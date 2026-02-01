@@ -1,0 +1,73 @@
+; test_pe1.ocn - Verify PE1 (spot checks)
+; Run: ocean -nograph < test_pe1.ocn
+
+out = outfile("/home/v71349/analog-gradients/results/pe1_test.txt" "w")
+fprintf(out "=== PE1 Verification ===\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("/home/v71349/analog-gradients/results/pe1/pe1.raw")
+selectResult("tran_test-tran")
+
+vdd = 1.8
+vth_low = 0.2 * vdd
+vth_high = 0.8 * vdd
+
+vy0 = v("y0")
+vy1 = v("y1")
+vy2 = v("y2")
+vy3 = v("y3")
+vcout = v("cout")
+
+check_bit = lambda((v t expected)
+    let((val))
+        val = value(v t)
+        if(expected == 1 then
+            if(val > vth_high then t else nil)
+        else
+            if(val < vth_low then t else nil)
+        )
+    )
+)
+
+if(vy0 && vy1 && vy2 && vy3 && vcout then
+    pass = t
+
+    ; t=5ns: AND, A=0x5, B=0x3 -> Y=0x1
+    if(!check_bit(vy0 5n 1) then pass=nil)
+    if(!check_bit(vy1 5n 0) then pass=nil)
+    if(!check_bit(vy2 5n 0) then pass=nil)
+    if(!check_bit(vy3 5n 0) then pass=nil)
+
+    ; t=15ns: OR, A=0xA, B=0x4 -> Y=0xE
+    if(!check_bit(vy0 15n 0) then pass=nil)
+    if(!check_bit(vy1 15n 1) then pass=nil)
+    if(!check_bit(vy2 15n 1) then pass=nil)
+    if(!check_bit(vy3 15n 1) then pass=nil)
+
+    ; t=25ns: XOR, A=0x6, B=0x9 -> Y=0xF
+    if(!check_bit(vy0 25n 1) then pass=nil)
+    if(!check_bit(vy1 25n 1) then pass=nil)
+    if(!check_bit(vy2 25n 1) then pass=nil)
+    if(!check_bit(vy3 25n 1) then pass=nil)
+
+    ; t=35ns: ADD, A=0xF, B=0x1 -> Y=0x0, COUT=1
+    if(!check_bit(vy0 35n 0) then pass=nil)
+    if(!check_bit(vy1 35n 0) then pass=nil)
+    if(!check_bit(vy2 35n 0) then pass=nil)
+    if(!check_bit(vy3 35n 0) then pass=nil)
+    if(!check_bit(vcout 35n 1) then pass=nil)
+
+    fprintf(out "\n")
+    if(pass then
+        fprintf(out "=== PASS: PE1 verification (spot checks) ===\n")
+    else
+        fprintf(out "=== FAIL: PE1 verification failed ===\n")
+    )
+else
+    fprintf(out "ERROR: Could not read waveform data\n")
+)
+
+close(out)
+printf("PE1 test done.\n")
+exit()

@@ -1,0 +1,76 @@
+; test_pe4.ocn - Verify PE4 array (spot checks per PE)
+; Run: ocean -nograph < test_pe4.ocn
+
+out = outfile("/home/v71349/analog-gradients/results/pe4_test.txt" "w")
+fprintf(out "=== PE4 Verification ===\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("/home/v71349/analog-gradients/results/pe4/pe4.raw")
+selectResult("tran_test-tran")
+
+vdd = 1.8
+vth_low = 0.2 * vdd
+vth_high = 0.8 * vdd
+
+check_bit = lambda((v t expected)
+    let((val))
+        val = value(v t)
+        if(expected == 1 then
+            if(val > vth_high then t else nil)
+        else
+            if(val < vth_low then t else nil)
+        )
+    )
+)
+
+check_pe = lambda((prefix t exp0 exp1 exp2 exp3)
+    let((v0 v1 v2 v3))
+        v0 = v(strcat(prefix "_0"))
+        v1 = v(strcat(prefix "_1"))
+        v2 = v(strcat(prefix "_2"))
+        v3 = v(strcat(prefix "_3"))
+        if(!(v0 && v1 && v2 && v3) then nil
+        else
+            if(!check_bit(v0 t exp0) then nil
+            else if(!check_bit(v1 t exp1) then nil
+            else if(!check_bit(v2 t exp2) then nil
+            else if(!check_bit(v3 t exp3) then nil else t)
+            )
+        )
+    )
+)
+
+pass = t
+
+; t=5ns: AND
+if(!check_pe("y0" 5n 1 0 0 0) then pass=nil)
+if(!check_pe("y1" 5n 0 0 1 1) then pass=nil)
+if(!check_pe("y2" 5n 0 1 0 1) then pass=nil)
+if(!check_pe("y3" 5n 0 1 1 1) then pass=nil)
+
+; t=15ns: OR
+if(!check_pe("y0" 15n 0 1 1 1) then pass=nil)
+if(!check_pe("y1" 15n 1 1 1 0) then pass=nil)
+if(!check_pe("y2" 15n 1 1 1 1) then pass=nil)
+if(!check_pe("y3" 15n 1 1 1 1) then pass=nil)
+
+; t=25ns: XOR
+if(!check_pe("y0" 25n 1 1 1 1) then pass=nil)
+if(!check_pe("y1" 25n 1 1 0 1) then pass=nil)
+if(!check_pe("y2" 25n 1 1 1 1) then pass=nil)
+if(!check_pe("y3" 25n 0 0 1 1) then pass=nil)
+
+; t=35ns: ADD (spot check)
+if(!check_pe("y0" 35n 0 0 0 0) then pass=nil)
+
+fprintf(out "\n")
+if(pass then
+    fprintf(out "=== PASS: PE4 verification (spot checks) ===\n")
+else
+    fprintf(out "=== FAIL: PE4 verification failed ===\n")
+)
+
+close(out)
+printf("PE4 test done.\n")
+exit()

@@ -46,6 +46,10 @@ verification and builds directly on the Level 4 gates.
 ### Acceptance Criteria
 - Parallel operation verified (same opcode, independent A/B)
 
+### Current Implementation
+- `pe1.scs`: single PE with ALU4
+- `pe4.scs`: 4x PE array with shared opcode
+
 ---
 
 This spec keeps the demo “GPU-shaped” while staying feasible with the current

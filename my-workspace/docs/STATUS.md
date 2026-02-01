@@ -9,7 +9,7 @@ Level 5: CMOS Primitives     ✅ COMPLETE
 Level 4: Logic Gates         🔜 NEXT
 Level 3: Building Blocks     ⏳ PENDING
 Level 2: RTL Components      🔜 NEXT
-Level 1: Functional Blocks   ⏳ PENDING
+Level 1: Functional Blocks   🔜 NEXT
 Level 0: System              ⏳ PENDING
 ```
 
@@ -62,6 +62,13 @@ Level 0: System              ⏳ PENDING
 |-----------|---------|------------|--------------|
 | ALU1      | ✅ | ⏳ | ⏳ |
 | ALU4      | ✅ | ⏳ | ⏳ |
+
+## Level 1: Functional Blocks
+
+| Component | Netlist | Simulation | Verification |
+|-----------|---------|------------|--------------|
+| PE1       | ✅ | ⏳ | ⏳ |
+| PE4       | ✅ | ⏳ | ⏳ |
 
 ## Tooling
 
