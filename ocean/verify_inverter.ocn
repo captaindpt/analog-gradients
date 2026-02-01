@@ -1,0 +1,71 @@
+; verify_inverter.ocn - Read Spectre results and verify inverter behavior
+; Run: ocean -nograph < verify_inverter.ocn
+
+out = outfile("/home/v71349/analog-gradients/results/inverter_verify.txt" "w")
+fprintf(out "=== Inverter Verification ===\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("/home/v71349/analog-gradients/results/inverter/inverter.raw")
+
+; List what's available
+fprintf(out "Available analyses:\n")
+foreach(r resultsDir() fprintf(out "  %s\n" r))
+
+; Select the transient analysis
+selectResult("tran_test-tran")
+
+; List available outputs
+fprintf(out "\nAvailable outputs:\n")
+foreach(o outputs() fprintf(out "  %s\n" o))
+
+vdd = 1.8
+vth_low = 0.2 * vdd
+vth_high = 0.8 * vdd
+
+; Try to get the voltage waveforms
+vout = v("out")
+vin = v("in")
+
+if(vout then
+    ; Sample at key points
+    vout_at_2n = value(vout 2n)
+    vout_at_7n = value(vout 7n)
+    vin_at_2n = value(vin 2n)
+    vin_at_7n = value(vin 7n)
+
+    fprintf(out "\nMeasurements:\n")
+    fprintf(out "t=2ns: Vin=%.3f V, Vout=%.3f V\n" vin_at_2n vout_at_2n)
+    fprintf(out "t=7ns: Vin=%.3f V, Vout=%.3f V\n\n" vin_at_7n vout_at_7n)
+
+    pass = t
+
+    ; When input is HIGH (~1.8V at t=2n), output should be LOW
+    if(vout_at_2n > vth_low then
+        fprintf(out "FAIL: Vout should be LOW when Vin is HIGH\n")
+        pass = nil
+    else
+        fprintf(out "OK: Vin HIGH (%.2f V) -> Vout LOW (%.2f V)\n" vin_at_2n vout_at_2n)
+    )
+
+    ; When input is LOW (0V at t=7n), output should be HIGH
+    if(vout_at_7n < vth_high then
+        fprintf(out "FAIL: Vout should be HIGH when Vin is LOW\n")
+        pass = nil
+    else
+        fprintf(out "OK: Vin LOW (%.2f V) -> Vout HIGH (%.2f V)\n" vin_at_7n vout_at_7n)
+    )
+
+    fprintf(out "\n")
+    if(pass then
+        fprintf(out "=== PASS: Inverter functions correctly ===\n")
+    else
+        fprintf(out "=== FAIL: Inverter verification failed ===\n")
+    )
+else
+    fprintf(out "ERROR: Could not read waveform data\n")
+)
+
+close(out)
+printf("Done. Results in: ~/analog-gradients/results/inverter_verify.txt\n")
+exit()

@@ -19,6 +19,22 @@ which ocean      # /CMC/tools/cadence/IC23.10.140_lnx86/tools.lnx86/dfII/bin/oce
 
 ---
 
+## Repo Automation Runner (Headless-Friendly)
+
+This repo includes a helper that runs SKILL scripts via Virtuoso replay mode,
+handling DISPLAY vs Xvfb automatically.
+
+```bash
+./scripts/virtuoso_replay.sh skill/L5_inverter.il
+```
+
+Behavior:
+- If `DISPLAY` is set, it uses it directly.
+- If `DISPLAY` is not set but `xvfb-run` exists, it runs under Xvfb.
+- Otherwise it fails with a clear error message and next steps.
+
+---
+
 ## OCEAN Scripting (Verified Working)
 
 OCEAN is the scriptable simulation interface. It uses SKILL syntax.

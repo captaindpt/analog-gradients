@@ -1,158 +1,163 @@
-# CMC Cloud + Claude + OCEAN Workflow
+# skill.md
 
-## Mission
-
-Hook up Claude to Cadence OCEAN on CMC Cloud. Build circuit elements bottom-up: transistors → gates → adders → ALU. Verify each component via simulation before composing.
+How-to guide for this repository.
 
 ---
 
-## Quick Connect
+## Quick Start
 
 ```bash
-# From iTerm (with XQuartz running)
-ssh -Y -p 31487 v71349@130.15.52.59
-```
-
-Password: get from CMC Cloud portal each session.
-
----
-
-## On CMC Cloud
-
-### Setup (every session)
-```bash
-source /CMC/scripts/cadence.ic23.10.140.csh
-source /CMC/scripts/cadence.spectre23.10.802.csh
-```
-
-### Run Claude (print mode - TUI broken)
-```bash
-claude --print "your task here"
-claude --print --permission-mode acceptEdits "task with file access"
-```
-
-### Run OCEAN
-```bash
-ocean -nograph
-```
-
-### Run Virtuoso GUI (needs X11)
-```bash
-virtuoso &
+source setup_cadence.sh
+./build.sh all
 ```
 
 ---
 
-## Constraints
-
-| What | Status |
-|------|--------|
-| OCEAN interactive | ✅ Works |
-| OCEAN simulation scripts | ✅ Works |
-| Claude --print mode | ✅ Works |
-| Claude TUI | ❌ Raw mode error |
-| Headless schematic creation | ❌ Needs X11 |
-| GUI + SKILL scripts | ✅ Works (load in CIW) |
-
-**Key insight:** Schematic creation via SKILL requires X11 display even in "nograph" mode. Two paths:
-1. **GUI-assisted:** Run Virtuoso with X11, load SKILL via CIW
-2. **Virtual display:** Use Xvfb for headless X11 (untested)
-
----
-
-## Build Hierarchy
-
-```
-Level 5: CMOS (inverter, NAND, NOR)
-Level 4: Logic gates (AND, OR, XOR)
-Level 3: Building blocks (adder, mux, register)
-Level 2: RTL (ALU, SRAM, FSM)
-Level 1: Functional blocks (PE array, memory)
-Level 0: System (GPU core)
-```
-
----
-
-## Library Setup
+## Run Spectre Simulation
 
 ```bash
-# Your library
-~/inverter/
+cd results/<name>
+spectre /path/to/netlists/<name>.scs -raw <name>.raw +log spectre.log
+```
 
-# cds.lib
-SOFTINCLUDE /CMC/tools/cadence/IC23.10.140_lnx86/share/cdssetup/cds.lib
-DEFINE inverter /home/v71349/inverter
+Check: `grep "completes with 0 errors" spectre.log`
 
-# analogLib components available via SOFTINCLUDE:
-# nmos4, pmos4, vdc, gnd, vpulse, res, cap, etc.
+---
+
+## Run OCEAN Verification
+
+```bash
+ocean -nograph < ocean/test_<name>.ocn
+cat results/<name>_test.txt
 ```
 
 ---
 
-## OCEAN Script Template
+## Run SKILL Replay (Virtuoso Headless-Friendly)
 
+```bash
+./scripts/virtuoso_replay.sh skill/L5_inverter.il
+```
+
+---
+
+## Create a New Gate
+
+### 1. Write the netlist
+
+`netlists/and2.scs`:
+```
+simulator lang=spectre
+parameters vdd_val=1.8
+
+model nch mos1 type=n vth=0.4 kp=120u
+model pch mos1 type=p vth=-0.4 kp=40u
+
+V_VDD (vdd 0) vsource dc=vdd_val
+V_A (a 0) vsource type=pulse val0=0 val1=1.8 delay=10n rise=100p fall=100p width=10n period=20n
+V_B (b 0) vsource type=pulse val0=0 val1=1.8 delay=20n rise=100p fall=100p width=20n period=40n
+
+// AND2 = NAND2 + Inverter
+// NAND stage
+MP0 (nand_out a vdd vdd) pch w=2u l=1u
+MP1 (nand_out b vdd vdd) pch w=2u l=1u
+MN0 (nand_out a mid 0) nch w=2u l=1u
+MN1 (mid b 0 0) nch w=2u l=1u
+
+// Inverter stage
+MP2 (out nand_out vdd vdd) pch w=2u l=1u
+MN2 (out nand_out 0 0) nch w=1u l=1u
+
+tran_test tran stop=80n
+save out a b
+```
+
+### 2. Write the test
+
+`ocean/test_and2.ocn`:
 ```lisp
-; simulation_test.ocn
-out = outfile("/home/v71349/sim_results.txt" "w")
+out = outfile("/home/v71349/analog-gradients/results/and2_test.txt" "w")
+fprintf(out "=== AND2 Verification ===\n")
 
 simulator('spectre)
-design("/path/to/netlist")
-analysis('tran ?stop "100n")
-run()
+openResults("/home/v71349/analog-gradients/results/and2/and2.raw")
+selectResult("tran_test-tran")
 
-vout = value(VT("/vout") 100n)
-if(vout > 0.9 then
-    fprintf(out "PASS\n")
-else
-    fprintf(out "FAIL\n")
-)
+vout = v("out")
+vth_low = 0.36
+vth_high = 1.44
+pass = t
 
+; A=0,B=0 -> 0
+v = value(vout 5n)
+fprintf(out "A=0,B=0: %.3f " v)
+if(v < vth_low then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+; A=1,B=0 -> 0
+v = value(vout 15n)
+fprintf(out "A=1,B=0: %.3f " v)
+if(v < vth_low then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+; A=0,B=1 -> 0
+v = value(vout 25n)
+fprintf(out "A=0,B=1: %.3f " v)
+if(v < vth_low then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+; A=1,B=1 -> 1
+v = value(vout 35n)
+fprintf(out "A=1,B=1: %.3f " v)
+if(v > vth_high then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+if(pass then fprintf(out "\n=== PASS ===\n") else fprintf(out "\n=== FAIL ===\n"))
 close(out)
 exit()
 ```
 
-Run: `ocean -nograph < simulation_test.ocn`
+### 3. Run it
 
----
-
-## SKILL Schematic Template
-
-```lisp
-; create_nand.il - run in Virtuoso CIW with: load("create_nand.il")
-lib = "inverter"
-cell = "nand2"
-view = "schematic"
-
-cv = dbOpenCellViewByType(lib cell view "schematic" "w")
-
-; Add instances, wires, pins here
-; dbCreateInst(...)
-; dbCreateNet(...)
-; dbCreatePin(...)
-
-dbSave(cv)
-dbClose(cv)
-printf("Created %s/%s/%s\n" lib cell view)
+```bash
+mkdir -p results/and2
+cd results/and2
+spectre ../../netlists/and2.scs -raw and2.raw +log spectre.log
+cd ../..
+ocean -nograph < ocean/test_and2.ocn
+cat results/and2_test.txt
 ```
 
 ---
 
-## Next Steps
+## Compose Circuits
 
-1. SSH into CMC Cloud with X11
-2. Source Cadence scripts
-3. Launch Virtuoso
-4. Use Claude --print to generate SKILL scripts
-5. Load scripts in CIW to create schematics
-6. Run OCEAN simulations to verify
-7. Build up the hierarchy
+Instantiate subcircuits in netlists:
+
+```
+// Include subcircuit definition or define inline
+subckt inverter (in out vdd)
+  MP0 (out in vdd vdd) pch w=2u l=1u
+  MN0 (out in 0 0) nch w=1u l=1u
+ends inverter
+
+// Instantiate
+I0 (a a_inv vdd) inverter
+I1 (b b_inv vdd) inverter
+```
 
 ---
 
-## System Info
+## Debug Tips
 
-- **Host:** CMC Cloud (Rocky Linux 8.10)
-- **Shell:** tcsh (not bash)
-- **Tools:** IC23.10.140, Spectre 23.10.802
-- **User:** v71349
-- **No sudo access**
+- Check `spectre.log` for simulation errors
+- PSF results named `tran_test-tran` (with hyphen)
+- OCEAN needs: `selectResult("tran_test-tran")` (quoted string)
+- Voltage thresholds: LOW < 0.36V, HIGH > 1.44V (for VDD=1.8V)
+
+---
+
+## CMC Cloud Access
+
+```bash
+ssh -Y -p 31487 v71349@130.15.52.59
+source /CMC/scripts/cadence.ic23.10.140.csh  # if using tcsh
+# or
+source setup_cadence.sh  # if using bash
+```

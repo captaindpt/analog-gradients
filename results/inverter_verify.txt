@@ -1,0 +1,17 @@
+=== Inverter Verification ===
+Date: Jan 31 19:11:05 2026
+
+Available analyses:
+
+Available outputs:
+  out
+  in
+
+Measurements:
+t=2ns: Vin=1.800 V, Vout=0.007 V
+t=7ns: Vin=0.000 V, Vout=1.783 V
+
+OK: Vin HIGH (1.80 V) -> Vout LOW (0.01 V)
+OK: Vin LOW (0.00 V) -> Vout HIGH (1.78 V)
+
+=== PASS: Inverter functions correctly ===

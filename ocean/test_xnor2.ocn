@@ -1,0 +1,53 @@
+; test_xnor2.ocn - Verify XNOR2 truth table
+; Run: ocean -nograph < test_xnor2.ocn
+
+out = outfile("/home/v71349/analog-gradients/results/xnor2_test.txt" "w")
+fprintf(out "=== XNOR2 Verification ===\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("/home/v71349/analog-gradients/results/xnor2/xnor2.raw")
+selectResult("tran_test-tran")
+
+vdd = 1.8
+vth_low = 0.2 * vdd
+vth_high = 0.8 * vdd
+
+vout = v("out")
+
+if(vout then
+    pass = t
+
+    ; Test case 1: A=0, B=0 -> OUT=1
+    v = value(vout 5n)
+    fprintf(out "A=0, B=0: Vout=%.3f V " v)
+    if(v > vth_high then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    ; Test case 2: A=1, B=0 -> OUT=0
+    v = value(vout 15n)
+    fprintf(out "A=1, B=0: Vout=%.3f V " v)
+    if(v < vth_low then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    ; Test case 3: A=0, B=1 -> OUT=0
+    v = value(vout 25n)
+    fprintf(out "A=0, B=1: Vout=%.3f V " v)
+    if(v < vth_low then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    ; Test case 4: A=1, B=1 -> OUT=1
+    v = value(vout 35n)
+    fprintf(out "A=1, B=1: Vout=%.3f V " v)
+    if(v > vth_high then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    fprintf(out "\n")
+    if(pass then
+        fprintf(out "=== PASS: XNOR2 truth table verified ===\n")
+    else
+        fprintf(out "=== FAIL: XNOR2 verification failed ===\n")
+    )
+else
+    fprintf(out "ERROR: Could not read waveform data\n")
+)
+
+close(out)
+printf("XNOR2 test done.\n")
+exit()

@@ -1,0 +1,30 @@
+// inverter.scs - CMOS Inverter Netlist for Spectre
+// Using mos1 models
+// Run: spectre inverter.scs -raw inverter.raw
+
+simulator lang=spectre
+
+// Parameters
+parameters vdd_val=1.8
+
+// MOSFET Models
+model nch mos1 type=n vth=0.4 kp=120u
+model pch mos1 type=p vth=-0.4 kp=40u
+
+// Supply
+V_VDD (vdd 0) vsource dc=vdd_val
+
+// Input stimulus - pulse for transient analysis
+V_IN (in 0) vsource type=pulse val0=0 val1=vdd_val delay=1n rise=100p fall=100p width=5n period=10n
+
+// CMOS Inverter
+// PMOS: when gate LOW (0V), Vgs=-1.8V, |Vgs|>|Vth|=0.4, ON -> output=VDD
+// NMOS: when gate HIGH (1.8V), Vgs=1.8V>Vth=0.4, ON -> output=0V
+MP0 (out in vdd vdd) pch w=2u l=1u
+MN0 (out in 0 0) nch w=1u l=1u
+
+// Analysis
+tran_test tran stop=50n
+
+// Save outputs
+save out in

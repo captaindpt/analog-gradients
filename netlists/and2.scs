@@ -1,0 +1,50 @@
+// and2.scs - 2-input CMOS AND Gate
+// AND2 = NAND2 + Inverter
+// Truth table: OUT = A & B
+//   A B | OUT
+//   0 0 | 0
+//   0 1 | 0
+//   1 0 | 0
+//   1 1 | 1
+// Run: spectre and2.scs -raw and2.raw
+
+simulator lang=spectre
+
+parameters vdd_val=1.8
+
+// MOSFET Models
+model nch mos1 type=n vth=0.4 kp=120u
+model pch mos1 type=p vth=-0.4 kp=40u
+
+// Supply
+V_VDD (vdd 0) vsource dc=vdd_val
+
+// Inputs - cycle through all 4 combinations
+// t=5ns:  A=0, B=0
+// t=15ns: A=1, B=0
+// t=25ns: A=0, B=1
+// t=35ns: A=1, B=1
+V_A (a 0) vsource type=pulse val0=0 val1=vdd_val delay=10n rise=100p fall=100p width=10n period=20n
+V_B (b 0) vsource type=pulse val0=0 val1=vdd_val delay=20n rise=100p fall=100p width=20n period=40n
+
+// Subcircuits
+subckt nand2 (a b out vdd)
+    MP0 (out a vdd vdd) pch w=2u l=1u
+    MP1 (out b vdd vdd) pch w=2u l=1u
+    MN0 (out a mid 0) nch w=2u l=1u
+    MN1 (mid b 0 0) nch w=2u l=1u
+ends nand2
+
+subckt inverter (in out vdd)
+    MP0 (out in vdd vdd) pch w=2u l=1u
+    MN0 (out in 0 0) nch w=1u l=1u
+ends inverter
+
+// AND2 = NAND2 + INV
+X_NAND (a b nand_out vdd) nand2
+X_INV (nand_out out vdd) inverter
+
+// Analysis
+tran_test tran stop=80n
+
+save out a b

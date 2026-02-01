@@ -1,0 +1,13 @@
+=== PSF Debug ===
+
+Available results:
+Results dir: nil
+
+Selected: tran_test
+Outputs: nil
+
+Trying signal reads:
+  VT(out) = nil
+  VT(/out) = nil
+  VT(V:out) = nil
+  VT(out:p) = nil

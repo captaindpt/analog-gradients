@@ -1,85 +1,65 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Context and guidance for Claude Code working in this repository.
 
-## Repository Purpose
+## What This Is
 
-This is a **neuromorphic computing research repository** focused on analog AI hardware, memristor-based computing-in-memory (CIM), and hardware-aware training algorithms. The work supports preparation for the FABrIC IoT Device Challenge and CMC Microsystems-based prototyping efforts.
+Neuromorphic computing research repository. Building a GPU core from transistors up using Cadence tools on CMC Cloud.
 
 ## Repository Structure
 
 ```
 analog-gradients/
-├── skill.md                     # ACTIVE WORKFLOW - CMC Cloud + Claude + OCEAN
-├── Cadence/                     # Setup guides and automation docs
-├── papers/                      # Research paper collection
-│   ├── papers-markdown/         # Converted summaries and analyses
-│   └── BOOKS/                   # Reference books
-└── mani-plan.md                 # Strategic roadmap
+├── CLAUDE.md             # This file - general context
+├── skill.md              # How-to guides and commands
+├── setup_cadence.sh      # Cadence environment (bash)
+├── build.sh              # Build and test runner
+├── netlists/             # Spectre simulation files (.scs)
+├── ocean/                # OCEAN verification scripts (.ocn)
+├── skill/                # Virtuoso SKILL scripts (.il)
+├── results/              # Simulation outputs
+├── lib/                  # Reusable subcircuit library
+└── my-workspace/         # Reference docs only
+    ├── docs/             # Vision, status, reference
+    ├── tickets/          # Work items
+    └── logs/             # Session logs
 ```
 
-## CMC Cloud Workflow (PRIMARY)
+## Current State
 
-**See [skill.md](skill.md) for full details.**
+**Level 5 COMPLETE:** Inverter, NAND2, NOR2 verified.
 
-### Quick Connect
+See `my-workspace/docs/STATUS.md` for full progress.
+
+## Build Hierarchy
+
+```
+Level 5: CMOS (inverter, NAND, NOR)        ✅ DONE
+Level 4: Logic gates (AND, OR, XOR)        🔜 NEXT
+Level 3: Building blocks (adder, mux)
+Level 2: RTL (ALU, SRAM, FSM)
+Level 1: Functional blocks (PE array)
+Level 0: System (GPU core)
+```
+
+## CMC Cloud
+
 ```bash
 ssh -Y -p 31487 v71349@130.15.52.59
 ```
 
-### On CMC Cloud
+- Shell: tcsh (scripts use bash workaround)
+- Tools: Virtuoso IC23, Spectre 23, OCEAN
+- Claude: `--print` mode only (TUI broken)
+
+## Key Constraint
+
+Schematic creation via SKILL requires X11. We use netlist-based simulation flow for headless operation.
+
+## Quick Commands
+
 ```bash
-source /CMC/scripts/cadence.ic23.10.140.csh
-source /CMC/scripts/cadence.spectre23.10.802.csh
-
-# Claude (print mode only - TUI broken)
-claude --print "your task"
-
-# OCEAN simulation
-ocean -nograph
-
-# Virtuoso GUI (needs X11)
-virtuoso &
+source setup_cadence.sh   # Setup environment
+./build.sh all            # Build and test everything
+./build.sh inverter       # Test single component
 ```
-
-### Build Hierarchy
-```
-Level 5: CMOS (inverter, NAND, NOR)
-Level 4: Logic gates (AND, OR, XOR)
-Level 3: Building blocks (adder, mux, register)
-Level 2: RTL (ALU, SRAM, FSM)
-Level 1: Functional blocks (PE array, memory)
-Level 0: System (GPU core)
-```
-
-### Constraints
-- Headless schematic creation fails (needs X11)
-- Use GUI + SKILL scripts loaded via CIW
-- OCEAN simulations work headlessly
-
-## Current Mission
-
-**Goal:** Build circuit elements bottom-up using Claude + OCEAN on CMC Cloud.
-
-**Immediate target:** Transistors → gates → adders → ALU, verified at each level via Spectre simulation.
-
-**Demo concept:** "Watch AI design a GPU core in 60 seconds" - building from transistors up, verified at each level.
-
-**Longer-term:** FABrIC IoT Challenge 2026 - Analog Edge-AI Sensor Node
-
-## Tools Stack
-
-| Tool | Status | Purpose |
-|------|--------|---------|
-| Cadence Virtuoso | ✅ CMC Cloud | Schematic capture, layout |
-| Cadence Spectre | ✅ CMC Cloud | Circuit simulation |
-| OCEAN | ✅ CMC Cloud | Scriptable simulation interface |
-| Claude --print | ✅ CMC Cloud | AI-assisted SKILL generation |
-| PyTorch + AIHWKIT | 🔜 Next | Hardware-aware neural training |
-
-
-## Resources
-
-- CMC Microsystems: https://cmc.ca
-- FABrIC IoT Challenge: https://fabricinnovation.ca
-- IBM AIHWKIT: https://github.com/IBM/aihwkit
