@@ -44,13 +44,35 @@ Level 0: System (GPU core)
 
 ## CMC Cloud
 
+**Port changes each session.** Get current credentials:
+1. Log into CMC Cloud portal
+2. Start VM session
+3. Click "Open Terminal SSH" - downloads `.moba` file
+4. Check `~/Downloads/*.moba` for current port:
+   ```bash
+   cat ~/Downloads/My\ Linux\ CAD\ Workstation*.moba
+   # Look for port number (e.g., 130.15.52.59%30189%v71349)
+   ```
+
+**Connect:**
 ```bash
-ssh -Y -p 31487 v71349@130.15.52.59
+ssh -Y -p <PORT> v71349@130.15.52.59
 ```
 
-- Shell: tcsh (scripts use bash workaround)
-- Tools: Virtuoso IC23, Spectre 23, OCEAN
+**VSCode Remote:** Cmd+Shift+P → "Remote-SSH: Connect to Host" → `ssh -p <PORT> v71349@130.15.52.59`
+
+**On the machine:**
+- Shell: tcsh (`setenv` not `export`)
+- Claude/gh in PATH: `~/.tcshrc` has `setenv PATH "$HOME/.local/bin:$PATH"`
 - Claude: `--print` mode only (TUI broken)
+- Tools: `source /CMC/scripts/cadence.ic23.10.140.csh`
+
+**First-time setup (already done):**
+```tcsh
+curl -fsSL https://claude.ai/install.sh | bash
+echo 'setenv PATH "$HOME/.local/bin:$PATH"' >> ~/.tcshrc
+source ~/.tcshrc
+```
 
 ## Key Constraint
 
