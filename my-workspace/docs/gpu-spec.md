@@ -50,6 +50,18 @@ verification and builds directly on the Level 4 gates.
 - `pe1.scs`: single PE with ALU4
 - `pe4.scs`: 4x PE array with shared opcode
 
+## GPU-Lite v3 (M3)
+
+**Goal:** Minimal system wrapper (GPU core).
+
+### Block Additions
+- Top-level wrapper around PE4
+- Single entry point for opcode and IO vectors
+
+### Acceptance Criteria
+- `gpu_core.scs` netlist + `test_gpu_core.ocn`
+- Spot-check verification passes
+
 ---
 
 This spec keeps the demo “GPU-shaped” while staying feasible with the current

@@ -143,6 +143,9 @@ case $COMPONENT in
     pe4)
         run_sim pe4
         ;;
+    gpu_core)
+        run_sim gpu_core
+        ;;
     all)
         echo "Building Level 5: CMOS primitives"
         echo "=================================="
@@ -172,12 +175,16 @@ case $COMPONENT in
         echo "=================================="
         run_sim pe1
         run_sim pe4
+        echo ""
+        echo "Building Level 0: System"
         echo "=================================="
-        echo -e "${GREEN}All Level 1-5 components verified!${NC}"
+        run_sim gpu_core
+        echo "=================================="
+        echo -e "${GREEN}All Level 0-5 components verified!${NC}"
         ;;
     *)
         echo "Unknown component: $COMPONENT"
-        echo "Available: inverter, nand2, nor2, and2, or2, xor2, xnor2, mux2, half_adder, full_adder, alu1, alu4, pe1, pe4, all"
+        echo "Available: inverter, nand2, nor2, and2, or2, xor2, xnor2, mux2, half_adder, full_adder, alu1, alu4, pe1, pe4, gpu_core, all"
         exit 1
         ;;
 esac

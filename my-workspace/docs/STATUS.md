@@ -10,7 +10,7 @@ Level 4: Logic Gates         🔜 NEXT
 Level 3: Building Blocks     ⏳ PENDING
 Level 2: RTL Components      🔜 NEXT
 Level 1: Functional Blocks   🔜 NEXT
-Level 0: System              ⏳ PENDING
+Level 0: System              🔜 NEXT
 ```
 
 ## Level 5: CMOS Primitives ✅
@@ -69,6 +69,12 @@ Level 0: System              ⏳ PENDING
 |-----------|---------|------------|--------------|
 | PE1       | ✅ | ⏳ | ⏳ |
 | PE4       | ✅ | ⏳ | ⏳ |
+
+## Level 0: System
+
+| Component | Netlist | Simulation | Verification |
+|-----------|---------|------------|--------------|
+| GPU Core  | ✅ | ⏳ | ⏳ |
 
 ## Tooling
 
