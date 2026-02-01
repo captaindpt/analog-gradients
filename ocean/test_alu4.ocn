@@ -19,48 +19,54 @@ vy2 = v("y2")
 vy3 = v("y3")
 vcout = v("cout")
 
-check_bit = lambda((v t expected)
-    let((val))
-        val = value(v t)
-        if(expected == 1 then
-            if(val > vth_high then t else nil)
-        else
-            if(val < vth_low then t else nil)
-        )
-    )
-)
-
 if(vy0 && vy1 && vy2 && vy3 && vcout then
     pass = t
 
     ; t=5ns: AND, A=0x5, B=0x3 -> Y=0x1
     fprintf(out "AND A=0x5 B=0x3 -> Y=0x1\n")
-    if(!check_bit(vy0 5n 1) then fprintf(out "  y0 FAIL\n") pass=nil)
-    if(!check_bit(vy1 5n 0) then fprintf(out "  y1 FAIL\n") pass=nil)
-    if(!check_bit(vy2 5n 0) then fprintf(out "  y2 FAIL\n") pass=nil)
-    if(!check_bit(vy3 5n 0) then fprintf(out "  y3 FAIL\n") pass=nil)
+    v = value(vy0 5n)
+    if(v > vth_high then fprintf(out "  y0 OK\n") else fprintf(out "  y0 FAIL\n") pass=nil)
+    v = value(vy1 5n)
+    if(v < vth_low then fprintf(out "  y1 OK\n") else fprintf(out "  y1 FAIL\n") pass=nil)
+    v = value(vy2 5n)
+    if(v < vth_low then fprintf(out "  y2 OK\n") else fprintf(out "  y2 FAIL\n") pass=nil)
+    v = value(vy3 5n)
+    if(v < vth_low then fprintf(out "  y3 OK\n") else fprintf(out "  y3 FAIL\n") pass=nil)
 
     ; t=15ns: OR, A=0xA, B=0x4 -> Y=0xE
     fprintf(out "OR  A=0xA B=0x4 -> Y=0xE\n")
-    if(!check_bit(vy0 15n 0) then fprintf(out "  y0 FAIL\n") pass=nil)
-    if(!check_bit(vy1 15n 1) then fprintf(out "  y1 FAIL\n") pass=nil)
-    if(!check_bit(vy2 15n 1) then fprintf(out "  y2 FAIL\n") pass=nil)
-    if(!check_bit(vy3 15n 1) then fprintf(out "  y3 FAIL\n") pass=nil)
+    v = value(vy0 15n)
+    if(v < vth_low then fprintf(out "  y0 OK\n") else fprintf(out "  y0 FAIL\n") pass=nil)
+    v = value(vy1 15n)
+    if(v > vth_high then fprintf(out "  y1 OK\n") else fprintf(out "  y1 FAIL\n") pass=nil)
+    v = value(vy2 15n)
+    if(v > vth_high then fprintf(out "  y2 OK\n") else fprintf(out "  y2 FAIL\n") pass=nil)
+    v = value(vy3 15n)
+    if(v > vth_high then fprintf(out "  y3 OK\n") else fprintf(out "  y3 FAIL\n") pass=nil)
 
     ; t=25ns: XOR, A=0x6, B=0x9 -> Y=0xF
     fprintf(out "XOR A=0x6 B=0x9 -> Y=0xF\n")
-    if(!check_bit(vy0 25n 1) then fprintf(out "  y0 FAIL\n") pass=nil)
-    if(!check_bit(vy1 25n 1) then fprintf(out "  y1 FAIL\n") pass=nil)
-    if(!check_bit(vy2 25n 1) then fprintf(out "  y2 FAIL\n") pass=nil)
-    if(!check_bit(vy3 25n 1) then fprintf(out "  y3 FAIL\n") pass=nil)
+    v = value(vy0 25n)
+    if(v > vth_high then fprintf(out "  y0 OK\n") else fprintf(out "  y0 FAIL\n") pass=nil)
+    v = value(vy1 25n)
+    if(v > vth_high then fprintf(out "  y1 OK\n") else fprintf(out "  y1 FAIL\n") pass=nil)
+    v = value(vy2 25n)
+    if(v > vth_high then fprintf(out "  y2 OK\n") else fprintf(out "  y2 FAIL\n") pass=nil)
+    v = value(vy3 25n)
+    if(v > vth_high then fprintf(out "  y3 OK\n") else fprintf(out "  y3 FAIL\n") pass=nil)
 
     ; t=35ns: ADD, A=0xF, B=0x1 -> Y=0x0, COUT=1
     fprintf(out "ADD A=0xF B=0x1 -> Y=0x0 COUT=1\n")
-    if(!check_bit(vy0 35n 0) then fprintf(out "  y0 FAIL\n") pass=nil)
-    if(!check_bit(vy1 35n 0) then fprintf(out "  y1 FAIL\n") pass=nil)
-    if(!check_bit(vy2 35n 0) then fprintf(out "  y2 FAIL\n") pass=nil)
-    if(!check_bit(vy3 35n 0) then fprintf(out "  y3 FAIL\n") pass=nil)
-    if(!check_bit(vcout 35n 1) then fprintf(out "  cout FAIL\n") pass=nil)
+    v = value(vy0 35n)
+    if(v < vth_low then fprintf(out "  y0 OK\n") else fprintf(out "  y0 FAIL\n") pass=nil)
+    v = value(vy1 35n)
+    if(v < vth_low then fprintf(out "  y1 OK\n") else fprintf(out "  y1 FAIL\n") pass=nil)
+    v = value(vy2 35n)
+    if(v < vth_low then fprintf(out "  y2 OK\n") else fprintf(out "  y2 FAIL\n") pass=nil)
+    v = value(vy3 35n)
+    if(v < vth_low then fprintf(out "  y3 OK\n") else fprintf(out "  y3 FAIL\n") pass=nil)
+    v = value(vcout 35n)
+    if(v > vth_high then fprintf(out "  cout OK\n") else fprintf(out "  cout FAIL\n") pass=nil)
 
     fprintf(out "\n")
     if(pass then

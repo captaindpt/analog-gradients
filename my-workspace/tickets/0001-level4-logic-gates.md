@@ -16,12 +16,12 @@ Build AND, OR, XOR, XNOR gates using the verified Level 5 primitives.
 - [ ] XNOR2 = XOR2 → Inverter
 - [x] Create netlists
 - [x] Create OCEAN test scripts
-- [ ] Verify all truth tables
+- [x] Verify all truth tables
 - [x] Update STATUS.md
 
 ## Notes
 
-- `./build.sh all` currently fails due to missing license path (LMC-01902).
+- Verified successfully after setting `CDS_LIC_FILE=6055@licaccess.cmc.ca`.
 
 ## Technical Notes
 

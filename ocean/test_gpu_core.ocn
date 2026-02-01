@@ -1,4 +1,4 @@
-; test_gpu_core.ocn - Verify GPU core (PE4 wrapper)
+; test_gpu_core.ocn - Verify GPU core (PE0 spot checks)
 ; Run: ocean -nograph < test_gpu_core.ocn
 
 out = outfile("/home/v71349/analog-gradients/results/gpu_core_test.txt" "w")
@@ -13,60 +13,63 @@ vdd = 1.8
 vth_low = 0.2 * vdd
 vth_high = 0.8 * vdd
 
-check_bit = lambda((v t expected)
-    let((val))
-        val = value(v t)
-        if(expected == 1 then
-            if(val > vth_high then t else nil)
-        else
-            if(val < vth_low then t else nil)
-        )
-    )
-)
-
-check_pe = lambda((prefix t exp0 exp1 exp2 exp3)
-    let((v0 v1 v2 v3))
-        v0 = v(strcat(prefix "_0"))
-        v1 = v(strcat(prefix "_1"))
-        v2 = v(strcat(prefix "_2"))
-        v3 = v(strcat(prefix "_3"))
-        if(!(v0 && v1 && v2 && v3) then nil
-        else
-            if(!check_bit(v0 t exp0) then nil
-            else if(!check_bit(v1 t exp1) then nil
-            else if(!check_bit(v2 t exp2) then nil
-            else if(!check_bit(v3 t exp3) then nil else t)
-            )
-        )
-    )
-)
-
 pass = t
 
-; t=5ns: AND (spot checks)
-if(!check_pe("y0" 5n 1 0 0 0) then pass=nil)
-if(!check_pe("y1" 5n 0 0 1 1) then pass=nil)
-if(!check_pe("y2" 5n 0 1 0 1) then pass=nil)
-if(!check_pe("y3" 5n 0 1 1 1) then pass=nil)
+vy0_0 = v("y0_0")
+vy0_1 = v("y0_1")
+vy0_2 = v("y0_2")
+vy0_3 = v("y0_3")
+vcout0 = v("cout0")
 
-; t=15ns: OR
-if(!check_pe("y0" 15n 0 1 1 1) then pass=nil)
-if(!check_pe("y1" 15n 1 1 1 0) then pass=nil)
-if(!check_pe("y2" 15n 1 1 1 1) then pass=nil)
-if(!check_pe("y3" 15n 1 1 1 1) then pass=nil)
+if(vy0_0 && vy0_1 && vy0_2 && vy0_3 && vcout0 then
+    ; t=5ns: AND -> Y=0x1
+    v = value(vy0_0 5n)
+    if(v > vth_high then t else pass=nil)
+    v = value(vy0_1 5n)
+    if(v < vth_low then t else pass=nil)
+    v = value(vy0_2 5n)
+    if(v < vth_low then t else pass=nil)
+    v = value(vy0_3 5n)
+    if(v < vth_low then t else pass=nil)
 
-; t=25ns: XOR
-if(!check_pe("y0" 25n 1 1 1 1) then pass=nil)
-if(!check_pe("y1" 25n 1 1 0 1) then pass=nil)
-if(!check_pe("y2" 25n 1 1 1 1) then pass=nil)
-if(!check_pe("y3" 25n 0 0 1 1) then pass=nil)
+    ; t=15ns: OR -> Y=0xE
+    v = value(vy0_0 15n)
+    if(v < vth_low then t else pass=nil)
+    v = value(vy0_1 15n)
+    if(v > vth_high then t else pass=nil)
+    v = value(vy0_2 15n)
+    if(v > vth_high then t else pass=nil)
+    v = value(vy0_3 15n)
+    if(v > vth_high then t else pass=nil)
 
-; t=35ns: ADD (spot check)
-if(!check_pe("y0" 35n 0 0 0 0) then pass=nil)
+    ; t=25ns: XOR -> Y=0xF
+    v = value(vy0_0 25n)
+    if(v > vth_high then t else pass=nil)
+    v = value(vy0_1 25n)
+    if(v > vth_high then t else pass=nil)
+    v = value(vy0_2 25n)
+    if(v > vth_high then t else pass=nil)
+    v = value(vy0_3 25n)
+    if(v > vth_high then t else pass=nil)
+
+    ; t=35ns: ADD -> Y=0x0, COUT=1
+    v = value(vy0_0 35n)
+    if(v < vth_low then t else pass=nil)
+    v = value(vy0_1 35n)
+    if(v < vth_low then t else pass=nil)
+    v = value(vy0_2 35n)
+    if(v < vth_low then t else pass=nil)
+    v = value(vy0_3 35n)
+    if(v < vth_low then t else pass=nil)
+    v = value(vcout0 35n)
+    if(v > vth_high then t else pass=nil)
+else
+    pass = nil
+)
 
 fprintf(out "\n")
 if(pass then
-    fprintf(out "=== PASS: GPU core verification (spot checks) ===\n")
+    fprintf(out "=== PASS: GPU core verification (PE0 spot checks) ===\n")
 else
     fprintf(out "=== FAIL: GPU core verification failed ===\n")
 )

@@ -1,0 +1,199 @@
+
+Spectre (R) Circuit Simulator
+Version 23.1.0.802.isr17 64bit -- 10 Apr 2025
+Copyright (C) 1989-2025 Cadence Design Systems, Inc. All rights reserved worldwide. Cadence and Spectre are registered trademarks of Cadence Design Systems, Inc. All others are the property of their respective holders.
+
+Includes RSA BSAFE(R) Cryptographic or Security Protocol Software from RSA Security, Inc.
+
+User: v71349   Host: vcl-vm0-159   HostID: 10AC9F79   PID: 125954
+Memory  available: 13.6812 GB  physical: 16.2294 GB
+Linux   : Rocky Linux release 8.10 (Green Obsidian)
+CPU Type: Intel(R) Xeon(R) Gold 6248R CPU @ 3.00GHz
+All processors running at 2993.0 MHz
+        Socket: Processors
+        0:       0
+        2:       1
+        4:       2
+        6:       3
+        
+System load averages (1min, 5min, 15min) : 31.8 %, 28.2 %, 26.0 %
+This is a virtual machine
+
+
+Simulating `/home/v71349/analog-gradients/netlists/or2.scs' on vcl-vm0-159 at 9:26:18 PM, Sat Jan 31, 2026 (process id: 125954).
+Current working directory: /home/v71349/analog-gradients/results/or2
+Command line:
+    /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/bin/spectre  \
+        -64 /home/v71349/analog-gradients/netlists/or2.scs -raw or2.raw  \
+        +log spectre.log
+
+Licensing Information:
+[21:26:18.502689] Configured Lic search path (22.01-s002): 6055@licaccess.cmc.ca
+
+Licensing Information:
+[21:26:18.392218] Periodic Lic check successful
+
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libinfineon_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libphilips_I_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libphilips_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libsparam_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libstmodels_sh.so ...
+Reading file:  /home/v71349/analog-gradients/netlists/or2.scs
+Reading file:  /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/etc/configs/spectre.cfg
+Time for NDB Parsing: CPU = 70.057 ms, elapsed = 492.115 ms.
+Time accumulated: CPU = 140.179 ms, elapsed = 492.117 ms.
+Peak resident memory used = 172 Mbytes.
+
+
+Warning from spectre in `nor2':`X_NOR', during hierarchy flattening.
+    WARNING (SFE-101): "/home/v71349/analog-gradients/netlists/or2.scs" 17: Parameter 'vth' has been ignored because it has been assigned to instance pch of master 'mos1'; however, it has not been defined for 'mos1'. Specify a valid parameter and rerun the simulation.
+    WARNING (SFE-101): "/home/v71349/analog-gradients/netlists/or2.scs" 16: Parameter 'vth' has been ignored because it has been assigned to instance nch of master 'mos1'; however, it has not been defined for 'mos1'. Specify a valid parameter and rerun the simulation.
+
+Time for Elaboration: CPU = 14.37 ms, elapsed = 14.4651 ms.
+Time accumulated: CPU = 154.624 ms, elapsed = 506.656 ms.
+Peak resident memory used = 180 Mbytes.
+
+
+Time for EDB Visiting: CPU = 420 us, elapsed = 419.855 us.
+Time accumulated: CPU = 155.111 ms, elapsed = 507.142 ms.
+Peak resident memory used = 182 Mbytes.
+
+
+Notice from spectre during initial setup.
+    pch: The saturation channel conductance is zero in the model.  This could result in enormous gain and cause convergence or overflow problems.  Check the value of lambda or kappa.
+    pch: `cgso' is not specified.  0.1um * Cox is used.
+    pch: `cgdo' is not specified.  0.1um * Cox is used.
+    nch: The saturation channel conductance is zero in the model.  This could result in enormous gain and cause convergence or overflow problems.  Check the value of lambda or kappa.
+    nch: `cgso' is not specified.  0.1um * Cox is used.
+    nch: `cgdo' is not specified.  0.1um * Cox is used.
+
+
+Netlist title:
+        // or2.scs - 2-input CMOS OR Gate
+
+
+Global user options:
+
+Scoped user options:
+
+Circuit inventory:
+              nodes 6
+               mos1 6     
+            vsource 3     
+
+Analysis and control statement inventory:
+               tran 1     
+
+Output statements:
+             .probe 0     
+           .measure 0     
+               save 1     
+
+
+Notice from spectre during initial setup.
+    pch: The saturation channel conductance is zero in the model.  This could result in enormous gain and cause convergence or overflow problems.  Check the value of lambda or kappa.
+    nch: The saturation channel conductance is zero in the model.  This could result in enormous gain and cause convergence or overflow problems.  Check the value of lambda or kappa.
+
+Time for parsing: CPU = 1.466 ms, elapsed = 8.57782 ms.
+Time accumulated: CPU = 156.633 ms, elapsed = 515.777 ms.
+Peak resident memory used = 184 Mbytes.
+
+~~~~~~~~~~~~~~~~~~~~~~
+Pre-Simulation Summary
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+
+*****************************************************
+Transient Analysis `tran_test': time = (0 s -> 80 ns)
+*****************************************************
+Convergence achieved in 10 iterations.
+DC simulation time: CPU = 304 us, elapsed = 309.944 us.
+
+Opening the PSFXL file or2.raw/tran_test.tran.tran ...
+Important parameter values:
+    start = 0 s
+    outputstart = 0 s
+    stop = 80 ns
+    step = 80 ps
+    maxstep = 1.6 ns
+    ic = all
+    useprevic = no
+    skipdc = no
+    reltol = 1e-03
+    abstol(V) = 1 uV
+    abstol(I) = 1 pA
+    temp = 27 C
+    tnom = 27 C
+    tempeffects = all
+    errpreset = moderate
+    method = traponly
+    lteratio = 3.5
+    relref = sigglobal
+    cmin = 0 F
+    gmin = 1 pS
+
+
+Output and IC/nodeset summary:
+                 save   3       (voltage)
+
+......9......8....
+
+Notice from spectre at time = 20.3094 ns during transient analysis `tran_test'.
+    Found trapezoidal ringing on node X_NOR.mid.
+Notice from spectre at time = 20.3657 ns during transient analysis `tran_test'.
+    Found trapezoidal ringing on node X_NOR.mid.
+Notice from spectre at time = 20.4562 ns during transient analysis `tran_test'.
+    Found trapezoidal ringing on node X_NOR.mid.
+Notice from spectre at time = 20.6024 ns during transient analysis `tran_test'.
+    Found trapezoidal ringing on node X_NOR.mid.
+Notice from spectre at time = 20.8414 ns during transient analysis `tran_test'.
+    Found trapezoidal ringing on node X_NOR.mid.
+        Further occurrences of this notice will be suppressed.
+
+......9......8......7......6......5......4......3......2......1......0
+Number of accepted tran steps =             247
+
+Notice from spectre during transient analysis `tran_test'.
+    Trapezoidal ringing is detected during tran analysis.
+        Please use method=trap for better results and performance.
+
+
+Maximum value achieved for any signal of each quantity: 
+V: V(vdd) = 1.8 V
+I: I(V_VDD:p) = 138.2 uA
+If your circuit contains signals of the same quantity that are vastly different in size (such as high voltage circuitry combined with low voltage control circuitry), you should consider specifying global option `bin_relref=yes'.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Post-Transient Simulation Summary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   -   To further speed up simulation, consider
+          add ++aps on command line
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+During simulation, the CPU load for active processors is :
+         0 (7.8 %)       1 (100.0 %)     2 (23.1 %)      3 (4.0 %)
+        Total: 134.9%
+Initial condition solution time: CPU = 330 us, elapsed = 336.17 us.
+Intrinsic tran analysis time:    CPU = 5.751 ms, elapsed = 12.78 ms.
+Total time required for tran analysis `tran_test': CPU = 6.98 ms, elapsed = 14.0131 ms, util. = 49.8%.
+Time accumulated: CPU = 170.006 ms, elapsed = 540.861 ms.
+Peak resident memory used = 188 Mbytes.
+
+
+Notice from spectre.
+    31 notices suppressed.
+
+Licensing Information:
+Lic Summary:
+[21:26:19.009024] Cdslmd servers:6055@licaccess.cmc.ca
+[21:26:19.009035] Feature usage summary:
+[21:26:19.009040] Virtuoso_Multi_mode_Simulation
+
+
+Aggregate audit (9:26:19 PM, Sat Jan 31, 2026):
+Time used: CPU = 171 ms, elapsed = 544 ms, util. = 31.4%.
+Time spent in licensing: elapsed = 316 ms, percentage of total = 58%.
+Peak memory used = 189 Mbytes.
+Simulation started at: 9:26:18 PM, Sat Jan 31, 2026, ended at: 9:26:19 PM, Sat Jan 31, 2026, with elapsed time (wall clock): 544 ms.
+spectre completes with 0 errors, 2 warnings, and 16 notices.

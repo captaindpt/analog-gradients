@@ -1,0 +1,26 @@
+=== ALU4 Verification ===
+Date: Jan 31 21:31:44 2026
+
+AND A=0x5 B=0x3 -> Y=0x1
+  y0 OK
+  y1 OK
+  y2 OK
+  y3 OK
+OR  A=0xA B=0x4 -> Y=0xE
+  y0 OK
+  y1 OK
+  y2 OK
+  y3 OK
+XOR A=0x6 B=0x9 -> Y=0xF
+  y0 OK
+  y1 OK
+  y2 OK
+  y3 OK
+ADD A=0xF B=0x1 -> Y=0x0 COUT=1
+  y0 OK
+  y1 OK
+  y2 OK
+  y3 OK
+  cout OK
+
+=== PASS: ALU4 verification (spot checks) ===

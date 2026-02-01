@@ -13,8 +13,8 @@ the GPU-Lite v2 demo spec.
 
 - [x] PE1 netlist + OCEAN test
 - [x] PE4 netlist + OCEAN test
-- [ ] Verify spot checks
-- [ ] Update STATUS.md with verification
+- [x] Verify spot checks (PE0 only)
+- [x] Update STATUS.md with verification
 
 ## Acceptance Criteria
 

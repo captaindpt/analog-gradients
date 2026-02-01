@@ -141,43 +141,19 @@ subckt pe1 (a0 a1 a2 a3 b0 b1 b2 b3 cin op0 op1 y0 y1 y2 y3 cout vdd)
     X_ALU (a0 a1 a2 a3 b0 b1 b2 b3 cin op0 op1 y0 y1 y2 y3 cout vdd) alu4
 ends pe1
 
-subckt pe4 (op0 op1
-            a0_0 a0_1 a0_2 a0_3 b0_0 b0_1 b0_2 b0_3
-            a1_0 a1_1 a1_2 a1_3 b1_0 b1_1 b1_2 b1_3
-            a2_0 a2_1 a2_2 a2_3 b2_0 b2_1 b2_2 b2_3
-            a3_0 a3_1 a3_2 a3_3 b3_0 b3_1 b3_2 b3_3
-            y0_0 y0_1 y0_2 y0_3 y1_0 y1_1 y1_2 y1_3 y2_0 y2_1 y2_2 y2_3 y3_0 y3_1 y3_2 y3_3
-            cout0 cout1 cout2 cout3 vdd)
+subckt pe4 (op0 op1 a0_0 a0_1 a0_2 a0_3 b0_0 b0_1 b0_2 b0_3 a1_0 a1_1 a1_2 a1_3 b1_0 b1_1 b1_2 b1_3 a2_0 a2_1 a2_2 a2_3 b2_0 b2_1 b2_2 b2_3 a3_0 a3_1 a3_2 a3_3 b3_0 b3_1 b3_2 b3_3 y0_0 y0_1 y0_2 y0_3 y1_0 y1_1 y1_2 y1_3 y2_0 y2_1 y2_2 y2_3 y3_0 y3_1 y3_2 y3_3 cout0 cout1 cout2 cout3 vdd)
     X_PE0 (a0_0 a0_1 a0_2 a0_3 b0_0 b0_1 b0_2 b0_3 cin0 op0 op1 y0_0 y0_1 y0_2 y0_3 cout0 vdd) pe1
     X_PE1 (a1_0 a1_1 a1_2 a1_3 b1_0 b1_1 b1_2 b1_3 cin1 op0 op1 y1_0 y1_1 y1_2 y1_3 cout1 vdd) pe1
     X_PE2 (a2_0 a2_1 a2_2 a2_3 b2_0 b2_1 b2_2 b2_3 cin2 op0 op1 y2_0 y2_1 y2_2 y2_3 cout2 vdd) pe1
     X_PE3 (a3_0 a3_1 a3_2 a3_3 b3_0 b3_1 b3_2 b3_3 cin3 op0 op1 y3_0 y3_1 y3_2 y3_3 cout3 vdd) pe1
 ends pe4
 
-subckt gpu_core (op0 op1
-                 a0_0 a0_1 a0_2 a0_3 b0_0 b0_1 b0_2 b0_3
-                 a1_0 a1_1 a1_2 a1_3 b1_0 b1_1 b1_2 b1_3
-                 a2_0 a2_1 a2_2 a2_3 b2_0 b2_1 b2_2 b2_3
-                 a3_0 a3_1 a3_2 a3_3 b3_0 b3_1 b3_2 b3_3
-                 y0_0 y0_1 y0_2 y0_3 y1_0 y1_1 y1_2 y1_3 y2_0 y2_1 y2_2 y2_3 y3_0 y3_1 y3_2 y3_3
-                 cout0 cout1 cout2 cout3 vdd)
-    X_PE4 (op0 op1
-           a0_0 a0_1 a0_2 a0_3 b0_0 b0_1 b0_2 b0_3
-           a1_0 a1_1 a1_2 a1_3 b1_0 b1_1 b1_2 b1_3
-           a2_0 a2_1 a2_2 a2_3 b2_0 b2_1 b2_2 b2_3
-           a3_0 a3_1 a3_2 a3_3 b3_0 b3_1 b3_2 b3_3
-           y0_0 y0_1 y0_2 y0_3 y1_0 y1_1 y1_2 y1_3 y2_0 y2_1 y2_2 y2_3 y3_0 y3_1 y3_2 y3_3
-           cout0 cout1 cout2 cout3 vdd) pe4
+subckt gpu_core (op0 op1 a0_0 a0_1 a0_2 a0_3 b0_0 b0_1 b0_2 b0_3 a1_0 a1_1 a1_2 a1_3 b1_0 b1_1 b1_2 b1_3 a2_0 a2_1 a2_2 a2_3 b2_0 b2_1 b2_2 b2_3 a3_0 a3_1 a3_2 a3_3 b3_0 b3_1 b3_2 b3_3 y0_0 y0_1 y0_2 y0_3 y1_0 y1_1 y1_2 y1_3 y2_0 y2_1 y2_2 y2_3 y3_0 y3_1 y3_2 y3_3 cout0 cout1 cout2 cout3 vdd)
+    X_PE4 (op0 op1 a0_0 a0_1 a0_2 a0_3 b0_0 b0_1 b0_2 b0_3 a1_0 a1_1 a1_2 a1_3 b1_0 b1_1 b1_2 b1_3 a2_0 a2_1 a2_2 a2_3 b2_0 b2_1 b2_2 b2_3 a3_0 a3_1 a3_2 a3_3 b3_0 b3_1 b3_2 b3_3 y0_0 y0_1 y0_2 y0_3 y1_0 y1_1 y1_2 y1_3 y2_0 y2_1 y2_2 y2_3 y3_0 y3_1 y3_2 y3_3 cout0 cout1 cout2 cout3 vdd) pe4
 ends gpu_core
 
 // GPU core
-X_GPU (op0 op1
-       a0_0 a0_1 a0_2 a0_3 b0_0 b0_1 b0_2 b0_3
-       a1_0 a1_1 a1_2 a1_3 b1_0 b1_1 b1_2 b1_3
-       a2_0 a2_1 a2_2 a2_3 b2_0 b2_1 b2_2 b2_3
-       a3_0 a3_1 a3_2 a3_3 b3_0 b3_1 b3_2 b3_3
-       y0_0 y0_1 y0_2 y0_3 y1_0 y1_1 y1_2 y1_3 y2_0 y2_1 y2_2 y2_3 y3_0 y3_1 y3_2 y3_3
-       cout0 cout1 cout2 cout3 vdd) gpu_core
+X_GPU (op0 op1 a0_0 a0_1 a0_2 a0_3 b0_0 b0_1 b0_2 b0_3 a1_0 a1_1 a1_2 a1_3 b1_0 b1_1 b1_2 b1_3 a2_0 a2_1 a2_2 a2_3 b2_0 b2_1 b2_2 b2_3 a3_0 a3_1 a3_2 a3_3 b3_0 b3_1 b3_2 b3_3 y0_0 y0_1 y0_2 y0_3 y1_0 y1_1 y1_2 y1_3 y2_0 y2_1 y2_2 y2_3 y3_0 y3_1 y3_2 y3_3 cout0 cout1 cout2 cout3 vdd) gpu_core
 
 // Analysis
 tran_test tran stop=45n

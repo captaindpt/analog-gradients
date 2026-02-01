@@ -51,6 +51,12 @@ Some installations prefer `CDS_LIC_FILE`:
 export CDS_LIC_FILE="27000@license.server.example"
 ```
 
+CMC Cloud default (observed on this host):
+
+```bash
+export CDS_LIC_FILE="6055@licaccess.cmc.ca"
+```
+
 ### 3) Check for a local license file
 
 If CMC provides a file path (e.g., `/path/to/license.dat`), use:

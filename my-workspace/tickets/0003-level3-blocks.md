@@ -13,8 +13,8 @@ Build and verify core Level 3 blocks needed for the ALU path.
 - [x] MUX2 netlist + OCEAN test
 - [x] Half Adder netlist + OCEAN test
 - [x] Full Adder netlist + OCEAN test
-- [ ] Verify all truth tables
-- [ ] Update STATUS.md with verification
+- [x] Verify all truth tables
+- [x] Update STATUS.md with verification
 
 ## Acceptance Criteria
 

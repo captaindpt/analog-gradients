@@ -12,8 +12,8 @@ Build and verify a minimal ALU path to support the GPU-Lite spec.
 
 - [x] ALU1 netlist + OCEAN test
 - [x] ALU4 netlist + OCEAN test (spot checks)
-- [ ] Verify truth tables / spot checks
-- [ ] Update STATUS.md with verification
+- [x] Verify truth tables / spot checks
+- [x] Update STATUS.md with verification
 
 ## Acceptance Criteria
 

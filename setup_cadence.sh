@@ -24,6 +24,11 @@ export PATH=${SPECTRE_HOME}/tools.lnx86/spectre/bin:${PATH}
 # Library setup - point to our working library
 export CDS_LIB_PATH=${HOME}/cds.lib
 
+# CMC default license server (set only if not already provided)
+if [[ -z "${LM_LICENSE_FILE:-}" && -z "${CDS_LIC_FILE:-}" ]]; then
+  export CDS_LIC_FILE=6055@licaccess.cmc.ca
+fi
+
 echo "Cadence IC23.10.140 + Spectre23.10.802 ready"
 echo "  virtuoso: $(which virtuoso 2>/dev/null || echo 'not found')"
 echo "  ocean:    $(which ocean 2>/dev/null || echo 'not found')"

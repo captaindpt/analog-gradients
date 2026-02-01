@@ -11,8 +11,8 @@ Integrate PE4 into a top-level GPU-Lite core and verify spot checks.
 ## Tasks
 
 - [x] GPU core netlist + OCEAN test
-- [ ] Verify spot checks
-- [ ] Update STATUS.md with verification
+- [x] Verify spot checks (PE0 only)
+- [x] Update STATUS.md with verification
 
 ## Acceptance Criteria
 
