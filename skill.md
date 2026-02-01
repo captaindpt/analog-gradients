@@ -161,3 +161,44 @@ source /CMC/scripts/cadence.ic23.10.140.csh  # if using tcsh
 # or
 source setup_cadence.sh  # if using bash
 ```
+
+---
+
+## Field Notes (OCEAN / Spectre / SKILL)
+
+Short, forum-ready answers distilled from real runs.
+
+### Licensing (LMC-01902)
+
+If Spectre says the license search path is `<none>`, set a license variable:
+
+```bash
+export CDS_LIC_FILE=6055@licaccess.cmc.ca   # CMC host default observed
+# or
+export LM_LICENSE_FILE=27000@license.server
+```
+
+Then re-run:
+
+```bash
+source setup_cadence.sh
+./build.sh inverter
+```
+
+### OCEAN in batch mode
+
+- Always write output to a file (stdout is buffered).
+- `selectResult("tran_test-tran")` must be a **string** because of the hyphen.
+- Avoid fancy SKILL constructs in batch (e.g., lambdas). Explicit checks are more reliable.
+
+### Spectre netlist gotchas
+
+- Keep `subckt` pin lists **on one line**. Multi-line pin lists caused parse errors.
+- Use simple `mos1` models (per repo templates) to avoid PDK dependencies.
+- Use `save` statements to ensure OCEAN can access signals.
+
+### Virtuoso automation
+
+- Headless replay helper: `./scripts/virtuoso_replay.sh`
+- If `DISPLAY` is unset, the runner will try `xvfb-run` if available.
+- SKILL-based schematic creation still needs X11 on CMC; netlist flow is the stable path.
