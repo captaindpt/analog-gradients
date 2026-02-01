@@ -19,6 +19,10 @@ Build AND, OR, XOR, XNOR gates using the verified Level 5 primitives.
 - [ ] Verify all truth tables
 - [x] Update STATUS.md
 
+## Notes
+
+- `./build.sh all` currently fails due to missing license path (LMC-01902).
+
 ## Technical Notes
 
 **AND2:** Cascade NAND2 output through inverter

@@ -1,0 +1,66 @@
+; test_half_adder.ocn - Verify half adder truth table
+; Run: ocean -nograph < test_half_adder.ocn
+
+out = outfile("/home/v71349/analog-gradients/results/half_adder_test.txt" "w")
+fprintf(out "=== HALF ADDER Verification ===\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("/home/v71349/analog-gradients/results/half_adder/half_adder.raw")
+selectResult("tran_test-tran")
+
+vdd = 1.8
+vth_low = 0.2 * vdd
+vth_high = 0.8 * vdd
+
+vsum = v("sum")
+vcar = v("carry")
+
+if(vsum && vcar then
+    pass = t
+
+    ; A=0, B=0 -> SUM=0, CARRY=0
+    v = value(vsum 5n)
+    fprintf(out "A=0, B=0 SUM=%.3f " v)
+    if(v < vth_low then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+    v = value(vcar 5n)
+    fprintf(out "A=0, B=0 CARRY=%.3f " v)
+    if(v < vth_low then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    ; A=1, B=0 -> SUM=1, CARRY=0
+    v = value(vsum 15n)
+    fprintf(out "A=1, B=0 SUM=%.3f " v)
+    if(v > vth_high then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+    v = value(vcar 15n)
+    fprintf(out "A=1, B=0 CARRY=%.3f " v)
+    if(v < vth_low then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    ; A=0, B=1 -> SUM=1, CARRY=0
+    v = value(vsum 25n)
+    fprintf(out "A=0, B=1 SUM=%.3f " v)
+    if(v > vth_high then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+    v = value(vcar 25n)
+    fprintf(out "A=0, B=1 CARRY=%.3f " v)
+    if(v < vth_low then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    ; A=1, B=1 -> SUM=0, CARRY=1
+    v = value(vsum 35n)
+    fprintf(out "A=1, B=1 SUM=%.3f " v)
+    if(v < vth_low then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+    v = value(vcar 35n)
+    fprintf(out "A=1, B=1 CARRY=%.3f " v)
+    if(v > vth_high then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    fprintf(out "\n")
+    if(pass then
+        fprintf(out "=== PASS: HALF ADDER truth table verified ===\n")
+    else
+        fprintf(out "=== FAIL: HALF ADDER verification failed ===\n")
+    )
+else
+    fprintf(out "ERROR: Could not read waveform data\n")
+)
+
+close(out)
+printf("HALF ADDER test done.\n")
+exit()

@@ -1,0 +1,67 @@
+// mux2.scs - 2:1 CMOS MUX
+// OUT = (A & ~S) | (B & S)
+// Run: spectre mux2.scs -raw mux2.raw
+
+simulator lang=spectre
+
+parameters vdd_val=1.8
+
+// MOSFET Models
+model nch mos1 type=n vth=0.4 kp=120u
+model pch mos1 type=p vth=-0.4 kp=40u
+
+// Supply
+V_VDD (vdd 0) vsource dc=vdd_val
+
+// Inputs - cycle through 8 combinations
+// A: period=20n
+// B: period=40n
+// S: period=80n
+V_A (a 0) vsource type=pulse val0=0 val1=vdd_val delay=10n rise=100p fall=100p width=10n period=20n
+V_B (b 0) vsource type=pulse val0=0 val1=vdd_val delay=20n rise=100p fall=100p width=20n period=40n
+V_S (s 0) vsource type=pulse val0=0 val1=vdd_val delay=40n rise=100p fall=100p width=40n period=80n
+
+// Subcircuits
+subckt inverter (in out vdd)
+    MP0 (out in vdd vdd) pch w=2u l=1u
+    MN0 (out in 0 0) nch w=1u l=1u
+ends inverter
+
+subckt nand2 (a b out vdd)
+    MP0 (out a vdd vdd) pch w=2u l=1u
+    MP1 (out b vdd vdd) pch w=2u l=1u
+    MN0 (out a mid 0) nch w=2u l=1u
+    MN1 (mid b 0 0) nch w=2u l=1u
+ends nand2
+
+subckt nor2 (a b out vdd)
+    MP0 (mid a vdd vdd) pch w=4u l=1u
+    MP1 (out b mid mid) pch w=4u l=1u
+    MN0 (out a 0 0) nch w=1u l=1u
+    MN1 (out b 0 0) nch w=1u l=1u
+ends nor2
+
+subckt and2 (a b out vdd)
+    X_NAND (a b n_out vdd) nand2
+    X_INV (n_out out vdd) inverter
+ends and2
+
+subckt or2 (a b out vdd)
+    X_NOR (a b n_out vdd) nor2
+    X_INV (n_out out vdd) inverter
+ends or2
+
+subckt mux2 (a b s out vdd)
+    X_INV (s s_n vdd) inverter
+    X_AND0 (a s_n a_and vdd) and2
+    X_AND1 (b s b_and vdd) and2
+    X_OR (a_and b_and out vdd) or2
+ends mux2
+
+// MUX
+X_MUX (a b s out vdd) mux2
+
+// Analysis
+tran_test tran stop=80n
+
+save out a b s

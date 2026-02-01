@@ -122,6 +122,15 @@ case $COMPONENT in
     xnor2)
         run_sim xnor2
         ;;
+    mux2)
+        run_sim mux2
+        ;;
+    half_adder)
+        run_sim half_adder
+        ;;
+    full_adder)
+        run_sim full_adder
+        ;;
     all)
         echo "Building Level 5: CMOS primitives"
         echo "=================================="
@@ -135,12 +144,18 @@ case $COMPONENT in
         run_sim or2
         run_sim xor2
         run_sim xnor2
+        echo ""
+        echo "Building Level 3: Blocks"
         echo "=================================="
-        echo -e "${GREEN}All Level 4+5 components verified!${NC}"
+        run_sim mux2
+        run_sim half_adder
+        run_sim full_adder
+        echo "=================================="
+        echo -e "${GREEN}All Level 3-5 components verified!${NC}"
         ;;
     *)
         echo "Unknown component: $COMPONENT"
-        echo "Available: inverter, nand2, nor2, and2, or2, xor2, xnor2, all"
+        echo "Available: inverter, nand2, nor2, and2, or2, xor2, xnor2, mux2, half_adder, full_adder, all"
         exit 1
         ;;
 esac

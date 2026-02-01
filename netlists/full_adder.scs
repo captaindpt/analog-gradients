@@ -1,0 +1,82 @@
+// full_adder.scs - CMOS Full Adder
+// SUM = A ^ B ^ CIN
+// COUT = (A & B) | (CIN & (A ^ B))
+// Run: spectre full_adder.scs -raw full_adder.raw
+
+simulator lang=spectre
+
+parameters vdd_val=1.8
+
+// MOSFET Models
+model nch mos1 type=n vth=0.4 kp=120u
+model pch mos1 type=p vth=-0.4 kp=40u
+
+// Supply
+V_VDD (vdd 0) vsource dc=vdd_val
+
+// Inputs - cycle through all 8 combinations
+// A: period=20n, B: period=40n, CIN: period=80n
+// t=5ns:  000
+// t=15ns: 100
+// t=25ns: 010
+// t=35ns: 110
+// t=45ns: 001
+// t=55ns: 101
+// t=65ns: 011
+// t=75ns: 111
+V_A   (a 0)   vsource type=pulse val0=0 val1=vdd_val delay=10n rise=100p fall=100p width=10n period=20n
+V_B   (b 0)   vsource type=pulse val0=0 val1=vdd_val delay=20n rise=100p fall=100p width=20n period=40n
+V_CIN (cin 0) vsource type=pulse val0=0 val1=vdd_val delay=40n rise=100p fall=100p width=40n period=80n
+
+// Subcircuits
+subckt inverter (in out vdd)
+    MP0 (out in vdd vdd) pch w=2u l=1u
+    MN0 (out in 0 0) nch w=1u l=1u
+ends inverter
+
+subckt nand2 (a b out vdd)
+    MP0 (out a vdd vdd) pch w=2u l=1u
+    MP1 (out b vdd vdd) pch w=2u l=1u
+    MN0 (out a mid 0) nch w=2u l=1u
+    MN1 (mid b 0 0) nch w=2u l=1u
+ends nand2
+
+subckt nor2 (a b out vdd)
+    MP0 (mid a vdd vdd) pch w=4u l=1u
+    MP1 (out b mid mid) pch w=4u l=1u
+    MN0 (out a 0 0) nch w=1u l=1u
+    MN1 (out b 0 0) nch w=1u l=1u
+ends nor2
+
+subckt and2 (a b out vdd)
+    X_NAND (a b n_out vdd) nand2
+    X_INV (n_out out vdd) inverter
+ends and2
+
+subckt or2 (a b out vdd)
+    X_NOR (a b n_out vdd) nor2
+    X_INV (n_out out vdd) inverter
+ends or2
+
+subckt xor2 (a b out vdd)
+    X_N1 (a b n1 vdd) nand2
+    X_N2 (a n1 n2 vdd) nand2
+    X_N3 (b n1 n3 vdd) nand2
+    X_N4 (n2 n3 out vdd) nand2
+ends xor2
+
+subckt full_adder (a b cin sum cout vdd)
+    X_X1 (a b axb vdd) xor2
+    X_X2 (axb cin sum vdd) xor2
+    X_A1 (a b a_and_b vdd) and2
+    X_A2 (cin axb c_and_axb vdd) and2
+    X_OR (a_and_b c_and_axb cout vdd) or2
+ends full_adder
+
+// Full Adder
+X_FA (a b cin sum cout vdd) full_adder
+
+// Analysis
+tran_test tran stop=100n
+
+save sum cout a b cin

@@ -48,6 +48,14 @@ Level 0: System              ⏳ PENDING
 | XOR2      | ✅ | ⏳ | ⏳ |
 | XNOR2     | ✅ | ⏳ | ⏳ |
 
+## Level 3: Building Blocks
+
+| Component  | Netlist | Simulation | Verification |
+|------------|---------|------------|--------------|
+| MUX2       | ✅ | ⏳ | ⏳ |
+| Half Adder | ✅ | ⏳ | ⏳ |
+| Full Adder | ✅ | ⏳ | ⏳ |
+
 ## Tooling
 
 - Headless-friendly Virtuoso runner: `scripts/virtuoso_replay.sh`

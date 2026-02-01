@@ -1,0 +1,67 @@
+; test_mux2.ocn - Verify 2:1 MUX truth table
+; Run: ocean -nograph < test_mux2.ocn
+
+out = outfile("/home/v71349/analog-gradients/results/mux2_test.txt" "w")
+fprintf(out "=== MUX2 Verification ===\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("/home/v71349/analog-gradients/results/mux2/mux2.raw")
+selectResult("tran_test-tran")
+
+vdd = 1.8
+vth_low = 0.2 * vdd
+vth_high = 0.8 * vdd
+
+vout = v("out")
+
+if(vout then
+    pass = t
+
+    ; S=0 -> OUT=A
+    v = value(vout 5n)
+    fprintf(out "A=0, B=0, S=0: Vout=%.3f V " v)
+    if(v < vth_low then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    v = value(vout 15n)
+    fprintf(out "A=1, B=0, S=0: Vout=%.3f V " v)
+    if(v > vth_high then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    v = value(vout 25n)
+    fprintf(out "A=0, B=1, S=0: Vout=%.3f V " v)
+    if(v < vth_low then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    v = value(vout 35n)
+    fprintf(out "A=1, B=1, S=0: Vout=%.3f V " v)
+    if(v > vth_high then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    ; S=1 -> OUT=B
+    v = value(vout 45n)
+    fprintf(out "A=0, B=0, S=1: Vout=%.3f V " v)
+    if(v < vth_low then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    v = value(vout 55n)
+    fprintf(out "A=1, B=0, S=1: Vout=%.3f V " v)
+    if(v < vth_low then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    v = value(vout 65n)
+    fprintf(out "A=0, B=1, S=1: Vout=%.3f V " v)
+    if(v > vth_high then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    v = value(vout 75n)
+    fprintf(out "A=1, B=1, S=1: Vout=%.3f V " v)
+    if(v > vth_high then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    fprintf(out "\n")
+    if(pass then
+        fprintf(out "=== PASS: MUX2 truth table verified ===\n")
+    else
+        fprintf(out "=== FAIL: MUX2 verification failed ===\n")
+    )
+else
+    fprintf(out "ERROR: Could not read waveform data\n")
+)
+
+close(out)
+printf("MUX2 test done.\n")
+exit()
