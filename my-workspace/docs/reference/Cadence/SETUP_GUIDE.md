@@ -139,6 +139,11 @@ The Virtuoso GUI (CIW - Command Interpreter Window) will open.
 
 ## Troubleshooting
 
+### License error (LMC-01902)
+
+If Spectre reports `LMC-01902` (license search path <none>), follow:
+`my-workspace/docs/reference/Cadence/LICENSE_SETUP.md`.
+
 ### "No xauth data" or "Invalid MIT-MAGIC-COOKIE-1"
 
 Reset XQuartz:

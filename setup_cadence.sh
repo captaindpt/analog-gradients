@@ -28,3 +28,8 @@ echo "Cadence IC23.10.140 + Spectre23.10.802 ready"
 echo "  virtuoso: $(which virtuoso 2>/dev/null || echo 'not found')"
 echo "  ocean:    $(which ocean 2>/dev/null || echo 'not found')"
 echo "  spectre:  $(which spectre 2>/dev/null || echo 'not found')"
+if [[ -n "${LM_LICENSE_FILE:-}" || -n "${CDS_LIC_FILE:-}" ]]; then
+  echo "  license:  LM_LICENSE_FILE=${LM_LICENSE_FILE:-<unset>} CDS_LIC_FILE=${CDS_LIC_FILE:-<unset>}"
+else
+  echo "  license:  not set (export LM_LICENSE_FILE or CDS_LIC_FILE)"
+fi

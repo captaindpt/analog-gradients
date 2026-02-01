@@ -35,6 +35,13 @@ Behavior:
 
 ---
 
+## License Configuration
+
+If Spectre/Virtuoso fails with `LMC-01902`, configure license variables first.
+See `my-workspace/docs/reference/Cadence/LICENSE_SETUP.md`.
+
+---
+
 ## OCEAN Scripting (Verified Working)
 
 OCEAN is the scriptable simulation interface. It uses SKILL syntax.
