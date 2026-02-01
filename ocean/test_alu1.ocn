@@ -1,0 +1,57 @@
+; test_alu1.ocn - Verify 1-bit ALU
+; Run: ocean -nograph < test_alu1.ocn
+
+out = outfile("/home/v71349/analog-gradients/results/alu1_test.txt" "w")
+fprintf(out "=== ALU1 Verification ===\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("/home/v71349/analog-gradients/results/alu1/alu1.raw")
+selectResult("tran_test-tran")
+
+vdd = 1.8
+vth_low = 0.2 * vdd
+vth_high = 0.8 * vdd
+
+vy = v("y")
+vcout = v("cout")
+
+if(vy && vcout then
+    pass = t
+
+    ; t=5ns: op=00 AND, A=1, B=0 -> Y=0
+    v = value(vy 5n)
+    fprintf(out "AND (A=1,B=0) Y=%.3f " v)
+    if(v < vth_low then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    ; t=15ns: op=01 OR, A=0, B=1 -> Y=1
+    v = value(vy 15n)
+    fprintf(out "OR  (A=0,B=1) Y=%.3f " v)
+    if(v > vth_high then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    ; t=25ns: op=10 XOR, A=1, B=1 -> Y=0
+    v = value(vy 25n)
+    fprintf(out "XOR (A=1,B=1) Y=%.3f " v)
+    if(v < vth_low then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    ; t=35ns: op=11 ADD, A=1, B=1 -> Y=0, COUT=1
+    v = value(vy 35n)
+    fprintf(out "ADD (A=1,B=1) Y=%.3f " v)
+    if(v < vth_low then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+    v = value(vcout 35n)
+    fprintf(out "ADD (A=1,B=1) COUT=%.3f " v)
+    if(v > vth_high then fprintf(out "[PASS]\n") else fprintf(out "[FAIL]\n") pass=nil)
+
+    fprintf(out "\n")
+    if(pass then
+        fprintf(out "=== PASS: ALU1 verification ===\n")
+    else
+        fprintf(out "=== FAIL: ALU1 verification failed ===\n")
+    )
+else
+    fprintf(out "ERROR: Could not read waveform data\n")
+)
+
+close(out)
+printf("ALU1 test done.\n")
+exit()

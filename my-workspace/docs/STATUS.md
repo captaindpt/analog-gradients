@@ -8,7 +8,7 @@
 Level 5: CMOS Primitives     ✅ COMPLETE
 Level 4: Logic Gates         🔜 NEXT
 Level 3: Building Blocks     ⏳ PENDING
-Level 2: RTL Components      ⏳ PENDING
+Level 2: RTL Components      🔜 NEXT
 Level 1: Functional Blocks   ⏳ PENDING
 Level 0: System              ⏳ PENDING
 ```
@@ -55,6 +55,13 @@ Level 0: System              ⏳ PENDING
 | MUX2       | ✅ | ⏳ | ⏳ |
 | Half Adder | ✅ | ⏳ | ⏳ |
 | Full Adder | ✅ | ⏳ | ⏳ |
+
+## Level 2: RTL Components
+
+| Component | Netlist | Simulation | Verification |
+|-----------|---------|------------|--------------|
+| ALU1      | ✅ | ⏳ | ⏳ |
+| ALU4      | ✅ | ⏳ | ⏳ |
 
 ## Tooling
 

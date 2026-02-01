@@ -1,0 +1,100 @@
+// alu1.scs - 1-bit ALU
+// Ops (op1 op0):
+// 00 AND, 01 OR, 10 XOR, 11 ADD
+// Run: spectre alu1.scs -raw alu1.raw
+
+simulator lang=spectre
+
+parameters vdd_val=1.8
+
+// MOSFET Models
+model nch mos1 type=n vth=0.4 kp=120u
+model pch mos1 type=p vth=-0.4 kp=40u
+
+// Supply
+V_VDD (vdd 0) vsource dc=vdd_val
+
+// Inputs via PWL (4 cases)
+// t=5ns:  op=00 AND, A=1, B=0
+// t=15ns: op=01 OR,  A=0, B=1
+// t=25ns: op=10 XOR, A=1, B=1
+// t=35ns: op=11 ADD, A=1, B=1
+V_A   (a 0)   vsource type=pwl wave=[0 1.8 9.9n 1.8 10n 0 19.9n 0 20n 1.8 29.9n 1.8 30n 1.8 39.9n 1.8 40n 1.8]
+V_B   (b 0)   vsource type=pwl wave=[0 0   9.9n 0   10n 1.8 19.9n 1.8 20n 1.8 29.9n 1.8 30n 1.8 39.9n 1.8 40n 1.8]
+V_OP0 (op0 0) vsource type=pwl wave=[0 0   9.9n 0   10n 1.8 19.9n 1.8 20n 0   29.9n 0   30n 1.8 39.9n 1.8 40n 1.8]
+V_OP1 (op1 0) vsource type=pwl wave=[0 0   9.9n 0   10n 0   19.9n 0   20n 1.8 29.9n 1.8 30n 1.8 39.9n 1.8 40n 1.8]
+
+// CIN held low
+V_CIN (cin 0) vsource dc=0
+
+// Subcircuits
+subckt inverter (in out vdd)
+    MP0 (out in vdd vdd) pch w=2u l=1u
+    MN0 (out in 0 0) nch w=1u l=1u
+ends inverter
+
+subckt nand2 (a b out vdd)
+    MP0 (out a vdd vdd) pch w=2u l=1u
+    MP1 (out b vdd vdd) pch w=2u l=1u
+    MN0 (out a mid 0) nch w=2u l=1u
+    MN1 (mid b 0 0) nch w=2u l=1u
+ends nand2
+
+subckt nor2 (a b out vdd)
+    MP0 (mid a vdd vdd) pch w=4u l=1u
+    MP1 (out b mid mid) pch w=4u l=1u
+    MN0 (out a 0 0) nch w=1u l=1u
+    MN1 (out b 0 0) nch w=1u l=1u
+ends nor2
+
+subckt and2 (a b out vdd)
+    X_NAND (a b n_out vdd) nand2
+    X_INV (n_out out vdd) inverter
+ends and2
+
+subckt or2 (a b out vdd)
+    X_NOR (a b n_out vdd) nor2
+    X_INV (n_out out vdd) inverter
+ends or2
+
+subckt xor2 (a b out vdd)
+    X_N1 (a b n1 vdd) nand2
+    X_N2 (a n1 n2 vdd) nand2
+    X_N3 (b n1 n3 vdd) nand2
+    X_N4 (n2 n3 out vdd) nand2
+ends xor2
+
+subckt mux2 (a b s out vdd)
+    X_INV (s s_n vdd) inverter
+    X_AND0 (a s_n a_and vdd) and2
+    X_AND1 (b s b_and vdd) and2
+    X_OR (a_and b_and out vdd) or2
+ends mux2
+
+subckt full_adder (a b cin sum cout vdd)
+    X_X1 (a b axb vdd) xor2
+    X_X2 (axb cin sum vdd) xor2
+    X_A1 (a b a_and_b vdd) and2
+    X_A2 (cin axb c_and_axb vdd) and2
+    X_OR (a_and_b c_and_axb cout vdd) or2
+ends full_adder
+
+subckt alu1 (a b cin op0 op1 y cout vdd)
+    X_AND (a b and_out vdd) and2
+    X_OR  (a b or_out vdd)  or2
+    X_XOR (a b xor_out vdd) xor2
+    X_ADD (a b cin sum_out cout vdd) full_adder
+
+    ; op0 selects within pairs, op1 selects final
+    X_M0 (and_out or_out op0 m0 vdd) mux2
+    X_M1 (xor_out sum_out op0 m1 vdd) mux2
+    X_M2 (m0 m1 op1 y vdd) mux2
+ends alu1
+
+// ALU1
+X_ALU (a b cin op0 op1 y cout vdd) alu1
+
+// Analysis
+tran_test tran stop=45n
+
+save y cout a b op0 op1
