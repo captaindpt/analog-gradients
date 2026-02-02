@@ -1,6 +1,6 @@
 === Neuron Tile Verification ===
 Synapse + LIF composition
-Date: Feb  2 15:09:39 2026
+Date: Feb  2 16:44:10 2026
 
 Waveform Analysis:
 ==================

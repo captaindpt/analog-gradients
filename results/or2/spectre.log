@@ -5,8 +5,8 @@ Copyright (C) 1989-2025 Cadence Design Systems, Inc. All rights reserved worldwi
 
 Includes RSA BSAFE(R) Cryptographic or Security Protocol Software from RSA Security, Inc.
 
-User: v71349   Host: vcl-vm0-159   HostID: 10AC9F79   PID: 654515
-Memory  available: 14.0782 GB  physical: 16.2294 GB
+User: v71349   Host: vcl-vm0-159   HostID: 10AC9F79   PID: 703244
+Memory  available: 14.0372 GB  physical: 16.2294 GB
 Linux   : Rocky Linux release 8.10 (Green Obsidian)
 CPU Type: Intel(R) Xeon(R) Gold 6248R CPU @ 3.00GHz
 All processors running at 2993.0 MHz
@@ -16,11 +16,11 @@ All processors running at 2993.0 MHz
         4:       2
         6:       3
         
-System load averages (1min, 5min, 15min) : 9.2 %, 3.2 %, 1.5 %
+System load averages (1min, 5min, 15min) : 8.8 %, 3.8 %, 2.5 %
 This is a virtual machine
 
 
-Simulating `/home/v71349/analog-gradients/netlists/or2.scs' on vcl-vm0-159 at 3:07:47 PM, Mon Feb 2, 2026 (process id: 654515).
+Simulating `/home/v71349/analog-gradients/netlists/or2.scs' on vcl-vm0-159 at 4:42:19 PM, Mon Feb 2, 2026 (process id: 703244).
 Current working directory: /home/v71349/analog-gradients/results/or2
 Command line:
     /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/bin/spectre  \
@@ -28,10 +28,10 @@ Command line:
         +log spectre.log
 
 Licensing Information:
-[15:07:47.502721] Configured Lic search path (22.01-s002): 6055@licaccess.cmc.ca
+[16:42:19.502713] Configured Lic search path (22.01-s002): 6055@licaccess.cmc.ca
 
 Licensing Information:
-[15:07:48.065265] Periodic Lic check successful
+[16:42:19.377881] Periodic Lic check successful
 
 Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libinfineon_sh.so ...
 Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libphilips_I_sh.so ...
@@ -40,22 +40,22 @@ Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/
 Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libstmodels_sh.so ...
 Reading file:  /home/v71349/analog-gradients/netlists/or2.scs
 Reading file:  /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/etc/configs/spectre.cfg
-Time for NDB Parsing: CPU = 68.27 ms, elapsed = 541.714 ms.
-Time accumulated: CPU = 138.309 ms, elapsed = 541.716 ms.
-Peak resident memory used = 173 Mbytes.
+Time for NDB Parsing: CPU = 75.809 ms, elapsed = 500.755 ms.
+Time accumulated: CPU = 144.721 ms, elapsed = 500.757 ms.
+Peak resident memory used = 172 Mbytes.
 
 
 Warning from spectre in `nor2':`X_NOR', during hierarchy flattening.
     WARNING (SFE-101): "/home/v71349/analog-gradients/netlists/or2.scs" 17: Parameter 'vth' has been ignored because it has been assigned to instance pch of master 'mos1'; however, it has not been defined for 'mos1'. Specify a valid parameter and rerun the simulation.
     WARNING (SFE-101): "/home/v71349/analog-gradients/netlists/or2.scs" 16: Parameter 'vth' has been ignored because it has been assigned to instance nch of master 'mos1'; however, it has not been defined for 'mos1'. Specify a valid parameter and rerun the simulation.
 
-Time for Elaboration: CPU = 15.007 ms, elapsed = 15.1069 ms.
-Time accumulated: CPU = 153.431 ms, elapsed = 556.937 ms.
+Time for Elaboration: CPU = 14.49 ms, elapsed = 14.5779 ms.
+Time accumulated: CPU = 159.295 ms, elapsed = 515.419 ms.
 Peak resident memory used = 181 Mbytes.
 
 
-Time for EDB Visiting: CPU = 425 us, elapsed = 431.061 us.
-Time accumulated: CPU = 153.939 ms, elapsed = 557.45 ms.
+Time for EDB Visiting: CPU = 405 us, elapsed = 405.788 us.
+Time accumulated: CPU = 159.776 ms, elapsed = 515.899 ms.
 Peak resident memory used = 182 Mbytes.
 
 
@@ -94,8 +94,8 @@ Notice from spectre during initial setup.
     pch: The saturation channel conductance is zero in the model.  This could result in enormous gain and cause convergence or overflow problems.  Check the value of lambda or kappa.
     nch: The saturation channel conductance is zero in the model.  This could result in enormous gain and cause convergence or overflow problems.  Check the value of lambda or kappa.
 
-Time for parsing: CPU = 1.699 ms, elapsed = 11.1589 ms.
-Time accumulated: CPU = 155.705 ms, elapsed = 568.675 ms.
+Time for parsing: CPU = 1.422 ms, elapsed = 11.4801 ms.
+Time accumulated: CPU = 161.269 ms, elapsed = 527.455 ms.
 Peak resident memory used = 185 Mbytes.
 
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -107,7 +107,7 @@ Pre-Simulation Summary
 Transient Analysis `tran_test': time = (0 s -> 80 ns)
 *****************************************************
 Convergence achieved in 10 iterations.
-DC simulation time: CPU = 275 us, elapsed = 278.95 us.
+DC simulation time: CPU = 285 us, elapsed = 298.977 us.
 
 Opening the PSFXL file or2.raw/tran_test.tran.tran ...
 Important parameter values:
@@ -172,12 +172,12 @@ Post-Transient Simulation Summary
 
 
 During simulation, the CPU load for active processors is :
-         0 (12.5 %)      1 (3.6 %)       2 (7.3 %)       3 (5.3 %)
-        Total: 28.7%
-Initial condition solution time: CPU = 305 us, elapsed = 309.229 us.
-Intrinsic tran analysis time:    CPU = 6.05 ms, elapsed = 13.335 ms.
-Total time required for tran analysis `tran_test': CPU = 7.336 ms, elapsed = 14.6232 ms, util. = 50.2%.
-Time accumulated: CPU = 169.877 ms, elapsed = 592.596 ms.
+         0 (3.8 %)       1 (1.9 %)       2 (17.6 %)     
+        Total: 23.4%
+Initial condition solution time: CPU = 315 us, elapsed = 328.779 us.
+Intrinsic tran analysis time:    CPU = 6.064 ms, elapsed = 17.458 ms.
+Total time required for tran analysis `tran_test': CPU = 7.399 ms, elapsed = 18.81 ms, util. = 39.3%.
+Time accumulated: CPU = 175.253 ms, elapsed = 554.957 ms.
 Peak resident memory used = 189 Mbytes.
 
 
@@ -186,14 +186,14 @@ Notice from spectre.
 
 Licensing Information:
 Lic Summary:
-[15:07:48.159866] Cdslmd servers:6055@licaccess.cmc.ca
-[15:07:48.159881] Feature usage summary:
-[15:07:48.159881] Virtuoso_Multi_mode_Simulation
+[16:42:19.475337] Cdslmd servers:6055@licaccess.cmc.ca
+[16:42:19.475352] Feature usage summary:
+[16:42:19.475352] Virtuoso_Multi_mode_Simulation
 
 
-Aggregate audit (3:07:48 PM, Mon Feb 2, 2026):
-Time used: CPU = 171 ms, elapsed = 596 ms, util. = 28.7%.
-Time spent in licensing: elapsed = 356 ms, percentage of total = 59.7%.
-Peak memory used = 190 Mbytes.
-Simulation started at: 3:07:47 PM, Mon Feb 2, 2026, ended at: 3:07:48 PM, Mon Feb 2, 2026, with elapsed time (wall clock): 596 ms.
+Aggregate audit (4:42:20 PM, Mon Feb 2, 2026):
+Time used: CPU = 176 ms, elapsed = 558 ms, util. = 31.6%.
+Time spent in licensing: elapsed = 312 ms, percentage of total = 56%.
+Peak memory used = 189 Mbytes.
+Simulation started at: 4:42:19 PM, Mon Feb 2, 2026, ended at: 4:42:20 PM, Mon Feb 2, 2026, with elapsed time (wall clock): 558 ms.
 spectre completes with 0 errors, 2 warnings, and 16 notices.

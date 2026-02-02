@@ -243,3 +243,18 @@ source setup_cadence.sh
 - Main source:
   `competition/paper/neurocore_workthrough.tex`
 - Plot style choice for evidence: dark background + unsmoothed raw data points.
+
+### Founder-thesis tracking
+
+- Canonical thesis reference:
+  `competition/founder-thesis.md`
+- Keep claims tied to reproducible evidence:
+  - ODE fit
+  - timing sensitivity (`dt_spike/dparameter`)
+  - energy per event
+- Current analysis commands:
+  - `python3 scripts/analyze_lif_ode_fit.py`
+  - `python3 scripts/analyze_temporal_sensitivity.py`
+  - `scripts/analyze_lif_energy.sh`
+- Mixed-signal smoke command:
+  - `./build.sh neuro_tile4_mixed_signal`

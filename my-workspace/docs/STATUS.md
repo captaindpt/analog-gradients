@@ -25,6 +25,31 @@ Build path from verified digital GPU stack to a neuromorphic analog core:
 - Small neuromorphic tile integration: `neuro_tile4` ✅ PASS
 - Coupled propagation demo: `neuro_tile4_coupled` ✅ PASS
 - One-terminal transistor->GDSII demo path: planning + bring-up 🔄
+- Founder-thesis evidence track (clockless continuous-time compute): activated 🔄
+
+## Milestone: Founder Thesis Activated (2026-02-02)
+
+Reframe is now explicit: project value is original compute behavior, not only
+tool operation.
+
+- Thesis doc: `competition/founder-thesis.md`
+- Core claim: computation encoded in membrane dynamics + spike timing
+- Immediate proof targets:
+  1. ODE-fit error metrics ✅
+  2. Temporal sensitivity (`dt_spike/dparameter`) ✅
+  3. Energy-per-event estimates ✅
+  4. Mixed-signal coupling experiment ✅
+
+Founder-evidence artifacts:
+- `competition/analysis/lif_ode_fit_summary.md`
+- `competition/analysis/temporal_sensitivity_summary.md`
+- `competition/analysis/lif_energy_summary.md`
+
+Founder-evidence snapshot:
+- LIF decay-window ODE fit (12ns-19ns): `R^2 = 0.931`
+- Coupled-tile temporal sensitivity: `dt_spike0/dr_fb ≈ -0.663 ns/kOhm`
+- LIF first-pass energy per spike: `~4.718 pJ/spike` (0-200ns window)
+- Mixed-signal gating: downstream spikes `0` pre-enable -> `7` post-enable
 
 ## Competition Edge: Full Semiconductor Flow Demo (In Progress)
 
@@ -74,6 +99,7 @@ Full-flow smoke evidence:
 | Neuron Tile | ✅ | ✅ | ✅ PASS | synapse->membrane->spike path with 12 detected spike pulses |
 | Neuro Tile4 | ✅ | ✅ | ✅ PASS | 4-neuron tile with staggered first spikes: 27.5/29.5/31.5/33.5ns |
 | Neuro Tile4 Coupled | ✅ | ✅ | ✅ PASS | feed-forward coupling: downstream channels spike from channel-0 drive |
+| Neuro Tile4 Mixed-Signal | ✅ | ✅ | ✅ PASS | digital `en` gates analog propagation in one Spectre run |
 
 ## Competition Path: Robustness Snapshot
 

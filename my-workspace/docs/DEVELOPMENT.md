@@ -37,6 +37,25 @@ Use this track to support the ICTGC "one-terminal full-flow" narrative.
 6. Export and archive implementation artifacts under `competition/`.
 7. Keep the flow script-driven so it can be demonstrated in one terminal session.
 
+## Founder-Evidence Workflow (Original Idea Track)
+
+Use this track to prove the compute thesis beyond tool operation.
+
+1. Keep raw analog traces exportable (`competition/data/*.csv`) with no smoothing assumptions.
+2. Maintain deterministic timing evidence (`neuro_tile4`, `neuro_tile4_coupled`).
+3. Run parameter sweeps and quantify timing sensitivity (temporal gradients).
+4. Fit measured dynamics to governing equations (LIF/RC ODE checks).
+5. Estimate energy-per-event from transient supply behavior.
+6. Keep each claim mapped to a reproducible artifact under `competition/`.
+
+Current analysis commands:
+- `python3 scripts/analyze_lif_ode_fit.py`
+- `python3 scripts/analyze_temporal_sensitivity.py`
+- `scripts/analyze_lif_energy.sh`
+- `./build.sh neuro_tile4_mixed_signal` (digital-enable / analog-propagation smoke)
+
+Reference thesis: `competition/founder-thesis.md`
+
 ### Current Smoke Command Set
 
 - Stage-by-stage:

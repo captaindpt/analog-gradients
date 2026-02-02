@@ -1,0 +1,123 @@
+; test_neuro_tile4_mixed_signal.ocn
+; Verify digital-enable control of analog feed-forward propagation.
+
+out = outfile("/home/v71349/analog-gradients/results/neuro_tile4_mixed_signal_test.txt" "w")
+fprintf(out "=== Neuro Tile4 Mixed-Signal Verification ===\n")
+fprintf(out "Digital enable gating of analog spike propagation\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("/home/v71349/analog-gradients/results/neuro_tile4_mixed_signal/neuro_tile4_mixed_signal.raw")
+selectResult("tran_test-tran")
+
+ven = v("en")
+vspk0 = v("spike0")
+vspk1 = v("spike1")
+vspk2 = v("spike2")
+vspk3 = v("spike3")
+
+if(ven && vspk0 && vspk1 && vspk2 && vspk3 then
+    pass = t
+    fprintf(out "Waveform Analysis:\n")
+    fprintf(out "==================\n\n")
+
+    ; Find enable rising edge crossing (0.9V).
+    en_th = 0.9
+    en_rise = nil
+    ts = 1n
+    p_en = value(ven ts)
+    ts = ts + 500p
+    while(ts < 260n && !en_rise
+        c_en = value(ven ts)
+        if(p_en < en_th && c_en > en_th then
+            en_rise = ts
+        )
+        p_en = c_en
+        ts = ts + 500p
+    )
+
+    if(!en_rise then
+        fprintf(out "FAIL: could not detect enable rising edge\n")
+        pass = nil
+        en_rise = 140n
+    else
+        fprintf(out "Enable rising edge: %.2f ns\n" en_rise*1e9)
+    )
+
+    pre_start = 20n
+    pre_stop = en_rise - 5n
+    post_start = en_rise + 20n
+    post_stop = 300n
+
+    ; Count spikes in a time window.
+    procedure(countSpikesInWindow(wf th t0 t1)
+        let((cnt tt prev curr)
+            cnt = 0
+            tt = t0
+            prev = value(wf tt)
+            tt = tt + 500p
+            while(tt <= t1
+                curr = value(wf tt)
+                if(prev < th && curr > th then
+                    cnt = cnt + 1
+                )
+                prev = curr
+                tt = tt + 500p
+            )
+            cnt
+        )
+    )
+
+    ; Adaptive thresholds
+    th0 = (ymax(vspk0) + ymin(vspk0)) / 2
+    th1 = (ymax(vspk1) + ymin(vspk1)) / 2
+    th2 = (ymax(vspk2) + ymin(vspk2)) / 2
+    th3 = (ymax(vspk3) + ymin(vspk3)) / 2
+
+    c0_pre = countSpikesInWindow(vspk0 th0 pre_start pre_stop)
+    c1_pre = countSpikesInWindow(vspk1 th1 pre_start pre_stop)
+    c2_pre = countSpikesInWindow(vspk2 th2 pre_start pre_stop)
+    c3_pre = countSpikesInWindow(vspk3 th3 pre_start pre_stop)
+
+    c0_post = countSpikesInWindow(vspk0 th0 post_start post_stop)
+    c1_post = countSpikesInWindow(vspk1 th1 post_start post_stop)
+    c2_post = countSpikesInWindow(vspk2 th2 post_start post_stop)
+    c3_post = countSpikesInWindow(vspk3 th3 post_start post_stop)
+
+    fprintf(out "\nSpike counts before enable (20ns .. %.1fns):\n" pre_stop*1e9)
+    fprintf(out "  spike0=%d spike1=%d spike2=%d spike3=%d\n" c0_pre c1_pre c2_pre c3_pre)
+
+    fprintf(out "Spike counts after enable (%.1fns .. 300ns):\n" post_start*1e9)
+    fprintf(out "  spike0=%d spike1=%d spike2=%d spike3=%d\n" c0_post c1_post c2_post c3_post)
+
+    if(c0_pre < 1 || c0_post < 1 then
+        fprintf(out "FAIL: source channel spike0 not active across windows\n")
+        pass = nil
+    else
+        fprintf(out "OK: source channel remains active\n")
+    )
+
+    if((c1_pre + c2_pre + c3_pre) > 1 then
+        fprintf(out "WARN: downstream activity exists before enable\n")
+    else
+        fprintf(out "OK: downstream channels mostly quiescent before enable\n")
+    )
+
+    if(c1_post < 1 || c2_post < 1 then
+        fprintf(out "FAIL: downstream channels did not activate after enable\n")
+        pass = nil
+    else
+        fprintf(out "OK: downstream propagation appears after digital enable\n")
+    )
+
+    if(pass then
+        fprintf(out "\n=== PASS: Mixed-signal gating behavior verified ===\n")
+    else
+        fprintf(out "\n=== FAIL: Mixed-signal gating verification failed ===\n")
+    )
+else
+    fprintf(out "ERROR: Could not read required waveforms\n")
+)
+
+close(out)
+exit()

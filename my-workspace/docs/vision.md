@@ -16,6 +16,19 @@ For judging, the visual proof sequence is:
 3. Implementation flow replay (`scripts/run_fullflow_smoke.sh`)
 4. Concrete physical artifact (`alu4_flow_demo.gds`)
 
+## Founder Thesis (Milestone Upgrade)
+
+**Clockless continuous-time compute** is the original idea:
+the architecture computes in voltage trajectories and spike timing, not only in
+clocked boolean transitions.
+
+Core claim:
+- conventional digital flows optimize state transitions on clocks,
+- NeuroCore uses transistor dynamics where latency and membrane evolution carry
+  information and computation.
+- Mixed-signal proof now exists: a digital enable signal can gate analog
+  propagation timing in one reproducible Spectre run.
+
 ## What We Are Making
 
 We are building a development path, not just a single demo:
@@ -55,6 +68,8 @@ We are building a development path, not just a single demo:
 
 - A clear, testable analog neuromorphic progression from current assets
 - A live-demo-capable flow that reaches GDS-ready evidence for ICTGC judges
+- A defensible original-idea thesis backed by math-oriented evidence (ODE fit,
+  temporal sensitivity, energy/event)
 - Clean and navigable knowledgebase for future agent onboarding
 - Competition-ready narrative backed by real simulation evidence
 - Transparent reporting of tool-access constraints (license blockers) while
@@ -67,5 +82,6 @@ We are building a development path, not just a single demo:
 - Armory capability snapshot: `my-workspace/docs/armory/snapshot-2026-02-02/armory-summary.md`
 - Competition strategy: `competition/competition-plan.md`
 - Full-flow demo strategy: `competition/full-flow-demo-plan.md`
+- Founder thesis framing: `competition/founder-thesis.md`
 - Current evidence bundle: `competition/verification-evidence.md`
 - Full-flow smoke evidence: `competition/full-flow-smoke-evidence.md`

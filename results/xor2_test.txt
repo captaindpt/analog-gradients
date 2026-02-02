@@ -1,5 +1,5 @@
 === XOR2 Verification ===
-Date: Feb  2 15:08:00 2026
+Date: Feb  2 16:42:32 2026
 
 A=0, B=0: Vout=0.019 V [PASS]
 A=1, B=0: Vout=1.768 V [PASS]

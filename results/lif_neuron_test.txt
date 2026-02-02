@@ -1,6 +1,6 @@
 === LIF Neuron Verification ===
 Leaky Integrate-and-Fire Analog Neuron
-Date: Feb  2 15:09:31 2026
+Date: Feb  2 16:44:02 2026
 
 Test Parameters:
   Membrane capacitance: 1pF

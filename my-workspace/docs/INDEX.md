@@ -15,6 +15,9 @@ This is the primary navigation root for planning and development.
 - GPU demo spec: `my-workspace/docs/gpu-spec.md`
 - Personal roadmap: `my-workspace/docs/mani-plan.md`
 - Full-flow competition demo plan: `competition/full-flow-demo-plan.md`
+- Founder thesis reference: `competition/founder-thesis.md`
+- Founder evidence artifacts: `competition/analysis/README.md`
+- Mixed-signal founder evidence: `competition/mixed-signal-smoke-evidence.md`
 - Competition evidence index: `competition/verification-evidence.md`
 - Full-flow smoke evidence: `competition/full-flow-smoke-evidence.md`
 - Competition video shot script: `competition/video-shot-script.md`

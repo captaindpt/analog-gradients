@@ -1,5 +1,5 @@
 === AND2 Verification ===
-Date: Feb  2 15:07:44 2026
+Date: Feb  2 16:42:16 2026
 
 A=0, B=0: Vout=0.008 V [PASS]
 A=1, B=0: Vout=0.010 V [PASS]

@@ -14,6 +14,7 @@ Full-flow implementation strategy reference:
 ./build.sh neuron_tile
 ./build.sh neuro_tile4
 ./build.sh neuro_tile4_coupled
+./build.sh neuro_tile4_mixed_signal
 ./build.sh all
 scripts/collect_competition_metrics.sh
 scripts/generate_competition_diagrams.sh
@@ -24,6 +25,9 @@ scripts/run_dc_smoke.sh
 scripts/run_innovus_smoke.sh
 scripts/run_calibre_smoke.sh
 scripts/run_fullflow_smoke.sh
+python3 scripts/analyze_lif_ode_fit.py
+python3 scripts/analyze_temporal_sensitivity.py
+scripts/analyze_lif_energy.sh
 ```
 
 ## Verified Artifacts
@@ -35,6 +39,7 @@ scripts/run_fullflow_smoke.sh
 | Neuron Tile | `results/neuron_tile_test.txt` | PASS | End-to-end synapse -> membrane -> spike path |
 | Neuro Tile4 | `results/neuro_tile4_test.txt` | PASS | 4 channels spike with staggered first spikes |
 | Neuro Tile4 Coupled | `results/neuro_tile4_coupled_test.txt` | PASS | channel-0 drive propagates activity to downstream channels |
+| Neuro Tile4 Mixed-Signal | `results/neuro_tile4_mixed_signal_test.txt` | PASS | digital `en` gates analog propagation (off before enable, active after) |
 | GPU Core (baseline) | `results/gpu_core_test.txt` | PASS | Verified digital foundation remains intact |
 
 ## Neuro Tile4 Highlights
@@ -61,3 +66,10 @@ scripts/run_fullflow_smoke.sh
   - Innovus: PASS with DEF/post-route netlist/GDS artifacts
   - Calibre DRC: blocked by license; blocked summary captured
 - Full artifact index: `competition/full-flow-smoke-evidence.md`
+
+## Founder Thesis Evidence (Math-Oriented)
+
+- ODE fit summary: `competition/analysis/lif_ode_fit_summary.md`
+- Temporal sensitivity summary: `competition/analysis/temporal_sensitivity_summary.md`
+- Energy-per-event summary: `competition/analysis/lif_energy_summary.md`
+- Mixed-signal gating summary: `competition/mixed-signal-smoke-evidence.md`

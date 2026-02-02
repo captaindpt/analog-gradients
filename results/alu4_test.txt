@@ -1,5 +1,5 @@
 === ALU4 Verification ===
-Date: Feb  2 15:08:48 2026
+Date: Feb  2 16:43:20 2026
 
 AND A=0x5 B=0x3 -> Y=0x1
   y0 OK

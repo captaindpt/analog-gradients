@@ -26,6 +26,16 @@ Most teams show one slice (simulation, RTL, or layout). This plan shows all of i
 3. Physical verification readiness (DRC/LVS path)
 4. Scripted, reproducible terminal workflow
 
+## Founder Reframe (Milestone Upgrade)
+
+Full-flow evidence remains important, but it is now the support layer for the
+original idea:
+
+- **Primary claim:** clockless continuous-time compute via analog spike dynamics.
+- **Support claim:** the stack is implementation-credible and reproducible.
+
+Thesis reference: `competition/founder-thesis.md`
+
 ## Current Starting Point
 
 ### Analog (Spectre verified)

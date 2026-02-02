@@ -1,0 +1,18 @@
+=== Neuro Tile4 Mixed-Signal Verification ===
+Digital enable gating of analog spike propagation
+Date: Feb  2 16:44:34 2026
+
+Waveform Analysis:
+==================
+
+Enable rising edge: 140.50 ns
+
+Spike counts before enable (20ns .. 135.5ns):
+  spike0=6 spike1=0 spike2=0 spike3=0
+Spike counts after enable (160.5ns .. 300ns):
+  spike0=7 spike1=7 spike2=7 spike3=7
+OK: source channel remains active
+OK: downstream channels mostly quiescent before enable
+OK: downstream propagation appears after digital enable
+
+=== PASS: Mixed-signal gating behavior verified ===

@@ -16,7 +16,7 @@ source "$REPO_DIR/setup_cadence.sh"
 rfb_vals=("700" "1k" "1500")
 rleak_vals=("6M" "8M" "10M")
 
-echo "r_fb,rleak,pass,membrane_maxima,spike_counts,spike_maxima" > "$OUT_CSV"
+echo "r_fb,rleak,pass,membrane_maxima,spike_counts,spike_maxima,first_spike_times_ns" > "$OUT_CSV"
 
 for rfb in "${rfb_vals[@]}"; do
   for rleak in "${rleak_vals[@]}"; do
@@ -37,7 +37,9 @@ for rfb in "${rfb_vals[@]}"; do
     cnt_line="$(grep -m1 "spike0=" "$REPO_DIR/results/neuro_tile4_coupled_test.txt" | xargs)"
     max_line="$(grep -m1 "Spike maxima" "$REPO_DIR/results/neuro_tile4_coupled_test.txt" | awk -F: '{print $2}' | xargs)"
 
-    echo "${rfb},${rleak},${pass},\"${mem_line}\",\"${cnt_line}\",\"${max_line}\"" >> "$OUT_CSV"
+    first_line="$(grep -m1 "First spike times" "$REPO_DIR/results/neuro_tile4_coupled_test.txt" | awk -F: '{print $2}' | xargs)"
+
+    echo "${rfb},${rleak},${pass},\"${mem_line}\",\"${cnt_line}\",\"${max_line}\",\"${first_line}\"" >> "$OUT_CSV"
   done
 done
 
@@ -59,10 +61,12 @@ lines.append(f"Total points: {len(rows)}")
 lines.append(f"PASS points: {len(pass_rows)}")
 lines.append(f"FAIL points: {len(fail_rows)}")
 lines.append("")
-lines.append("| r_fb | rleak | pass | spike_counts |")
-lines.append("|------|-------|------|--------------|")
+lines.append("| r_fb | rleak | pass | spike_counts | first_spike_times_ns |")
+lines.append("|------|-------|------|--------------|----------------------|")
 for r in rows:
-    lines.append(f"| {r['r_fb']} | {r['rleak']} | {r['pass']} | {r['spike_counts']} |")
+    lines.append(
+        f"| {r['r_fb']} | {r['rleak']} | {r['pass']} | {r['spike_counts']} | {r.get('first_spike_times_ns', '')} |"
+    )
 lines.append("")
 lines.append(f"CSV source: `{csv_path}`")
 md_path.write_text("\n".join(lines) + "\n", encoding="utf-8")

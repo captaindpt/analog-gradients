@@ -36,6 +36,9 @@ Taiwan offers access to:
 | [competition-plan.md](competition-plan.md) | ICTGC strategy reference and execution checklist for Round 4 |
 | [full-flow-demo-plan.md](full-flow-demo-plan.md) | One-terminal transistor->GDSII demo strategy (competition edge) |
 | [full-flow-smoke-evidence.md](full-flow-smoke-evidence.md) | DC/Innovus/Calibre smoke run status, artifacts, and blockers |
+| [founder-thesis.md](founder-thesis.md) | Original-idea framing: clockless continuous-time compute thesis |
+| [analysis/README.md](analysis/README.md) | ODE fit, timing-sensitivity, and energy-per-event evidence artifacts |
+| [mixed-signal-smoke-evidence.md](mixed-signal-smoke-evidence.md) | Digital-enable control over analog propagation (Spectre smoke proof) |
 | [verification-evidence.md](verification-evidence.md) | Current technical evidence and reproducibility commands |
 | [video-shot-script.md](video-shot-script.md) | Shot-by-shot 3-minute recording runbook with commands and cues |
 | [voiceover-script.md](voiceover-script.md) | Word-for-word timed narration for the 3-minute recording |

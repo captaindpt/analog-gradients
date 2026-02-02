@@ -1,0 +1,62 @@
+; extract_lif_energy.ocn
+; Estimate total energy and energy/spike for lif_neuron transient.
+
+out = outfile("/home/v71349/analog-gradients/competition/analysis/lif_energy_summary.txt" "w")
+
+fprintf(out "=== LIF Energy Estimate ===\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("/home/v71349/analog-gradients/results/lif_neuron/lif_neuron_energy.raw")
+selectResult("tran_test-tran")
+
+idd = getData("V_VDD:p")
+vspk = v("spike")
+
+if(idd && vspk then
+    vdd = 1.8
+    dt = 500p
+    t0 = 0n
+    t1 = 200n
+
+    energy = 0
+    ts = t0
+    while(ts < t1
+        i0 = value(idd ts)
+        i1 = value(idd ts + dt)
+        p0 = -i0 * vdd
+        p1 = -i1 * vdd
+        energy = energy + 0.5 * (p0 + p1) * dt
+        ts = ts + dt
+    )
+
+    ; Spike counting via threshold crossing.
+    vth = 0.9
+    spikes = 0
+    ts = 1n
+    prev = value(vspk ts)
+    ts = ts + dt
+    while(ts < t1
+        curr = value(vspk ts)
+        if(prev < vth && curr > vth then
+            spikes = spikes + 1
+        )
+        prev = curr
+        ts = ts + dt
+    )
+
+    e_per_spike = 0
+    if(spikes > 0 then
+        e_per_spike = energy / spikes
+    )
+
+    fprintf(out "Total energy (0-200ns): %.6e J\n" energy)
+    fprintf(out "Detected spikes: %d\n" spikes)
+    fprintf(out "Energy per spike: %.6e J\n" e_per_spike)
+    fprintf(out "Energy per spike: %.6f pJ\n" e_per_spike * 1e12)
+else
+    fprintf(out "ERROR: Could not access current/spike waveforms\n")
+)
+
+close(out)
+exit()
