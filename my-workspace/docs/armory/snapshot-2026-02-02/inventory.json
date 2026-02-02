@@ -1,0 +1,394 @@
+{
+  "snapshot_date": "2026-02-02",
+  "snapshot_timestamp_utc": "2026-02-02T16:30:07.156226Z",
+  "host": "vcl-vm0-159",
+  "repo": "/home/v71349/analog-gradients",
+  "vendors": {
+    "cadence": {
+      "count": 232,
+      "latest_by_mtime": [
+        "XCELIUMMAIN25.09.001_lnx86",
+        "EMX25.10.000_lnx86",
+        "GENUS21.19.000_lnx86",
+        "QUANTUS24.10.000_lnx86",
+        "IC23.10.140_lnx86",
+        "FINEOPEN24.20.000_lnx86",
+        "FINETURBO24.20.000_lnx86",
+        "XCELIUMMAIN24.03.013_lnx86",
+        "SPECTRE23.10.802_lnx86",
+        "ASSURA04.17.240-231_lnx86",
+        "PEGASUS23.26.000_lnx86",
+        "DDI23.14.000_lnx86",
+        "SIG24.10.000_lnx86",
+        "FINEMARINE25.10.000_lnx86",
+        "SPB24.10.000_lnx86"
+      ]
+    },
+    "synopsys": {
+      "count": 162,
+      "latest_by_mtime": [
+        "sentaurus_vX_2025.09",
+        "siwb_vX-2025.06",
+        "quantumATK_vX-2025.06",
+        "sentaurus_vX-2025.06",
+        "nt_vW-2024.09",
+        "wv_vW-2024.09-SP1-1",
+        "topography_vW-2024.09",
+        "sentaurus_vW-2024.09",
+        "icvalidator_vW-2024.09-SP2-2",
+        "starrc_vW-2024.09-SP2",
+        "prime_vW-2024.09-SP2",
+        "mw_vW-2024.09-SP2",
+        "lc_vW-2024.09-SP2",
+        "syn_vW-2024.09-SP2",
+        "icv_workbench_vW_2024.09a"
+      ]
+    },
+    "mentor": {
+      "count": 69,
+      "latest_by_mtime": [
+        "aoj_cal_2024.3_37.19",
+        "aok_cal_2024.3_37.19",
+        "soa_cal_2024.3_37.19",
+        "amsv_2023_2_2",
+        "modelsim_dlx_2024.2",
+        "aoj_cal_2024.1_36.20",
+        "aok_cal_2024.1_36.20",
+        "modelsim_dlx_2022.4",
+        "tanner_2023.2",
+        "docs_cal_2023.2_27.15",
+        "aoi_cal_2023.2_35.23",
+        "aoj_cal_2023.2_35.23",
+        "aok_cal_2023.2_35.23",
+        "aoj_cal_2022.4_37.20",
+        "aok_cal_2022.4_37.20"
+      ]
+    },
+    "siemens": {
+      "count": 13,
+      "latest_by_mtime": [
+        "aok_cal_2025.4_24",
+        "questasim_2025.2_2",
+        "aprisa_2025.2",
+        "aok_cal_2025.2_23.15",
+        "aoj_cal_2025.2_23.15",
+        "catapult_2025.1",
+        "tessent_2025.1",
+        "modelsim_dlx_2025.1",
+        "tanner_2024.3u1",
+        "tessent_2024.3-p1",
+        "tanner_2023.2u3",
+        "questasim_2024.1",
+        "questasim_2022.1_2"
+      ]
+    },
+    "keysight": {
+      "count": 18,
+      "latest_by_mtime": [
+        "ADS2026U0.1",
+        "ADS2025U2",
+        "GoldenGate_2024",
+        "ADS2025",
+        "EMPro2023U0.2",
+        "ADS2024",
+        "GoldenGate-2022U1",
+        "ADS2023",
+        "EMPro2022",
+        "ADS2021",
+        "GoldenGate-2020U1",
+        "ADS2020_U2",
+        "EMPro2020U1py3",
+        "ADS2019_U1",
+        "ADS2019"
+      ]
+    },
+    "xilinx": {
+      "count": 8,
+      "latest_by_mtime": [
+        "2025.2",
+        "Vitis_2025.1",
+        "Vitis_2024.2",
+        "Vitis_2024.1",
+        "Vivado_2022.1",
+        "Vitis_2023.2.1",
+        "Vitis_2023.1",
+        "14.7"
+      ]
+    },
+    "intel": {
+      "count": 1,
+      "latest_by_mtime": [
+        "intelFPGA_pro"
+      ]
+    },
+    "altera": {
+      "count": 1,
+      "latest_by_mtime": [
+        "19.1"
+      ]
+    },
+    "ansys": {
+      "count": 8,
+      "latest_by_mtime": [
+        "ansys.2025r2",
+        "ansys.2025r1",
+        "ansys.2024r2",
+        "ansys.2024r1",
+        "RedHawk",
+        "PowerArtist",
+        "ansys.2023r2",
+        "ansys.2023r1"
+      ]
+    },
+    "COMSOL": {
+      "count": 8,
+      "latest_by_mtime": [
+        "COMSOL64",
+        "COMSOL63_teaching",
+        "COMSOL63",
+        "COMSOL62_teaching",
+        "COMSOL62U1",
+        "COMSOL62",
+        "COMSOL61",
+        "COMSOL60"
+      ]
+    },
+    "Coventor": {
+      "count": 0,
+      "latest_by_mtime": []
+    },
+    "Matlab": {
+      "count": 1,
+      "latest_by_mtime": [
+        "R2012a"
+      ]
+    },
+    "BEEcube": {
+      "count": 2,
+      "latest_by_mtime": [
+        "BPSv42b13_r20120904",
+        "BPSv42b13_r20120904_installer"
+      ]
+    },
+    "licenses": {
+      "count": 16,
+      "latest_by_mtime": [
+        "mentor.license",
+        "ansys.license",
+        "intelfpga.license",
+        "altera.license",
+        "coventorware.license",
+        "cadence.license",
+        "xilinx.csh",
+        "synopsys.csh",
+        "mentor.csh",
+        "comsol.csh",
+        "ads.license",
+        "cadence.csh",
+        "keysight.license",
+        "ansoft.csh",
+        "license.README"
+      ]
+    },
+    "lumerical": {
+      "count": 2,
+      "latest_by_mtime": [
+        "INTERCONNECT-6.5",
+        "INTERCONNECT-5.5.758"
+      ]
+    }
+  },
+  "script_prefixes": {
+    "cadence": {
+      "count": 523
+    },
+    "synopsys": {
+      "count": 169
+    },
+    "mentor": {
+      "count": 101
+    },
+    "siemens": {
+      "count": 14
+    },
+    "xilinx": {
+      "count": 15
+    },
+    "intel": {
+      "count": 4
+    },
+    "keysight": {
+      "count": 24
+    },
+    "agilent": {
+      "count": 15
+    },
+    "ansys": {
+      "count": 11
+    }
+  },
+  "kits": {
+    "count": 40,
+    "entries": [
+      "3it_ogjfet.v1",
+      "3it_ogjfet.v2-DRAFT",
+      "AMF_Ledit_Photonics_v3.2",
+      "AMSKIT61",
+      "AMSKIT615",
+      "CMC_AMF_calibre_rule_decks",
+      "CMC_AMF_calibre_rule_decks.saved",
+      "ESP_ogjfet.v2.1",
+      "GPDK045",
+      "GPDK045.20230130",
+      "MetalMUMPs",
+      "PolyMUMPs",
+      "SOIMUMPs",
+      "SiEPIC_IME_PDK_January25_2023",
+      "SiEPIC_imec",
+      "TDP_2010q2v1",
+      "TDP_2011q2v2",
+      "TDP_2011q2v3",
+      "artisan18.3.0",
+      "cadence",
+      "cmos65nm.1.0_lnx",
+      "cmos65nm.522_lnx",
+      "cmos90nm.3.0_lnx",
+      "cmos90nm_ip.1.1",
+      "cmosp18",
+      "cmosp18.5.2",
+      "cmosp18.5.2_test",
+      "cmosp18.6.13a_ic5",
+      "cmosp18.6.13a_ic6",
+      "cmosp35.4.3",
+      "cmosp8",
+      "ga911",
+      "local.2.3",
+      "package.2.2",
+      "rfsip",
+      "tsmc180_BCD",
+      "tsmc_130nm",
+      "tsmc_130nm_cmc",
+      "tsmc_180nm_cmc",
+      "tsmc_65nm_cmc"
+    ]
+  },
+  "licenses": {
+    "files": [
+      ".cmc",
+      "DO_NOT_PUT_LICENSE_FILES_IN_THIS_DIRECTORY",
+      "ads.license",
+      "altera.license",
+      "ansoft.csh",
+      "ansys.license",
+      "cadence.csh",
+      "cadence.license",
+      "comsol.csh",
+      "coventorware.license",
+      "intelfpga.license",
+      "keysight.license",
+      "license.README",
+      "mentor.csh",
+      "mentor.license",
+      "synopsys.csh",
+      "xilinx.csh"
+    ],
+    "script_contents": {
+      "cadence.csh": "setenv CDS_LIC_FILE 6055@licaccess.cmc.ca",
+      "synopsys.csh": "setenv SNPSLMD_LICENSE_FILE 6053@licaccess.cmc.ca",
+      "mentor.csh": "setenv MGLS_LICENSE_FILE 6056@licaccess.cmc.ca",
+      "xilinx.csh": "setenv XILINXD_LICENSE_FILE 6062@licaccess.cmc.ca",
+      "comsol.csh": "setenv LM_LICENSE_FILE 6601@licaccess.cmc.ca"
+    }
+  },
+  "live_checks": {
+    "cadence_local_setup": {
+      "returncode": 0,
+      "stdout_head": "virtuoso=/CMC/tools/cadence/IC23.10.140_lnx86/tools.lnx86/dfII/bin/virtuoso\nocean=/CMC/tools/cadence/IC23.10.140_lnx86/tools.lnx86/dfII/bin/ocean\nspectre=/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/bin/spectre",
+      "stderr_head": "2026/02/02 11:30:07 INFO (/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/bin/cdnsEnvCheck): Rocky Linux release 8.10 (Green Obsidian) detected (set environment variable CDS_SKIP_OS_CHECK_ON_STARTUP=1 to suppress).\nsub-version  23.1.0.802.isr17 "
+    },
+    "cadence_xcelium": {
+      "returncode": 0,
+      "stdout_head": "/CMC/tools/cadence/XCELIUMMAIN25.09.001_lnx86/tools.lnx86/bin/xrun\nTOOL:\txrun(64)\t25.09-s001",
+      "stderr_head": ""
+    },
+    "cadence_innovus": {
+      "returncode": 0,
+      "stdout_head": "/CMC/tools/cadence/INNOVUS21.17.000_lnx86/tools.lnx86/bin/innovus\n@(#)CDS: Innovus v21.17-s075_1 (64bit) 03/15/2023 11:17 (Linux 3.10.0-693.el7.x86_64)\n@(#)CDS: NanoRoute 21.17-s075_1 NR230308-2354/21_17-UB (database version 18.20.604) {superthreading v2.17}",
+      "stderr_head": ""
+    },
+    "cadence_pegasus": {
+      "returncode": 141,
+      "stdout_head": "/CMC/tools/cadence/PEGASUS23.26.000_lnx86/tools.lnx86/bin/pegasus\nPegasus 23.26-s005 yR5+5JOGoFD41eqkI3/4VA 2026-02-02 11:30:08 527135 vcl-vm0-159\nCopyright 2024 Cadence Design Systems, Inc.\nAll rights reserved worldwide.",
+      "stderr_head": "2026/02/02 11:30:08 WARNING (/CMC/tools/cadence/PEGASUS23.26.000_lnx86/tools.lnx86/bin/cdnsEnvCheck): This OS does not appear to be a Cadence supported Linux configuration (set environment variable CDS_SKIP_OS_CHECK_ON_STARTUP to suppress). For more info, please run <cdsroot>/tools/bin/checkSysConf <productId>"
+    },
+    "cadence_jasper": {
+      "returncode": 0,
+      "stdout_head": "/CMC/tools/cadence/JASPER23.09.002_lnx86/bin/jg\n2023.09p002 64 bits",
+      "stderr_head": ""
+    },
+    "synopsys_vcs_verdi": {
+      "returncode": 0,
+      "stdout_head": "/CMC/tools/synopsys/vcs_vW-2024.09-SP1/vcs/W-2024.09-SP1/bin/vcs\nvcs script version : W-2024.09\nmachine name = vcl-vm0-159 \n/CMC/tools/synopsys/verdi_vW-2024.09-SP1/verdi/W-2024.09-SP1/bin/verdi",
+      "stderr_head": ""
+    },
+    "synopsys_dc_shell": {
+      "returncode": 0,
+      "stdout_head": "/CMC/tools/synopsys/syn_vW-2024.09-SP2/syn/W-2024.09-SP2/bin/dc_shell\n               Version W-2024.09-SP2 for linux64 - Nov 28, 2024 ",
+      "stderr_head": ""
+    },
+    "synopsys_hspice_script": {
+      "returncode": 1,
+      "stdout_head": "hspice: Command not found.",
+      "stderr_head": "/usr/sbin/lsof: Command not found.\nif: Missing file name.\nhspice: Command not found."
+    },
+    "synopsys_hspice_direct": {
+      "returncode": 0,
+      "stdout_head": "  HSPICE Version V-2023.12 linux64 (Nov 17 2023 8561338)\n\n  Copyright (c) 1986 - 2026 by Synopsys, Inc. All Rights Reserved.",
+      "stderr_head": ""
+    },
+    "siemens_questa": {
+      "returncode": 0,
+      "stdout_head": "/CMC/tools/siemens/questasim_2025.2_2/questasim/bin/vsim\nQuesta Sim-64 vsim 2025.2_2 Simulator 2025.07 Jul 31 2025\n",
+      "stderr_head": ""
+    },
+    "siemens_calibre": {
+      "returncode": 0,
+      "stdout_head": "/CMC/tools/siemens/aok_cal_2025.4_24/bin/calibre\n//  Calibre v2025.4_24.16    Mon Nov 3 13:40:37 PST 2025\n//  Calibre Utility Library   v0-10_13-2017-1    Fri Sep 19 09:11:48 PDT 2025\n//  Litho Libraries v2025.4_24.16  Mon Nov 3 13:40:37 PST 2025",
+      "stderr_head": ""
+    },
+    "xilinx_vivado": {
+      "returncode": 0,
+      "stdout_head": "/CMC/tools/xilinx/2025.2/2025.2/Vivado/bin/vivado\nvivado v2025.2 (64-bit)\nTool Version Limit: 2025.11\nSW Build 6299465 on Fri Nov 14 12:34:56 MST 2025",
+      "stderr_head": ""
+    },
+    "intel_quartus": {
+      "returncode": 0,
+      "stdout_head": "/CMC/tools/intel/intelFPGA_pro/25.3/quartus/bin/quartus_sh\nQuartus Prime Shell\nVersion 25.3.0 Build 109 09/24/2025 SC Pro Edition",
+      "stderr_head": ""
+    },
+    "keysight_ads": {
+      "returncode": 141,
+      "stdout_head": "/CMC/tools/keysight/ADS2026U0.1/bin/ads\n Keysight Technologies\nAdvanced Design System\nUsing private colormap",
+      "stderr_head": ""
+    },
+    "ansys_tools": {
+      "returncode": 0,
+      "stdout_head": "/CMC/tools/ansys/ansys.2025r2/ansys_inc/v252/AnsysEM/ansysedt\n/CMC/tools/ansys/ansys.2025r2/ansys_inc/v252/fluent/bin/fluent",
+      "stderr_head": ""
+    },
+    "open_source_path_probe": {
+      "returncode": 1,
+      "stdout_head": "",
+      "stderr_head": ""
+    },
+    "module_tcsh_probe": {
+      "returncode": 0,
+      "stdout_head": "module:no\n/usr/bin/tcsh\ntcsh 6.20.00 (Astron) 2016-11-24 (x86_64-unknown-linux) options wide,nls,dl,al,kan,sm,rh,color,filec\n/usr/bin/bash",
+      "stderr_head": ""
+    }
+  },
+  "notes": [
+    "Snapshot generated by Codex local inventory script.",
+    "Counts are based on top-level directory entries under /CMC/tools/<vendor>."
+  ]
+}

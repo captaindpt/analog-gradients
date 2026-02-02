@@ -1,0 +1,11 @@
+ansys.2017.09.csh
+ansys.2022.csh
+ansys.21.2.csh
+ansys.22.1.csh
+ansys.22.2.csh
+ansys.23.1.csh
+ansys.23.2.csh
+ansys.24.1.csh
+ansys.24.2.csh
+ansys.25.1.csh
+ansys.25.2.csh

@@ -1,0 +1,1 @@
+/home/v71349/.local/bin:/home/v71349/bin:/home/v71349/.codex/tmp/path/codex-arg0rsWYTc:/home/v71349/.local/bin:/home/v71349/.vscode-server/cli/servers/Stable-c9d77990917f3102ada88be140d28b038d1dd7c7/server/bin/remote-cli:/home/v71349/.local/bin:/home/v71349/.local/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin

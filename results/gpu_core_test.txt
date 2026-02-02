@@ -1,5 +1,5 @@
 === GPU CORE Verification ===
-Date: Jan 31 21:40:10 2026
+Date: Jan 31 22:21:55 2026
 
 
 === PASS: GPU core verification (PE0 spot checks) ===

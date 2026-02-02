@@ -1,0 +1,4 @@
+intel.fpga.22.3.csh
+intel.fpga.24.1.csh
+intel.fpga.24.3.csh
+intel.fpga.25.3.csh

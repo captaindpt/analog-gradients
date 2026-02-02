@@ -1,0 +1,20 @@
+total 31
+drwxr-xr-x  3 stcmgr stcmgr  19 Feb 29  2024 .
+drwxrwxr-x 18 stcmgr stcmgr  18 Mar 26  2025 ..
+drwxrwxr-x  3 stcmgr stcmgr   8 Nov  5  2016 .cmc
+-rw-r--r--  1 stcmgr stcmgr   0 Nov  7  2016 DO_NOT_PUT_LICENSE_FILES_IN_THIS_DIRECTORY
+-rw-r--r--  1 root   root    45 Nov 22  2019 ads.license
+-rw-r--r--  1 root   root    45 Jan  3  2022 altera.license
+-rw-r--r--  1 root   root   169 Nov  7  2016 ansoft.csh
+-rw-r--r--  1 root   root    45 Aug  5  2022 ansys.license
+-rw-r--r--  1 root   root    42 Nov 22  2019 cadence.csh
+-rw-r--r--  1 root   root    45 Sep 15  2020 cadence.license
+-rw-r--r--  1 root   root    46 Nov 28  2019 comsol.csh
+-rw-rw-r--  1 stcmgr stcmgr  45 Dec 22  2020 coventorware.license
+-rw-rw-r--  1 stcmgr stcmgr  45 May 24  2022 intelfpga.license
+-rw-r--r--  1 root   root    45 Nov 22  2019 keysight.license
+-rw-r--r--  1 stcmgr stcmgr 592 Nov  7  2016 license.README
+-rw-r--r--  1 root   root    47 Nov 28  2019 mentor.csh
+-rw-r--r--  1 root   root    45 Feb 29  2024 mentor.license
+-rw-r--r--  1 root   root    50 Nov 28  2019 synopsys.csh
+-rw-r--r--  1 stcmgr stcmgr  50 Nov 28  2019 xilinx.csh

@@ -1,0 +1,8 @@
+ansys.2023r1
+ansys.2023r2
+ansys.2024r1
+ansys.2024r2
+ansys.2025r1
+ansys.2025r2
+PowerArtist
+RedHawk

@@ -1,0 +1,15 @@
+agilent.2007.05.sh
+agilent.ads.2005a.sh
+agilent.ads.2009.csh
+agilent.ads.2009u1.csh
+agilent.ads.201105.csh
+agilent.ads.201110.csh
+agilent.ads.201208.csh
+agilent.ads.201401.csh
+agilent.ads.201501.csh
+agilent.ads.2016.01.csh
+agilent.empro.201209.csh
+agilent.empro.201501.csh
+agilent.goldengate.201108.csh
+agilent.goldengate.201210.csh
+agilent.goldengate.201501.csh

@@ -1,0 +1,15 @@
+xilinx.14.7.csh
+xilinx.2017.csh
+xilinx.2025.csh
+xilinx.vitis.2023.1.csh
+xilinx.vitis.2023.2.1.csh
+xilinx.vitis.2024.1.csh
+xilinx.vitis.2024.2.csh
+xilinx.vitis.2025.1.csh
+xilinx.vitis.2025.2.csh
+xilinx.vivado.2023.1.csh
+xilinx.vivado.2023.2.1.csh
+xilinx.vivado.2024.1.csh
+xilinx.vivado.2024.2.csh
+xilinx.vivado.2025.1.csh
+xilinx.vivado.2025.2.csh

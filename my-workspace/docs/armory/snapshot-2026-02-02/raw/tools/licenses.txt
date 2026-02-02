@@ -1,0 +1,16 @@
+ads.license
+altera.license
+ansoft.csh
+ansys.license
+cadence.csh
+cadence.license
+comsol.csh
+coventorware.license
+DO_NOT_PUT_LICENSE_FILES_IN_THIS_DIRECTORY
+intelfpga.license
+keysight.license
+license.README
+mentor.csh
+mentor.license
+synopsys.csh
+xilinx.csh

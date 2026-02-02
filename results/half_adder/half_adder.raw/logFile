@@ -1,11 +1,11 @@
 HEADER
 "PSFversion" "1.00"
 "Log Generator" "drlLog rev. 1.0"
-"Log Time Stamp" "Sat Jan 31 21:26:50 2026"
+"Log Time Stamp" "Sat Jan 31 22:21:01 2026"
 "psfversion" "1.4.0"
 "simulator" "spectre"
 "version" "23.1.0.802.isr17"
-"date" "9:26:50 PM, Sat Jan 31, 2026"
+"date" "10:21:01 PM, Sat Jan 31, 2026"
 "design" "// half_adder.scs - CMOS Half Adder"
 "signalNameType" "spectre"
 "simMode" "Spectre"

@@ -1,0 +1,208 @@
+Cadence IC23.10.140 + Spectre23.10.802 ready
+  virtuoso: /CMC/tools/cadence/IC23.10.140_lnx86/tools.lnx86/dfII/bin/virtuoso
+  ocean:    /CMC/tools/cadence/IC23.10.140_lnx86/tools.lnx86/dfII/bin/ocean
+  spectre:  /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/bin/spectre
+  license:  LM_LICENSE_FILE=<unset> CDS_LIC_FILE=6055@licaccess.cmc.ca
+========================================
+GPU Building Blocks - Build & Test
+========================================
+
+Building Level 5: CMOS primitives
+==================================
+[1;33m=== Building inverter ===[0m
+Running Spectre simulation...
+Time spent in licensing: elapsed = 538 ms, percentage of total = 80.4%.
+Peak memory used = 191 Mbytes.
+Simulation started at: 10:19:57 PM, Sat Jan 31, 2026, ended at: 10:19:57 PM,
+        Sat Jan 31, 2026, with elapsed time (wall clock): 669 ms.
+spectre completes with 0 errors, 2 warnings, and 16 notices.
+[0;32mSimulation: OK[0m
+Running OCEAN verification...
+> Done. Results in: ~/analog-gradients/results/inverter_verify.txt
+[0;32mVerification: PASS[0m
+
+[1;33m=== Building nand2 ===[0m
+Running Spectre simulation...
+Time spent in licensing: elapsed = 504 ms, percentage of total = 79.7%.
+Peak memory used = 190 Mbytes.
+Simulation started at: 10:20:05 PM, Sat Jan 31, 2026, ended at: 10:20:05 PM,
+        Sat Jan 31, 2026, with elapsed time (wall clock): 633 ms.
+spectre completes with 0 errors, 2 warnings, and 16 notices.
+[0;32mSimulation: OK[0m
+Running OCEAN verification...
+> NAND2 test done.
+[0;32mVerification: PASS[0m
+
+[1;33m=== Building nor2 ===[0m
+Running Spectre simulation...
+Time spent in licensing: elapsed = 301 ms, percentage of total = 56%.
+Peak memory used = 191 Mbytes.
+Simulation started at: 10:20:13 PM, Sat Jan 31, 2026, ended at: 10:20:14 PM,
+        Sat Jan 31, 2026, with elapsed time (wall clock): 537 ms.
+spectre completes with 0 errors, 2 warnings, and 16 notices.
+[0;32mSimulation: OK[0m
+Running OCEAN verification...
+> NOR2 test done.
+[0;32mVerification: PASS[0m
+
+
+Building Level 4: Logic gates
+==================================
+[1;33m=== Building and2 ===[0m
+Running Spectre simulation...
+Time spent in licensing: elapsed = 302 ms, percentage of total = 56.4%.
+Peak memory used = 193 Mbytes.
+Simulation started at: 10:20:21 PM, Sat Jan 31, 2026, ended at: 10:20:21 PM,
+        Sat Jan 31, 2026, with elapsed time (wall clock): 536 ms.
+spectre completes with 0 errors, 2 warnings, and 16 notices.
+[0;32mSimulation: OK[0m
+Running OCEAN verification...
+> AND2 test done.
+[0;32mVerification: PASS[0m
+
+[1;33m=== Building or2 ===[0m
+Running Spectre simulation...
+Time spent in licensing: elapsed = 299 ms, percentage of total = 56.8%.
+Peak memory used = 192 Mbytes.
+Simulation started at: 10:20:29 PM, Sat Jan 31, 2026, ended at: 10:20:29 PM,
+        Sat Jan 31, 2026, with elapsed time (wall clock): 527 ms.
+spectre completes with 0 errors, 2 warnings, and 16 notices.
+[0;32mSimulation: OK[0m
+Running OCEAN verification...
+> OR2 test done.
+[0;32mVerification: PASS[0m
+
+[1;33m=== Building xor2 ===[0m
+Running Spectre simulation...
+Time spent in licensing: elapsed = 295 ms, percentage of total = 54.4%.
+Peak memory used = 191 Mbytes.
+Simulation started at: 10:20:37 PM, Sat Jan 31, 2026, ended at: 10:20:38 PM,
+        Sat Jan 31, 2026, with elapsed time (wall clock): 543 ms.
+spectre completes with 0 errors, 2 warnings, and 16 notices.
+[0;32mSimulation: OK[0m
+Running OCEAN verification...
+> XOR2 test done.
+[0;32mVerification: PASS[0m
+
+[1;33m=== Building xnor2 ===[0m
+Running Spectre simulation...
+Time spent in licensing: elapsed = 299 ms, percentage of total = 54.7%.
+Peak memory used = 193 Mbytes.
+Simulation started at: 10:20:45 PM, Sat Jan 31, 2026, ended at: 10:20:46 PM,
+        Sat Jan 31, 2026, with elapsed time (wall clock): 546 ms.
+spectre completes with 0 errors, 2 warnings, and 16 notices.
+[0;32mSimulation: OK[0m
+Running OCEAN verification...
+> XNOR2 test done.
+[0;32mVerification: PASS[0m
+
+
+Building Level 3: Blocks
+==================================
+[1;33m=== Building mux2 ===[0m
+Running Spectre simulation...
+Time spent in licensing: elapsed = 294 ms, percentage of total = 56.8%.
+Peak memory used = 193 Mbytes.
+Simulation started at: 10:20:53 PM, Sat Jan 31, 2026, ended at: 10:20:54 PM,
+        Sat Jan 31, 2026, with elapsed time (wall clock): 518 ms.
+spectre completes with 0 errors, 2 warnings, and 16 notices.
+[0;32mSimulation: OK[0m
+Running OCEAN verification...
+> MUX2 test done.
+[0;32mVerification: PASS[0m
+
+[1;33m=== Building half_adder ===[0m
+Running Spectre simulation...
+Time spent in licensing: elapsed = 497 ms, percentage of total = 76%.
+Peak memory used = 191 Mbytes.
+Simulation started at: 10:21:01 PM, Sat Jan 31, 2026, ended at: 10:21:01 PM,
+        Sat Jan 31, 2026, with elapsed time (wall clock): 653 ms.
+spectre completes with 0 errors, 2 warnings, and 16 notices.
+[0;32mSimulation: OK[0m
+Running OCEAN verification...
+> HALF ADDER test done.
+[0;32mVerification: PASS[0m
+
+[1;33m=== Building full_adder ===[0m
+Running Spectre simulation...
+Time spent in licensing: elapsed = 297 ms, percentage of total = 54.7%.
+Peak memory used = 192 Mbytes.
+Simulation started at: 10:21:09 PM, Sat Jan 31, 2026, ended at: 10:21:09 PM,
+        Sat Jan 31, 2026, with elapsed time (wall clock): 544 ms.
+spectre completes with 0 errors, 2 warnings, and 16 notices.
+[0;32mSimulation: OK[0m
+Running OCEAN verification...
+> FULL ADDER test done.
+[0;32mVerification: PASS[0m
+
+
+Building Level 2: RTL Components
+==================================
+[1;33m=== Building alu1 ===[0m
+Running Spectre simulation...
+Time spent in licensing: elapsed = 704 ms, percentage of total = 95.1%.
+Peak memory used = 193 Mbytes.
+Simulation started at: 10:21:17 PM, Sat Jan 31, 2026, ended at: 10:21:17 PM,
+        Sat Jan 31, 2026, with elapsed time (wall clock): 741 ms.
+spectre completes with 0 errors, 2 warnings, and 16 notices.
+[0;32mSimulation: OK[0m
+Running OCEAN verification...
+> ALU1 test done.
+[0;32mVerification: PASS[0m
+
+[1;33m=== Building alu4 ===[0m
+Running Spectre simulation...
+Time spent in licensing: elapsed = 888 ms, percentage of total = 95.9%.
+Peak memory used = 191 Mbytes.
+Simulation started at: 10:21:25 PM, Sat Jan 31, 2026, ended at: 10:21:26 PM,
+        Sat Jan 31, 2026, with elapsed time (wall clock): 926 ms.
+spectre completes with 0 errors, 2 warnings, and 19 notices.
+[0;32mSimulation: OK[0m
+Running OCEAN verification...
+> ALU4 test done.
+[0;32mVerification: PASS[0m
+
+
+Building Level 1: Functional Blocks
+==================================
+[1;33m=== Building pe1 ===[0m
+Running Spectre simulation...
+Time spent in licensing: elapsed = 501 ms, percentage of total = 67.4%.
+Peak memory used = 191 Mbytes.
+Simulation started at: 10:21:33 PM, Sat Jan 31, 2026, ended at: 10:21:34 PM,
+        Sat Jan 31, 2026, with elapsed time (wall clock): 742 ms.
+spectre completes with 0 errors, 2 warnings, and 19 notices.
+[0;32mSimulation: OK[0m
+Running OCEAN verification...
+> PE1 test done.
+[0;32mVerification: PASS[0m
+
+[1;33m=== Building pe4 ===[0m
+Running Spectre simulation...
+Time spent in licensing: elapsed = 494 ms, percentage of total = 41.4%.
+Peak memory used = 203 Mbytes.
+Simulation started at: 10:21:41 PM, Sat Jan 31, 2026, ended at: 10:21:42 PM,
+        Sat Jan 31, 2026, with elapsed time (wall clock): 1.19 s.
+spectre completes with 0 errors, 2 warnings, and 22 notices.
+[0;32mSimulation: OK[0m
+Running OCEAN verification...
+> PE4 test done.
+[0;32mVerification: PASS[0m
+
+
+Building Level 0: System
+==================================
+[1;33m=== Building gpu_core ===[0m
+Running Spectre simulation...
+Time spent in licensing: elapsed = 295 ms, percentage of total = 26.6%.
+Peak memory used = 202 Mbytes.
+Simulation started at: 10:21:49 PM, Sat Jan 31, 2026, ended at: 10:21:50 PM,
+        Sat Jan 31, 2026, with elapsed time (wall clock): 1.11 s.
+spectre completes with 0 errors, 2 warnings, and 22 notices.
+[0;32mSimulation: OK[0m
+Running OCEAN verification...
+> GPU core test done.
+[0;32mVerification: PASS[0m
+
+==================================
+[0;32mAll Level 0-5 components verified![0m

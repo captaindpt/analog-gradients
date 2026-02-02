@@ -1,0 +1,15 @@
+[cadence.csh]
+setenv CDS_LIC_FILE 6055@licaccess.cmc.ca
+
+[synopsys.csh]
+setenv SNPSLMD_LICENSE_FILE 6053@licaccess.cmc.ca
+
+[mentor.csh]
+setenv MGLS_LICENSE_FILE 6056@licaccess.cmc.ca
+
+[xilinx.csh]
+setenv XILINXD_LICENSE_FILE 6062@licaccess.cmc.ca
+
+[comsol.csh]
+setenv LM_LICENSE_FILE 6601@licaccess.cmc.ca
+

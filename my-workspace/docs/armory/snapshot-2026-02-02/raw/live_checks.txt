@@ -1,0 +1,141 @@
+### cadence_local_setup
+CMD: source /home/v71349/analog-gradients/setup_cadence.sh >/dev/null; echo "virtuoso=$(command -v virtuoso)"; echo "ocean=$(command -v ocean)"; echo "spectre=$(command -v spectre)"; spectre -W | head -3
+RETURN_CODE: 0
+--- STDOUT ---
+virtuoso=/CMC/tools/cadence/IC23.10.140_lnx86/tools.lnx86/dfII/bin/virtuoso
+ocean=/CMC/tools/cadence/IC23.10.140_lnx86/tools.lnx86/dfII/bin/ocean
+spectre=/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/bin/spectre
+--- STDERR ---
+2026/02/02 11:30:07 INFO (/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/bin/cdnsEnvCheck): Rocky Linux release 8.10 (Green Obsidian) detected (set environment variable CDS_SKIP_OS_CHECK_ON_STARTUP=1 to suppress).
+sub-version  23.1.0.802.isr17 
+
+### cadence_xcelium
+CMD: source /CMC/scripts/cadence.xceliummain25.09.001.csh >/dev/null; which xrun; xrun -version | head -2
+RETURN_CODE: 0
+--- STDOUT ---
+/CMC/tools/cadence/XCELIUMMAIN25.09.001_lnx86/tools.lnx86/bin/xrun
+TOOL:	xrun(64)	25.09-s001
+
+### cadence_innovus
+CMD: source /CMC/scripts/cadence.innovus21.17.000.csh >/dev/null; which innovus; innovus -version | head -2
+RETURN_CODE: 0
+--- STDOUT ---
+/CMC/tools/cadence/INNOVUS21.17.000_lnx86/tools.lnx86/bin/innovus
+@(#)CDS: Innovus v21.17-s075_1 (64bit) 03/15/2023 11:17 (Linux 3.10.0-693.el7.x86_64)
+@(#)CDS: NanoRoute 21.17-s075_1 NR230308-2354/21_17-UB (database version 18.20.604) {superthreading v2.17}
+
+### cadence_pegasus
+CMD: source /CMC/scripts/cadence.pegasus23.26.000.csh >/dev/null; which pegasus; pegasus -version | head -3
+RETURN_CODE: 141
+--- STDOUT ---
+/CMC/tools/cadence/PEGASUS23.26.000_lnx86/tools.lnx86/bin/pegasus
+Pegasus 23.26-s005 yR5+5JOGoFD41eqkI3/4VA 2026-02-02 11:30:08 527135 vcl-vm0-159
+Copyright 2024 Cadence Design Systems, Inc.
+All rights reserved worldwide.
+--- STDERR ---
+2026/02/02 11:30:08 WARNING (/CMC/tools/cadence/PEGASUS23.26.000_lnx86/tools.lnx86/bin/cdnsEnvCheck): This OS does not appear to be a Cadence supported Linux configuration (set environment variable CDS_SKIP_OS_CHECK_ON_STARTUP to suppress). For more info, please run <cdsroot>/tools/bin/checkSysConf <productId>
+
+### cadence_jasper
+CMD: source /CMC/scripts/cadence.jasper23.09.002.csh >/dev/null; which jg; jg -allow_unsupported_OS -version | head -2
+RETURN_CODE: 0
+--- STDOUT ---
+/CMC/tools/cadence/JASPER23.09.002_lnx86/bin/jg
+2023.09p002 64 bits
+
+### synopsys_vcs_verdi
+CMD: source /CMC/scripts/synopsys.vcs_verdi.2024.09-SP1.csh >/dev/null; which vcs; vcs -ID | head -2; which verdi
+RETURN_CODE: 0
+--- STDOUT ---
+/CMC/tools/synopsys/vcs_vW-2024.09-SP1/vcs/W-2024.09-SP1/bin/vcs
+vcs script version : W-2024.09
+machine name = vcl-vm0-159 
+/CMC/tools/synopsys/verdi_vW-2024.09-SP1/verdi/W-2024.09-SP1/bin/verdi
+
+### synopsys_dc_shell
+CMD: source /CMC/scripts/synopsys.syn.2024.09-SP2.csh >/dev/null; which dc_shell; dc_shell -x "quit" | grep -i "Version" | head -2
+RETURN_CODE: 0
+--- STDOUT ---
+/CMC/tools/synopsys/syn_vW-2024.09-SP2/syn/W-2024.09-SP2/bin/dc_shell
+               Version W-2024.09-SP2 for linux64 - Nov 28, 2024 
+
+### synopsys_hspice_script
+CMD: source /CMC/scripts/synopsys.hspice.2023.12.csh >/dev/null; which hspice; hspice -v | head -2
+RETURN_CODE: 1
+--- STDOUT ---
+hspice: Command not found.
+--- STDERR ---
+/usr/sbin/lsof: Command not found.
+if: Missing file name.
+hspice: Command not found.
+
+### synopsys_hspice_direct
+CMD: /CMC/tools/synopsys/hspice_vV-2023.12/hspice/V-2023.12/hspice/linux64/hspice -v | head -3
+RETURN_CODE: 0
+--- STDOUT ---
+  HSPICE Version V-2023.12 linux64 (Nov 17 2023 8561338)
+
+  Copyright (c) 1986 - 2026 by Synopsys, Inc. All Rights Reserved.
+
+### siemens_questa
+CMD: source /CMC/scripts/siemens.questasim.2025.2_2.csh >/dev/null; which vsim; vsim -version | head -2
+RETURN_CODE: 0
+--- STDOUT ---
+/CMC/tools/siemens/questasim_2025.2_2/questasim/bin/vsim
+Questa Sim-64 vsim 2025.2_2 Simulator 2025.07 Jul 31 2025
+
+
+### siemens_calibre
+CMD: source /CMC/scripts/siemens.calibre.2025.4_24.aok.csh >/dev/null; which calibre; calibre -version | head -3
+RETURN_CODE: 0
+--- STDOUT ---
+/CMC/tools/siemens/aok_cal_2025.4_24/bin/calibre
+//  Calibre v2025.4_24.16    Mon Nov 3 13:40:37 PST 2025
+//  Calibre Utility Library   v0-10_13-2017-1    Fri Sep 19 09:11:48 PDT 2025
+//  Litho Libraries v2025.4_24.16  Mon Nov 3 13:40:37 PST 2025
+
+### xilinx_vivado
+CMD: source /CMC/scripts/xilinx.vivado.2025.2.csh >/dev/null; which vivado; vivado -version | head -3
+RETURN_CODE: 0
+--- STDOUT ---
+/CMC/tools/xilinx/2025.2/2025.2/Vivado/bin/vivado
+vivado v2025.2 (64-bit)
+Tool Version Limit: 2025.11
+SW Build 6299465 on Fri Nov 14 12:34:56 MST 2025
+
+### intel_quartus
+CMD: source /CMC/scripts/intel.fpga.25.3.csh >/dev/null; which quartus_sh; quartus_sh --version | head -2
+RETURN_CODE: 0
+--- STDOUT ---
+/CMC/tools/intel/intelFPGA_pro/25.3/quartus/bin/quartus_sh
+Quartus Prime Shell
+Version 25.3.0 Build 109 09/24/2025 SC Pro Edition
+
+### keysight_ads
+CMD: source /CMC/scripts/keysight.ads.2026U0.1.csh >/dev/null; which ads; ads -version | head -3
+RETURN_CODE: 141
+--- STDOUT ---
+/CMC/tools/keysight/ADS2026U0.1/bin/ads
+ Keysight Technologies
+Advanced Design System
+Using private colormap
+
+### ansys_tools
+CMD: source /CMC/scripts/ansys.25.2.csh >/dev/null; which ansysedt; which fluent
+RETURN_CODE: 0
+--- STDOUT ---
+/CMC/tools/ansys/ansys.2025r2/ansys_inc/v252/AnsysEM/ansysedt
+/CMC/tools/ansys/ansys.2025r2/ansys_inc/v252/fluent/bin/fluent
+
+### open_source_path_probe
+CMD: for t in ngspice xyce iverilog vvp verilator yosys openroad klayout magic netgen qflow ghdl gtkwave; do p=$(command -v "$t" 2>/dev/null || true); [ -n "$p" ] && echo "$t $p"; done
+RETURN_CODE: 1
+
+### module_tcsh_probe
+CMD: type module >/dev/null 2>&1 && echo "module:yes" || echo "module:no"; command -v tcsh; tcsh --version | head -1; command -v bash
+RETURN_CODE: 0
+--- STDOUT ---
+module:no
+/usr/bin/tcsh
+tcsh 6.20.00 (Astron) 2016-11-24 (x86_64-unknown-linux) options wide,nls,dl,al,kan,sm,rh,color,filec
+/usr/bin/bash
+
