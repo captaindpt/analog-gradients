@@ -1,0 +1,3 @@
+Calibre DRC smoke could not run due unavailable DRC license.
+Command:
+  /CMC/tools/siemens/aok_cal_2025.4_24/bin/calibre -drc -hier /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc_smoke.svrf

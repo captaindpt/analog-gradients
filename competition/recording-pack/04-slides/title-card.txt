@@ -1,0 +1,6 @@
+NEUROCORE
+Analog AI on Standard CMOS
+
+One Terminal.
+Transistors to Tape-Out Path.
+One Engineer.

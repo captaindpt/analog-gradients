@@ -15,7 +15,7 @@ fprintf(out "Test Parameters:\n")
 fprintf(out "  Membrane capacitance: 1pF\n")
 fprintf(out "  Leak resistance: 10M ohm\n")
 fprintf(out "  Time constant (tau): 10us\n")
-fprintf(out "  Input current: 500nA pulses\n\n")
+fprintf(out "  Input current: 500uA pulses\n\n")
 
 ; Get waveforms
 vmem = v("mem")
@@ -55,17 +55,17 @@ if(vmem && vspike then
     spike_times = nil
 
     ; Simple spike detection: sample at regular intervals
-    t = 1n
+    ts = 1n
     prev_spike = 0
-    while(t < 200n
-        curr_spike = value(vspike t)
+    while(ts < 200n
+        curr_spike = value(vspike ts)
         ; Detect rising edge
         if(prev_spike < vth_spike && curr_spike > vth_spike then
             spike_count = spike_count + 1
-            spike_times = cons(t spike_times)
+            spike_times = cons(ts spike_times)
         )
         prev_spike = curr_spike
-        t = t + 1n
+        ts = ts + 500p
     )
 
     fprintf(out "Spike Detection:\n")
@@ -76,7 +76,7 @@ if(vmem && vspike then
         foreach(st reverse(spike_times)
             fprintf(out "%.0fns " st*1e9)
         )
-        fprintf(out "\n"
+        fprintf(out "\n")
     )
 
     ; Calculate inter-spike interval if multiple spikes
@@ -85,7 +85,7 @@ if(vmem && vspike then
         t1 = car(times_list)
         t2 = cadr(times_list)
         isi = (t2 - t1) * 1e9
-        freq = 1e9 / (t2 - t1) / 1e6  ; MHz
+        freq = 1 / (t2 - t1) / 1e6  ; MHz
         fprintf(out "  Inter-spike interval: %.1f ns\n" isi)
         fprintf(out "  Spike frequency: %.1f MHz\n" freq)
     )

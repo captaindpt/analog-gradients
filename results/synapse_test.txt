@@ -1,0 +1,29 @@
+=== Synapse Verification ===
+CMOS excitatory synapse primitive
+Date: Feb  2 15:09:23 2026
+
+Test Parameters:
+  cpost: 200fF
+  rdecay: 80k ohm
+  Input spikes: 2ns width, 20ns period
+
+Waveform Analysis:
+==================
+
+Samples:
+  Vpre @6ns:   1.800 V
+  Vpost @4ns:  0.130 V (before first spike)
+  Vpost @8ns:  1.480 V (after first spike)
+  Vpost @16ns: 0.898 V (decay region)
+  Vpost @24ns: 0.546 V (before second spike)
+  Vpost @26ns: 1.389 V (second spike active)
+  Vpost max:   1.575 V
+
+OK: post node integrates first input spike
+OK: post node decays after spike
+OK: second spike re-charges post node
+OK: synapse response amplitude is significant
+Output pulse count (threshold 0.9V): 6
+OK: buffered synapse output pulses detected
+
+=== PASS: Synapse exhibits integrate + decay behavior ===

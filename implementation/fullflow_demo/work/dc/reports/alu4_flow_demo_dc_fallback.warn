@@ -1,0 +1,3 @@
+DC synthesis could not run due license issue (DCSH-1).
+Fallback gate-level netlist was used:
+  implementation/fullflow_demo/rtl/alu4_flow_demo_fallback_mapped.v

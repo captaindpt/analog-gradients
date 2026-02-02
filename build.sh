@@ -146,6 +146,21 @@ case $COMPONENT in
     gpu_core)
         run_sim gpu_core
         ;;
+    synapse)
+        run_sim synapse
+        ;;
+    lif_neuron)
+        run_sim lif_neuron
+        ;;
+    neuron_tile)
+        run_sim neuron_tile
+        ;;
+    neuro_tile4)
+        run_sim neuro_tile4
+        ;;
+    neuro_tile4_coupled)
+        run_sim neuro_tile4_coupled
+        ;;
     all)
         echo "Building Level 5: CMOS primitives"
         echo "=================================="
@@ -179,12 +194,23 @@ case $COMPONENT in
         echo "Building Level 0: System"
         echo "=================================="
         run_sim gpu_core
+        echo ""
+        echo "Building Competition Analog Primitives"
         echo "=================================="
-        echo -e "${GREEN}All Level 0-5 components verified!${NC}"
+        run_sim synapse
+        run_sim lif_neuron
+        echo ""
+        echo "Building Competition Analog Compositions"
+        echo "=================================="
+        run_sim neuron_tile
+        run_sim neuro_tile4
+        run_sim neuro_tile4_coupled
+        echo "=================================="
+        echo -e "${GREEN}All Level 0-5 components + analog competition path verified!${NC}"
         ;;
     *)
         echo "Unknown component: $COMPONENT"
-        echo "Available: inverter, nand2, nor2, and2, or2, xor2, xnor2, mux2, half_adder, full_adder, alu1, alu4, pe1, pe4, gpu_core, all"
+        echo "Available: inverter, nand2, nor2, and2, or2, xor2, xnor2, mux2, half_adder, full_adder, alu1, alu4, pe1, pe4, gpu_core, synapse, lif_neuron, neuron_tile, neuro_tile4, neuro_tile4_coupled, all"
         exit 1
         ;;
 esac

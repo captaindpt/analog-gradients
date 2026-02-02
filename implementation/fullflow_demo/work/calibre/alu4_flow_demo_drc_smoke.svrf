@@ -1,0 +1,20 @@
+LAYOUT PATH "/home/v71349/analog-gradients/implementation/fullflow_demo/work/innovus/out/alu4_flow_demo.gds"
+LAYOUT PRIMARY "alu4_flow_demo"
+LAYOUT SYSTEM GDSII
+
+DRC RESULTS DATABASE "/home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc.results" ASCII
+DRC SUMMARY REPORT "/home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc.summary" REPLACE HIER
+DRC MAXIMUM RESULTS ALL
+
+LAYER M1 11
+LAYER M2 12
+
+M1_WIDTH_CHECK {
+  @ Smoke check: minimum width on layer 11
+  INTERNAL M1 < 0.04
+}
+
+M2_WIDTH_CHECK {
+  @ Smoke check: minimum width on layer 12
+  INTERNAL M2 < 0.04
+}

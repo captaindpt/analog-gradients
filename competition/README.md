@@ -34,6 +34,13 @@ Taiwan offers access to:
 | File | Description |
 |------|-------------|
 | [competition-plan.md](competition-plan.md) | ICTGC strategy reference and execution checklist for Round 4 |
+| [full-flow-demo-plan.md](full-flow-demo-plan.md) | One-terminal transistor->GDSII demo strategy (competition edge) |
+| [full-flow-smoke-evidence.md](full-flow-smoke-evidence.md) | DC/Innovus/Calibre smoke run status, artifacts, and blockers |
+| [verification-evidence.md](verification-evidence.md) | Current technical evidence and reproducibility commands |
+| [video-shot-script.md](video-shot-script.md) | Shot-by-shot 3-minute recording runbook with commands and cues |
+| [voiceover-script.md](voiceover-script.md) | Word-for-word timed narration for the 3-minute recording |
+| [recording-pack/](recording-pack/) | Scene-organized capture assets and recording checklist |
+| [paper/README.md](paper/README.md) | LaTeX workthrough paper with raw-point dark-theme figures and tables |
 | [ICTGC-Program-Guidelines.md](ICTGC-Program-Guidelines.md) | Full competition rules, categories, judging criteria |
 | [ICTGC-Application-Form.md](ICTGC-Application-Form.md) | Resource requirement form (submitted after initial review) |
 | [ICTGC-IP-Statement-Eligibility.md](ICTGC-IP-Statement-Eligibility.md) | IP and eligibility declarations |

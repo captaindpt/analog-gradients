@@ -1,0 +1,98 @@
+; test_neuron_tile.ocn - Verify synapse+LIF composition tile
+; Run: ocean -nograph < test_neuron_tile.ocn
+
+out = outfile("/home/v71349/analog-gradients/results/neuron_tile_test.txt" "w")
+fprintf(out "=== Neuron Tile Verification ===\n")
+fprintf(out "Synapse + LIF composition\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("/home/v71349/analog-gradients/results/neuron_tile/neuron_tile.raw")
+selectResult("tran_test-tran")
+
+vsyn = v("syn_post")
+vmem = v("mem")
+vspike = v("spike")
+
+if(vsyn && vmem && vspike then
+    pass = t
+    fprintf(out "Waveform Analysis:\n")
+    fprintf(out "==================\n\n")
+
+    syn_t8 = value(vsyn 8n)
+    syn_t16 = value(vsyn 16n)
+    mem_t8 = value(vmem 8n)
+    mem_t30 = value(vmem 30n)
+    mem_max = ymax(vmem)
+    spike_min = ymin(vspike)
+    spike_max = ymax(vspike)
+
+    fprintf(out "Samples:\n")
+    fprintf(out "  Vsyn @8ns:  %.3f V\n" syn_t8)
+    fprintf(out "  Vsyn @16ns: %.3f V\n" syn_t16)
+    fprintf(out "  Vmem @8ns:  %.3f V\n" mem_t8)
+    fprintf(out "  Vmem @30ns: %.3f V\n" mem_t30)
+    fprintf(out "  Vmem max:   %.3f V\n\n" mem_max)
+    fprintf(out "  Vspike min: %.3f V\n" spike_min)
+    fprintf(out "  Vspike max: %.3f V\n\n" spike_max)
+
+    if(syn_t8 > syn_t16 then
+        fprintf(out "OK: synapse node exhibits decay after stimulation\n")
+    else
+        fprintf(out "FAIL: synapse node decay not observed\n")
+        pass = nil
+    )
+
+    if(mem_max > 0.4 then
+        fprintf(out "OK: membrane integrates synaptic drive\n")
+    else
+        fprintf(out "FAIL: membrane integration too weak\n")
+        pass = nil
+    )
+
+    ; Detect spike node pulses with adaptive threshold
+    vth = (spike_max + spike_min) / 2
+    spike_count = 0
+    spike_times = nil
+    ts = 1n
+    prev_val = value(vspike ts)
+    ts = ts + 500p
+    while(ts < 250n
+        curr_val = value(vspike ts)
+        if(prev_val < vth && curr_val > vth then
+            spike_count = spike_count + 1
+            spike_times = cons(ts spike_times)
+        )
+        prev_val = curr_val
+        ts = ts + 500p
+    )
+
+    fprintf(out "Spike node pulses detected: %d\n" spike_count)
+    if(spike_times then
+        fprintf(out "Spike times (ns): ")
+        foreach(st reverse(spike_times)
+            fprintf(out "%.0f " st*1e9)
+        )
+        fprintf(out "\n")
+    )
+
+    if(spike_max > 0.4 && spike_count >= 1 then
+        fprintf(out "OK: tile emits spikes from composed synapse->neuron path\n")
+    else
+        fprintf(out "FAIL: no output spikes detected\n")
+        pass = nil
+    )
+
+    fprintf(out "\n")
+    if(pass then
+        fprintf(out "=== PASS: Neuron tile composition verified ===\n")
+    else
+        fprintf(out "=== FAIL: Neuron tile verification failed ===\n")
+    )
+else
+    fprintf(out "ERROR: Could not read waveform data\n")
+)
+
+close(out)
+printf("Done. Results in: ~/analog-gradients/results/neuron_tile_test.txt\n")
+exit()

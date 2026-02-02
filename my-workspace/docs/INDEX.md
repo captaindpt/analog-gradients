@@ -14,6 +14,13 @@ This is the primary navigation root for planning and development.
 
 - GPU demo spec: `my-workspace/docs/gpu-spec.md`
 - Personal roadmap: `my-workspace/docs/mani-plan.md`
+- Full-flow competition demo plan: `competition/full-flow-demo-plan.md`
+- Competition evidence index: `competition/verification-evidence.md`
+- Full-flow smoke evidence: `competition/full-flow-smoke-evidence.md`
+- Competition video shot script: `competition/video-shot-script.md`
+- Competition voiceover script: `competition/voiceover-script.md`
+- Competition recording pack: `competition/recording-pack/README.md`
+- Competition LaTeX workthrough: `competition/paper/README.md`
 
 ## Armory / Environment
 

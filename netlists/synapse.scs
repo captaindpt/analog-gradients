@@ -1,0 +1,34 @@
+// synapse.scs - CMOS excitatory synapse primitive
+// Run: spectre synapse.scs -raw synapse.raw
+
+simulator lang=spectre
+
+// Parameters
+parameters vdd_val=1.8 cpost=200f rdecay=80k
+
+// MOSFET models (aligned with existing repo primitives)
+model nch mos1 type=n vth=0.4 kp=120u
+model pch mos1 type=p vth=-0.4 kp=40u
+
+// Power supply
+V_VDD (vdd 0) vsource dc=vdd_val
+
+// Presynaptic spike train
+V_PRE (pre 0) vsource type=pulse val0=0 val1=vdd_val \
+    delay=5n rise=100p fall=100p width=2n period=20n
+
+// Charge-transfer device: pre spike opens path from VDD to post node
+MN_DRV (post pre vdd 0) nch w=4u l=1u
+
+// Postsynaptic potential dynamics (EPSP-like)
+C_POST (post 0) capacitor c=cpost
+R_DECAY (post 0) resistor r=rdecay
+
+// Output buffer for clean rail-to-rail readout
+MP1 (out_n post vdd vdd) pch w=2u l=1u
+MN1 (out_n post 0 0) nch w=1u l=1u
+MP2 (out out_n vdd vdd) pch w=2u l=1u
+MN2 (out out_n 0 0) nch w=1u l=1u
+
+tran_test tran stop=120n
+save pre post out

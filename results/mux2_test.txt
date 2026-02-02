@@ -1,5 +1,5 @@
 === MUX2 Verification ===
-Date: Jan 31 22:20:58 2026
+Date: Feb  2 15:08:16 2026
 
 A=0, B=0, S=0: Vout=0.011 V [PASS]
 A=1, B=0, S=0: Vout=1.780 V [PASS]

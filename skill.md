@@ -202,3 +202,44 @@ source setup_cadence.sh
 - Headless replay helper: `./scripts/virtuoso_replay.sh`
 - If `DISPLAY` is unset, the runner will try `xvfb-run` if available.
 - SKILL-based schematic creation still needs X11 on CMC; netlist flow is the stable path.
+
+### Full-flow demo operations (DC -> Innovus -> Calibre)
+
+- Use `scripts/run_fullflow_smoke.sh` for the standard replay path.
+- If DC is license-blocked (`DCSH-1`), the flow can continue using:
+  `implementation/fullflow_demo/rtl/alu4_flow_demo_fallback_mapped.v`.
+- Calibre license failures are recorded explicitly in:
+  `implementation/fullflow_demo/work/calibre/alu4_flow_demo_calibre_license.warn`.
+- For CI or strict gating, use:
+  `env FULLFLOW_STRICT=1 scripts/run_fullflow_smoke.sh`
+  (returns non-zero when any stage is blocked).
+
+### Demo asset generation
+
+- One-command visual refresh:
+  `scripts/run_competition_visuals.sh`
+- Coupled-tile waveform assets are generated under:
+  - `competition/plots/neuro_tile4_coupled_spikes.svg`
+  - `competition/plots/neuro_tile4_coupled_mems.svg`
+- Before recording, pre-run long flows and verify artifact existence so the
+  live capture can focus on the key moments (PASS cascade, waveform evidence,
+  GDS output).
+
+### Recording workflow
+
+- Build scene-organized assets with:
+  `scripts/build_recording_pack.sh`
+- Guided pacing for one-take capture:
+  `scripts/demo_narrator.sh`
+- Fast rehearsal without long tool runtime:
+  `DEMO_SKIP_LONG=1 scripts/demo_narrator.sh`
+
+### LaTeX paper workflow
+
+- Prepare parsed paper datasets:
+  `python3 scripts/prepare_paper_data.py`
+- Build paper (if LaTeX engine is installed):
+  `scripts/build_paper.sh`
+- Main source:
+  `competition/paper/neurocore_workthrough.tex`
+- Plot style choice for evidence: dark background + unsmoothed raw data points.

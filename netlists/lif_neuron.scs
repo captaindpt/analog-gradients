@@ -5,7 +5,7 @@
 simulator lang=spectre
 
 // Parameters
-parameters vdd_val=1.8 cmem=1p rleak=10M iin_amp=500n
+parameters vdd_val=1.8 cmem=1p rleak=10M iin_amp=500u
 
 // MOSFET Models (same as digital blocks for compatibility)
 model nch mos1 type=n vth=0.4 kp=120u

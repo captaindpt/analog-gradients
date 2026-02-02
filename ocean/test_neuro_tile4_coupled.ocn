@@ -1,0 +1,145 @@
+; test_neuro_tile4_coupled.ocn - Verify feed-forward spike propagation
+; Run: ocean -nograph < test_neuro_tile4_coupled.ocn
+
+out = outfile("/home/v71349/analog-gradients/results/neuro_tile4_coupled_test.txt" "w")
+fprintf(out "=== Neuro Tile4 Coupled Verification ===\n")
+fprintf(out "4-neuron feed-forward coupled tile\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("/home/v71349/analog-gradients/results/neuro_tile4_coupled/neuro_tile4_coupled.raw")
+selectResult("tran_test-tran")
+
+vmem0 = v("mem0")
+vmem1 = v("mem1")
+vmem2 = v("mem2")
+vmem3 = v("mem3")
+vspk0 = v("spike0")
+vspk1 = v("spike1")
+vspk2 = v("spike2")
+vspk3 = v("spike3")
+
+if(vmem0 && vmem1 && vmem2 && vmem3 && vspk0 && vspk1 && vspk2 && vspk3 then
+    pass = t
+    fprintf(out "Waveform Analysis:\n")
+    fprintf(out "==================\n\n")
+
+    mem0_max = ymax(vmem0)
+    mem1_max = ymax(vmem1)
+    mem2_max = ymax(vmem2)
+    mem3_max = ymax(vmem3)
+    fprintf(out "Membrane maxima (V): %.3f, %.3f, %.3f, %.3f\n\n"
+        mem0_max mem1_max mem2_max mem3_max)
+
+    if(mem0_max <= 0.4 || mem1_max <= 0.2 || mem2_max <= 0.2 || mem3_max <= 0.2 then
+        fprintf(out "FAIL: one or more membranes did not integrate sufficiently\n")
+        pass = nil
+    else
+        fprintf(out "OK: all membranes show integration activity\n")
+    )
+
+    ; Adaptive thresholds per spike node
+    s0min = ymin(vspk0)
+    s1min = ymin(vspk1)
+    s2min = ymin(vspk2)
+    s3min = ymin(vspk3)
+    s0max = ymax(vspk0)
+    s1max = ymax(vspk1)
+    s2max = ymax(vspk2)
+    s3max = ymax(vspk3)
+    th0 = (s0max + s0min) / 2
+    th1 = (s1max + s1min) / 2
+    th2 = (s2max + s2min) / 2
+    th3 = (s3max + s3min) / 2
+
+    c0 = 0
+    c1 = 0
+    c2 = 0
+    c3 = 0
+    f0 = nil
+    f1 = nil
+    f2 = nil
+    f3 = nil
+
+    ts = 1n
+    p0 = value(vspk0 ts)
+    p1 = value(vspk1 ts)
+    p2 = value(vspk2 ts)
+    p3 = value(vspk3 ts)
+    ts = ts + 500p
+    while(ts < 300n
+        v0 = value(vspk0 ts)
+        v1 = value(vspk1 ts)
+        v2 = value(vspk2 ts)
+        v3 = value(vspk3 ts)
+
+        if(p0 < th0 && v0 > th0 then
+            c0 = c0 + 1
+            if(c0 == 1 then f0 = ts)
+        )
+        if(p1 < th1 && v1 > th1 then
+            c1 = c1 + 1
+            if(c1 == 1 then f1 = ts)
+        )
+        if(p2 < th2 && v2 > th2 then
+            c2 = c2 + 1
+            if(c2 == 1 then f2 = ts)
+        )
+        if(p3 < th3 && v3 > th3 then
+            c3 = c3 + 1
+            if(c3 == 1 then f3 = ts)
+        )
+
+        p0 = v0
+        p1 = v1
+        p2 = v2
+        p3 = v3
+        ts = ts + 500p
+    )
+
+    fprintf(out "\nSpike pulse counts:\n")
+    fprintf(out "  spike0=%d spike1=%d spike2=%d spike3=%d\n" c0 c1 c2 c3)
+    fprintf(out "Spike maxima (V): %.3f, %.3f, %.3f, %.3f\n"
+        s0max s1max s2max s3max)
+
+    ; Channel 0 must be active from external drive.
+    if(c0 < 2 then
+        fprintf(out "FAIL: source channel spike0 activity too low\n")
+        pass = nil
+    else
+        fprintf(out "OK: source channel spike0 active\n")
+    )
+
+    ; Downstream channels should also spike due coupling.
+    if(c1 < 1 || c2 < 1 || c3 < 1 || s1max < 0.4 || s2max < 0.4 || s3max < 0.4 then
+        fprintf(out "FAIL: downstream propagation incomplete\n")
+        pass = nil
+    else
+        fprintf(out "OK: downstream channels spike (propagation observed)\n")
+    )
+
+    if(f0 && f1 && f2 && f3 then
+        fprintf(out "First spike times (ns): %.1f, %.1f, %.1f, %.1f\n"
+            f0*1e9 f1*1e9 f2*1e9 f3*1e9)
+        if(f0 <= f1 && f1 <= f2 && f2 <= f3 then
+            fprintf(out "OK: feed-forward ordering preserved\n")
+        else
+            fprintf(out "WARN: first-spike ordering not strictly monotonic\n")
+        )
+    else
+        fprintf(out "WARN: missing first-spike timestamps on one or more channels\n")
+    )
+
+    fprintf(out "\n")
+    if(pass then
+        fprintf(out "=== PASS: Neuro Tile4 coupled propagation verified ===\n")
+    else
+        fprintf(out "=== FAIL: Neuro Tile4 coupled verification failed ===\n")
+    )
+else
+    fprintf(out "ERROR: Could not read waveform data\n")
+)
+
+close(out)
+printf("Done. Results in: ~/analog-gradients/results/neuro_tile4_coupled_test.txt\n")
+exit()

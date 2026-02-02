@@ -5,7 +5,8 @@ This file defines how agents should execute work in this repo.
 ## Mission
 
 Build and verify a transistor-up hardware stack that evolves from digital GPU
-building blocks into an analog neuromorphic compute core.
+building blocks into an analog neuromorphic compute core, then demonstrate
+credible implementation readiness through a reproducible full-flow path.
 
 ## Agent Bootstrap (First 5 Minutes)
 
@@ -24,6 +25,34 @@ building blocks into an analog neuromorphic compute core.
 5. Add component wiring in `build.sh` if new top-level target.
 6. Re-run verification and record outcomes in `results/<name>_test.txt`.
 
+## Competition Edge Workflow (Transistor -> GDSII Demo)
+
+Use this track to support the ICTGC "one-terminal full-flow" narrative.
+
+1. Keep analog proof current (`synapse`, `lif_neuron`, tile-level PASS results).
+2. Select a digital implementation target (initially `alu4` or `pe1` class block).
+3. Run synthesis smoke flow (Synopsys DC) and capture netlist/timing artifacts.
+4. Run place-and-route smoke flow (Cadence Innovus) and capture floorplan/route outputs.
+5. Run physical verification smoke flow (Siemens Calibre) and capture DRC/LVS status.
+6. Export and archive implementation artifacts under `competition/`.
+7. Keep the flow script-driven so it can be demonstrated in one terminal session.
+
+### Current Smoke Command Set
+
+- Stage-by-stage:
+  - `scripts/run_dc_smoke.sh`
+  - `scripts/run_innovus_smoke.sh`
+  - `scripts/run_calibre_smoke.sh`
+- End-to-end:
+  - `scripts/run_fullflow_smoke.sh`
+  - `FULLFLOW_STRICT=1 scripts/run_fullflow_smoke.sh` (fails on license-blocked stages)
+
+### Current Environment Caveat
+
+- DC and Calibre binaries run in this environment, but licenses may be
+  unavailable; scripts emit explicit warning artifacts instead of silently
+  failing.
+
 ## Documentation Update Contract
 
 For every meaningful change:
@@ -37,8 +66,8 @@ For every meaningful change:
 - Preferred stack for this repo: Cadence Spectre + OCEAN + optional Virtuoso SKILL.
 - Treat the armory snapshot as capability evidence, not as permission to switch
   toolchains mid-task.
-- Do not introduce Synopsys/Siemens/other tool dependencies unless explicitly
-  requested and documented in ticket/log files.
+- Synopsys/Siemens flow usage is now in-scope for the ICTGC full-flow demo
+  track; document all usage in ticket/log files and keep scripts reproducible.
 
 ## Definition of Development-Ready
 
@@ -46,3 +75,4 @@ For every meaningful change:
 - Current progress reflected in `my-workspace/docs/STATUS.md`
 - Reproducible run path (`setup_cadence.sh` + `build.sh`)
 - Tests produce readable PASS/FAIL reports under `results/*_test.txt`
+- Competition evidence assets are reproducible under `competition/` scripts

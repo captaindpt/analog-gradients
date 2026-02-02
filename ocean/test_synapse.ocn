@@ -1,0 +1,107 @@
+; test_synapse.ocn - Verify CMOS synapse behavior
+; Run: ocean -nograph < test_synapse.ocn
+
+out = outfile("/home/v71349/analog-gradients/results/synapse_test.txt" "w")
+fprintf(out "=== Synapse Verification ===\n")
+fprintf(out "CMOS excitatory synapse primitive\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("/home/v71349/analog-gradients/results/synapse/synapse.raw")
+selectResult("tran_test-tran")
+
+fprintf(out "Test Parameters:\n")
+fprintf(out "  cpost: 200fF\n")
+fprintf(out "  rdecay: 80k ohm\n")
+fprintf(out "  Input spikes: 2ns width, 20ns period\n\n")
+
+vpre = v("pre")
+vpost = v("post")
+vout = v("out")
+
+if(vpre && vpost && vout then
+    pass = t
+    fprintf(out "Waveform Analysis:\n")
+    fprintf(out "==================\n\n")
+
+    pre_t6 = value(vpre 6n)
+    post_t4 = value(vpost 4n)
+    post_t8 = value(vpost 8n)
+    post_t16 = value(vpost 16n)
+    post_t24 = value(vpost 24n)
+    post_t26 = value(vpost 26n)
+    post_max = ymax(vpost)
+
+    fprintf(out "Samples:\n")
+    fprintf(out "  Vpre @6ns:   %.3f V\n" pre_t6)
+    fprintf(out "  Vpost @4ns:  %.3f V (before first spike)\n" post_t4)
+    fprintf(out "  Vpost @8ns:  %.3f V (after first spike)\n" post_t8)
+    fprintf(out "  Vpost @16ns: %.3f V (decay region)\n" post_t16)
+    fprintf(out "  Vpost @24ns: %.3f V (before second spike)\n" post_t24)
+    fprintf(out "  Vpost @26ns: %.3f V (second spike active)\n" post_t26)
+    fprintf(out "  Vpost max:   %.3f V\n\n" post_max)
+
+    if(post_t8 > 0.2 then
+        fprintf(out "OK: post node integrates first input spike\n")
+    else
+        fprintf(out "FAIL: post node did not integrate first spike\n")
+        pass = nil
+    )
+
+    if(post_t16 < post_t8 && post_t24 < post_t8 then
+        fprintf(out "OK: post node decays after spike\n")
+    else
+        fprintf(out "FAIL: post node decay behavior not observed\n")
+        pass = nil
+    )
+
+    if(post_t26 > post_t24 then
+        fprintf(out "OK: second spike re-charges post node\n")
+    else
+        fprintf(out "FAIL: post node does not respond to subsequent spike\n")
+        pass = nil
+    )
+
+    if(post_max > 0.3 then
+        fprintf(out "OK: synapse response amplitude is significant\n")
+    else
+        fprintf(out "FAIL: synapse response amplitude too low\n")
+        pass = nil
+    )
+
+    ; Count output pulses with threshold crossing
+    vth = 0.9
+    pulse_count = 0
+    ts = 1n
+    prev_val = value(vout ts)
+    ts = ts + 500p
+    while(ts < 120n
+        curr_val = value(vout ts)
+        if(prev_val < vth && curr_val > vth then
+            pulse_count = pulse_count + 1
+        )
+        prev_val = curr_val
+        ts = ts + 500p
+    )
+
+    fprintf(out "Output pulse count (threshold %.1fV): %d\n" vth pulse_count)
+    if(pulse_count >= 3 then
+        fprintf(out "OK: buffered synapse output pulses detected\n")
+    else
+        fprintf(out "WARN: few output pulses detected (check threshold sizing)\n")
+    )
+
+    fprintf(out "\n")
+    if(pass then
+        fprintf(out "=== PASS: Synapse exhibits integrate + decay behavior ===\n")
+    else
+        fprintf(out "=== FAIL: Synapse verification failed ===\n")
+    )
+else
+    fprintf(out "ERROR: Could not read waveform data\n")
+    foreach(o outputs() fprintf(out "  %s\n" o))
+)
+
+close(out)
+printf("Done. Results in: ~/analog-gradients/results/synapse_test.txt\n")
+exit()

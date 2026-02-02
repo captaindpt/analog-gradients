@@ -20,9 +20,66 @@ context in `competition/competition-plan.md`).
 
 Build path from verified digital GPU stack to a neuromorphic analog core:
 
-- Analog primitive bring-up: `lif_neuron`
-- Neuron composition and spike behavior verification
-- Small neuromorphic tile integration and test strategy
+- Analog primitive bring-up: `synapse`, `lif_neuron` ✅ PASS
+- Neuron composition and spike behavior verification: `neuron_tile` ✅ PASS
+- Small neuromorphic tile integration: `neuro_tile4` ✅ PASS
+- Coupled propagation demo: `neuro_tile4_coupled` ✅ PASS
+- One-terminal transistor->GDSII demo path: planning + bring-up 🔄
+
+## Competition Edge: Full Semiconductor Flow Demo (In Progress)
+
+| Stage | Toolchain | Status | Target Artifact |
+|-------|-----------|--------|-----------------|
+| Flow strategy and script plan | docs + bash/tcl planning | ✅ | `competition/full-flow-demo-plan.md` |
+| Synthesis smoke test | Synopsys Design Compiler | ⚠️ executable OK, license blocked (`DCSH-1`) | fallback gate-level netlist + logs |
+| Place and route smoke test | Cadence Innovus | ✅ | DEF + routed netlist + GDS + reports |
+| Physical verification smoke test | Siemens Calibre | ⚠️ executable OK, DRC license blocked | blocked DRC summary + logs |
+| Single-command demo orchestration | repo scripts | ✅ | `scripts/run_fullflow_smoke.sh` |
+
+Full-flow smoke evidence:
+`competition/full-flow-smoke-evidence.md`
+
+## Video Demo Capture Readiness
+
+- Scripted shot plan: `competition/video-shot-script.md`
+- Waveform capture checklist: `competition/waveform-capture-checklist.md`
+- Recording pack builder: `scripts/build_recording_pack.sh`
+- Guided recording runner: `scripts/demo_narrator.sh`
+- Timed narration script: `competition/voiceover-script.md`
+- Available coupled-tile plot assets:
+  - `competition/plots/neuro_tile4_coupled_spikes.svg`
+  - `competition/plots/neuro_tile4_coupled_mems.svg`
+
+## Paper Workthrough Readiness
+
+- LaTeX source: `competition/paper/neurocore_workthrough.tex`
+- Paper build helper: `scripts/build_paper.sh`
+- Parsed paper data prep: `scripts/prepare_paper_data.py`
+- Raw-point sweep + spike summary data:
+  - `competition/paper/data/neuro_tile4_coupled_sweep_parsed.csv`
+  - `competition/paper/data/first_spike_summary.csv`
+- Build caveat: no local LaTeX engine currently available in this environment.
+
+## Competition Path: Analog Primitive Bring-Up
+
+| Component | Netlist | Simulation | Verification | Notes |
+|-----------|---------|------------|--------------|-------|
+| Synapse | ✅ | ✅ | ✅ PASS | EPSP integrate/decay + 6 output pulses in 120ns |
+| LIF Neuron | ✅ | ✅ | ✅ PASS | 10 spikes in 200ns, max Vmem=1.573V |
+
+## Competition Path: Analog Composition
+
+| Component | Netlist | Simulation | Verification | Notes |
+|-----------|---------|------------|--------------|-------|
+| Neuron Tile | ✅ | ✅ | ✅ PASS | synapse->membrane->spike path with 12 detected spike pulses |
+| Neuro Tile4 | ✅ | ✅ | ✅ PASS | 4-neuron tile with staggered first spikes: 27.5/29.5/31.5/33.5ns |
+| Neuro Tile4 Coupled | ✅ | ✅ | ✅ PASS | feed-forward coupling: downstream channels spike from channel-0 drive |
+
+## Competition Path: Robustness Snapshot
+
+| Block | Sweep | Result | Artifact |
+|-------|-------|--------|----------|
+| Neuro Tile4 Coupled | r_fb={700,1k,1500}, rleak={6M,8M,10M} | 9/9 PASS | `competition/sweeps/neuro_tile4_coupled_sweep_summary.md` |
 
 ## Level 5: CMOS Primitives ✅
 
@@ -103,6 +160,11 @@ Build path from verified digital GPU stack to a neuromorphic analog core:
 ./build.sh inverter
 ./build.sh nand2
 ./build.sh nor2
+./build.sh synapse
+./build.sh lif_neuron
+./build.sh neuron_tile
+./build.sh neuro_tile4
+./build.sh neuro_tile4_coupled
 
 # Source Cadence environment
 source setup_cadence.sh

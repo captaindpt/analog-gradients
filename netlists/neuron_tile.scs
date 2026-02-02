@@ -1,0 +1,41 @@
+// neuron_tile.scs - Minimal neuromorphic tile (synapse + LIF neuron)
+// Run: spectre neuron_tile.scs -raw neuron_tile.raw
+
+simulator lang=spectre
+
+parameters vdd_val=1.8 cpost=200f rdecay=80k r_couple=8k cmem=500f rleak=8M
+
+model nch mos1 type=n vth=0.4 kp=120u
+model pch mos1 type=p vth=-0.4 kp=40u
+
+V_VDD (vdd 0) vsource dc=vdd_val
+
+// Presynaptic input spike train
+V_PRE (pre 0) vsource type=pulse val0=0 val1=vdd_val \
+    delay=5n rise=100p fall=100p width=2n period=20n
+
+// Synapse front-end
+MN_SYN (syn_post pre vdd 0) nch w=4u l=1u
+C_SYN (syn_post 0) capacitor c=cpost
+R_SYN (syn_post 0) resistor r=rdecay
+
+// Coupling into membrane integration node
+R_COUPLE (syn_post mem) resistor r=r_couple
+C_MEM (mem 0) capacitor c=cmem
+R_LEAK (mem 0) resistor r=rleak
+
+// Threshold + spike generation
+MP1 (spike_n mem vdd vdd) pch w=2u l=1u
+MN1 (spike_n mem 0 0) nch w=1u l=1u
+MP2 (spike spike_n vdd vdd) pch w=2u l=1u
+MN2 (spike spike_n 0 0) nch w=1u l=1u
+
+// Reset membrane after spike
+MN_RESET (mem spike 0 0) nch w=700n l=1u
+
+// Buffered output
+MP3 (out spike vdd vdd) pch w=2u l=1u
+MN3 (out spike 0 0) nch w=1u l=1u
+
+tran_test tran stop=250n
+save pre syn_post mem spike out
