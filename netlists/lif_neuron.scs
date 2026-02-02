@@ -1,0 +1,99 @@
+// lif_neuron.scs - Leaky Integrate-and-Fire Neuron
+// Analog neuromorphic building block
+// Run: spectre lif_neuron.scs -raw lif_neuron.raw
+
+simulator lang=spectre
+
+// Parameters
+parameters vdd_val=1.8 cmem=1p rleak=10M iin_amp=500n
+
+// MOSFET Models (same as digital blocks for compatibility)
+model nch mos1 type=n vth=0.4 kp=120u
+model pch mos1 type=p vth=-0.4 kp=40u
+
+// ============================================================
+// LEAKY INTEGRATE-AND-FIRE NEURON
+// ============================================================
+//
+// Biological analogy:
+//   - Cmem = membrane capacitance (stores charge like cell membrane)
+//   - Rleak = leak conductance (ion channels that cause decay)
+//   - Threshold = action potential trigger level
+//   - Reset = refractory period (membrane returns to rest)
+//
+// Circuit operation:
+//   1. Input current charges membrane capacitor
+//   2. Leakage resistor causes voltage decay (RC time constant)
+//   3. When Vmem crosses threshold, inverter chain triggers spike
+//   4. Spike feeds back to reset switch, discharging membrane
+//   5. Cycle repeats
+//
+// ============================================================
+
+// Power supply
+V_VDD (vdd 0) vsource dc=vdd_val
+
+// ------------------------------------------------------------
+// INPUT: Current pulses representing synaptic input
+// ------------------------------------------------------------
+// In a full system, this comes from synapse circuits
+// Here we use a current pulse train for testing
+I_in (vdd mem) isource type=pulse val0=0 val1=iin_amp \
+    delay=5n rise=100p fall=100p width=2n period=20n
+
+// ------------------------------------------------------------
+// MEMBRANE: Capacitor + Leakage
+// ------------------------------------------------------------
+// Membrane capacitor (integrates input current)
+Cmem (mem 0) capacitor c=cmem
+
+// Leakage resistor (causes exponential decay)
+// Tau = R * C = 10M * 1p = 10us (biological neurons ~10-100ms)
+// Scaled for simulation speed
+Rleak (mem 0) resistor r=rleak
+
+// ------------------------------------------------------------
+// THRESHOLD DETECTOR: Inverter chain (acts as comparator)
+// ------------------------------------------------------------
+// When Vmem rises above ~Vdd/2, output switches
+// Two inverters for sharp transition and correct polarity
+
+// Inverter 1: mem -> spike_n (inverted)
+MP1 (spike_n mem vdd vdd) pch w=2u l=1u
+MN1 (spike_n mem 0 0) nch w=1u l=1u
+
+// Inverter 2: spike_n -> spike (restored polarity)
+MP2 (spike spike_n vdd vdd) pch w=2u l=1u
+MN2 (spike spike_n 0 0) nch w=1u l=1u
+
+// ------------------------------------------------------------
+// RESET: Feedback discharge switch
+// ------------------------------------------------------------
+// When spike goes HIGH, NMOS turns on and discharges membrane
+// This creates the "refractory period" behavior
+// Weak transistor for controlled discharge rate
+
+MN_reset (mem spike 0 0) nch w=500n l=1u
+
+// ------------------------------------------------------------
+// OUTPUT BUFFER: Clean digital spike output
+// ------------------------------------------------------------
+MP3 (out spike vdd vdd) pch w=2u l=1u
+MN3 (out spike 0 0) nch w=1u l=1u
+
+// ============================================================
+// ANALYSIS
+// ============================================================
+
+// Transient: observe spiking behavior over multiple input pulses
+tran_test tran stop=200n
+
+// Save key signals
+save mem spike out
+
+// ============================================================
+// EXPECTED BEHAVIOR:
+// - mem: sawtooth-like waveform, charging then resetting
+// - spike: brief HIGH pulses when mem crosses threshold
+// - Spike rate increases with input current (rate coding)
+// ============================================================

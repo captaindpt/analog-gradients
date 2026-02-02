@@ -5,10 +5,31 @@ Instructions for any agent working in this repository.
 ## What This Is
 
 A testbed for AI-driven hardware design. You have tools to design, simulate, and verify digital circuits using Cadence Spectre on CMC Cloud.
+Current mission: evolve the verified GPU stack into a neuromorphic analog
+compute core (NeuroCore) while keeping reproducible verification.
+
+## Source of Truth
+
+- Knowledgebase navigation: `my-workspace/docs/INDEX.md`
+- Vision and product direction: `my-workspace/docs/vision.md`
+- Development workflow: `my-workspace/docs/DEVELOPMENT.md`
+- Technical status: `my-workspace/docs/STATUS.md`
+
+## Agent Bootstrap Order
+
+Read these before making changes:
+
+1. `my-workspace/docs/INDEX.md`
+2. `my-workspace/docs/vision.md`
+3. `my-workspace/docs/DEVELOPMENT.md`
+4. `my-workspace/docs/STATUS.md`
+5. `my-workspace/docs/armory/snapshot-2026-02-02/armory-summary.md`
 
 ## Your Task
 
-Build digital circuits from specifications. Use existing building blocks when available, create new ones when needed, verify everything via simulation.
+Build and verify digital/analog circuit blocks from specifications. Reuse
+existing building blocks when possible, create new ones when needed, and keep
+the repo aligned to the NeuroCore mission.
 
 ## Available Tools
 
@@ -71,24 +92,61 @@ exit()
 
 ## Verified Building Blocks
 
-| Component | File | Function |
-|-----------|------|----------|
-| Inverter | `netlists/inverter.scs` | OUT = ~IN |
-| NAND2 | `netlists/nand2.scs` | OUT = ~(A & B) |
-| NOR2 | `netlists/nor2.scs` | OUT = ~(A \| B) |
+### Level 5: CMOS Primitives
+
+- Inverter: `netlists/inverter.scs`
+- NAND2: `netlists/nand2.scs`
+- NOR2: `netlists/nor2.scs`
+
+### Level 4: Logic
+
+- AND2: `netlists/and2.scs`
+- OR2: `netlists/or2.scs`
+- XOR2: `netlists/xor2.scs`
+- XNOR2: `netlists/xnor2.scs`
+
+### Level 3: Blocks
+
+- MUX2: `netlists/mux2.scs`
+- Half Adder: `netlists/half_adder.scs`
+- Full Adder: `netlists/full_adder.scs`
+
+### Level 2: RTL
+
+- ALU1: `netlists/alu1.scs`
+- ALU4: `netlists/alu4.scs`
+
+### Level 1: Functional
+
+- PE1: `netlists/pe1.scs`
+- PE4: `netlists/pe4.scs`
+
+### Level 0: System
+
+- GPU Core: `netlists/gpu_core.scs`
+
+### Experimental / In Progress
+
+- LIF Neuron: `netlists/lif_neuron.scs` with `ocean/test_lif_neuron.ocn`
 
 ## Build Hierarchy
 
 ```
 Level 5: CMOS ✅      → inverter, nand2, nor2
-Level 4: Logic        → and2, or2, xor2 (use Level 5)
-Level 3: Blocks       → adder, mux (use Level 4)
-Level 2: RTL          → ALU, registers (use Level 3)
-Level 1: Functional   → PE, memory (use Level 2)
-Level 0: System       → GPU core (use Level 1)
+Level 4: Logic ✅     → and2, or2, xor2, xnor2
+Level 3: Blocks ✅    → mux2, half_adder, full_adder
+Level 2: RTL ✅       → alu1, alu4
+Level 1: Functional ✅→ pe1, pe4
+Level 0: System ✅    → gpu_core
 ```
 
 Build bottom-up. Each level uses components from the level below.
+
+## Next Build Track (Neuromorphic)
+
+1. Verify `lif_neuron`
+2. Build neuron array/tile blocks
+3. Integrate with existing PE/GPU scaffold where useful
 
 ## File Locations
 

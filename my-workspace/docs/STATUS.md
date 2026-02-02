@@ -1,6 +1,6 @@
 # GPU Building Blocks - Status
 
-**Last Updated:** 2026-02-01
+**Last Updated:** 2026-02-02
 
 ## Build Hierarchy
 
@@ -12,6 +12,17 @@ Level 2: RTL Components      ✅ COMPLETE
 Level 1: Functional Blocks   ✅ COMPLETE
 Level 0: System              ✅ COMPLETE
 ```
+
+Strategic direction reference: `my-workspace/docs/vision.md` (competition
+context in `competition/competition-plan.md`).
+
+## Current Development Focus
+
+Build path from verified digital GPU stack to a neuromorphic analog core:
+
+- Analog primitive bring-up: `lif_neuron`
+- Neuron composition and spike behavior verification
+- Small neuromorphic tile integration and test strategy
 
 ## Level 5: CMOS Primitives ✅
 
@@ -39,7 +50,7 @@ Level 0: System              ✅ COMPLETE
 - A=0, B=1 → 0.012V (LOW) ✓
 - A=1, B=1 → 0.004V (LOW) ✓
 
-## Level 4: Logic Gates (Next)
+## Level 4: Logic Gates
 
 | Component | Netlist | Simulation | Verification |
 |-----------|---------|------------|--------------|
@@ -101,26 +112,15 @@ source setup_cadence.sh
 
 ```
 analog-gradients/
+├── AGENTS.md             # Agent workflow rules
 ├── setup_cadence.sh      # Bash env setup for Cadence
 ├── build.sh              # Master build/test script
-├── STATUS.md             # This file
 ├── netlists/             # Spectre netlists (.scs)
-│   ├── inverter.scs
-│   ├── nand2.scs
-│   └── nor2.scs
 ├── ocean/                # OCEAN verification scripts (.ocn)
-│   ├── verify_inverter.ocn
-│   ├── test_nand2.ocn
-│   └── test_nor2.ocn
 ├── skill/                # Virtuoso SKILL scripts (.il)
-│   ├── L5_inverter.il
-│   ├── L5_nand2.il
-│   └── L5_nor2.il
-├── results/              # Simulation outputs
-│   ├── inverter/
-│   ├── nand2/
-│   └── nor2/
-└── lib/                  # Future: Reusable subcircuits
+├── results/              # Simulation outputs + *_test.txt reports
+├── competition/          # ICTGC strategy + source docs
+└── my-workspace/         # Knowledgebase, tickets, and logs
 ```
 
 ## Open Tickets

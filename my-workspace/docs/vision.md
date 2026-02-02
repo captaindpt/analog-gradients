@@ -2,115 +2,49 @@
 
 ## One-Liner
 
-**Voice-to-Silicon.** Ask an AI to build a GPU, watch it happen.
+Build **NeuroCore**: an analog neuromorphic compute core in standard CMOS,
+starting from the verified transistor-up GPU stack in this repo.
 
----
+## What We Are Making
 
-## The Demo
+We are building a development path, not just a single demo:
 
-A terminal. A voice command. An AI designs a GPU core from transistors up, verified at every level, in under a minute.
+1. Preserve and maintain the verified digital foundation (Level 0-5 stack).
+2. Add analog neuron and spiking primitives (starting with `lif_neuron`).
+3. Compose those primitives into a small neuromorphic compute tile.
+4. Package the story and technical evidence for ICTGC execution.
 
-```
-"Build me a 4-bit ALU"
+## Why This Repo Exists
 
-→ Agent reads AGENTS.md
-→ Finds building blocks (inverter, nand2, nor2)
-→ Composes gates (and2, or2, xor2)
-→ Builds adder from gates
-→ Builds ALU from adders
-→ Each step: simulate, verify, proceed
-→ Done. Verified ALU.
-```
+- To prove AI-assisted hardware development can move from device primitives to
+  system-level verified behavior.
+- To make the workflow reproducible for future agents and collaborators.
+- To turn simulation assets into credible competition and research artifacts.
 
----
+## Scope
 
-## What We're Building
+### In Scope (Now)
 
-A **testbed for AI-driven hardware design**.
+- Spectre/OCEAN simulation and verification
+- Reusable netlist building blocks
+- Deterministic PASS/FAIL reporting
+- Clear development docs under `my-workspace/docs/`
 
-- **Not** a full EDA tool
-- **Not** layout or tape-out ready
-- **Yes** a demonstration of speed and automation
-- **Yes** a library of verified building blocks
-- **Yes** a workflow any agent can follow
+### Out of Scope (For Now)
 
----
+- Layout, DRC/LVS, tape-out execution
+- Process-porting beyond the current verified flow
+- New EDA toolchain adoption without explicit planning
 
-## The Moat
+## North Star Outcomes
 
-Experience encoded into:
+- A clear, testable analog neuromorphic progression from current assets
+- Clean and navigable knowledgebase for future agent onboarding
+- Competition-ready narrative backed by real simulation evidence
 
-1. **Verified netlists** - Working circuits, tested
-2. **Clear templates** - How to create new components
-3. **Automated verification** - OCEAN scripts for truth tables
-4. **Documentation** - AGENTS.md, skill.md, CLAUDE.md
+## Key References
 
-An agent walks in cold, reads the docs, builds hardware.
-
----
-
-## Build Hierarchy
-
-```
-Level 0: GPU Core        ← The demo goal
-   ↑
-Level 1: PE Array, Memory, Control
-   ↑
-Level 2: ALU, SRAM, Registers
-   ↑
-Level 3: Adder, Mux, Decoder
-   ↑
-Level 4: AND, OR, XOR
-   ↑
-Level 5: Inverter, NAND, NOR  ← Foundation (DONE)
-```
-
----
-
-## Current State
-
-- **Level 5:** ✅ Complete (inverter, nand2, nor2)
-- **Tooling:** ✅ Working (build.sh, setup_cadence.sh)
-- **Docs:** ✅ Ready (AGENTS.md, skill.md, CLAUDE.md)
-- **Tickets:** ✅ Set up
-
----
-
-## What's Next
-
-1. **Codex builds Level 4** - AND, OR, XOR gates
-2. **Then Level 3** - Adders, muxes
-3. **Then Level 2** - ALU
-4. **Record the demo**
-
----
-
-## Constraints We Accept
-
-- No layout (simulation only)
-- No GUI (headless Spectre/OCEAN)
-- CMC Cloud dependency
-- Simple mos1 models (not PDK)
-
-These are fine. The point is **speed and automation**, not tape-out.
-
----
-
-## Success Criteria
-
-- [ ] Agent can build a component from spec without human help
-- [ ] Full hierarchy from transistor to ALU, verified
-- [ ] Demo video: Voice → GPU core in 60 seconds
-- [ ] Repository usable by any agent or human
-
----
-
-## Long-Term
-
-This is a stepping stone to:
-
-1. FABrIC IoT Challenge 2026
-2. Hardware-aware neural network training
-3. Neuromorphic computing research
-
-But for now: **make the demo work.**
+- Development process: `my-workspace/docs/DEVELOPMENT.md`
+- Progress tracker: `my-workspace/docs/STATUS.md`
+- Armory capability snapshot: `my-workspace/docs/armory/snapshot-2026-02-02/armory-summary.md`
+- Competition strategy: `competition/competition-plan.md`

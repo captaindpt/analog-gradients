@@ -1,2 +1,23 @@
+# Local research dumps
 papers/
 *.html
+
+# OS / editor noise
+.DS_Store
+*.swp
+
+# Local agent/session logs
+.claude/
+command.log
+
+# Cadence generated artifacts (keep *_test.txt reports)
+results/**/*.raw/
+results/**/psf/
+results/**/spectre.log
+results/**/logFile
+results/**/*.tran
+results/**/*.psfxl
+results/**/*.sig
+results/debug.txt
+results/env_test.txt
+results/_runlogs/*.log
