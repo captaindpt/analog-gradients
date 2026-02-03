@@ -113,7 +113,48 @@ Siemens Calibre smoke & BLOCKED (license) &
 \label{fig:stack-diagram}
 \end{figure}
 
+\section{Architecture Dissection and Compute Model}
+
+This work uses a bottom-up analog composition path:
+\texttt{synapse} \textrightarrow{} \texttt{lif\_neuron} \textrightarrow{} \texttt{neuron\_tile}
+\textrightarrow{} \texttt{neuro\_tile4} \textrightarrow{} \texttt{neuro\_tile4\_coupled}
+\textrightarrow{} \texttt{neuro\_tile4\_mixed\_signal}.
+The architecture note for paper drafting is maintained at
+\texttt{competition/paper/architecture-dissection.md}.
+
+\begin{table}[h]
+\centering
+\caption{Component-by-component architecture breakdown.}
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.9cm} >{\raggedright\arraybackslash}p{4.1cm} >{\raggedright\arraybackslash}p{4.8cm}}
+\toprule
+\textbf{Block} & \textbf{Mechanism} & \textbf{Compute role} \\
+\midrule
+Synapse & Charge injection + RC decay on \texttt{post} node & Converts input pulse stream into analog postsynaptic trajectory \\
+LIF neuron & Membrane RC integration + threshold inverter chain + reset NMOS & Converts trajectory crossing into spike events \\
+Neuron tile & Synapse output resistively coupled into membrane node & End-to-end local channel: pulse \textrightarrow{} state \textrightarrow{} event \\
+Neuro Tile4 & Four replicated channels with staggered drives & Encodes information in relative spike timing \\
+Neuro Tile4 Coupled & Feed-forward channel-to-channel injection links & Demonstrates asynchronous event propagation without clocking \\
+Neuro Tile4 Mixed-Signal & Digital \texttt{en} gates analog propagation transistors & Demonstrates digital control over analog compute path \\
+\bottomrule
+\end{tabular}
+\label{tab:arch-breakdown}
+\end{table}
+
+At model level, the dominant continuous-time behavior is captured by:
+\begin{align}
+\frac{dV_{\mathrm{post}}}{dt} &= \frac{I_{\mathrm{inj}}}{C_{\mathrm{post}}} - \frac{V_{\mathrm{post}}}{R_{\mathrm{decay}}C_{\mathrm{post}}} \\
+C_{\mathrm{mem}}\frac{dV_{\mathrm{mem}}}{dt} &= I_{\mathrm{in}} - \frac{V_{\mathrm{mem}}}{R_{\mathrm{leak}}} - I_{\mathrm{reset}}(t)
+\end{align}
+with event condition \(V_{\mathrm{mem}} \ge V_{\mathrm{th}}\) producing a spike and
+activating reset/coupling currents. In this framing, computation is carried by
+trajectory shape and event timing, not only by synchronized logic state updates.
+
 \section{Raw Electrical Data (No Smoothing)}
+
+Data provenance note:
+plots are drawn from exported CSV files in \texttt{competition/data/}, while
+pass/fail metrics come from OCEAN verification reports in \texttt{results/}.
+This keeps both waveform-level transparency and regression-style checks.
 
 \subsection{Synapse and Tile-Level Spiking}
 
@@ -165,7 +206,7 @@ Siemens Calibre smoke & BLOCKED (license) &
   \legend{spike0, spike1, spike2, spike3}
 \end{axis}
 \end{tikzpicture}
-\caption{Four-channel spiking behavior with measured first-spike staggering at 27.5/29.5/31.5/33.5 ns.}
+\caption{Four-channel spiking behavior showing preserved first-spike staggering across channels.}
 \label{fig:tile4-spikes}
 \end{figure}
 
@@ -224,19 +265,20 @@ Siemens Calibre smoke & BLOCKED (license) &
 
 \begin{table}[h]
 \centering
-\caption{Selected analog metrics extracted from verification artifacts.}
+\caption{Selected analog metrics from current verification reports (\texttt{results/*\_test.txt}).}
 \begin{tabular}{lll}
 \toprule
 \textbf{Block} & \textbf{Metric} & \textbf{Value} \\
 \midrule
-Synapse & \(V_{\text{post,max}}\) & \SI{1.575}{V} \\
+Synapse & \(V_{\text{post,max}}\) & \SI{1.418}{V} \\
 Synapse & Output pulse count & 6 \\
 LIF neuron & Total spikes detected & 10 \\
-LIF neuron & \(V_{\text{mem,max}}\) & \SI{1.573}{V} \\
-Neuron tile & Spike-node pulses & 12 \\
-Neuro Tile4 & First spike times & 27.5, 29.5, 31.5, 33.5 ns \\
-Neuro Tile4 Coupled & Membrane maxima & 0.569, 0.974, 1.268, 0.873 V \\
-Neuro Tile4 Coupled & Spike counts & 15, 15, 1, 1 \\
+LIF neuron & \(V_{\text{mem,max}}\) & \SI{1.651}{V} \\
+Neuron tile & Spike-node pulses & 11 \\
+Neuro Tile4 & First spike times & 47.5, 49.5, 51.5, 53.5 ns \\
+Neuro Tile4 Coupled & Membrane maxima & 0.642, 0.993, 1.216, 0.756 V \\
+Neuro Tile4 Coupled & Spike counts & 15, 15, 15, 15 \\
+Neuro Tile4 Mixed-Signal & Downstream counts pre/post \texttt{en} & 0 \textrightarrow{} 7 per channel \\
 \bottomrule
 \end{tabular}
 \label{tab:analog-metrics}
@@ -284,6 +326,24 @@ Spike-count vector \((s0,s1,s2,s3)\) & \multicolumn{2}{c}{(15, 15, 1, 1) at all 
 \bottomrule
 \end{tabular}
 \label{tab:sweep-envelope}
+\end{table}
+
+\section{Founder-Thesis Quantitative Evidence}
+
+\begin{table}[h]
+\centering
+\caption{Math-oriented evidence tied to the continuous-time compute claim.}
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.0cm} >{\raggedright\arraybackslash}p{2.2cm} >{\raggedright\arraybackslash}p{6.4cm}}
+\toprule
+\textbf{Evidence track} & \textbf{Value} & \textbf{Artifact} \\
+\midrule
+LIF decay-window ODE fit \(R^2\) & 0.931 & \texttt{competition/analysis/lif\_ode\_fit\_summary.md} \\
+Temporal sensitivity \(dt_{\text{spike0}}/dr_{fb}\) & -0.663 ns/kOhm & \texttt{competition/analysis/temporal\_sensitivity\_summary.md} \\
+Energy per spike (first-pass estimate) & 4.718 pJ/spike & \texttt{competition/analysis/lif\_energy\_summary.md} \\
+Mixed-signal gating check & pre-enable off, post-enable on & \texttt{competition/mixed-signal-smoke-evidence.md} \\
+\bottomrule
+\end{tabular}
+\label{tab:founder-evidence}
 \end{table}
 
 \section{Implementation Flow Artifacts}
