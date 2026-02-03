@@ -1,1 +1,50 @@
-Calibre DRC smoke status: BLOCKED (license unavailable)
+
+
+==================================================================================
+=== CALIBRE::DRC-H SUMMARY REPORT
+===
+Execution Date/Time:       Tue Feb  3 15:34:27 2026
+Calibre Version:           v2025.4_24.16    Mon Nov 3 13:40:37 PST 2025
+Rule File Pathname:        /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc_smoke.svrf
+Rule File Title:           
+Layout System:             GDS
+Layout Path(s):            /home/v71349/analog-gradients/implementation/fullflow_demo/work/innovus/out/alu4_flow_demo.gds
+Layout Primary Cell:       alu4_flow_demo
+Current Directory:         /home/v71349/analog-gradients
+User Name:                 v71349
+Maximum Results/RuleCheck: ALL
+Maximum Result Vertices:   4096
+DRC Results Database:      /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc.results (ASCII)
+Layout Depth:              ALL
+Text Depth:                PRIMARY
+Summary Report File:       /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc.summary (REPLACE)
+Geometry Flagging:         ACUTE = NO  SKEW = NO  ANGLED = NO  OFFGRID = NO
+                           NONSIMPLE POLYGON = NO  NONSIMPLE PATH = NO
+Excluded Cells:           
+CheckText Mapping:         COMMENT TEXT + RULE FILE INFORMATION
+Layers:                    MEMORY-BASED
+Keep Empty Checks:         YES
+----------------------------------------------------------------------------------
+--- RUNTIME WARNINGS
+---
+----------------------------------------------------------------------------------
+--- ORIGINAL LAYER STATISTICS
+---
+LAYER M1 ... TOTAL Original Geometry Count = 0 (0)
+LAYER M2 ... TOTAL Original Geometry Count = 0 (0)
+----------------------------------------------------------------------------------
+--- RULECHECK RESULTS STATISTICS
+---
+RULECHECK M1_WIDTH_CHECK ... TOTAL Result Count = 0 (0)
+RULECHECK M2_WIDTH_CHECK ... TOTAL Result Count = 0 (0)
+----------------------------------------------------------------------------------
+--- RULECHECK RESULTS STATISTICS (BY CELL)
+---
+----------------------------------------------------------------------------------
+--- SUMMARY
+---
+TOTAL CPU Time:                  0
+TOTAL REAL Time:                 0
+TOTAL Original Layer Geometries: 0 (0)
+TOTAL DRC RuleChecks Executed:   2
+TOTAL DRC Results Generated:     0 (0)

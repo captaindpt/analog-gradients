@@ -59,10 +59,11 @@ source setup_cadence.sh
 
 ## Start Here
 
-- Knowledgebase index (source-of-truth root): `my-workspace/docs/INDEX.md`
+- Context trail (canonical): `AGENTS.md` -> `my-workspace/README.md` -> `my-workspace/docs/INDEX.md`
 - Vision: `my-workspace/docs/vision.md`
 - Development playbook: `my-workspace/docs/DEVELOPMENT.md`
 - Technical status: `my-workspace/docs/STATUS.md`
+- Workspace operating loop: `my-workspace/docs/RANDEZVOUS.md`
 - Competition strategy packet: `competition/README.md`
 
 ## Repository Structure

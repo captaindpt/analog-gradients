@@ -5,16 +5,16 @@
 Create a judge-visible "from transistors to GDS-ready artifacts" demo that proves
 NeuroCore is not only simulated, but implementable through a real semiconductor flow.
 
-## Current Reality (2026-02-02)
+## Current Reality (2026-02-03)
 
 | Track | Status | Evidence |
 |------|--------|----------|
 | Analog path (`synapse` -> `neuro_tile4_coupled`) | PASS | `competition/verification-evidence.md` |
 | Digital path (CMOS -> GPU core) | PASS | `results/gpu_core_test.txt` |
-| Robustness snapshot (`neuro_tile4_coupled`) | 9/9 PASS | `competition/sweeps/neuro_tile4_coupled_sweep_summary.md` |
-| Synopsys DC smoke | BLOCKED (license) | `implementation/fullflow_demo/work/dc/reports/alu4_flow_demo_dc_fallback.warn` |
+| Robustness snapshot (`neuro_tile4_coupled`) | 63/63 PASS | `competition/sweeps/neuro_tile4_coupled_sweep_summary.md` |
+| Synopsys DC smoke | DEGRADED (`DB-1` target-library mismatch, fallback netlist) | `implementation/fullflow_demo/work/dc/reports/alu4_flow_demo_dc_target_lib.warn` |
 | Cadence Innovus smoke | PASS | `implementation/fullflow_demo/work/innovus/out/alu4_flow_demo.gds` |
-| Siemens Calibre smoke | BLOCKED (license) | `implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc.summary` |
+| Siemens Calibre smoke | PASS | `implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc.summary` |
 | One-command orchestration | PASS | `scripts/run_fullflow_smoke.sh` |
 
 ## Why This Is the Edge
@@ -107,12 +107,13 @@ middle.
 4. Script all steps into one replayable command chain
 5. Integrate outputs into `competition/` evidence files
 
-## Bring-Up Status (2026-02-02)
+## Bring-Up Status (2026-02-03)
 
 - `scripts/run_fullflow_smoke.sh` now replays the 3 stages in one command.
-- DC: script path validated, current environment blocked by `DCSH-1` license.
+- DC: license env is configured in-script; current blocker is `DB-1` target-library
+  compatibility (`.lib` vs expected `.db`) and fallback netlist usage.
 - Innovus: smoke P&R completed; DEF, reports, and GDS emitted.
-- Calibre: invocation validated; current environment blocked by DRC license.
+- Calibre: smoke DRC run completes with results database + summary output.
 - Artifact index: `competition/full-flow-smoke-evidence.md`.
 
 ## Success Criteria

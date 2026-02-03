@@ -1,6 +1,6 @@
 # Full-Flow Smoke Evidence (DC -> Innovus -> Calibre)
 
-**Date:** 2026-02-02  
+**Date:** 2026-02-03  
 **Target:** `alu4_flow_demo`  
 **Replay command:** `scripts/run_fullflow_smoke.sh`
 
@@ -8,9 +8,9 @@
 
 | Stage | Script | Result | Notes |
 |------|--------|--------|-------|
-| Synthesis | `scripts/run_dc_smoke.sh` | BLOCKED (license) | `dc_shell` runs, then reports `DCSH-1`; fallback mapped netlist is injected |
+| Synthesis | `scripts/run_dc_smoke.sh` | DEGRADED (fallback) | DC launches with license, but target library is not DB-compatible (`DB-1`/`UIO-3`); fallback mapped netlist is injected |
 | Place/Route | `scripts/run_innovus_smoke.sh` | PASS | Innovus completes and emits DEF, routed netlist, reports, and GDS |
-| Physical Verification | `scripts/run_calibre_smoke.sh` | BLOCKED (license) | Calibre runs and parses rule file; DRC license checkout fails |
+| Physical Verification | `scripts/run_calibre_smoke.sh` | PASS | Calibre DRC smoke runs to completion with `0` DRC results in summary |
 
 ## Key Artifacts
 
@@ -18,7 +18,7 @@
 
 - `implementation/fullflow_demo/work/dc/dc_shell.log`
 - `implementation/fullflow_demo/work/dc/out/alu4_flow_demo_mapped.v`
-- `implementation/fullflow_demo/work/dc/reports/alu4_flow_demo_dc_fallback.warn`
+- `implementation/fullflow_demo/work/dc/reports/alu4_flow_demo_dc_target_lib.warn`
 
 ### Innovus
 
@@ -36,7 +36,6 @@
 - `implementation/fullflow_demo/work/calibre/calibre_drc.log`
 - `implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc_smoke.svrf`
 - `implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc.summary`
-- `implementation/fullflow_demo/work/calibre/alu4_flow_demo_calibre_license.warn`
 
 ### Stage Logs
 
@@ -55,8 +54,9 @@
 ## Notes for Demo Narrative
 
 - The implementation chain is reproducible and script-driven in one command.
-- Current environment licenses block full DC synthesis and Calibre DRC signoff.
-- Innovus stage proves physical-design execution and GDS emission path.
+- Calibre stage now runs with configured license defaults and produces a DRC summary.
+- Current limiting issue is DC target-library compatibility (`DB-1`), not license checkout.
+- Innovus stage continues to prove physical-design execution and GDS emission path.
 - Use `FULLFLOW_STRICT=1 scripts/run_fullflow_smoke.sh` when a hard fail is
-  preferred for blocked stages.
-- Strict-mode behavior verified on 2026-02-02 (`exit 20` with current licenses).
+  preferred for degraded stages.
+- Strict-mode behavior verified on 2026-02-03 (`exit 20` while DB-1 fallback persists).
