@@ -1,9 +1,9 @@
 === NOR2 Verification ===
-Date: Feb  2 16:42:08 2026
+Date: Feb  2 18:47:12 2026
 
-A=0, B=0: Vout=1.766 V [PASS]
-A=1, B=0: Vout=0.014 V [PASS]
-A=0, B=1: Vout=0.012 V [PASS]
-A=1, B=1: Vout=0.004 V [PASS]
+A=0, B=0: Vout=1.800 V [PASS]
+A=1, B=0: Vout=0.000 V [PASS]
+A=0, B=1: Vout=0.000 V [PASS]
+A=1, B=1: Vout=-0.000 V [PASS]
 
 === PASS: NOR2 truth table verified ===

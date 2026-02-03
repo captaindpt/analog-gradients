@@ -10,7 +10,8 @@ This folder is for simulation outputs.
 ## Do not keep in version control
 
 - Spectre raw waveforms (`*.raw/`, `*.tran`, `*.psfxl`, `*.sig`)
-- Spectre/OCEAN logs (`spectre.log`, `logFile`, run logs)
+- Spectre/OCEAN logs (`spectre.log`, `ocean.log`, `logFile`, run logs)
+- Auto-generated run manifests (`results/_runlogs/*.manifest.txt`)
 - Temporary debug/environment files
 
 The root `.gitignore` is configured to ignore generated artifacts while keeping

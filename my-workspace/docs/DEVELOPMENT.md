@@ -12,9 +12,10 @@ credible implementation readiness through a reproducible full-flow path.
 
 1. Read `my-workspace/docs/INDEX.md`.
 2. Read `my-workspace/docs/vision.md`.
-3. Read `my-workspace/docs/STATUS.md`.
-4. Read `AGENTS.md`.
+3. Read `my-workspace/docs/DEVELOPMENT.md`.
+4. Read `my-workspace/docs/STATUS.md`.
 5. Read `my-workspace/docs/armory/snapshot-2026-02-02/armory-summary.md`.
+6. Read `AGENTS.md`.
 
 ## Workflow
 
@@ -24,6 +25,22 @@ credible implementation readiness through a reproducible full-flow path.
 4. Implement verification in `ocean/test_<name>.ocn`.
 5. Add component wiring in `build.sh` if new top-level target.
 6. Re-run verification and record outcomes in `results/<name>_test.txt`.
+
+## Auditability Guardrails (Mandatory)
+
+1. Build is fail-closed (`set -euo pipefail`) and must not continue after errors.
+2. Each run must start clean for that component:
+   - remove previous raw directory
+   - remove previous `spectre.log`, `ocean.log`, and result txt
+3. PASS is only valid if both conditions hold:
+   - fresh raw artifact exists (`*.raw/tran_test.tran.tran.psfxl`)
+   - OCEAN result file exists and contains `PASS`
+4. `./build.sh all` must emit:
+   - timestamped run log: `results/_runlogs/build_all_<ts>.log`
+   - timestamped manifest: `results/_runlogs/build_all_<ts>.manifest.txt`
+5. Keep waveforms/logs local-only (ignored by git); keep human-readable
+   verification summaries (`results/*_test.txt`, `results/inverter_verify.txt`)
+   in version control.
 
 ## Competition Edge Workflow (Transistor -> GDSII Demo)
 

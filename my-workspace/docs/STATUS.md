@@ -2,6 +2,15 @@
 
 **Last Updated:** 2026-02-02
 
+## Latest Audited Full Run
+
+- Command: `./build.sh all`
+- Local run window: 2026-02-02 18:46:50 -> 18:49:41
+- Manifest: `results/_runlogs/build_all_20260202_184650.manifest.txt`
+- Log: `results/_runlogs/build_all_20260202_184650.log`
+- Result: PASS for full digital stack + analog path with per-component fresh raw
+  artifact records in manifest.
+
 ## Build Hierarchy
 
 ```
@@ -24,8 +33,12 @@ Build path from verified digital GPU stack to a neuromorphic analog core:
 - Neuron composition and spike behavior verification: `neuron_tile` ✅ PASS
 - Small neuromorphic tile integration: `neuro_tile4` ✅ PASS
 - Coupled propagation demo: `neuro_tile4_coupled` ✅ PASS
+- Audit hardening: fail-closed build + fresh-artifact checks + run manifests ✅
+- Verification-depth hardening: PE4/GPU full-lane checks (80 assertions each) ✅
 - One-terminal transistor->GDSII demo path: planning + bring-up 🔄
 - Founder-thesis evidence track (clockless continuous-time compute): activated 🔄
+- Founder-evidence rigor hardening (model fidelity + sensitivity resolution): next 🔄
+  - Tracking ticket: `my-workspace/tickets/0013-evidence-rigor-hardening.md`
 
 ## Milestone: Founder Thesis Activated (2026-02-02)
 
@@ -47,7 +60,10 @@ Founder-evidence artifacts:
 
 Founder-evidence snapshot:
 - LIF decay-window ODE fit (12ns-19ns): `R^2 = 0.931`
+- LIF full-window ODE fit remains weak: `R^2 = 0.029` (not yet explanatory)
 - Coupled-tile temporal sensitivity: `dt_spike0/dr_fb ≈ -0.663 ns/kOhm`
+- Temporal-sensitivity dataset is still coarse (0.5ns event quantization), so
+  invariance across `rleak` is treated as preliminary.
 - LIF first-pass energy per spike: `~4.718 pJ/spike` (0-200ns window)
 - Mixed-signal gating: downstream spikes `0` pre-enable -> `7` post-enable
 
@@ -162,15 +178,13 @@ Full-flow smoke evidence:
 | Component | Netlist | Simulation | Verification |
 |-----------|---------|------------|--------------|
 | PE1       | ✅ | ✅ | ✅ PASS |
-| PE4       | ✅ | ✅ | ✅ PASS* |
+| PE4       | ✅ | ✅ | ✅ PASS |
 
 ## Level 0: System
 
 | Component | Netlist | Simulation | Verification |
 |-----------|---------|------------|--------------|
-| GPU Core  | ✅ | ✅ | ✅ PASS* |
-
-*Spot-check verification for PE4 and GPU Core uses PE0 outputs only.*
+| GPU Core  | ✅ | ✅ | ✅ PASS |
 
 ## Tooling
 

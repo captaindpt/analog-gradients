@@ -1,9 +1,9 @@
 === OR2 Verification ===
-Date: Feb  2 16:42:24 2026
+Date: Feb  2 18:47:28 2026
 
-A=0, B=0: Vout=0.010 V [PASS]
-A=1, B=0: Vout=1.781 V [PASS]
-A=0, B=1: Vout=1.781 V [PASS]
-A=1, B=1: Vout=1.782 V [PASS]
+A=0, B=0: Vout=0.000 V [PASS]
+A=1, B=0: Vout=1.800 V [PASS]
+A=0, B=1: Vout=1.800 V [PASS]
+A=1, B=1: Vout=1.800 V [PASS]
 
 === PASS: OR2 truth table verified ===

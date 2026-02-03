@@ -57,6 +57,9 @@ source setup_cadence.sh
 ./build.sh all
 ```
 
+For auditable full runs, use the generated files under `results/_runlogs/`
+(`build_all_<timestamp>.log` and `.manifest.txt`).
+
 ## Start Here
 
 - Knowledgebase index (source-of-truth root): `my-workspace/docs/INDEX.md`
@@ -91,3 +94,10 @@ analog-gradients/
 - GPU spec: `my-workspace/docs/gpu-spec.md`
 - Tickets: `my-workspace/tickets/`
 - Logs: `my-workspace/logs/`
+
+## Results Policy
+
+- Commit: `results/*_test.txt` and `results/inverter_verify.txt`
+- Do not commit: raw waveforms/logs (`results/**/*.raw/`, `spectre.log`,
+  `ocean.log`, run logs/manifests)
+- See `results/README.md` for full policy.

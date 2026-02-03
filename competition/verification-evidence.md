@@ -42,6 +42,19 @@ scripts/analyze_lif_energy.sh
 | Neuro Tile4 Mixed-Signal | `results/neuro_tile4_mixed_signal_test.txt` | PASS | digital `en` gates analog propagation (off before enable, active after) |
 | GPU Core (baseline) | `results/gpu_core_test.txt` | PASS | Verified digital foundation remains intact |
 
+## Auditability Snapshot (Latest Full Run)
+
+- Audited command: `./build.sh all`
+- Latest manifest: `results/_runlogs/build_all_20260202_184650.manifest.txt`
+- Latest log: `results/_runlogs/build_all_20260202_184650.log`
+- Manifest includes per-component PASS records with:
+  - raw waveform path
+  - raw byte size
+  - raw mtime (UTC)
+  - result-file path and mtime (UTC)
+- Note: raw waveforms/logs are intentionally git-ignored; audit evidence is the
+  manifest + committed verification summaries.
+
 ## Neuro Tile4 Highlights
 
 - Membrane maxima: `0.792V` for channels 0-3
@@ -73,3 +86,9 @@ scripts/analyze_lif_energy.sh
 - Temporal sensitivity summary: `competition/analysis/temporal_sensitivity_summary.md`
 - Energy-per-event summary: `competition/analysis/lif_energy_summary.md`
 - Mixed-signal gating summary: `competition/mixed-signal-smoke-evidence.md`
+
+Current rigor caveats:
+- Full-window LIF ODE fit is currently weak (`R^2 = 0.029`); decay-window fit
+  is strong (`R^2 = 0.931`) but narrower in scope.
+- Coupled-tile temporal slopes are quantized by current measurement resolution
+  and sweep granularity; treat as preliminary trend evidence.

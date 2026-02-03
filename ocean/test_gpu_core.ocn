@@ -1,4 +1,4 @@
-; test_gpu_core.ocn - Verify GPU core (PE0 spot checks)
+; test_gpu_core.ocn - Verify GPU core (all PEs / all op windows)
 ; Run: ocean -nograph < test_gpu_core.ocn
 
 out = outfile("/home/v71349/analog-gradients/results/gpu_core_test.txt" "w")
@@ -14,62 +14,174 @@ vth_low = 0.2 * vdd
 vth_high = 0.8 * vdd
 
 pass = t
+fail_count = 0
+total_checks = 0
 
+; Collect all PE outputs.
 vy0_0 = v("y0_0")
 vy0_1 = v("y0_1")
 vy0_2 = v("y0_2")
 vy0_3 = v("y0_3")
 vcout0 = v("cout0")
 
-if(vy0_0 && vy0_1 && vy0_2 && vy0_3 && vcout0 then
-    ; t=5ns: AND -> Y=0x1
-    v = value(vy0_0 5n)
-    if(v > vth_high then t else pass=nil)
-    v = value(vy0_1 5n)
-    if(v < vth_low then t else pass=nil)
-    v = value(vy0_2 5n)
-    if(v < vth_low then t else pass=nil)
-    v = value(vy0_3 5n)
-    if(v < vth_low then t else pass=nil)
+vy1_0 = v("y1_0")
+vy1_1 = v("y1_1")
+vy1_2 = v("y1_2")
+vy1_3 = v("y1_3")
+vcout1 = v("cout1")
 
-    ; t=15ns: OR -> Y=0xE
-    v = value(vy0_0 15n)
-    if(v < vth_low then t else pass=nil)
-    v = value(vy0_1 15n)
-    if(v > vth_high then t else pass=nil)
-    v = value(vy0_2 15n)
-    if(v > vth_high then t else pass=nil)
-    v = value(vy0_3 15n)
-    if(v > vth_high then t else pass=nil)
+vy2_0 = v("y2_0")
+vy2_1 = v("y2_1")
+vy2_2 = v("y2_2")
+vy2_3 = v("y2_3")
+vcout2 = v("cout2")
 
-    ; t=25ns: XOR -> Y=0xF
-    v = value(vy0_0 25n)
-    if(v > vth_high then t else pass=nil)
-    v = value(vy0_1 25n)
-    if(v > vth_high then t else pass=nil)
-    v = value(vy0_2 25n)
-    if(v > vth_high then t else pass=nil)
-    v = value(vy0_3 25n)
-    if(v > vth_high then t else pass=nil)
+vy3_0 = v("y3_0")
+vy3_1 = v("y3_1")
+vy3_2 = v("y3_2")
+vy3_3 = v("y3_3")
+vcout3 = v("cout3")
 
-    ; t=35ns: ADD -> Y=0x0, COUT=1
-    v = value(vy0_0 35n)
-    if(v < vth_low then t else pass=nil)
-    v = value(vy0_1 35n)
-    if(v < vth_low then t else pass=nil)
-    v = value(vy0_2 35n)
-    if(v < vth_low then t else pass=nil)
-    v = value(vy0_3 35n)
-    if(v < vth_low then t else pass=nil)
-    v = value(vcout0 35n)
-    if(v > vth_high then t else pass=nil)
+if(vy0_0 && vy0_1 && vy0_2 && vy0_3 && vcout0 &&
+   vy1_0 && vy1_1 && vy1_2 && vy1_3 && vcout1 &&
+   vy2_0 && vy2_1 && vy2_2 && vy2_3 && vcout2 &&
+   vy3_0 && vy3_1 && vy3_2 && vy3_3 && vcout3 then
+
+    procedure(check_bit(name wf ts expect)
+        let((v ok)
+            total_checks = total_checks + 1
+            v = value(wf ts)
+            if(expect == 1 then
+                ok = (v > vth_high)
+            else
+                ok = (v < vth_low)
+            )
+
+            if(ok then
+                fprintf(out "  OK   %-6s @%5.1fns = %.3fV expect %d\n" name ts*1e9 v expect)
+            else
+                fprintf(out "  FAIL %-6s @%5.1fns = %.3fV expect %d\n" name ts*1e9 v expect)
+                pass = nil
+                fail_count = fail_count + 1
+            )
+        )
+    )
+
+    fprintf(out "Thresholds: LOW<%.3fV HIGH>%.3fV\n\n" vth_low vth_high)
+
+    ; t=5ns, opcode=AND
+    fprintf(out "Window 5ns (AND):\n")
+    check_bit("y0_0" vy0_0 5n 1)
+    check_bit("y0_1" vy0_1 5n 0)
+    check_bit("y0_2" vy0_2 5n 0)
+    check_bit("y0_3" vy0_3 5n 0)
+    check_bit("cout0" vcout0 5n 0)
+    check_bit("y1_0" vy1_0 5n 0)
+    check_bit("y1_1" vy1_1 5n 0)
+    check_bit("y1_2" vy1_2 5n 0)
+    check_bit("y1_3" vy1_3 5n 1)
+    check_bit("cout1" vcout1 5n 1)
+    check_bit("y2_0" vy2_0 5n 0)
+    check_bit("y2_1" vy2_1 5n 0)
+    check_bit("y2_2" vy2_2 5n 1)
+    check_bit("y2_3" vy2_3 5n 0)
+    check_bit("cout2" vcout2 5n 0)
+    check_bit("y3_0" vy3_0 5n 0)
+    check_bit("y3_1" vy3_1 5n 0)
+    check_bit("y3_2" vy3_2 5n 0)
+    check_bit("y3_3" vy3_3 5n 0)
+    check_bit("cout3" vcout3 5n 0)
+    fprintf(out "\n")
+
+    ; t=15ns, opcode=OR
+    fprintf(out "Window 15ns (OR):\n")
+    check_bit("y0_0" vy0_0 15n 0)
+    check_bit("y0_1" vy0_1 15n 1)
+    check_bit("y0_2" vy0_2 15n 1)
+    check_bit("y0_3" vy0_3 15n 1)
+    check_bit("cout0" vcout0 15n 0)
+    check_bit("y1_0" vy1_0 15n 1)
+    check_bit("y1_1" vy1_1 15n 1)
+    check_bit("y1_2" vy1_2 15n 1)
+    check_bit("y1_3" vy1_3 15n 0)
+    check_bit("cout1" vcout1 15n 0)
+    check_bit("y2_0" vy2_0 15n 1)
+    check_bit("y2_1" vy2_1 15n 1)
+    check_bit("y2_2" vy2_2 15n 1)
+    check_bit("y2_3" vy2_3 15n 0)
+    check_bit("cout2" vcout2 15n 0)
+    check_bit("y3_0" vy3_0 15n 0)
+    check_bit("y3_1" vy3_1 15n 1)
+    check_bit("y3_2" vy3_2 15n 1)
+    check_bit("y3_3" vy3_3 15n 0)
+    check_bit("cout3" vcout3 15n 0)
+    fprintf(out "\n")
+
+    ; t=25ns, opcode=XOR
+    fprintf(out "Window 25ns (XOR):\n")
+    check_bit("y0_0" vy0_0 25n 1)
+    check_bit("y0_1" vy0_1 25n 1)
+    check_bit("y0_2" vy0_2 25n 1)
+    check_bit("y0_3" vy0_3 25n 1)
+    check_bit("cout0" vcout0 25n 0)
+    check_bit("y1_0" vy1_0 25n 0)
+    check_bit("y1_1" vy1_1 25n 0)
+    check_bit("y1_2" vy1_2 25n 1)
+    check_bit("y1_3" vy1_3 25n 0)
+    check_bit("cout1" vcout1 25n 0)
+    check_bit("y2_0" vy2_0 25n 1)
+    check_bit("y2_1" vy2_1 25n 1)
+    check_bit("y2_2" vy2_2 25n 1)
+    check_bit("y2_3" vy2_3 25n 0)
+    check_bit("cout2" vcout2 25n 1)
+    check_bit("y3_0" vy3_0 25n 1)
+    check_bit("y3_1" vy3_1 25n 0)
+    check_bit("y3_2" vy3_2 25n 0)
+    check_bit("y3_3" vy3_3 25n 0)
+    check_bit("cout3" vcout3 25n 1)
+    fprintf(out "\n")
+
+    ; t=35ns, opcode=ADD
+    fprintf(out "Window 35ns (ADD):\n")
+    check_bit("y0_0" vy0_0 35n 0)
+    check_bit("y0_1" vy0_1 35n 0)
+    check_bit("y0_2" vy0_2 35n 0)
+    check_bit("y0_3" vy0_3 35n 0)
+    check_bit("cout0" vcout0 35n 1)
+    check_bit("y1_0" vy1_0 35n 1)
+    check_bit("y1_1" vy1_1 35n 0)
+    check_bit("y1_2" vy1_2 35n 0)
+    check_bit("y1_3" vy1_3 35n 0)
+    check_bit("cout1" vcout1 35n 1)
+    check_bit("y2_0" vy2_0 35n 0)
+    check_bit("y2_1" vy2_1 35n 0)
+    check_bit("y2_2" vy2_2 35n 1)
+    check_bit("y2_3" vy2_3 35n 0)
+    check_bit("cout2" vcout2 35n 1)
+    check_bit("y3_0" vy3_0 35n 0)
+    check_bit("y3_1" vy3_1 35n 0)
+    check_bit("y3_2" vy3_2 35n 1)
+    check_bit("y3_3" vy3_3 35n 1)
+    check_bit("cout3" vcout3 35n 0)
+    fprintf(out "\n")
+
 else
     pass = nil
+    fail_count = fail_count + 1
+    fprintf(out "ERROR: missing one or more required output waveforms\n")
 )
 
+fprintf(out "Checks run: %d\n" total_checks)
+if(total_checks != 80 then
+    fprintf(out "FAIL: expected 80 checks but observed %d\n" total_checks)
+    pass = nil
+    fail_count = fail_count + 1
+)
+fprintf(out "Failures: %d\n" fail_count)
 fprintf(out "\n")
+
 if(pass then
-    fprintf(out "=== PASS: GPU core verification (PE0 spot checks) ===\n")
+    fprintf(out "=== PASS: GPU core verification (all PEs / all op windows) ===\n")
 else
     fprintf(out "=== FAIL: GPU core verification failed ===\n")
 )

@@ -1,5 +1,97 @@
 === GPU CORE Verification ===
-Date: Feb  2 16:43:45 2026
+Date: Feb  2 18:48:50 2026
 
+Thresholds: LOW<0.360V HIGH>1.440V
 
-=== PASS: GPU core verification (PE0 spot checks) ===
+Window 5ns (AND):
+  OK   y0_0   @  5.0ns = 1.800V expect 1
+  OK   y0_1   @  5.0ns = 0.000V expect 0
+  OK   y0_2   @  5.0ns = 0.000V expect 0
+  OK   y0_3   @  5.0ns = 0.000V expect 0
+  OK   cout0  @  5.0ns = 0.000V expect 0
+  OK   y1_0   @  5.0ns = 0.000V expect 0
+  OK   y1_1   @  5.0ns = 0.000V expect 0
+  OK   y1_2   @  5.0ns = 0.000V expect 0
+  OK   y1_3   @  5.0ns = 1.800V expect 1
+  OK   cout1  @  5.0ns = 1.800V expect 1
+  OK   y2_0   @  5.0ns = 0.000V expect 0
+  OK   y2_1   @  5.0ns = 0.000V expect 0
+  OK   y2_2   @  5.0ns = 1.800V expect 1
+  OK   y2_3   @  5.0ns = 0.000V expect 0
+  OK   cout2  @  5.0ns = 0.000V expect 0
+  OK   y3_0   @  5.0ns = 0.000V expect 0
+  OK   y3_1   @  5.0ns = 0.000V expect 0
+  OK   y3_2   @  5.0ns = 0.000V expect 0
+  OK   y3_3   @  5.0ns = 0.000V expect 0
+  OK   cout3  @  5.0ns = 0.000V expect 0
+
+Window 15ns (OR):
+  OK   y0_0   @ 15.0ns = 0.000V expect 0
+  OK   y0_1   @ 15.0ns = 1.800V expect 1
+  OK   y0_2   @ 15.0ns = 1.800V expect 1
+  OK   y0_3   @ 15.0ns = 1.800V expect 1
+  OK   cout0  @ 15.0ns = 0.000V expect 0
+  OK   y1_0   @ 15.0ns = 1.800V expect 1
+  OK   y1_1   @ 15.0ns = 1.800V expect 1
+  OK   y1_2   @ 15.0ns = 1.800V expect 1
+  OK   y1_3   @ 15.0ns = 0.000V expect 0
+  OK   cout1  @ 15.0ns = 0.000V expect 0
+  OK   y2_0   @ 15.0ns = 1.800V expect 1
+  OK   y2_1   @ 15.0ns = 1.800V expect 1
+  OK   y2_2   @ 15.0ns = 1.800V expect 1
+  OK   y2_3   @ 15.0ns = 0.000V expect 0
+  OK   cout2  @ 15.0ns = 0.000V expect 0
+  OK   y3_0   @ 15.0ns = 0.000V expect 0
+  OK   y3_1   @ 15.0ns = 1.800V expect 1
+  OK   y3_2   @ 15.0ns = 1.800V expect 1
+  OK   y3_3   @ 15.0ns = 0.000V expect 0
+  OK   cout3  @ 15.0ns = 0.000V expect 0
+
+Window 25ns (XOR):
+  OK   y0_0   @ 25.0ns = 1.800V expect 1
+  OK   y0_1   @ 25.0ns = 1.800V expect 1
+  OK   y0_2   @ 25.0ns = 1.800V expect 1
+  OK   y0_3   @ 25.0ns = 1.800V expect 1
+  OK   cout0  @ 25.0ns = 0.000V expect 0
+  OK   y1_0   @ 25.0ns = 0.000V expect 0
+  OK   y1_1   @ 25.0ns = 0.000V expect 0
+  OK   y1_2   @ 25.0ns = 1.800V expect 1
+  OK   y1_3   @ 25.0ns = 0.000V expect 0
+  OK   cout1  @ 25.0ns = 0.000V expect 0
+  OK   y2_0   @ 25.0ns = 1.800V expect 1
+  OK   y2_1   @ 25.0ns = 1.800V expect 1
+  OK   y2_2   @ 25.0ns = 1.800V expect 1
+  OK   y2_3   @ 25.0ns = 0.000V expect 0
+  OK   cout2  @ 25.0ns = 1.800V expect 1
+  OK   y3_0   @ 25.0ns = 1.800V expect 1
+  OK   y3_1   @ 25.0ns = 0.000V expect 0
+  OK   y3_2   @ 25.0ns = 0.000V expect 0
+  OK   y3_3   @ 25.0ns = 0.000V expect 0
+  OK   cout3  @ 25.0ns = 1.800V expect 1
+
+Window 35ns (ADD):
+  OK   y0_0   @ 35.0ns = 0.000V expect 0
+  OK   y0_1   @ 35.0ns = 0.000V expect 0
+  OK   y0_2   @ 35.0ns = 0.000V expect 0
+  OK   y0_3   @ 35.0ns = 0.000V expect 0
+  OK   cout0  @ 35.0ns = 1.800V expect 1
+  OK   y1_0   @ 35.0ns = 1.800V expect 1
+  OK   y1_1   @ 35.0ns = 0.000V expect 0
+  OK   y1_2   @ 35.0ns = 0.000V expect 0
+  OK   y1_3   @ 35.0ns = 0.000V expect 0
+  OK   cout1  @ 35.0ns = 1.800V expect 1
+  OK   y2_0   @ 35.0ns = 0.000V expect 0
+  OK   y2_1   @ 35.0ns = 0.000V expect 0
+  OK   y2_2   @ 35.0ns = 1.800V expect 1
+  OK   y2_3   @ 35.0ns = 0.000V expect 0
+  OK   cout2  @ 35.0ns = 1.800V expect 1
+  OK   y3_0   @ 35.0ns = 0.000V expect 0
+  OK   y3_1   @ 35.0ns = 0.000V expect 0
+  OK   y3_2   @ 35.0ns = 1.800V expect 1
+  OK   y3_3   @ 35.0ns = 1.800V expect 1
+  OK   cout3  @ 35.0ns = 0.000V expect 0
+
+Checks run: 80
+Failures: 0
+
+=== PASS: GPU core verification (all PEs / all op windows) ===

@@ -5,6 +5,8 @@ papers/
 # OS / editor noise
 .DS_Store
 *.swp
+__pycache__/
+*.pyc
 
 # Local agent/session logs
 .claude/
@@ -14,10 +16,13 @@ command.log
 results/**/*.raw/
 results/**/psf/
 results/**/spectre.log
+results/**/ocean.log
 results/**/logFile
 results/**/*.tran
 results/**/*.psfxl
 results/**/*.sig
+results/**/*_sweep_tmp.scs
 results/debug.txt
 results/env_test.txt
 results/_runlogs/*.log
+results/_runlogs/*.manifest.txt

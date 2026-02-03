@@ -18,7 +18,7 @@ verification and builds directly on the Level 4 gates.
 
 ### Acceptance Criteria
 - Netlist + OCEAN tests for each op
-- Truth-table-based spot checks at multiple vectors
+- Deterministic vector checks with explicit expected outputs
 - Integrated ALU netlist passes OCEAN verification
 
 ## GPU-Lite v1 (M1)
@@ -60,7 +60,7 @@ verification and builds directly on the Level 4 gates.
 
 ### Acceptance Criteria
 - `gpu_core.scs` netlist + `test_gpu_core.ocn`
-- Spot-check verification passes
+- Full-lane verification passes across all opcode windows
 
 ---
 

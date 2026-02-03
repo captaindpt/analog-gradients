@@ -7,8 +7,9 @@ This is the primary navigation root for planning and development.
 1. Vision and product direction: `my-workspace/docs/vision.md`
 2. Development workflow: `my-workspace/docs/DEVELOPMENT.md`
 3. Technical progress tracker: `my-workspace/docs/STATUS.md`
-4. Agent operating rules: `AGENTS.md`
-5. Tooling quick reference: `skill.md`
+4. Armory capability snapshot: `my-workspace/docs/armory/snapshot-2026-02-02/armory-summary.md`
+5. Agent operating rules: `AGENTS.md`
+6. Tooling quick reference: `skill.md`
 
 ## Core Docs
 
@@ -36,6 +37,13 @@ This is the primary navigation root for planning and development.
 - Session logs: `my-workspace/logs/`
 - Tickets: `my-workspace/tickets/`
 - Competition strategy docs: `competition/`
+
+## Auditability References
+
+- Build artifact policy: `results/README.md`
+- Full-run logs/manifests: `results/_runlogs/`
+- Hardening log: `my-workspace/logs/2026-02-02-audit-hardening.md`
+- Coverage hardening log: `my-workspace/logs/2026-02-02-pe4-gpu-coverage-hardening.md`
 
 ## Repo Hygiene Rules
 

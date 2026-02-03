@@ -120,4 +120,5 @@ else
 )
 
 close(out)
+printf("Done. Results in: ~/analog-gradients/results/neuro_tile4_mixed_signal_test.txt\n")
 exit()

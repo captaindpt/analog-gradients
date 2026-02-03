@@ -33,20 +33,33 @@ NeuroCore demonstrates:
 | Parameter robustness | `competition/sweeps/neuro_tile4_coupled_sweep_summary.md` (9/9 PASS) |
 | Implementation credibility | `competition/full-flow-smoke-evidence.md` |
 
-## Next Evidence Targets (Math-Heavy)
+## Current Evidence Status (Phase 1 complete, rigor pass pending)
 
-1. **ODE-fit validation** ✅
+1. **ODE-fit validation** ✅ (phase-1)
    - Artifact: `competition/analysis/lif_ode_fit_summary.md`
-   - Highlight: decay-window fit (12ns-19ns) reaches \(R^2 = 0.931\).
-2. **Temporal sensitivity extraction** ✅
+   - Current readout:
+     - decay-window fit (12ns-19ns): \(R^2 = 0.931\)
+     - full-window fit: \(R^2 = 0.029\) (insufficient as global model)
+2. **Temporal sensitivity extraction** ✅ (phase-1)
    - Artifact: `competition/analysis/temporal_sensitivity_summary.md`
-   - Highlight: \(dt_{spike0}/dr_{fb} \approx -0.663 \,\text{ns}/\text{k}\Omega\) across tested \(r_{leak}\).
-3. **Energy-per-event estimate** ✅
+   - Current readout:
+     - \(dt_{spike0}/dr_{fb} \approx -0.663 \,\text{ns}/\text{k}\Omega\)
+     - slope invariance across tested \(r_{leak}\) is currently limited by sweep
+       granularity and event-time quantization.
+3. **Energy-per-event estimate** ✅ (first pass)
    - Artifact: `competition/analysis/lif_energy_summary.md`
-   - Highlight: first-pass estimate \(\approx 4.718\,\text{pJ/spike}\) (0-200ns window).
+   - Current readout: \(\approx 4.718\,\text{pJ/spike}\) in the 0-200ns window.
 4. **Mixed-signal coupling demo** ✅
    - Artifact: `competition/mixed-signal-smoke-evidence.md`
-   - Highlight: downstream spikes are suppressed before digital `en` and activate after `en` rises.
+   - Current readout: downstream spikes are suppressed before digital `en` and
+     activate after `en` rises.
+
+## Next Rigor Targets
+
+1. Expand ODE modeling from single linear form to piecewise/hybrid phases.
+2. Increase temporal-resolution robustness sweeps (finer \(r_{fb}\), \(r_{leak}\),
+   and transient resolution) before claiming stronger gradient behavior.
+3. Add uncertainty/error bars to energy-per-event reporting.
 
 ## Competition Pitch Line
 
