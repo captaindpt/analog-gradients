@@ -168,7 +168,7 @@ submission package.
 
 - Concept paper draft: `competition/concept-paper-v1.md`
 - Strategy and judging fit: `competition/competition-plan.md`
-- Program rules reference: `competition/ICTGC-Program-Guidelines.md`
+- Program rules reference: `competition/ictgc-reference/ICTGC-Program-Guidelines.md`
 - Evidence rollup: `competition/verification-evidence.md`,
   `competition/metrics-summary.md`
 - Verification evidence: `results/synapse_test.txt`, `results/lif_neuron_test.txt`,

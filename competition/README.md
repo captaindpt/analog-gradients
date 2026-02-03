@@ -44,11 +44,17 @@ Taiwan offers access to:
 | [voiceover-script.md](voiceover-script.md) | Word-for-word timed narration for the 3-minute recording |
 | [recording-pack/](recording-pack/) | Scene-organized capture assets and recording checklist |
 | [paper/README.md](paper/README.md) | LaTeX workthrough paper with raw-point dark-theme figures and tables |
-| [ICTGC-Program-Guidelines.md](ICTGC-Program-Guidelines.md) | Full competition rules, categories, judging criteria |
-| [ICTGC-Application-Form.md](ICTGC-Application-Form.md) | Resource requirement form (submitted after initial review) |
-| [ICTGC-IP-Statement-Eligibility.md](ICTGC-IP-Statement-Eligibility.md) | IP and eligibility declarations |
-| [ICTGC-Registration-Guide.md](ICTGC-Registration-Guide.md) | Step-by-step registration walkthrough |
-| [ICTGC-Past-Winners.md](ICTGC-Past-Winners.md) | Previous winners for reference |
+| [ictgc-reference/README.md](ictgc-reference/README.md) | Official ICTGC source materials (rules/forms/slides/PDFs) |
+
+## Folder Map
+
+- `analysis/` - founder-evidence artifacts (ODE, temporal sensitivity, energy, corners)
+- `data/` - waveform CSV exports
+- `plots/` - SVG plots generated from waveform data
+- `sweeps/` - robustness sweep CSV + summaries
+- `paper/` - LaTeX paper and supporting notes
+- `recording-pack/` - video capture pack
+- `ictgc-reference/` - official ICTGC documents and source PDFs
 
 ---
 
