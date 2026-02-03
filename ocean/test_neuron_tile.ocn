@@ -1,13 +1,13 @@
 ; test_neuron_tile.ocn - Verify synapse+LIF composition tile
 ; Run: ocean -nograph < test_neuron_tile.ocn
 
-out = outfile("/home/v71349/analog-gradients/results/neuron_tile_test.txt" "w")
+out = outfile("results/neuron_tile_test.txt" "w")
 fprintf(out "=== Neuron Tile Verification ===\n")
 fprintf(out "Synapse + LIF composition\n")
 fprintf(out "Date: %s\n\n" getCurrentTime())
 
 simulator('spectre)
-openResults("/home/v71349/analog-gradients/results/neuron_tile/neuron_tile.raw")
+openResults("results/neuron_tile/neuron_tile.raw")
 selectResult("tran_test-tran")
 
 vsyn = v("syn_post")

@@ -1,0 +1,202 @@
+; test_xor_spike2.ocn - Verify spike-domain XOR behavior
+; Run: ocean -nograph < test_xor_spike2.ocn
+
+out = outfile("results/xor_spike2_test.txt" "w")
+fprintf(out "=== XOR Spike2 Verification ===\n")
+fprintf(out "2-input spike-domain XOR compute demo\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("results/xor_spike2/xor_spike2.raw")
+selectResult("tran_test-tran")
+
+vmx00 = v("memx_00")
+vmx10 = v("memx_10")
+vmx01 = v("memx_01")
+vmx11 = v("memx_11")
+vma00 = v("mema_00")
+vma10 = v("mema_10")
+vma01 = v("mema_01")
+vma11 = v("mema_11")
+vsa00 = v("spike_a_00")
+vsa10 = v("spike_a_10")
+vsa01 = v("spike_a_01")
+vsa11 = v("spike_a_11")
+vsx00 = v("spike_x_00")
+vsx10 = v("spike_x_10")
+vsx01 = v("spike_x_01")
+vsx11 = v("spike_x_11")
+
+if(vmx00 && vmx10 && vmx01 && vmx11 && vma00 && vma10 && vma01 && vma11 \
+   && vsx00 && vsx10 && vsx01 && vsx11 && vsa00 && vsa10 && vsa01 && vsa11 then
+    pass = t
+    dt = 100p
+    vth = 0.9
+
+    fprintf(out "Waveform Analysis:\n")
+    fprintf(out "==================\n\n")
+
+    fprintf(out "Membrane maxima (V):\n")
+    fprintf(out "  00: %.3f\n" ymax(vmx00))
+    fprintf(out "  10: %.3f\n" ymax(vmx10))
+    fprintf(out "  01: %.3f\n" ymax(vmx01))
+    fprintf(out "  11: %.3f\n\n" ymax(vmx11))
+    fprintf(out "AND membrane maxima (V):\n")
+    fprintf(out "  00: %.3f\n" ymax(vma00))
+    fprintf(out "  10: %.3f\n" ymax(vma10))
+    fprintf(out "  01: %.3f\n" ymax(vma01))
+    fprintf(out "  11: %.3f\n\n" ymax(vma11))
+    fprintf(out "XOR spike maxima (V):\n")
+    fprintf(out "  00: %.3f\n" ymax(vsx00))
+    fprintf(out "  10: %.3f\n" ymax(vsx10))
+    fprintf(out "  01: %.3f\n" ymax(vsx01))
+    fprintf(out "  11: %.3f\n\n" ymax(vsx11))
+    fprintf(out "AND spike maxima (V):\n")
+    fprintf(out "  00: %.3f\n" ymax(vsa00))
+    fprintf(out "  10: %.3f\n" ymax(vsa10))
+    fprintf(out "  01: %.3f\n" ymax(vsa01))
+    fprintf(out "  11: %.3f\n\n" ymax(vsa11))
+
+    ; Count output spikes for case 00
+    c00 = 0
+    t00 = nil
+    ts = 1n
+    p = value(vsx00 ts)
+    ts = ts + dt
+    while(ts < 80n
+        c = value(vsx00 ts)
+        if(p < vth && c > vth then
+            frac = (vth - p) / (c - p)
+            if(frac < 0 then frac = 0)
+            if(frac > 1 then frac = 1)
+            tc = (ts - dt) + frac * dt
+            c00 = c00 + 1
+            if(c00 == 1 then t00 = tc)
+        )
+        p = c
+        ts = ts + dt
+    )
+
+    ; Count output spikes for case 10
+    c10 = 0
+    t10 = nil
+    ts = 1n
+    p = value(vsx10 ts)
+    ts = ts + dt
+    while(ts < 80n
+        c = value(vsx10 ts)
+        if(p < vth && c > vth then
+            frac = (vth - p) / (c - p)
+            if(frac < 0 then frac = 0)
+            if(frac > 1 then frac = 1)
+            tc = (ts - dt) + frac * dt
+            c10 = c10 + 1
+            if(c10 == 1 then t10 = tc)
+        )
+        p = c
+        ts = ts + dt
+    )
+
+    ; Count output spikes for case 01
+    c01 = 0
+    t01 = nil
+    ts = 1n
+    p = value(vsx01 ts)
+    ts = ts + dt
+    while(ts < 80n
+        c = value(vsx01 ts)
+        if(p < vth && c > vth then
+            frac = (vth - p) / (c - p)
+            if(frac < 0 then frac = 0)
+            if(frac > 1 then frac = 1)
+            tc = (ts - dt) + frac * dt
+            c01 = c01 + 1
+            if(c01 == 1 then t01 = tc)
+        )
+        p = c
+        ts = ts + dt
+    )
+
+    ; Count output spikes for case 11
+    c11 = 0
+    t11 = nil
+    ts = 1n
+    p = value(vsx11 ts)
+    ts = ts + dt
+    while(ts < 80n
+        c = value(vsx11 ts)
+        if(p < vth && c > vth then
+            frac = (vth - p) / (c - p)
+            if(frac < 0 then frac = 0)
+            if(frac > 1 then frac = 1)
+            tc = (ts - dt) + frac * dt
+            c11 = c11 + 1
+            if(c11 == 1 then t11 = tc)
+        )
+        p = c
+        ts = ts + dt
+    )
+
+    ; Count AND/inhibitory branch spikes for case 11
+    ca11 = 0
+    ta11 = nil
+    ts = 1n
+    p = value(vsa11 ts)
+    ts = ts + dt
+    while(ts < 80n
+        c = value(vsa11 ts)
+        if(p < vth && c > vth then
+            frac = (vth - p) / (c - p)
+            if(frac < 0 then frac = 0)
+            if(frac > 1 then frac = 1)
+            tc = (ts - dt) + frac * dt
+            ca11 = ca11 + 1
+            if(ca11 == 1 then ta11 = tc)
+        )
+        p = c
+        ts = ts + dt
+    )
+
+    fprintf(out "Spike threshold: %.3f V\n\n" vth)
+    fprintf(out "Output spike counts (XOR branch):\n")
+    fprintf(out "  00: %d\n" c00)
+    fprintf(out "  10: %d\n" c10)
+    fprintf(out "  01: %d\n" c01)
+    fprintf(out "  11: %d\n\n" c11)
+    fprintf(out "Case-11 inhibitory spikes (AND branch): %d\n\n" ca11)
+
+    if(t00 then fprintf(out "First spike 00: %.3f ns\n" t00*1e9))
+    if(t10 then fprintf(out "First spike 10: %.3f ns\n" t10*1e9))
+    if(t01 then fprintf(out "First spike 01: %.3f ns\n" t01*1e9))
+    if(t11 then fprintf(out "First spike 11: %.3f ns\n" t11*1e9))
+    if(ta11 then fprintf(out "First inhibit spike 11: %.3f ns\n" ta11*1e9))
+    fprintf(out "\n")
+
+    ; XOR truth table behavior: 00->0, 10->1, 01->1, 11->0
+    if(c00 == 0 && c10 >= 1 && c01 >= 1 && c11 == 0 then
+        fprintf(out "OK: XOR truth cases satisfied\n")
+    else
+        fprintf(out "FAIL: XOR truth cases violated\n")
+        pass = nil
+    )
+
+    if(ca11 >= 1 then
+        fprintf(out "OK: inhibitory coincidence branch is active for 11\n")
+    else
+        fprintf(out "FAIL: no explicit inhibitory branch spike detected for 11\n")
+        pass = nil
+    )
+
+    fprintf(out "\n")
+    if(pass then
+        fprintf(out "=== PASS: XOR spike-domain computation verified ===\n")
+    else
+        fprintf(out "=== FAIL: XOR spike-domain verification failed ===\n")
+    )
+else
+    fprintf(out "ERROR: Could not read waveform data\n")
+)
+
+close(out)
+printf("Done. Results in: ~/analog-gradients/results/xor_spike2_test.txt\n")
+exit()

@@ -1,12 +1,12 @@
 ; test_alu1.ocn - Verify 1-bit ALU
 ; Run: ocean -nograph < test_alu1.ocn
 
-out = outfile("/home/v71349/analog-gradients/results/alu1_test.txt" "w")
+out = outfile("results/alu1_test.txt" "w")
 fprintf(out "=== ALU1 Verification ===\n")
 fprintf(out "Date: %s\n\n" getCurrentTime())
 
 simulator('spectre)
-openResults("/home/v71349/analog-gradients/results/alu1/alu1.raw")
+openResults("results/alu1/alu1.raw")
 selectResult("tran_test-tran")
 
 vdd = 1.8

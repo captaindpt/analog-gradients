@@ -1,6 +1,6 @@
 === LIF Neuron Verification ===
 Leaky Integrate-and-Fire Analog Neuron
-Date: Feb  2 16:44:02 2026
+Date: Feb  3 15:32:07 2026
 
 Test Parameters:
   Membrane capacitance: 1pF
@@ -12,10 +12,10 @@ Waveform Analysis:
 ==================
 
 Membrane voltage samples:
-  t=1ns  (before input):  Vmem = -0.000 V
-  t=10ns (after 1st pulse): Vmem = 0.823 V
-  t=15ns (decaying):       Vmem = 0.738 V
-  t=25ns (after 2nd pulse): Vmem = 0.685 V
+  t=1ns  (before input):  Vmem = 0.000 V
+  t=10ns (after 1st pulse): Vmem = 0.834 V
+  t=15ns (decaying):       Vmem = 0.796 V
+  t=25ns (after 2nd pulse): Vmem = 0.785 V
 
 Spike Detection:
   Total spikes detected: 10
@@ -24,10 +24,11 @@ Spike Detection:
   Spike frequency: 54.1 MHz
 
 Verification:
-  Max membrane voltage: 1.573 V
+  Max membrane voltage: 1.651 V
   OK: Membrane charges above 0.3V
   OK: At least one spike detected
-  Vmem 5ns after first spike: 0.767 V
-  WARN: Membrane may not be resetting fully
+  Vmem at first spike: 0.978 V
+  Vmem 5ns after first spike: 0.800 V
+  OK: Membrane resets after spike (drop=0.177 V)
 
 === PASS: LIF Neuron exhibits spiking behavior ===

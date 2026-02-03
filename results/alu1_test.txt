@@ -1,10 +1,10 @@
 === ALU1 Verification ===
-Date: Feb  2 16:43:12 2026
+Date: Feb  3 15:31:16 2026
 
-AND (A=1,B=0) Y=0.011 [PASS]
-OR  (A=0,B=1) Y=1.780 [PASS]
-XOR (A=1,B=1) Y=0.011 [PASS]
-ADD (A=1,B=1) Y=0.011 [PASS]
-ADD (A=1,B=1) COUT=1.780 [PASS]
+AND (A=1,B=0) Y=0.000 [PASS]
+OR  (A=0,B=1) Y=1.800 [PASS]
+XOR (A=1,B=1) Y=-0.000 [PASS]
+ADD (A=1,B=1) Y=-0.000 [PASS]
+ADD (A=1,B=1) COUT=1.800 [PASS]
 
 === PASS: ALU1 verification ===

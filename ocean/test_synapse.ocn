@@ -1,13 +1,13 @@
 ; test_synapse.ocn - Verify CMOS synapse behavior
 ; Run: ocean -nograph < test_synapse.ocn
 
-out = outfile("/home/v71349/analog-gradients/results/synapse_test.txt" "w")
+out = outfile("results/synapse_test.txt" "w")
 fprintf(out "=== Synapse Verification ===\n")
 fprintf(out "CMOS excitatory synapse primitive\n")
 fprintf(out "Date: %s\n\n" getCurrentTime())
 
 simulator('spectre)
-openResults("/home/v71349/analog-gradients/results/synapse/synapse.raw")
+openResults("results/synapse/synapse.raw")
 selectResult("tran_test-tran")
 
 fprintf(out "Test Parameters:\n")
@@ -88,7 +88,8 @@ if(vpre && vpost && vout then
     if(pulse_count >= 3 then
         fprintf(out "OK: buffered synapse output pulses detected\n")
     else
-        fprintf(out "WARN: few output pulses detected (check threshold sizing)\n")
+        fprintf(out "FAIL: few output pulses detected (check threshold sizing)\n")
+        pass = nil
     )
 
     fprintf(out "\n")

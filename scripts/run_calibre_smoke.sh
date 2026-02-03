@@ -5,8 +5,14 @@ REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 WORK_DIR="$REPO_DIR/implementation/fullflow_demo/work/calibre"
 INNOVUS_OUT="$REPO_DIR/implementation/fullflow_demo/work/innovus/out"
 GDS_IN="$INNOVUS_OUT/alu4_flow_demo.gds"
+WARN_FILE="$WORK_DIR/alu4_flow_demo_calibre_license.warn"
 
 mkdir -p "$WORK_DIR"
+
+# Keep stage-local defaults so direct stage runs are reproducible.
+source "$REPO_DIR/scripts/setup_fullflow_licenses.sh"
+
+rm -f "$WARN_FILE"
 
 if [[ ! -f "$GDS_IN" ]]; then
     echo "ERROR: Missing GDS for Calibre DRC smoke: $GDS_IN" >&2
@@ -52,7 +58,7 @@ if [[ $cal_rc -ne 0 ]]; then
     if grep -qi "Unable to acquire the first license" "$WORK_DIR/calibre_drc.log" \
        || grep -qi "products could not be licensed" "$WORK_DIR/calibre_drc.log"; then
         echo "WARN: Calibre DRC license unavailable. Recording blocked status." >&2
-        cat > "$WORK_DIR/alu4_flow_demo_calibre_license.warn" <<EOF
+        cat > "$WARN_FILE" <<EOF
 Calibre DRC smoke could not run due unavailable DRC license.
 Command:
   $CALIBRE_BIN -drc -hier $RULE_FILE

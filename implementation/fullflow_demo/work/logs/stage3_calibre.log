@@ -1,3 +1,7 @@
+License env:
+  SNPSLMD_LICENSE_FILE=6053@licaccess.cmc.ca
+  MGLS_LICENSE_FILE=6056@licaccess.cmc.ca
+  SALT_LICENSE_SERVER=6056@licaccess.cmc.ca
 Running Calibre DRC smoke flow...
 WARNING: Software tree location not set or invalid, using $CALIBRE_HOME=/CMC/tools/siemens/aok_cal_2025.4_24
 //  Calibre v2025.4_24.16    Mon Nov 3 13:40:37 PST 2025
@@ -21,43 +25,43 @@ WARNING: Software tree location not set or invalid, using $CALIBRE_HOME=/CMC/too
 //  Entries in /proc/meminfo:
 //
 //  MemTotal:       15849072 kB
-//  MemFree:         7957084 kB
-//  MemAvailable:   13841408 kB
+//  MemFree:         3017264 kB
+//  MemAvailable:   11037964 kB
 //  Buffers:            4240 kB
-//  Cached:          5433340 kB
+//  Cached:          6239916 kB
 //  SwapCached:            0 kB
-//  Active:          3646472 kB
-//  Inactive:        2758304 kB
-//  Active(anon):      89052 kB
-//  Inactive(anon):  1052972 kB
-//  Active(file):    3557420 kB
-//  Inactive(file):  1705332 kB
+//  Active:          4040352 kB
+//  Inactive:        5702660 kB
+//  Active(anon):     144692 kB
+//  Inactive(anon):  3619144 kB
+//  Active(file):    3895660 kB
+//  Inactive(file):  2083516 kB
 //  Unevictable:           0 kB
 //  Mlocked:               0 kB
 //  SwapTotal:      16773116 kB
 //  SwapFree:       16773116 kB
-//  Dirty:               476 kB
+//  Dirty:               544 kB
 //  Writeback:             0 kB
-//  AnonPages:        960148 kB
-//  Mapped:           418268 kB
-//  Shmem:            174868 kB
-//  KReclaimable:     958036 kB
-//  Slab:            1172716 kB
-//  SReclaimable:     958036 kB
-//  SUnreclaim:       214680 kB
-//  KernelStack:        9844 kB
-//  PageTables:        32428 kB
+//  AnonPages:       3492388 kB
+//  Mapped:           508316 kB
+//  Shmem:            264996 kB
+//  KReclaimable:    2377988 kB
+//  Slab:            2736452 kB
+//  SReclaimable:    2377988 kB
+//  SUnreclaim:       358464 kB
+//  KernelStack:       11184 kB
+//  PageTables:        51624 kB
 //  NFS_Unstable:          0 kB
 //  Bounce:                0 kB
 //  WritebackTmp:          0 kB
 //  CommitLimit:    24697652 kB
-//  Committed_AS:    3144028 kB
+//  Committed_AS:    4850784 kB
 //  VmallocTotal:   34359738367 kB
-//  VmallocUsed:       63404 kB
+//  VmallocUsed:       64764 kB
 //  VmallocChunk:          0 kB
-//  Percpu:            83968 kB
+//  Percpu:            87040 kB
 //  HardwareCorrupted:     0 kB
-//  AnonHugePages:    401408 kB
+//  AnonHugePages:   1695744 kB
 //  ShmemHugePages:        0 kB
 //  ShmemPmdMapped:        0 kB
 //  FileHugePages:         0 kB
@@ -68,9 +72,9 @@ WARNING: Software tree location not set or invalid, using $CALIBRE_HOME=/CMC/too
 //  HugePages_Surp:        0
 //  Hugepagesize:       2048 kB
 //  Hugetlb:               0 kB
-//  DirectMap4k:      476992 kB
-//  DirectMap2M:    10795008 kB
-//  DirectMap1G:     5242880 kB
+//  DirectMap4k:      614208 kB
+//  DirectMap2M:    13803520 kB
+//  DirectMap1G:     2097152 kB
 //
 //  User limits:
 //
@@ -91,9 +95,9 @@ WARNING: Software tree location not set or invalid, using $CALIBRE_HOME=/CMC/too
 //  Max file descriptors: 262144
 //  64 bit virtual addressing enabled
 //  Running aok_cal_2025.4_24/pkgs/icv/pvt/calibre -drc -hier /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc_smoke.svrf
-//  Process ID: 639573
+//  Process ID: 1366580
 //
-//  Starting time: Mon Feb  2 14:34:15 2026
+//  Starting time: Tue Feb  3 15:34:27 2026
 //
 
 --- CALIBRE_* ENVIRONMENT VARIABLES:
@@ -102,18 +106,14 @@ CALIBRE_ATOMIC_LVHEAP=0
 CALIBRE_CMD_LINE='/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv/pvt/calibre  -drc -hier /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc_smoke.svrf'
 CALIBRE_HOME=/CMC/tools/siemens/aok_cal_2025.4_24
 CALIBRE_INITIAL_CMD_LINE='/CMC/tools/siemens/aok_cal_2025.4_24/bin/calibre -drc -hier /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc_smoke.svrf'
-CALIBRE_MTFLEX_LOGTAG=vcl-vm0-159.639573.2026_0202_1434
+CALIBRE_MTFLEX_LOGTAG=vcl-vm0-159.1366580.2026_0203_1534
 CALIBRE_READDB_LD_LIBRARY_PATH=/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv/julia/1.5/lib/julia:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv/julia/1.5/lib:/CMC/tools/siemens/aok_cal_2025.4_24/shared/pkgs/icv/tools/calibre_client/lib/64:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/calibre_base/lib64:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv_lib/lib64:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv_qt5_comp/plugins:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv_oa/22.41p004/lib/linux_rhel68_gcc44x_64/opt
 CALIBRE_SKIP_OS_CHECKS=
-//  No license file variables are set.
-//  Unable to set the license server path. Licensing issues may occur.
-//  No license file variables are set.
-//  Unable to set the license server path. Licensing issues may occur..
 //  Running on 1 CPU (pending licensing) 
 //
 //
 
---- CALIBRE::DRC-H - Mon Feb  2 14:34:15 2026
+--- CALIBRE::DRC-H - Tue Feb  3 15:34:27 2026
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -153,7 +153,7 @@ CALIBRE_ATOMIC_LVHEAP=0
 CALIBRE_CMD_LINE='/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv/pvt/calibre  -drc -hier /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc_smoke.svrf'
 CALIBRE_HOME=/CMC/tools/siemens/aok_cal_2025.4_24
 CALIBRE_INITIAL_CMD_LINE='/CMC/tools/siemens/aok_cal_2025.4_24/bin/calibre -drc -hier /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc_smoke.svrf'
-CALIBRE_MTFLEX_LOGTAG=vcl-vm0-159.639573.2026_0202_1434
+CALIBRE_MTFLEX_LOGTAG=vcl-vm0-159.1366580.2026_0203_1534
 CALIBRE_READDB_LD_LIBRARY_PATH=/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv/julia/1.5/lib/julia:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv/julia/1.5/lib:/CMC/tools/siemens/aok_cal_2025.4_24/shared/pkgs/icv/tools/calibre_client/lib/64:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/calibre_base/lib64:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv_lib/lib64:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv_qt5_comp/plugins:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv_oa/22.41p004/lib/linux_rhel68_gcc44x_64/opt
 CALIBRE_SKIP_OS_CHECKS=
 
@@ -178,9 +178,434 @@ CALIBRE_SKIP_OS_CHECKS=
 
 
 //  Applying licensing policy...
+//  calibrehdrc license acquired.
+//  calibredrc license acquired.
 
-//  ERROR: Unable to acquire the first license for one or more products
-//  ERROR: The following products could not be licensed sufficiently:
-//  ERROR: - DRC (Hierarchical)
+//  Licensed Products
+//  -----------------
+//  Base products running on 1 core:
+//  - DRC (Hierarchical)
+
+--- CALIBRE::DRC-H LICENSING MODULE COMPLETED.  CPU TIME = 0  REAL TIME = 0
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-----                   CALIBRE LAYOUT DATA INPUT MODULE                   -----
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--- LAYOUT SYSTEM = GDS
+--- LAYOUT MAGNIFICATION = 1
+
+--------------------------------------------------------------------------------
+-----                     GDS FILE SUMMARY INFORMATION                     -----
+--------------------------------------------------------------------------------
+
+GDS FILENAME:        /home/v71349/analog-gradients/implementation/fullflow_demo/work/innovus/out/alu4_flow_demo.gds
+GDS VERSION:         5
+LIBRARY NAME:        DesignLib
+LAST MODIFIED:       ON 2026/2/3 AT 15:34:25
+LAST ACCESSED:       ON 2026/2/3 AT 15:34:25
+DATABASE PRECISION:  0.001 user units per database unit
+PHYSICAL PRECISION:  1e-09 meters per database unit
+MAGNIFICATION:       1
+SIZE:                21692
+
+--------------------------------------------------------------------------------
+-----                 GDS INPUT DATA FOR INDIVIDUAL CELLS                  -----
+--------------------------------------------------------------------------------
+     CELL NAME                  PLACEMENTS   ARRAYS   POLYGONS    PATHS    TEXTS
+--------------------------------------------------------------------------------
+alu4_flow_demo                          31        0         11       22       33
+M2_M1_1x2_VV_C                           0        0          4        0        0
+M2_M1_1x2_HV_S                           0        0          4        0        0
+M2_M1_1x2_HV_N                           0        0          4        0        0
+M3_M2_2x1_VH_W                           0        0          4        0        0
+M2_M1_2x1_HV_E                           0        0          4        0        0
+M3_M2_2x1_VH_E                           0        0          4        0        0
+M2_M1_1x2_VV_N                           0        0          4        0        0
+M2_M1_HV                                 0        0          3        0        0
+M2_M1_1x2_VV_S                           0        0          4        0        0
+OR2X1                                    0        0         48        2       11
+XOR2X1                                   0        0         70        2       11
+AND2X1                                   0        0         47        2       11
+
+--------------------------------------------------------------------------------
+-----                LAYOUT DATABASE CONSTRUCTOR CONCLUSION                -----
+--------------------------------------------------------------------------------
+
+DATABASE PREP:                      CPU TIME = 0  REAL TIME = 0
+DATABASE READ:                      CPU TIME = 0  REAL TIME = 0
+TEXT UPDATE:                        CPU TIME = 0  REAL TIME = 0
+MISC:                               CPU TIME = 0  REAL TIME = 0
+RECURSIVE REFERENCE CHECK:          CPU TIME = 0  REAL TIME = 0
+EXTENT UPDATE:                      CPU TIME = 0  REAL TIME = 0
+
+NOTE: UNUSED geometric data is present on the following layer/datatype pairs:
+    LAYER = 1 DATATYPE = 0
+    LAYER = 2 DATATYPE = 0
+    LAYER = 3 DATATYPE = 0
+    LAYER = 4 DATATYPE = 0
+    LAYER = 5 DATATYPE = 0
+    LAYER = 6 DATATYPE = 0
+    LAYER = 7 DATATYPE = 0
+    LAYER = 7 DATATYPE = 1
+    LAYER = 8 DATATYPE = 0
+    LAYER = 14 DATATYPE = 0
+    LAYER = 26 DATATYPE = 0
+    LAYER = 29 DATATYPE = 0
+    LAYER = 35 DATATYPE = 0
+    LAYER = 47 DATATYPE = 0
+    LAYER = 50 DATATYPE = 0
+    LAYER = 56 DATATYPE = 0
+    LAYER = 63 DATATYPE = 0
+    LAYER = 233 DATATYPE = 0
+    LAYER = 234 DATATYPE = 0
+
+NOTE: USED geometric data is present on the following layer/datatype pairs:
+
+NOTE: The following required simple layers are EMPTY:
+    11
+    12
+
+WRAPUP:                             CPU TIME = 0  REAL TIME = 0
+
+--- LAYOUT DATABASE CONSTRUCTOR COMPLETED.  CPU TIME = 0  REAL TIME = 0  LVHEAP = 2/4/4
+
+CONSTRUCTING HIERARCHICAL DATABASE
+    COPYING LAYOUT DATABASE
+    COPY COMPLETE. CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4
+    (P=31 A=0(0) AX=0(0) AY=0(0) AD=0(0) D=0)
+    RULE FILE INFO  A:0 C:0 F:0 L:0 M:0
+    CLONE STATE: LCTP(Y/N/U) = U LCRP(Y/N/U) = U LCXP(Y/N/U) = U LCYP(Y/N/U) = U LITHO(0/1/2) = 0 DFM(0/1/2) = 0 MAGXY(0/1) = 0
+    PROCESSING TEXT
+    ELIMINATING DUPLICATE TEXT
+    DUPLICATE TEXT ELIMINATION COMPLETE (0 -> 0 = 0). CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4
+    ELIMINATING EMPTY CELLS
+        alu4_flow_demo
+        M2_M1_1x2_VV_C
+        M2_M1_1x2_HV_S
+        M2_M1_1x2_HV_N
+        M3_M2_2x1_VH_W
+        M3_M2_2x1_VH_E
+        M2_M1_2x1_HV_E
+        M2_M1_1x2_VV_S
+        M2_M1_1x2_VV_N
+        M2_M1_HV
+        OR2X1
+        XOR2X1
+        AND2X1
+    EMPTY CELL ELIMINATION COMPLETE CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4
+    EXPANDING UNIQUE ICV PLACEMENTS
+    MERGING TOP/MP LAYER CELLS
+    PACKING PLACEMENTS
+    PACKING COMPLETE. CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4
+    PACKING GEOMETRY HEADERS
+    PACKING COMPLETE. CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4
+    PACKING GEOMETRY HEADERS
+    PACKING COMPLETE. CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4
+    IDENTIFYING MULTI-CORE CELLS
+    FLATTENING VERY SMALL CELL PLACEMENTS
+    FLATTENING SMALL TOP LAYER CELL PLACEMENTS
+    COMPUTING CELL-TO-WORLD TRANSFORMS
+    COMPUTE COMPLETE. CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4
+    SORTING PLACEMENTS BY CELL
+    SORT COMPLETE. CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4
+    PACKING HIERARCHY. (C=1 CN=1 P1=0 P2=0 P3=0 XF=0) LVHEAP = 1/3/4
+    PACKING COMPLETE. (C=1 CN=1 P=0 XF=0) CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4
+    COMPUTING PLACEMENT OVERLAPS
+    COMPUTE COMPLETE (OC=0 V1=0 V2=0 SC=0 FC=0). CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4
+    COMPUTING CELL OVERLAP AREAS
+    COMPUTE COMPLETE. CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4
+    COMPUTING PLACEMENT / OVERLAP AREA INTERSECTIONS
+    COMPUTE COMPLETE. CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4
+HIERARCHICAL DATABASE CONSTRUCTOR COMPLETE. CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4
+(C=1 CN=1 P=0 G=1 GH=1 D=0 TXT=0 XF=0 PO=0)
+
+--------------------------------------------------------------------------------
+-----                           VPC REQUIREMENTS                           -----
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-----               TEXT OBJECTS FOR CONNECTIVITY EXTRACTION               -----
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+-----                TEXT OBJECTS FOR WITH TEXT OPERATIONS                 -----
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+-----               TEXT OBJECTS FOR EXPAND TEXT OPERATIONS                -----
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+-----                  TEXT OBJECTS FOR CAPI OPERATIONS                    -----
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+-----             LAYER READ SUMMARY (SIMPLE LAYER GEOMETRIES)             -----
+--------------------------------------------------------------------------------
+SIMPLE LAYER      GEOMETRIES                                                    
+--------------------------------------------------------------------------------
+
+  11                     0
+  12                     0
+
+--------------------------------------------------------------------------------
+-----            LAYER READ SUMMARY (ORIGINAL LAYER GEOMETRIES)            -----
+--------------------------------------------------------------------------------
+ORIGINAL LAYER       INITIAL GEOMETRIES                 FINAL GEOMETRIES        
+--------------------------------------------------------------------------------
+
+M1                         0 (0)                            0 (0)               
+M2                         0 (0)                            0 (0)               
+
+--------------------------------------------------------------------------------
+-----         LAYER READ SUMMARY (TEXT FOR CONNECTIVITY EXTRACTION)        -----
+--------------------------------------------------------------------------------
+SIMPLE LAYER              TEXTS                                                 
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+-----          LAYER READ SUMMARY (TEXT FOR WITH TEXT OPERATIONS)          -----
+--------------------------------------------------------------------------------
+SIMPLE LAYER              TEXTS                                                 
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+-----         LAYER READ SUMMARY (TEXT FOR EXPAND TEXT OPERATIONS)         -----
+--------------------------------------------------------------------------------
+SIMPLE LAYER              TEXTS                                                 
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+-----            LAYER READ SUMMARY (TEXT FOR CAPI OPERATIONS)             -----
+--------------------------------------------------------------------------------
+SIMPLE LAYER              TEXTS                                                 
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-----               LAYOUT INPUT EXCEPTION SEVERITY SUMMARY                -----
+--------------------------------------------------------------------------------
+EXCEPTION                           SEVERITY  DEFAULT  COUNT        RDB         
+--------------------------------------------------------------------------------
+
+AREF_ANGLED                            0         Y       0         
+AREF_DIAGONAL                          0         Y       0         
+AREF_PLACEMENT                         0         Y       0         
+AREF_UNPLACED                          0         Y       0         
+ARRAY_PITCH_ZERO                       0         Y       0         
+REPETITION_TYPE_8_9_10_11              0         Y       0         
+DUPLICATE_CELL                         2         Y       0         
+EXCLUDE_CELL_NAME                      1         Y       0         
+EXPAND_CELL                            1         Y       0         
+EXTENT_CELL                            1         Y       0         
+INSIDE_CELL                            1         Y       0         
+MISSING_REFERENCE                      2         Y       0         
+RENAME_CELL                            0         Y       0         
+TOP_CELL_CHOSEN                        1         Y       0         
+TOP_CELL_MULTIPLE                      0         Y       0         
+LAYER_DIRECTORY                        2         Y       0         
+DATATYPE_MAP_SOURCE                    1         Y       0         
+DATATYPE_MAP_TARGET                    1         Y       0         
+EMPTY_BASE_LAYER                       1         Y       0         
+EMPTY_LAYER                            1         Y       2         
+LAYER_OVER_BUMP                        1         Y       0         
+LAYER_BUMP_DUPLICATE                   0         Y       0         
+UNUSED_DATA                            1         Y       19        
+MAGNIFICATION_AUTO                     0         Y       0         
+BOX_RECORD                             0         Y       13        
+CIRCLE                                 2         Y       0         
+CIRCLE_RADIUS_ZERO                     1         Y       0         
+CTRAPEZOID_AREA_ZERO                   1         Y       0         
+CTRAPEZOID_DEGENERATE                  2         Y       0         
+TRAPEZOID_AREA_ZERO                    1         Y       0         
+TRAPEZOID_DEGENERATE                   2         Y       0         
+XGEOMETRY_UNSUPPORTED                  2         Y       0         
+NODE_RECORD                            0         Y       13        
+XELEMENT_UNSUPPORTED                   2         Y       0         
+XNAME_UNSUPPORTED                      2         Y       0         
+PATH_ACUTE                             1         Y       0         
+PATH_ANGLED                            1         Y       0         
+PATH_SKEW                              1         Y       0         
+PATH_BIG                               0         Y       0         
+PATH_CIRCULAR                          1         Y       0         
+PATH_COINCIDENT                        1         Y       0         
+PATH_DEGENERATE                        2         Y       0         
+PATH_ENDSEGMENT_SHORT                  1         Y       0         
+PATH_EXTENSION                         2         Y       0         
+PATH_EXTENSION_MULTIPLE                1         Y       0         
+PATH_NEGATIVE                          1         Y       0         
+PATH_NONORIENTABLE                     2         Y       0         
+PATH_NONSIMPLE                         0         Y       0         
+PATH_SPIKE                             2         Y       0         
+PATH_VARIABLE                          1         Y       0         
+PATH_WIDTH_ABSOLUTE                    2         Y       0         
+PATH_WIDTH_MULTIPLE                    1         Y       0         
+PATH_WIDTH_ODD                         0         Y       0         
+PATH_WIDTH_ZERO                        1         Y       0         
+LAYOUT_PATH_LAYER_GDS                  1         Y       0         
+PLACEMENT_ANGLE_ABSOLUTE               2         Y       0         
+PLACEMENT_MAGNIFICATION_ABSOLUTE       2         Y       0         
+PLACEMENT_MAGNIFICATION_NONPOSITIVE    2         Y       0         
+PLACEMENT_MAGNIFIED                    0         Y       0         
+PLACEMENT_MULTIPLE                     0         Y       0         
+LAYOUT_POLYGON                         1         Y       0         
+POLYGON_ACUTE                          0         Y       0         
+POLYGON_AREA_ZERO                      1         Y       0         
+POLYGON_DEGENERATE                     2         Y       0         
+POLYGON_IS_RECTANGLE                   0         Y       0         
+POLYGON_NONORIENTABLE                  2         Y       0         
+POLYGON_NONSIMPLE                      0         Y       0         
+POLYGON_NOT_CLOSED                     0         Y       0         
+POLYGON_SPIKE                          0         Y       0         
+RECTANGLE_SIDE_ZERO                    1         Y       0         
+CELLNAME_NSTRING                       2         Y       0         
+PROPNAME_NSTRING                       2         Y       0         
+TEXT_LENGTH                            1         Y       0         
+TEXTSTRING_ASTRING                     2         Y       0         
+LAYOUT_TEXT                            1         Y       0         
+TEXT_BIG                               2         Y       0         
+TEXT_DEGENERATE                        2         Y       0         
+METRIC_INPUT_FILE                      2         Y       0         
+METRIC_RULE_FILE                       1         Y       0         
+PRECISION_LAYOUT                       2         Y       0         
+PRECISION_INPUT_FILE                   2         Y       0         
+PRECISION_RULE_FILE                    2         Y       0         
+
+
+--------------------------------------------------------------------------------
+-----                      CELL AND PLACEMENT SUMMARY                      -----
+--------------------------------------------------------------------------------
+CELL TYPE                 CELLS           PLACEMENTS       FLAT PLACEMENTS      
+--------------------------------------------------------------------------------
+
+USER                          1                    0                     0
+ VERY SMALL                   0                    0                     0
+ TOP LAYER                    0                    0                     0
+  VERY SMALL                  0                    0                     0
+PSEUDO                        0                    0                     0
+TOTAL                         1                    0                     0
+
+--------------------------------------------------------------------------------
+-----                   LAYOUT DATA INPUT MODULE SUMMARY                   -----
+--------------------------------------------------------------------------------
+
+--- TOTAL GEOMETRIES READ FROM SIMPLE LAYERS = 0
+--- TOTAL GEOMETRIES READ FROM ORIGINAL LAYERS = 0 (0)
+--- TOTAL GEOMETRIES WRITTEN TO ORIGINAL LAYERS = 0 (0)
+--- LVHEAP = 1/3/4
+--- DATABASE EXTENT = [ 0 , 0 ] -> [ 1 , 1 ]
+--- GEOMETRIC DEPTH = ALL
+--- TEXT DEPTH FOR CONNECTIVITY EXTRACTION = PRIMARY
+--- TOTAL TEXT OBJECTS FOR CONNECTIVITY EXTRACTION = 0 (0)
+--- TOTAL TEXT OBJECTS FOR WITH TEXT OPERATIONS = 0 (0)
+--- TOTAL TEXT OBJECTS FOR EXPAND TEXT OPERATIONS = 0 (0)
+--- TOTAL TEXT OBJECTS FOR CAPI OPERATIONS = 0 (0)
+--- GEOMETRY FLAGGING = ACUTE (NO)  SKEW (NO)  ANGLED (NO)  OFFGRID (NO)
+                        NONSIMPLE POLYGON (NO)  NONSIMPLE PATH (NO)
+--- PRIMARY CELL = alu4_flow_demo
+--- EXCLUDED CELLS =
+--- LAYOUT BASE LAYER = (NOT SPECIFIED)
+--- LAYOUT TOP LAYER = (NOT SPECIFIED)
+--- LAYOUT IGNORE LAYER [INVERSE] = (NOT SPECIFIED)
+
+--- CALIBRE LAYOUT DATA INPUT MODULE COMPLETED.  CPU TIME = 0  REAL TIME = 0
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-----        CALIBRE::DRC-H - RESULTS DATABASE INITIALIZATION MODULE       -----
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--- GLOBAL DRC RESULTS DATABASE FILE = /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc.results (ASCII)
+--- GLOBAL MAXIMUM RESULTS PER RULECHECK = ALL
+--- GLOBAL MAXIMUM VERTICES PER RESULT POLYGON = 4096
+--- CHECK TEXT MAPPING = COMMENTS + RULE FILE INFORMATION
+--- KEEP EMPTY RULE CHECKS = YES
+--- DRC RESULTS MAGNIFICATION = 1
+--- DRC RESULTS DATABASE PRECISION = 1000
+
+--------------------------------------------------------------------------------
+-----              DRC RULECHECK -> RESULTS DATABASE MAPPING               -----
+--------------------------------------------------------------------------------
+                                                          DATA        MAX    MAX
+RULECHECK            RESULTS DATABASE         TYPE LAYER  TYPE     RESULT VERTEX
+--------------------------------------------------------------------------------
+M1_WIDTH_CHECK       /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc.results
+                                             ASCII   N/A   N/A        ALL   4096
+M2_WIDTH_CHECK       /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc.results
+                                             ASCII   N/A   N/A        ALL   4096
+
+--- CALIBRE::DRC-H RESULTS DATABASE INITIALIZATION MODULE COMPLETED.  CPU TIME = 0  REAL TIME = 0
+
+--- CALIBRE::DRC-H LAYER READ SUMMARY SETUP COMPLETED.  CPU TIME = 0  REAL TIME = 0
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-----                   CALIBRE::DRC-H - EXECUTIVE MODULE                  -----
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+M1 = OR M1
+----------
+M1 (HIER TYP=1 CFG=1 HGC=0 FGC=0 HEC=0 FEC=0 IGC=0 VHC=F VPC=F)
+CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4  OPS COMPLETE = 1 OF 4  ELAPSED TIME = 1
+
+Original Layer M1 DELETED -- LVHEAP = 1/3/4
+
+M1_WIDTH_CHECK::<1> = INT M1 < 0.04
+-----------------------------------
+M1_WIDTH_CHECK::<1> (HIER TYP=3 CFG=0 HGC=0 FGC=0 HEC=0 FEC=0 IGC=0)
+CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4  OPS COMPLETE = 2 OF 4  ELAPSED TIME = 1
+
+Layer M1 DELETED -- LVHEAP = 1/3/4
+
+Layer M1_WIDTH_CHECK::<1> DELETED -- LVHEAP = 1/3/4
+
+DRC RuleCheck M1_WIDTH_CHECK COMPLETED. Number of Results = 0 (0)
+
+M2 = OR M2
+----------
+M2 (HIER TYP=1 CFG=1 HGC=0 FGC=0 HEC=0 FEC=0 IGC=0 VHC=F VPC=F)
+CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4  OPS COMPLETE = 3 OF 4  ELAPSED TIME = 1
+
+Original Layer M2 DELETED -- LVHEAP = 1/3/4
+
+M2_WIDTH_CHECK::<1> = INT M2 < 0.04
+-----------------------------------
+M2_WIDTH_CHECK::<1> (HIER TYP=3 CFG=0 HGC=0 FGC=0 HEC=0 FEC=0 IGC=0)
+CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4  OPS COMPLETE = 4 OF 4  ELAPSED TIME = 1
+
+Layer M2 DELETED -- LVHEAP = 1/3/4
+
+Layer M2_WIDTH_CHECK::<1> DELETED -- LVHEAP = 1/3/4
+
+WRITE to ASCII DRC Results Database /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc.results COMPLETED
+
+DRC RuleCheck M2_WIDTH_CHECK COMPLETED. Number of Results = 0 (0)
+
+Cumulative ONE-LAYER BOOLEAN Time: CPU = 0  REAL = 0
+Cumulative ONE-LAYER DRC Time: CPU = 0  REAL = 0
+Cumulative RDB Time: CPU = 0  REAL = 0
+
+--- CALIBRE::DRC-H EXECUTIVE MODULE COMPLETED.  CPU TIME = 0  REAL TIME = 0
+--- TOTAL RULECHECKS EXECUTED = 2
+--- TOTAL RESULTS GENERATED = 0 (0)
+--- TOTAL NAR RDB RESULTS GENERATED = 0
+--- TOTAL DENSITY RDB RESULTS GENERATED = 0
+--- DRC RESULTS DATABASE FILE = /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc.results (ASCII)
+
+--- CALIBRE::DRC-H COMPLETED - Tue Feb  3 15:34:28 2026
+--- TOTAL CPU TIME = 0  REAL TIME = 0
+--- PROCESSOR COUNT = 1
+--- SUMMARY REPORT FILE = /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc.summary
 
 Calibre smoke flow complete.

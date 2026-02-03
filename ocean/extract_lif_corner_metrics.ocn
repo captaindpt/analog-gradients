@@ -1,0 +1,55 @@
+; extract_lif_corner_metrics.ocn
+; Parameterized extractor for corner-conditioned LIF waveform + energy trace.
+
+rawPath = getShellEnvVar("LIF_CORNER_RAW")
+waveCsv = getShellEnvVar("LIF_CORNER_WAVE_CSV")
+traceCsv = getShellEnvVar("LIF_CORNER_ENERGY_TRACE")
+
+if(rawPath == nil then
+    rawPath = "results/lif_neuron/lif_neuron.raw"
+)
+if(waveCsv == nil then
+    waveCsv = "competition/analysis/lif_corner_waveform.csv"
+)
+if(traceCsv == nil then
+    traceCsv = "competition/analysis/lif_corner_energy_trace.csv"
+)
+
+simulator('spectre)
+openResults(rawPath)
+selectResult("tran_test-tran")
+
+vmem = v("mem")
+vspike = v("spike")
+vout = v("out")
+idd = getData("V_VDD:p")
+
+if(vmem && vspike && vout && idd then
+    fw = outfile(waveCsv "w")
+    fprintf(fw "time_ns,mem,spike,out\n")
+    ts = 0
+    while(ts <= 200n
+        fprintf(fw "%.3f,%.6f,%.6f,%.6f\n"
+            ts*1e9 value(vmem ts) value(vspike ts) value(vout ts))
+        ts = ts + 500p
+    )
+    close(fw)
+
+    fe = outfile(traceCsv "w")
+    fprintf(fe "time_ns,current_a,power_w,spike_v\n")
+    ts = 0
+    while(ts <= 200n
+        iv = value(idd ts)
+        sp = value(vspike ts)
+        pw = -iv * 1.8
+        fprintf(fe "%.6f,%.9e,%.9e,%.9f\n" ts*1e9 iv pw sp)
+        ts = ts + 100p
+    )
+    close(fe)
+
+    printf("Done. Extracted corner waveform and energy trace.\n")
+else
+    printf("ERROR: Could not access one or more required waveforms.\n")
+)
+
+exit()

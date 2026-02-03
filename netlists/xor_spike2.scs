@@ -1,0 +1,148 @@
+// xor_spike2.scs - 2-input spike-domain XOR compute demo
+// Goal: spike for A=1,B=0 and A=0,B=1; suppress for A=0,B=0 and A=1,B=1
+// Run: spectre xor_spike2.scs -raw xor_spike2.raw
+
+simulator lang=spectre
+
+parameters vdd_val=1.8 cmem_x=1p cmem_a=800f rleak_x=24k rleak_a=18k
+
+model nch mos1 type=n vto=0.0 kp=120u
+model pch mos1 type=p vto=0.0 kp=40u
+model nch_xor mos1 type=n vto=0.45 kp=120u
+model pch_xor mos1 type=p vto=-0.45 kp=40u
+model nch_and mos1 type=n vto=0.2 kp=120u
+model pch_and mos1 type=p vto=-0.2 kp=40u
+
+V_VDD (vdd 0) vsource dc=vdd_val
+
+// ============================================================
+// Four deterministic input cases in one transient:
+//   00: A=0, B=0
+//   10: A=1 pulse, B=0
+//   01: A=0, B=1 pulse
+//   11: A=1 pulse, B=1 pulse (coincident)
+// Each case instantiates the same XOR cell topology.
+// ============================================================
+
+// ---------------- Input sources ----------------
+V_A_00 (a00 0) vsource dc=0
+V_B_00 (b00 0) vsource dc=0
+
+V_A_10 (a10 0) vsource type=pulse val0=0 val1=vdd_val \
+    delay=10n rise=100p fall=100p width=2n period=200n
+V_B_10 (b10 0) vsource dc=0
+
+V_A_01 (a01 0) vsource dc=0
+V_B_01 (b01 0) vsource type=pulse val0=0 val1=vdd_val \
+    delay=10n rise=100p fall=100p width=2n period=200n
+
+V_A_11 (a11 0) vsource type=pulse val0=0 val1=vdd_val \
+    delay=10n rise=100p fall=100p width=2n period=200n
+V_B_11 (b11 0) vsource type=pulse val0=0 val1=vdd_val \
+    delay=10n rise=100p fall=100p width=2n period=200n
+
+// ---------------- Case 00 ----------------
+MN_XA_00 (memx_00 a00 vdd 0) nch w=4u l=1u
+MN_XB_00 (memx_00 b00 vdd 0) nch w=4u l=1u
+C_MEMX_00 (memx_00 0) capacitor c=cmem_x
+R_LEAKX_00 (memx_00 0) resistor r=rleak_x
+MP_X1_00 (spike_x_00_n memx_00 vdd vdd) pch_xor w=1.8u l=1u
+MN_X1_00 (spike_x_00_n memx_00 0 0) nch_xor w=1.8u l=1u
+MP_X2_00 (spike_x_00 spike_x_00_n vdd vdd) pch w=2u l=1u
+MN_X2_00 (spike_x_00 spike_x_00_n 0 0) nch w=1u l=1u
+MN_RSTX_00 (memx_00 spike_x_00 0 0) nch w=500n l=1u
+
+MN_AA_00 (mema_00 a00 vdd 0) nch w=1.2u l=1u
+MN_AB_00 (mema_00 b00 vdd 0) nch w=1.2u l=1u
+C_MEMA_00 (mema_00 0) capacitor c=cmem_a
+R_LEAKA_00 (mema_00 0) resistor r=rleak_a
+MP_A1_00 (spike_a_00_n mema_00 vdd vdd) pch_and w=1u l=1u
+MN_A1_00 (spike_a_00_n mema_00 0 0) nch_and w=2.5u l=1u
+MP_A2_00 (spike_a_00 spike_a_00_n vdd vdd) pch w=2u l=1u
+MN_A2_00 (spike_a_00 spike_a_00_n 0 0) nch w=1u l=1u
+
+MN_INH_00 (memx_00 spike_a_00 0 0) nch w=6u l=1u
+MN_CLAMP_00 (spike_x_00 spike_a_00 0 0) nch w=6u l=1u
+MN_XORC1_00 (spike_x_00 a00 xorc_00 0) nch w=6u l=1u
+MN_XORC2_00 (xorc_00 b00 0 0) nch w=6u l=1u
+
+// ---------------- Case 10 ----------------
+MN_XA_10 (memx_10 a10 vdd 0) nch w=4u l=1u
+MN_XB_10 (memx_10 b10 vdd 0) nch w=4u l=1u
+C_MEMX_10 (memx_10 0) capacitor c=cmem_x
+R_LEAKX_10 (memx_10 0) resistor r=rleak_x
+MP_X1_10 (spike_x_10_n memx_10 vdd vdd) pch_xor w=1.8u l=1u
+MN_X1_10 (spike_x_10_n memx_10 0 0) nch_xor w=1.8u l=1u
+MP_X2_10 (spike_x_10 spike_x_10_n vdd vdd) pch w=2u l=1u
+MN_X2_10 (spike_x_10 spike_x_10_n 0 0) nch w=1u l=1u
+MN_RSTX_10 (memx_10 spike_x_10 0 0) nch w=500n l=1u
+
+MN_AA_10 (mema_10 a10 vdd 0) nch w=1.2u l=1u
+MN_AB_10 (mema_10 b10 vdd 0) nch w=1.2u l=1u
+C_MEMA_10 (mema_10 0) capacitor c=cmem_a
+R_LEAKA_10 (mema_10 0) resistor r=rleak_a
+MP_A1_10 (spike_a_10_n mema_10 vdd vdd) pch_and w=1u l=1u
+MN_A1_10 (spike_a_10_n mema_10 0 0) nch_and w=2.5u l=1u
+MP_A2_10 (spike_a_10 spike_a_10_n vdd vdd) pch w=2u l=1u
+MN_A2_10 (spike_a_10 spike_a_10_n 0 0) nch w=1u l=1u
+
+MN_INH_10 (memx_10 spike_a_10 0 0) nch w=6u l=1u
+MN_CLAMP_10 (spike_x_10 spike_a_10 0 0) nch w=6u l=1u
+MN_XORC1_10 (spike_x_10 a10 xorc_10 0) nch w=6u l=1u
+MN_XORC2_10 (xorc_10 b10 0 0) nch w=6u l=1u
+
+// ---------------- Case 01 ----------------
+MN_XA_01 (memx_01 a01 vdd 0) nch w=4u l=1u
+MN_XB_01 (memx_01 b01 vdd 0) nch w=4u l=1u
+C_MEMX_01 (memx_01 0) capacitor c=cmem_x
+R_LEAKX_01 (memx_01 0) resistor r=rleak_x
+MP_X1_01 (spike_x_01_n memx_01 vdd vdd) pch_xor w=1.8u l=1u
+MN_X1_01 (spike_x_01_n memx_01 0 0) nch_xor w=1.8u l=1u
+MP_X2_01 (spike_x_01 spike_x_01_n vdd vdd) pch w=2u l=1u
+MN_X2_01 (spike_x_01 spike_x_01_n 0 0) nch w=1u l=1u
+MN_RSTX_01 (memx_01 spike_x_01 0 0) nch w=500n l=1u
+
+MN_AA_01 (mema_01 a01 vdd 0) nch w=1.2u l=1u
+MN_AB_01 (mema_01 b01 vdd 0) nch w=1.2u l=1u
+C_MEMA_01 (mema_01 0) capacitor c=cmem_a
+R_LEAKA_01 (mema_01 0) resistor r=rleak_a
+MP_A1_01 (spike_a_01_n mema_01 vdd vdd) pch_and w=1u l=1u
+MN_A1_01 (spike_a_01_n mema_01 0 0) nch_and w=2.5u l=1u
+MP_A2_01 (spike_a_01 spike_a_01_n vdd vdd) pch w=2u l=1u
+MN_A2_01 (spike_a_01 spike_a_01_n 0 0) nch w=1u l=1u
+
+MN_INH_01 (memx_01 spike_a_01 0 0) nch w=6u l=1u
+MN_CLAMP_01 (spike_x_01 spike_a_01 0 0) nch w=6u l=1u
+MN_XORC1_01 (spike_x_01 a01 xorc_01 0) nch w=6u l=1u
+MN_XORC2_01 (xorc_01 b01 0 0) nch w=6u l=1u
+
+// ---------------- Case 11 ----------------
+MN_XA_11 (memx_11 a11 vdd 0) nch w=4u l=1u
+MN_XB_11 (memx_11 b11 vdd 0) nch w=4u l=1u
+C_MEMX_11 (memx_11 0) capacitor c=cmem_x
+R_LEAKX_11 (memx_11 0) resistor r=rleak_x
+MP_X1_11 (spike_x_11_n memx_11 vdd vdd) pch_xor w=1.8u l=1u
+MN_X1_11 (spike_x_11_n memx_11 0 0) nch_xor w=1.8u l=1u
+MP_X2_11 (spike_x_11 spike_x_11_n vdd vdd) pch w=2u l=1u
+MN_X2_11 (spike_x_11 spike_x_11_n 0 0) nch w=1u l=1u
+MN_RSTX_11 (memx_11 spike_x_11 0 0) nch w=500n l=1u
+
+MN_AA_11 (mema_11 a11 vdd 0) nch w=1.2u l=1u
+MN_AB_11 (mema_11 b11 vdd 0) nch w=1.2u l=1u
+C_MEMA_11 (mema_11 0) capacitor c=cmem_a
+R_LEAKA_11 (mema_11 0) resistor r=rleak_a
+MP_A1_11 (spike_a_11_n mema_11 vdd vdd) pch_and w=1u l=1u
+MN_A1_11 (spike_a_11_n mema_11 0 0) nch_and w=2.5u l=1u
+MP_A2_11 (spike_a_11 spike_a_11_n vdd vdd) pch w=2u l=1u
+MN_A2_11 (spike_a_11 spike_a_11_n 0 0) nch w=1u l=1u
+
+MN_INH_11 (memx_11 spike_a_11 0 0) nch w=6u l=1u
+MN_CLAMP_11 (spike_x_11 spike_a_11 0 0) nch w=6u l=1u
+MN_XORC1_11 (spike_x_11 a11 xorc_11 0) nch w=6u l=1u
+MN_XORC2_11 (xorc_11 b11 0 0) nch w=6u l=1u
+
+tran_test tran stop=80n
+save memx_00 memx_10 memx_01 memx_11 \
+     mema_00 mema_10 mema_01 mema_11 \
+     spike_x_00 spike_x_10 spike_x_01 spike_x_11 \
+     spike_a_00 spike_a_10 spike_a_01 spike_a_11

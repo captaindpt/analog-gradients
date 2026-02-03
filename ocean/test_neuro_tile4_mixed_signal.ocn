@@ -1,13 +1,13 @@
 ; test_neuro_tile4_mixed_signal.ocn
 ; Verify digital-enable control of analog feed-forward propagation.
 
-out = outfile("/home/v71349/analog-gradients/results/neuro_tile4_mixed_signal_test.txt" "w")
+out = outfile("results/neuro_tile4_mixed_signal_test.txt" "w")
 fprintf(out "=== Neuro Tile4 Mixed-Signal Verification ===\n")
 fprintf(out "Digital enable gating of analog spike propagation\n")
 fprintf(out "Date: %s\n\n" getCurrentTime())
 
 simulator('spectre)
-openResults("/home/v71349/analog-gradients/results/neuro_tile4_mixed_signal/neuro_tile4_mixed_signal.raw")
+openResults("results/neuro_tile4_mixed_signal/neuro_tile4_mixed_signal.raw")
 selectResult("tran_test-tran")
 
 ven = v("en")

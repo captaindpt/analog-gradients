@@ -1,13 +1,13 @@
 ; test_lif_neuron.ocn - Verify LIF neuron spiking behavior
 ; Run: ocean -nograph < test_lif_neuron.ocn
 
-out = outfile("/home/v71349/analog-gradients/results/lif_neuron_test.txt" "w")
+out = outfile("results/lif_neuron_test.txt" "w")
 fprintf(out "=== LIF Neuron Verification ===\n")
 fprintf(out "Leaky Integrate-and-Fire Analog Neuron\n")
 fprintf(out "Date: %s\n\n" getCurrentTime())
 
 simulator('spectre)
-openResults("/home/v71349/analog-gradients/results/lif_neuron/lif_neuron.raw")
+openResults("results/lif_neuron/lif_neuron.raw")
 
 selectResult("tran_test-tran")
 
@@ -115,15 +115,19 @@ if(vmem && vspike then
     )
 
     ; 3. Membrane should reset after spike (not stay high)
-    ; Check that membrane goes below 0.5V at some point after first spike
+    ; Require a meaningful drop from peak after the first spike
     if(spike_times then
         first_spike_time = car(reverse(spike_times))
+        vmem_first_spike = value(vmem first_spike_time)
         vmem_after_spike = value(vmem first_spike_time + 5n)
+        vmem_drop = vmem_first_spike - vmem_after_spike
+        fprintf(out "  Vmem at first spike: %.3f V\n" vmem_first_spike)
         fprintf(out "  Vmem 5ns after first spike: %.3f V\n" vmem_after_spike)
-        if(vmem_after_spike < 0.5 then
-            fprintf(out "  OK: Membrane resets after spike\n")
+        if(vmem_drop > 0.15 then
+            fprintf(out "  OK: Membrane resets after spike (drop=%.3f V)\n" vmem_drop)
         else
-            fprintf(out "  WARN: Membrane may not be resetting fully\n")
+            fprintf(out "  FAIL: Membrane reset drop too small (drop=%.3f V)\n" vmem_drop)
+            pass = nil
         )
     )
 

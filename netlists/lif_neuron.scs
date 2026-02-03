@@ -8,8 +8,8 @@ simulator lang=spectre
 parameters vdd_val=1.8 cmem=1p rleak=10M iin_amp=500u
 
 // MOSFET Models (same as digital blocks for compatibility)
-model nch mos1 type=n vth=0.4 kp=120u
-model pch mos1 type=p vth=-0.4 kp=40u
+model nch mos1 type=n vto=0.0 kp=120u
+model pch mos1 type=p vto=0.0 kp=40u
 
 // ============================================================
 // LEAKY INTEGRATE-AND-FIRE NEURON

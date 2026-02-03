@@ -75,6 +75,16 @@ We are building a development path, not just a single demo:
 - Transparent reporting of tool-access constraints (license blockers) while
   preserving reproducible flow evidence
 
+## Current Technical Priorities (Pre-Submission)
+
+Before any packaging/bureaucracy work, the technical bar is:
+
+1. **No false passes** in verification and logging (fail closed on script/runtime errors).
+2. **Robustness evidence**, not only nominal-point PASS (sweeps, jitter tolerance, clear PASS bands).
+3. **Eye-popping compute proof** at behavior level (coincidence + XOR + mixed-signal gating with reproducible data).
+4. **Comparative credibility** against a digital baseline on at least one clear metric (energy/latency/task behavior).
+5. **Single-command replay** for judges (`./build.sh all` plus scripted evidence regeneration).
+
 ## Key References
 
 - Development process: `my-workspace/docs/DEVELOPMENT.md`

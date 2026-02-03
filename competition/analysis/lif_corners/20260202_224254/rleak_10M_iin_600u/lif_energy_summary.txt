@@ -1,0 +1,15 @@
+=== LIF Energy Summary (rleak_10M_iin_600u) ===
+
+Total energy (window): 3.391165e-11 J
+Detected spikes: 10
+Energy per spike (total/spike): 3.391165e-12 J
+Energy per spike (total/spike): 3.391165 pJ
+
+Per-spike event energies (count): 10
+Per-spike mean (event windows): 3.391165e-12 J
+Per-spike std (event windows): 1.556410e-13 J
+Per-spike CV (event windows): 0.045896
+Bootstrap mean energy/spike (N=2000, seed=42): 3.392693e-12 J
+Bootstrap 95% CI: [3.299564e-12, 3.489566e-12] J
+Bootstrap artifact: /home/v71349/analog-gradients/competition/analysis/lif_corners/20260202_224254/rleak_10M_iin_600u/lif_energy_bootstrap.csv
+Trace CSV: /home/v71349/analog-gradients/competition/analysis/lif_corners/20260202_224254/rleak_10M_iin_600u/lif_energy_trace.csv

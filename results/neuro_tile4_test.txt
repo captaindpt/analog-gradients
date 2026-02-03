@@ -1,26 +1,26 @@
 === Neuro Tile4 Verification ===
 4-neuron synapse+LIF composition
-Date: Feb  2 16:44:18 2026
+Date: Feb  3 15:32:24 2026
 
 Waveform Analysis:
 ==================
 
 Membrane maxima:
-  mem0: 0.792 V
-  mem1: 0.792 V
-  mem2: 0.792 V
-  mem3: 0.792 V
+  mem0: 0.818 V
+  mem1: 0.818 V
+  mem2: 0.818 V
+  mem3: 0.818 V
 
 OK: all membrane nodes integrated synaptic drive
 
 Spike pulse counts:
-  spike0: 14 (min=0.011V max=0.799V)
-  spike1: 14 (min=0.011V max=0.799V)
-  spike2: 14 (min=0.011V max=0.799V)
-  spike3: 14 (min=0.011V max=0.795V)
+  spike0: 13 (min=0.000V max=1.425V)
+  spike1: 13 (min=0.000V max=1.425V)
+  spike2: 13 (min=0.000V max=1.425V)
+  spike3: 13 (min=0.000V max=1.424V)
 
 OK: all neurons produced spike pulses
-First spike times (ns): 27.5, 29.5, 31.5, 33.5
+First spike times (ns): 47.5, 49.5, 51.5, 53.5
 OK: channel staggering preserved in first spike timing
 
 === PASS: Neuro Tile4 verified ===

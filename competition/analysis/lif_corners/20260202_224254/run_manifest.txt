@@ -1,0 +1,9 @@
+run_id=20260202_224254
+start_utc=2026-02-03T03:42:54Z
+rleak_list=8M,10M,12M
+iin_list=400u,500u,600u
+result_root=/home/v71349/analog-gradients/results/lif_neuron_corners/20260202_224254
+analysis_root=/home/v71349/analog-gradients/competition/analysis/lif_corners/20260202_224254
+end_utc=2026-02-03T03:44:07Z
+summary_csv=/home/v71349/analog-gradients/competition/analysis/lif_corners/20260202_224254/lif_corner_summary.csv
+summary_md=/home/v71349/analog-gradients/competition/analysis/lif_corners/20260202_224254/lif_corner_summary.md

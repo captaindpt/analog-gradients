@@ -1,0 +1,9 @@
+alu4_flow_demo 1000
+M1_WIDTH_CHECK
+0 0 2 Feb  3 15:34:28 2026                     
+Rule File Pathname: /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc_smoke.svrf
+Smoke check: minimum width on layer 11
+M2_WIDTH_CHECK
+0 0 2 Feb  3 15:34:28 2026                     
+Rule File Pathname: /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc_smoke.svrf
+Smoke check: minimum width on layer 12

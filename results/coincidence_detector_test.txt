@@ -1,0 +1,34 @@
+=== Coincidence Detector Verification ===
+2-input spike-domain temporal AND (coincidence)
+Date: Feb  3 15:32:49 2026
+
+Waveform Analysis:
+==================
+
+Membrane maxima (V):
+  A-only:     0.447
+  B-only:     0.447
+  Coincident: 0.894
+  Offset:     0.685
+
+Spike detection threshold: 0.900 V
+
+Spike counts:
+  A-only:     0
+  B-only:     0
+  Coincident: 1
+  Offset:     0
+
+Spike maxima (V):
+  A-only:     0.000
+  B-only:     0.000
+  Coincident: 1.775
+  Offset:     0.000
+
+First coincident spike: 12.229 ns
+
+OK: coincident input triggers output spike
+OK: non-coincident cases remain subthreshold
+OK: coincidence channel integrates more strongly than offset
+
+=== PASS: Coincidence detector computes temporal AND ===

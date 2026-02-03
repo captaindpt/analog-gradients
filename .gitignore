@@ -5,19 +5,36 @@ papers/
 # OS / editor noise
 .DS_Store
 *.swp
+__pycache__/
+*.pyc
 
 # Local agent/session logs
 .claude/
 command.log
+default.svf
+inverter.log
+inverter.raw/
+spectre_probe_*.log
 
 # Cadence generated artifacts (keep *_test.txt reports)
 results/**/*.raw/
 results/**/psf/
 results/**/spectre.log
+results/**/ocean.log
 results/**/logFile
 results/**/*.tran
 results/**/*.psfxl
 results/**/*.sig
+results/**/*_sweep_tmp.scs
+results/**/sweeps/
+results/lif_neuron_corners/
 results/debug.txt
 results/env_test.txt
 results/_runlogs/*.log
+results/_runlogs/*.manifest.txt
+
+# Full-flow scratch artifacts (reproducible from scripts)
+implementation/fullflow_demo/work/dc/work/
+implementation/fullflow_demo/work/dc/out/*.ddc
+implementation/fullflow_demo/work/dc/out/*.sdc
+implementation/fullflow_demo/work/dc/reports/*.rpt
