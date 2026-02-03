@@ -1,8 +1,18 @@
 # NeuroCore Architecture Dissection (Paper Notes)
 
-Date: 2026-02-02
+Date: 2026-02-03
 
-This note is the paper-facing technical breakdown of the neuromorphic path:
+This is the working dissection notebook for `competition/paper/neurocore_workthrough.tex`.
+
+## Dissection method (systematic, repeatable)
+
+Three passes are used for every block:
+
+1. **Structure pass**: identify devices, topology, and control paths.
+2. **Dynamics pass**: identify dominant state variables and governing equations.
+3. **Evidence pass**: map claims to `results/*_test.txt` and derived analysis artifacts.
+
+Build path under study:
 
 1. `synapse`
 2. `lif_neuron`
@@ -11,120 +21,178 @@ This note is the paper-facing technical breakdown of the neuromorphic path:
 5. `neuro_tile4_coupled`
 6. `neuro_tile4_mixed_signal`
 
-## 1) Synapse Primitive
+---
 
-Source:
+## First sketch (draw it once)
+
+```
+pre spikes --> [Synapse RC] --> [Membrane RC] --> [Threshold + Reset] --> spike
+                                  |                                     |
+                                  +--------- continuous state ----------+
+
+channel0 spike --(feed-forward links)--> channel1 --> channel2 --> channel3
+                         ^
+                         |
+                   digital en gate (mixed-signal experiment)
+```
+
+This sketch is the seed for the larger assembled architecture figure in the paper.
+
+---
+
+## 1) Synapse primitive
+
+Sources:
 - `netlists/synapse.scs`
 - `ocean/test_synapse.ocn`
 - `results/synapse_test.txt`
 
-Mechanism:
-- Pulse-controlled transistor charges `post` node.
-- `C_POST` stores charge, `R_DECAY` leaks it.
-- Two-inverter buffer converts analog `post` into robust digital-like `out`.
+Structure:
+- `MN_DRV` opens charge path into `post`.
+- `C_POST` and `R_DECAY` set integrate/decay behavior.
+- inverter buffer chain exports a robust readout.
 
-Model:
+Dynamics:
 - `dVpost/dt = Iinj/Cpost - Vpost/(Rdecay*Cpost)`
 - `tau_syn = Rdecay * Cpost = 16ns` with current defaults.
 
-Evidence highlights:
-- Integrate + decay + recharge confirmed.
-- Output pulse count: 6.
+Evidence:
+- `Vpost(max)=1.575V`, pulse count `6`, repeated integrate/decay/recharge confirmed.
 
-## 2) LIF Neuron
+Dictation note:
+> This block is not just a pulse shaper; it is the first analog state machine
+> in the path, where stored charge carries short-term memory between events.
 
-Source:
+---
+
+## 2) LIF neuron
+
+Sources:
 - `netlists/lif_neuron.scs`
 - `ocean/test_lif_neuron.ocn`
 - `results/lif_neuron_test.txt`
 
-Mechanism:
-- Input current charges membrane capacitor.
-- Leak resistor creates exponential decay pressure.
-- Inverter pair acts as threshold detector.
-- Reset NMOS discharges membrane after spike event.
+Structure:
+- pulse current input charges membrane node `mem`,
+- leak resistor creates passive discharge,
+- inverter chain performs thresholding,
+- reset NMOS discharges membrane after spike.
 
-Hybrid model:
-- Subthreshold: `Cmem * dVmem/dt = Iin - Vmem/Rleak`
-- Event/reset: when `Vmem` crosses threshold, spike -> reset path turns on.
+Dynamics:
+- subthreshold: `Cmem * dVmem/dt = Iin - Vmem/Rleak`
+- event/reset: threshold crossing enables a nonlinear reset current.
 
-Evidence highlights:
-- 10 spikes in 200ns window.
-- `Vmem(max)` above 1.6V in latest report.
+Evidence:
+- 10 spikes in 200ns window, `Vmem(max)=1.573V`.
 
-## 3) Neuron Tile (Synapse + LIF Composition)
+Dictation note:
+> Computation appears here as *when* the membrane crosses threshold, not just
+> whether an input pulse exists.
 
-Source:
+---
+
+## 3) Neuron tile (synapse + LIF composition)
+
+Sources:
 - `netlists/neuron_tile.scs`
 - `ocean/test_neuron_tile.ocn`
 - `results/neuron_tile_test.txt`
 
-Mechanism:
-- Synapse output feeds membrane via coupling resistor.
-- Demonstrates full local compute path:
-  `input pulse -> analog integration -> threshold event`.
+Structure:
+- synapse output couples into membrane via `R_COUPLE`,
+- threshold/reset loop reused from LIF cell.
 
-Evidence highlights:
-- Synapse decay behavior visible at tile level.
-- 11 spike-node pulses in latest report.
+Evidence:
+- decay at synapse node is preserved after composition,
+- spike-node pulses detected: `12`.
 
-## 4) Neuro Tile4 (Parallel Temporal Channels)
+Dictation note:
+> This is the minimum complete compute channel: event input -> analog state
+> evolution -> event output.
 
-Source:
+---
+
+## 4) Neuro Tile4 (parallel temporal channels)
+
+Sources:
 - `netlists/neuro_tile4.scs`
 - `ocean/test_neuro_tile4.ocn`
 - `results/neuro_tile4_test.txt`
 
-Mechanism:
-- Four replicated channels with staggered input delays.
-- Structure turns known phase offsets into ordered spike timing.
+Structure:
+- four replicated channels with offset presynaptic pulse delays.
 
-Evidence highlights:
-- All channels spike.
-- Ordered first-spike timing preserved across channels.
+Evidence:
+- all channels spike (`14` pulses each),
+- first spikes: `27.5, 29.5, 31.5, 33.5 ns`.
 
-## 5) Neuro Tile4 Coupled (Feed-Forward Propagation)
+Dictation note:
+> The signal is encoded as relative timing between channels; this is temporal
+> coding at transistor level, not clocked cycle-indexed logic.
 
-Source:
+---
+
+## 5) Neuro Tile4 Coupled (feed-forward propagation)
+
+Sources:
 - `netlists/neuro_tile4_coupled.scs`
 - `ocean/test_neuro_tile4_coupled.ocn`
 - `results/neuro_tile4_coupled_test.txt`
 
-Mechanism:
-- Only channel-0 receives external pulse.
-- Feed-forward coupling injects upstream spike activity into downstream channels.
-- Uses resistive and transistor-assisted coupling links.
+Structure:
+- only channel-0 receives external drive,
+- downstream channels receive injected activity via feed-forward links.
 
-Evidence highlights:
-- All downstream channels activate from channel-0 drive.
-- Feed-forward first-spike ordering is preserved in latest report.
+Evidence:
+- membrane maxima: `0.569, 0.974, 1.268, 0.873V`,
+- spike counts: `15, 15, 1, 1`,
+- downstream activation confirmed.
 
-## 6) Neuro Tile4 Mixed-Signal (Digital Control of Analog Propagation)
+Dictation note:
+> Propagation exists, but strict ordering is not monotonic in this snapshot;
+> this should be reported explicitly as behavior, not hidden.
 
-Source:
+---
+
+## 6) Neuro Tile4 mixed-signal (digital gating over analog path)
+
+Sources:
 - `netlists/neuro_tile4_mixed_signal.scs`
 - `ocean/test_neuro_tile4_mixed_signal.ocn`
 - `results/neuro_tile4_mixed_signal_test.txt`
 
-Mechanism:
-- Digital `en` signal gates analog feed-forward transistors.
-- Before enable: downstream channels stay quiescent.
-- After enable: downstream channels propagate spikes.
+Structure:
+- digital `en` controls coupling transistors between channels.
 
-Evidence highlights:
-- Enable edge detected near 140.5ns.
-- Pre-enable downstream spikes: 0.
-- Post-enable downstream spikes: active on channels 1..3.
+Evidence:
+- enable rises near `140.5ns`,
+- downstream spikes pre-enable: `0`,
+- downstream spikes post-enable: `7` each for channels `1..3`.
 
-## Big-Picture Assembly
+Dictation note:
+> This is the bridge experiment: digital control signal selects when analog
+> continuous-time propagation is allowed.
 
-The architecture computes in continuous-time trajectories and event timing:
+---
 
-- state variables: membrane and synaptic voltages,
-- events: spike threshold crossings,
-- coupling: latency transfer between channels,
-- control: optional digital gating over analog pathways.
+## Assembled architecture statement
 
-This is the core narrative for the paper:
-clockless analog dynamics perform computation, while digital flow evidence
-supports engineering credibility and reproducibility.
+Computation in this path is distributed across:
+
+- **state variables**: synaptic and membrane voltages,
+- **event surfaces**: threshold crossings in inverter detector chains,
+- **propagation links**: feed-forward coupling paths carrying timing,
+- **gates**: digital enable controlling analog transport.
+
+Paper-level claim:
+> NeuroCore computes in trajectory and latency space, with a reproducible
+> evidence chain from transistor simulation to implementation-flow artifacts.
+
+---
+
+## Next paper hardening checkpoints
+
+- Add one dedicated assembled architecture figure (channel internals + coupling + digital gate).
+- Add claim-to-artifact traceability table in manuscript.
+- Keep metric tables synchronized to latest `results/*_test.txt` and sweep CSV.
+- Add explicit limitation paragraph (coarse sensitivity grid, full-window ODE weakness).
