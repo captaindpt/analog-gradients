@@ -37,6 +37,12 @@ Build path from verified digital GPU stack to a neuromorphic analog core:
 - Founder-thesis evidence track (clockless continuous-time compute): activated 🔄
 - Analog robustness expansion (`synapse`, `lif_neuron`, `neuron_tile`) ✅ COMPLETE
   - Bundle summary: `competition/sweeps/robustness_summary.md`
+- Binary 2x2 architecture comparison demo (ticket 0016) 🔄
+  - Neuro path proof v0 PASS: `results/matmul2x2_binary_neuro_test.txt`
+  - Two-substrate comparison run published:
+    `competition/analysis/matmul2x2_binary_comparison.md`
+  - Matrix-size scaling sweep added (model-based):
+    `competition/analysis/matmul_binary_scaling_summary.md`
 
 ## Workspace Rendezvous (2026-02-03)
 
@@ -183,6 +189,8 @@ Full-flow smoke evidence:
 | Neuro Tile4 Mixed-Signal | ✅ | ✅ | ✅ PASS | digital `en` gates analog propagation in one Spectre run |
 | Coincidence Detector | ✅ | ✅ | ✅ PASS | spike-domain temporal AND: only coincident A+B input produces spike |
 | XOR Spike2 | ✅ | ✅ | ✅ PASS | spike-domain XOR: output spikes for 10/01, suppressed for 00/11 |
+| Matmul2x2 Binary Neuro | ✅ | ✅ | ✅ PASS | binary 2x2 proof point decodes expected `[[1 1] [1 2]]` |
+| Matmul2x2 Binary Digital | ✅ | ✅ | ✅ PASS | binary 2x2 digital baseline decodes expected `[[1 1] [1 2]]` |
 
 ## Competition Path: Robustness Snapshot
 
@@ -193,6 +201,20 @@ Full-flow smoke evidence:
 | Neuron Tile | r_couple={6k,8k,10k}, rleak={6M,8M,10M} | 9/9 PASS (band) | `competition/sweeps/neuron_tile_sweep_summary.md` |
 | Neuro Tile4 Coupled | r_fb={600..1500}, rleak={5M..12M} | 63/63 PASS | `competition/sweeps/neuro_tile4_coupled_sweep_summary.md` |
 | Bundle Rollup | all above | 90/90 PASS | `competition/sweeps/robustness_summary.md` |
+
+## Architecture Scaling Sweep (Ticket 0016)
+
+- Added scaling harness for binary matmul architecture discussion:
+  - `scripts/run_matmul_binary_scaling_sweep.sh`
+  - `scripts/analyze_matmul_binary_scaling.py`
+- Latest sweep artifacts:
+  - `competition/sweeps/matmul_binary_scaling_sweep.csv`
+  - `competition/analysis/matmul_binary_scaling_summary.md`
+  - `competition/analysis/matmul_binary_scaling_energy.svg`
+  - `competition/analysis/matmul_binary_scaling_pressure.svg`
+- Scope caveat:
+  - this sweep is calibrated from verified 2x2 transistor runs and extrapolated
+    algorithmically for larger `N`; it is not yet a transistor-run NxN netlist flow.
 
 ## Level 5: CMOS Primitives ✅
 

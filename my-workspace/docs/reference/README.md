@@ -17,6 +17,8 @@ This folder contains supporting reference notes.
 - `Cadence/VIRTUOSO_AUTOMATION.md`: automation patterns and helper usage.
 - `Cadence/CHECKPOINT_CLI_PROGRESS.md`: historical checkpoint notes (archival).
 - `Cadence/CHINA_INFRASTRUCTURE_INSIGHTS.md`: motivation/thesis context (archival).
+- `BINARY_MATMUL_PROOF_PLAN.md`: binary 2x2 matmul proof architecture
+  and comparison method (digital vs neuro).
 
 ## Manufacturing-Readiness Goals
 

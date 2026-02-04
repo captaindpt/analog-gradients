@@ -1,0 +1,176 @@
+; test_matmul2x2_binary_digital.ocn
+; Verify binary 2x2 matmul digital baseline and extract matched metrics.
+
+out = outfile("results/matmul2x2_binary_digital_test.txt" "w")
+fprintf(out "=== Binary 2x2 Matmul (Digital Baseline) Verification ===\n")
+fprintf(out "Binary-only proof: AND partial products + XOR/AND two-term adder\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("results/matmul2x2_binary_digital/matmul2x2_binary_digital.raw")
+selectResult("tran_test-tran")
+
+procedure(firstCross(sig th dt tstart tstop)
+  let((ts prev curr frac tcross found)
+    tcross = nil
+    found = nil
+    ts = tstart
+    prev = value(sig ts)
+    ts = ts + dt
+    while(ts < tstop && !found
+      curr = value(sig ts)
+      if(prev < th && curr > th then
+        frac = (th - prev) / (curr - prev)
+        if(frac < 0 then frac = 0)
+        if(frac > 1 then frac = 1)
+        tcross = (ts - dt) + frac * dt
+        found = t
+      )
+      prev = curr
+      ts = ts + dt
+    )
+    tcross
+  )
+)
+
+procedure(bitAt(sig tsample vth_low vth_high)
+  let((vv)
+    vv = value(sig tsample)
+    if(vv < vth_low then
+      0
+    else
+      if(vv > vth_high then 1 else -1)
+    )
+  )
+)
+
+vp_ae = v("p_ae")
+vp_bg = v("p_bg")
+vp_af = v("p_af")
+vp_bh = v("p_bh")
+vp_ce = v("p_ce")
+vp_dg = v("p_dg")
+vp_cf = v("p_cf")
+vp_dh = v("p_dh")
+vy11_l = v("y11_l")
+vy11_m = v("y11_m")
+vy12_l = v("y12_l")
+vy12_m = v("y12_m")
+vy21_l = v("y21_l")
+vy21_m = v("y21_m")
+vy22_l = v("y22_l")
+vy22_m = v("y22_m")
+idd = getData("V_VDD:p")
+
+if(vp_ae && vp_bg && vp_af && vp_bh && vp_ce && vp_dg && vp_cf && vp_dh &&
+   vy11_l && vy11_m && vy12_l && vy12_m && vy21_l && vy21_m && vy22_l && vy22_m && idd then
+    pass = t
+    dt = 50p
+    t_in = 10n
+    t_sample = 30n
+    vdd = 1.8
+    vth_low = 0.2 * vdd
+    vth_high = 0.8 * vdd
+
+    y11_l_b = bitAt(vy11_l t_sample vth_low vth_high)
+    y11_m_b = bitAt(vy11_m t_sample vth_low vth_high)
+    y12_l_b = bitAt(vy12_l t_sample vth_low vth_high)
+    y12_m_b = bitAt(vy12_m t_sample vth_low vth_high)
+    y21_l_b = bitAt(vy21_l t_sample vth_low vth_high)
+    y21_m_b = bitAt(vy21_m t_sample vth_low vth_high)
+    y22_l_b = bitAt(vy22_l t_sample vth_low vth_high)
+    y22_m_b = bitAt(vy22_m t_sample vth_low vth_high)
+
+    if(y11_l_b < 0 || y11_m_b < 0 || y12_l_b < 0 || y12_m_b < 0 ||
+       y21_l_b < 0 || y21_m_b < 0 || y22_l_b < 0 || y22_m_b < 0 then
+        fprintf(out "FAIL: one or more output bits are in undefined region at sample time\n")
+        pass = nil
+    )
+
+    y11 = y11_l_b + 2 * y11_m_b
+    y12 = y12_l_b + 2 * y12_m_b
+    y21 = y21_l_b + 2 * y21_m_b
+    y22 = y22_l_b + 2 * y22_m_b
+
+    t_y11 = firstCross(vy11_l vth_high dt 1n 90n)
+    t_y12 = firstCross(vy12_l vth_high dt 1n 90n)
+    t_y21 = firstCross(vy21_l vth_high dt 1n 90n)
+    t_y22 = firstCross(vy22_m vth_high dt 1n 90n)
+
+    latest_valid_t = nil
+    foreach(tt list(t_y11 t_y12 t_y21 t_y22)
+        if(tt then
+            if(latest_valid_t then
+                if(tt > latest_valid_t then latest_valid_t = tt)
+            else
+                latest_valid_t = tt
+            )
+        else
+            pass = nil
+            fprintf(out "FAIL: missing expected rising edge in one or more high output bits\n")
+        )
+    )
+
+    if(latest_valid_t then
+        latency_ns = (latest_valid_t - t_in) * 1e9
+    else
+        latency_ns = -1
+        pass = nil
+    )
+
+    t0 = 0n
+    t1 = 90n
+    energy = 0
+    ts = t0
+    prev_i = value(idd ts)
+    prev_t = ts
+    ts = ts + dt
+    while(ts <= t1
+        curr_i = value(idd ts)
+        p0 = -prev_i * vdd
+        p1 = -curr_i * vdd
+        energy = energy + 0.5 * (p0 + p1) * (ts - prev_t)
+        prev_i = curr_i
+        prev_t = ts
+        ts = ts + dt
+    )
+    e_per_op = energy / 12
+
+    fprintf(out "Stimulus matrix (fixed proof point):\n")
+    fprintf(out "  A = [[1 0] [1 1]]\n")
+    fprintf(out "  B = [[1 1] [0 1]]\n\n")
+
+    fprintf(out "Expected output:\n")
+    fprintf(out "  Y = [[1 1] [1 2]]\n\n")
+
+    fprintf(out "Sampled output bits @ %.1f ns:\n" t_sample*1e9)
+    fprintf(out "  y11=(msb=%d lsb=%d)\n" y11_m_b y11_l_b)
+    fprintf(out "  y12=(msb=%d lsb=%d)\n" y12_m_b y12_l_b)
+    fprintf(out "  y21=(msb=%d lsb=%d)\n" y21_m_b y21_l_b)
+    fprintf(out "  y22=(msb=%d lsb=%d)\n\n" y22_m_b y22_l_b)
+
+    fprintf(out "Decoded output matrix: [[%d %d] [%d %d]]\n" y11 y12 y21 y22)
+    fprintf(out "Latency to full output-valid: %.3f ns\n" latency_ns)
+    fprintf(out "Total energy (0-90ns): %.6e J\n" energy)
+    fprintf(out "Energy per operation (12 ops): %.6e J/op\n\n" e_per_op)
+
+    if(y11 == 1 && y12 == 1 && y21 == 1 && y22 == 2 then
+        fprintf(out "OK: binary matmul decoded outputs match expected matrix\n")
+    else
+        fprintf(out "FAIL: decoded binary matmul outputs do not match expected matrix\n")
+        pass = nil
+    )
+
+    fprintf(out "\n")
+    if(pass then
+        fprintf(out "=== PASS: Binary 2x2 digital matmul baseline verified ===\n")
+    else
+        fprintf(out "=== FAIL: Binary 2x2 digital matmul baseline failed ===\n")
+    )
+else
+    fprintf(out "ERROR: Could not read waveform data\n")
+)
+
+close(out)
+printf("Done. Results in: ~/analog-gradients/results/matmul2x2_binary_digital_test.txt\n")
+exit()

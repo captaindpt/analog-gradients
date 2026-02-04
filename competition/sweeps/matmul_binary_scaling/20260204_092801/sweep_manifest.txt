@@ -1,0 +1,14 @@
+run_id=20260204_092801
+start_utc=2026-02-04T14:28:01Z
+n_list=2,4,8,12,16
+density_list=0.10,0.30,0.50,0.80
+seed_list=1,2,3,4,5
+end_utc=2026-02-04T14:28:17Z
+run_csv=/home/v71349/analog-gradients/competition/sweeps/matmul_binary_scaling/20260204_092801/matmul_binary_scaling_sweep.csv
+run_md=/home/v71349/analog-gradients/competition/sweeps/matmul_binary_scaling/20260204_092801/matmul_binary_scaling_summary.md
+run_energy_svg=/home/v71349/analog-gradients/competition/sweeps/matmul_binary_scaling/20260204_092801/matmul_binary_scaling_energy.svg
+run_pressure_svg=/home/v71349/analog-gradients/competition/sweeps/matmul_binary_scaling/20260204_092801/matmul_binary_scaling_pressure.svg
+latest_csv=/home/v71349/analog-gradients/competition/sweeps/matmul_binary_scaling_sweep.csv
+latest_md=/home/v71349/analog-gradients/competition/analysis/matmul_binary_scaling_summary.md
+latest_energy_svg=/home/v71349/analog-gradients/competition/analysis/matmul_binary_scaling_energy.svg
+latest_pressure_svg=/home/v71349/analog-gradients/competition/analysis/matmul_binary_scaling_pressure.svg

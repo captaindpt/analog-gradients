@@ -1,0 +1,263 @@
+; test_matmul2x2_binary_neuro.ocn
+; Verify binary 2x2 matmul neuro-path proof netlist.
+
+out = outfile("results/matmul2x2_binary_neuro_test.txt" "w")
+fprintf(out "=== Binary 2x2 Matmul (Neuro Path) Verification ===\n")
+fprintf(out "Binary-only proof: product via coincidence, sum via integration\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("results/matmul2x2_binary_neuro/matmul2x2_binary_neuro.raw")
+selectResult("tran_test-tran")
+
+procedure(countRising(sig th dt tstart tstop)
+  let((cnt ts prev curr)
+    cnt = 0
+    ts = tstart
+    prev = value(sig ts)
+    ts = ts + dt
+    while(ts < tstop
+      curr = value(sig ts)
+      if(prev < th && curr > th then
+        cnt = cnt + 1
+      )
+      prev = curr
+      ts = ts + dt
+    )
+    cnt
+  )
+)
+
+procedure(firstCross(sig th dt tstart tstop)
+  let((ts prev curr frac tcross found)
+    tcross = nil
+    found = nil
+    ts = tstart
+    prev = value(sig ts)
+    ts = ts + dt
+    while(ts < tstop && !found
+      curr = value(sig ts)
+      if(prev < th && curr > th then
+        frac = (th - prev) / (curr - prev)
+        if(frac < 0 then frac = 0)
+        if(frac > 1 then frac = 1)
+        tcross = (ts - dt) + frac * dt
+        found = t
+      )
+      prev = curr
+      ts = ts + dt
+    )
+    tcross
+  )
+)
+
+vp_ae = v("p_ae")
+vp_bg = v("p_bg")
+vp_af = v("p_af")
+vp_bh = v("p_bh")
+vp_ce = v("p_ce")
+vp_dg = v("p_dg")
+vp_cf = v("p_cf")
+vp_dh = v("p_dh")
+vy11 = v("y11_mem")
+vy12 = v("y12_mem")
+vy21 = v("y21_mem")
+vy22 = v("y22_mem")
+idd = getData("V_VDD:p")
+
+if(vp_ae && vp_bg && vp_af && vp_bh && vp_ce && vp_dg && vp_cf && vp_dh && vy11 && vy12 && vy21 && vy22 && idd then
+    pass = t
+    dt = 100p
+    t_in = 10n
+
+    ae_min = ymin(vp_ae)
+    bg_min = ymin(vp_bg)
+    af_min = ymin(vp_af)
+    bh_min = ymin(vp_bh)
+    ce_min = ymin(vp_ce)
+    dg_min = ymin(vp_dg)
+    cf_min = ymin(vp_cf)
+    dh_min = ymin(vp_dh)
+
+    ae_max = ymax(vp_ae)
+    bg_max = ymax(vp_bg)
+    af_max = ymax(vp_af)
+    bh_max = ymax(vp_bh)
+    ce_max = ymax(vp_ce)
+    dg_max = ymax(vp_dg)
+    cf_max = ymax(vp_cf)
+    dh_max = ymax(vp_dh)
+
+    if(ae_max > 0.4 then
+        ae_th = (ae_max + ae_min)/2
+        ae_cnt = countRising(vp_ae ae_th dt 1n 90n)
+        ae_t = firstCross(vp_ae ae_th dt 1n 90n)
+    else
+        ae_cnt = 0
+        ae_t = nil
+    )
+    if(bg_max > 0.4 then
+        bg_th = (bg_max + bg_min)/2
+        bg_cnt = countRising(vp_bg bg_th dt 1n 90n)
+        bg_t = firstCross(vp_bg bg_th dt 1n 90n)
+    else
+        bg_cnt = 0
+        bg_t = nil
+    )
+    if(af_max > 0.4 then
+        af_th = (af_max + af_min)/2
+        af_cnt = countRising(vp_af af_th dt 1n 90n)
+        af_t = firstCross(vp_af af_th dt 1n 90n)
+    else
+        af_cnt = 0
+        af_t = nil
+    )
+    if(bh_max > 0.4 then
+        bh_th = (bh_max + bh_min)/2
+        bh_cnt = countRising(vp_bh bh_th dt 1n 90n)
+        bh_t = firstCross(vp_bh bh_th dt 1n 90n)
+    else
+        bh_cnt = 0
+        bh_t = nil
+    )
+    if(ce_max > 0.4 then
+        ce_th = (ce_max + ce_min)/2
+        ce_cnt = countRising(vp_ce ce_th dt 1n 90n)
+        ce_t = firstCross(vp_ce ce_th dt 1n 90n)
+    else
+        ce_cnt = 0
+        ce_t = nil
+    )
+    if(dg_max > 0.4 then
+        dg_th = (dg_max + dg_min)/2
+        dg_cnt = countRising(vp_dg dg_th dt 1n 90n)
+        dg_t = firstCross(vp_dg dg_th dt 1n 90n)
+    else
+        dg_cnt = 0
+        dg_t = nil
+    )
+    if(cf_max > 0.4 then
+        cf_th = (cf_max + cf_min)/2
+        cf_cnt = countRising(vp_cf cf_th dt 1n 90n)
+        cf_t = firstCross(vp_cf cf_th dt 1n 90n)
+    else
+        cf_cnt = 0
+        cf_t = nil
+    )
+    if(dh_max > 0.4 then
+        dh_th = (dh_max + dh_min)/2
+        dh_cnt = countRising(vp_dh dh_th dt 1n 90n)
+        dh_t = firstCross(vp_dh dh_th dt 1n 90n)
+    else
+        dh_cnt = 0
+        dh_t = nil
+    )
+
+    y11_est = ae_cnt + bg_cnt
+    y12_est = af_cnt + bh_cnt
+    y21_est = ce_cnt + dg_cnt
+    y22_est = cf_cnt + dh_cnt
+
+    y11_max = ymax(vy11)
+    y12_max = ymax(vy12)
+    y21_max = ymax(vy21)
+    y22_max = ymax(vy22)
+    total_partial_spikes = ae_cnt + bg_cnt + af_cnt + bh_cnt + ce_cnt + dg_cnt + cf_cnt + dh_cnt
+
+    latest_active_t = nil
+    foreach(tt list(ae_t af_t ce_t cf_t dh_t)
+        if(tt then
+            if(latest_active_t then
+                if(tt > latest_active_t then latest_active_t = tt)
+            else
+                latest_active_t = tt
+            )
+        )
+    )
+
+    if(latest_active_t then
+        latency_ns = (latest_active_t - t_in) * 1e9
+    else
+        latency_ns = -1
+        pass = nil
+        fprintf(out "FAIL: could not determine full-output latency from active products\n")
+    )
+
+    t0 = 0n
+    t1 = 90n
+    energy = 0
+    ts = t0
+    prev_i = value(idd ts)
+    prev_t = ts
+    ts = ts + dt
+    while(ts <= t1
+        curr_i = value(idd ts)
+        p0 = -prev_i * 1.8
+        p1 = -curr_i * 1.8
+        energy = energy + 0.5 * (p0 + p1) * (ts - prev_t)
+        prev_i = curr_i
+        prev_t = ts
+        ts = ts + dt
+    )
+    energy_per_op = energy / 12
+    spike_energy_est = total_partial_spikes * 3.27e-12
+
+    fprintf(out "Stimulus matrix (fixed proof point):\n")
+    fprintf(out "  A = [[1 0] [1 1]]\n")
+    fprintf(out "  B = [[1 1] [0 1]]\n\n")
+
+    fprintf(out "Expected output:\n")
+    fprintf(out "  Y = [[1 1] [1 2]]\n\n")
+
+    fprintf(out "Partial product spike counts:\n")
+    fprintf(out "  ae=%d bg=%d af=%d bh=%d ce=%d dg=%d cf=%d dh=%d\n\n"
+      ae_cnt bg_cnt af_cnt bh_cnt ce_cnt dg_cnt cf_cnt dh_cnt)
+    fprintf(out "Total partial spikes: %d\n\n" total_partial_spikes)
+    fprintf(out "Partial product maxima (V):\n")
+    fprintf(out "  ae=%.3f bg=%.3f af=%.3f bh=%.3f ce=%.3f dg=%.3f cf=%.3f dh=%.3f\n\n"
+      ae_max bg_max af_max bh_max ce_max dg_max cf_max dh_max)
+
+    fprintf(out "Decoded output from partial products:\n")
+    fprintf(out "  y11=%d y12=%d y21=%d y22=%d\n\n" y11_est y12_est y21_est y22_est)
+
+    fprintf(out "Accumulator membrane maxima (V):\n")
+    fprintf(out "  y11=%.3f y12=%.3f y21=%.3f y22=%.3f\n\n" y11_max y12_max y21_max y22_max)
+    fprintf(out "Latency to full output-valid: %.3f ns\n" latency_ns)
+    fprintf(out "Total energy (0-90ns): %.6e J\n" energy)
+    fprintf(out "Energy per operation (12 ops): %.6e J/op\n" energy_per_op)
+    fprintf(out "Spike-model energy estimate (3.27 pJ/spike): %.6e J\n\n" spike_energy_est)
+
+    if(y11_est == 1 && y12_est == 1 && y21_est == 1 && y22_est == 2 then
+        fprintf(out "OK: binary matmul decoded outputs match expected matrix\n")
+    else
+        fprintf(out "FAIL: decoded binary matmul outputs do not match expected matrix\n")
+        pass = nil
+    )
+
+    if(y22_max > y11_max + 0.05 && y22_max > y12_max + 0.05 && y22_max > y21_max + 0.05 then
+        fprintf(out "OK: two-term sum output (y22=2) has strongest integrated response\n")
+    else
+        fprintf(out "FAIL: y22 integration strength is not clearly above y=1 outputs\n")
+        pass = nil
+    )
+
+    if(y11_max > 0.10 && y12_max > 0.10 && y21_max > 0.10 then
+        fprintf(out "OK: y=1 outputs integrate above baseline\n")
+    else
+        fprintf(out "FAIL: one or more y=1 outputs too weak\n")
+        pass = nil
+    )
+
+    fprintf(out "\n")
+    if(pass then
+        fprintf(out "=== PASS: Binary 2x2 neuro matmul proof verified ===\n")
+    else
+        fprintf(out "=== FAIL: Binary 2x2 neuro matmul proof failed ===\n")
+    )
+else
+    fprintf(out "ERROR: Could not read waveform data\n")
+)
+
+close(out)
+printf("Done. Results in: ~/analog-gradients/results/matmul2x2_binary_neuro_test.txt\n")
+exit()

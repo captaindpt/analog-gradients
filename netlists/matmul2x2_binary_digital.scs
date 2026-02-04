@@ -1,0 +1,71 @@
+// matmul2x2_binary_digital.scs - Binary 2x2 matmul proof (digital path)
+// Binary multiply is AND. Two-term add is XOR (LSB) + AND (MSB).
+
+simulator lang=spectre
+
+parameters vdd_val=1.8 a=1 b=0 c=1 d=1 e=1 f=1 g=0 h=1
+parameters a_v=a*vdd_val b_v=b*vdd_val c_v=c*vdd_val d_v=d*vdd_val
+parameters e_v=e*vdd_val f_v=f*vdd_val g_v=g*vdd_val h_v=h*vdd_val
+
+model nch mos1 type=n vto=0.4 kp=120u
+model pch mos1 type=p vto=-0.4 kp=40u
+
+V_VDD (vdd 0) vsource dc=vdd_val
+
+// Input event at 10ns. Zero-valued bits keep val1=0.
+V_A (a_in 0) vsource type=pulse val0=0 val1=a_v delay=10n rise=100p fall=100p width=20n period=200n
+V_B (b_in 0) vsource type=pulse val0=0 val1=b_v delay=10n rise=100p fall=100p width=20n period=200n
+V_C (c_in 0) vsource type=pulse val0=0 val1=c_v delay=10n rise=100p fall=100p width=20n period=200n
+V_D (d_in 0) vsource type=pulse val0=0 val1=d_v delay=10n rise=100p fall=100p width=20n period=200n
+V_E (e_in 0) vsource type=pulse val0=0 val1=e_v delay=10n rise=100p fall=100p width=20n period=200n
+V_F (f_in 0) vsource type=pulse val0=0 val1=f_v delay=10n rise=100p fall=100p width=20n period=200n
+V_G (g_in 0) vsource type=pulse val0=0 val1=g_v delay=10n rise=100p fall=100p width=20n period=200n
+V_H (h_in 0) vsource type=pulse val0=0 val1=h_v delay=10n rise=100p fall=100p width=20n period=200n
+
+subckt nand2 (a b out vdd)
+    MP0 (out a vdd vdd) pch w=2u l=1u
+    MP1 (out b vdd vdd) pch w=2u l=1u
+    MN0 (out a mid 0) nch w=2u l=1u
+    MN1 (mid b 0 0) nch w=2u l=1u
+ends nand2
+
+subckt inverter (in out vdd)
+    MP0 (out in vdd vdd) pch w=2u l=1u
+    MN0 (out in 0 0) nch w=1u l=1u
+ends inverter
+
+subckt and2 (a b out vdd)
+    XN (a b n_int vdd) nand2
+    XI (n_int out vdd) inverter
+ends and2
+
+subckt xor2 (a b out vdd)
+    X1 (a b n1 vdd) nand2
+    X2 (a n1 n2 vdd) nand2
+    X3 (b n1 n3 vdd) nand2
+    X4 (n2 n3 out vdd) nand2
+ends xor2
+
+// Partial products.
+X_AE (a_in e_in p_ae vdd) and2
+X_BG (b_in g_in p_bg vdd) and2
+X_AF (a_in f_in p_af vdd) and2
+X_BH (b_in h_in p_bh vdd) and2
+X_CE (c_in e_in p_ce vdd) and2
+X_DG (d_in g_in p_dg vdd) and2
+X_CF (c_in f_in p_cf vdd) and2
+X_DH (d_in h_in p_dh vdd) and2
+
+// Sum outputs: y = p1 + p2, where LSB = XOR, MSB = AND.
+X_Y11_L (p_ae p_bg y11_l vdd) xor2
+X_Y11_M (p_ae p_bg y11_m vdd) and2
+X_Y12_L (p_af p_bh y12_l vdd) xor2
+X_Y12_M (p_af p_bh y12_m vdd) and2
+X_Y21_L (p_ce p_dg y21_l vdd) xor2
+X_Y21_M (p_ce p_dg y21_m vdd) and2
+X_Y22_L (p_cf p_dh y22_l vdd) xor2
+X_Y22_M (p_cf p_dh y22_m vdd) and2
+
+tran_test tran stop=90n
+save p_ae p_bg p_af p_bh p_ce p_dg p_cf p_dh \
+     y11_l y11_m y12_l y12_m y21_l y21_m y22_l y22_m V_VDD:p
