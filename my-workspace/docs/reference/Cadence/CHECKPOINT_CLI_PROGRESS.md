@@ -1,5 +1,9 @@
 # Checkpoint: CLI Automation Progress
 
+> Historical checkpoint (Dec 2024). Keep for traceability only.
+> Current execution truth lives in `my-workspace/docs/vision.md`,
+> `my-workspace/docs/DEVELOPMENT.md`, and `my-workspace/docs/STATUS.md`.
+
 **Date:** Dec 19, 2024
 **Status:** CLI path validated, hit GUI dependency issue. Claude Code installed but TUI broken.
 

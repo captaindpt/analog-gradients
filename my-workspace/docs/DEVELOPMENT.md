@@ -10,16 +10,40 @@ credible implementation readiness through a reproducible full-flow path.
 
 ## Agent Bootstrap (First 5 Minutes)
 
-1. Read `my-workspace/docs/INDEX.md`.
-2. Read `my-workspace/docs/vision.md`.
-3. Read `my-workspace/docs/STATUS.md`.
-4. Read `AGENTS.md`.
-5. Read `my-workspace/docs/armory/snapshot-2026-02-02/armory-summary.md`.
+Follow the canonical order in `my-workspace/docs/INDEX.md`. Quick copy:
+
+1. Read `AGENTS.md`.
+2. Read `my-workspace/README.md`.
+3. Read `my-workspace/docs/INDEX.md`.
+4. Read `my-workspace/docs/vision.md`.
+5. Read `my-workspace/docs/DEVELOPMENT.md`.
+6. Read `my-workspace/docs/STATUS.md`.
+7. Read `my-workspace/docs/RANDEZVOUS.md`.
+8. Read `my-workspace/docs/armory/snapshot-2026-02-02/armory-summary.md`.
+9. Read `my-workspace/docs/reference/README.md` (secondary context).
 
 ## Workflow
 
 1. `source setup_cadence.sh`
 2. Validate current baseline with `./build.sh all` (or impacted components).
+   - `build.sh` is fail-closed: stale `*_test.txt` and `.raw` artifacts are
+     removed before each run, and fresh raw/result timestamps are required.
+   - Result parsing is strict: exactly one terminal verdict line is required,
+     and any in-file `FAIL:`/`[FAIL]`/`ERROR:` marker fails the component.
+   - OCEAN runtime errors are fatal: any `*Error*` in `results/<component>/ocean.log`
+     fails the component, even if OCEAN exits `0`.
+   - Spectre strict warning policy is active: any unallowlisted
+     `WARNING (SPECTRE-xxxxx)` in `results/<component>/spectre.log` is fatal.
+   - Warning allowlist is explicit and auditable:
+     `config/spectre_warning_allowlist.txt`.
+   - Warning-count drift is fail-closed against prior green baseline:
+     each component/code count must be `<=` baseline in
+     `config/spectre_warning_baseline.csv`.
+   - Run manifests include per-component warning summaries (`warnings=...`).
+   - OCEAN scripts use repo-relative paths (`results/...`) to avoid machine-locked
+     absolute path dependencies.
+   - Every invocation writes a timestamped log + manifest:
+     `results/_runlogs/build_<component>_<timestamp>.{log,manifest.txt}`.
 3. Implement circuit in `netlists/<name>.scs`.
 4. Implement verification in `ocean/test_<name>.ocn`.
 5. Add component wiring in `build.sh` if new top-level target.
@@ -49,9 +73,13 @@ Use this track to prove the compute thesis beyond tool operation.
 6. Keep each claim mapped to a reproducible artifact under `competition/`.
 
 Current analysis commands:
+- `scripts/sweep_neuro_tile4_coupled.sh`
 - `python3 scripts/analyze_lif_ode_fit.py`
 - `python3 scripts/analyze_temporal_sensitivity.py`
 - `scripts/analyze_lif_energy.sh`
+- `scripts/run_lif_corner_evidence.sh`
+- `./build.sh coincidence_detector` (spike-domain temporal AND compute demo)
+- `./build.sh xor_spike2` (spike-domain XOR compute demo)
 - `./build.sh neuro_tile4_mixed_signal` (digital-enable / analog-propagation smoke)
 
 Reference thesis: `competition/founder-thesis.md`
@@ -64,13 +92,26 @@ Reference thesis: `competition/founder-thesis.md`
   - `scripts/run_calibre_smoke.sh`
 - End-to-end:
   - `scripts/run_fullflow_smoke.sh`
-  - `FULLFLOW_STRICT=1 scripts/run_fullflow_smoke.sh` (fails on license-blocked stages)
+  - `FULLFLOW_STRICT=1 scripts/run_fullflow_smoke.sh` (fails on any degraded stage)
+
+License defaults for full-flow stages are auto-seeded by:
+- `scripts/setup_fullflow_licenses.sh`
+  - `SNPSLMD_LICENSE_FILE=6053@licaccess.cmc.ca`
+  - `MGLS_LICENSE_FILE=6056@licaccess.cmc.ca`
+  - `SALT_LICENSE_SERVER=$MGLS_LICENSE_FILE`
+  - user-provided environment values still override defaults.
 
 ### Current Environment Caveat
 
-- DC and Calibre binaries run in this environment, but licenses may be
-  unavailable; scripts emit explicit warning artifacts instead of silently
-  failing.
+- As of 2026-02-03 investigation, DC and Calibre license behavior in this VM is
+  configuration-sensitive (not hard entitlement blockers by default):
+  - `SNPSLMD_LICENSE_FILE=6053@licaccess.cmc.ca`
+  - `MGLS_LICENSE_FILE=6056@licaccess.cmc.ca`
+  - `SALT_LICENSE_SERVER=$MGLS_LICENSE_FILE`
+- `scripts/setup_fullflow_licenses.sh` now seeds these defaults for full-flow
+  smoke scripts.
+- Remaining DC blocker after license env is set:
+  - `DB-1` target-library format/path issue (`.lib` vs expected `.db` flow usage).
 
 ## Documentation Update Contract
 

@@ -1,0 +1,9 @@
+# Spectre warning-count baseline (previous green baseline).
+# Generated from green full run: results/_runlogs/build_all_20260203_134652.manifest.txt
+# Format: component,code,count
+component,code,count
+alu1,SPECTRE-17191,1
+alu4,SPECTRE-17192,1
+pe1,SPECTRE-17192,1
+pe4,SPECTRE-17192,1
+gpu_core,SPECTRE-17192,1

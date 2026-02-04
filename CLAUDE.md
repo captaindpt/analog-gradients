@@ -2,6 +2,18 @@
 
 Context for Claude Code in this repository.
 
+## Context Trail (Read in Order)
+
+1. `AGENTS.md` (repo-level agent operating rules)
+2. `my-workspace/README.md` (workspace map)
+3. `my-workspace/docs/INDEX.md` (navigation root)
+4. `my-workspace/docs/vision.md` (mission + success criteria)
+5. `my-workspace/docs/DEVELOPMENT.md` (execution workflow)
+6. `my-workspace/docs/STATUS.md` (current state + blockers)
+7. `my-workspace/docs/armory/snapshot-2026-02-02/armory-summary.md` (tooling ceiling)
+
+If documents conflict, treat that order as precedence.
+
 ## What This Is
 
 Testbed for AI-driven hardware design with Cadence Spectre on CMC Cloud.
@@ -16,6 +28,7 @@ Current mission: extend the stack toward a neuromorphic analog compute core.
 - Technical progress: `my-workspace/docs/STATUS.md`
 - Agent workflow details: `AGENTS.md`
 - Armory capabilities: `my-workspace/docs/armory/snapshot-2026-02-02/armory-summary.md`
+- Reference docs (secondary context): `my-workspace/docs/reference/README.md`
 
 ## Current Verified Stack
 
@@ -28,9 +41,9 @@ Current mission: extend the stack toward a neuromorphic analog compute core.
 
 ## Current Development Focus
 
-- Bring up and verify `lif_neuron`
-- Create neuromorphic tile-level composition
-- Preserve digital baseline while extending analog path
+- Preserve strict, fail-closed verification credibility
+- Expand neuromorphic compute evidence (robustness + benchmark quality)
+- Keep implementation-flow path reproducible toward manufacturable pre-silicon package
 
 ## Repo Layout
 

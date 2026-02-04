@@ -2,13 +2,26 @@
 
 LaTeX source for a video-aligned technical workthrough with:
 - dark-theme unsmoothed waveform figures plotted from raw CSV points,
+- architecture and mathematical formulation sections for the analog compute path,
+- assembled architecture sketch and claim-to-artifact traceability table,
 - robustness sweep figure,
 - stack/full-flow status tables,
+- founder-thesis quantitative evidence summary,
+- explicit limitations/hardening roadmap section,
 - reproducibility command section.
 
 ## Main Source
 
 - `competition/paper/neurocore_workthrough.tex`
+- `competition/paper/architecture-dissection.md`
+- `competition/paper/systematic-dissection-worklog.md`
+- `competition/paper/full-architecture-atlas.md`
+
+## Documentation Scope (Paper Folder Policy)
+
+Paper-related writing and supporting documentation should live under
+`competition/paper/`. This keeps manuscript text, architecture notes, and
+paper-specific derived data in one place.
 
 ## Data Inputs
 

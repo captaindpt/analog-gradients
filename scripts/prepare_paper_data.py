@@ -67,12 +67,10 @@ def build_sweep_parsed():
         w.writeheader()
         w.writerows(rows)
 
-    grouped = {
-        "6000000": [],
-        "8000000": [],
-        "10000000": [],
-    }
+    grouped = {}
     for row in rows:
+        rleak_key = row["rleak_ohm"]
+        grouped.setdefault(rleak_key, [])
         grouped[row["rleak_ohm"]].append(
             {
                 "r_fb_ohm": row["r_fb_ohm"],
@@ -81,7 +79,8 @@ def build_sweep_parsed():
             }
         )
 
-    for rleak_ohm, group_rows in grouped.items():
+    for rleak_ohm in sorted(grouped.keys(), key=int):
+        group_rows = sorted(grouped[rleak_ohm], key=lambda x: int(x["r_fb_ohm"]))
         out_group = OUT_DIR / f"sweep_mem2_rleak_{rleak_ohm}.csv"
         with out_group.open("w", encoding="utf-8", newline="") as f:
             w = csv.DictWriter(f, fieldnames=["r_fb_ohm", "mem2_max_v", "spike2_max_v"])

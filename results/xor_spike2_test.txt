@@ -1,0 +1,49 @@
+=== XOR Spike2 Verification ===
+2-input spike-domain XOR compute demo
+Date: Feb  3 15:32:57 2026
+
+Waveform Analysis:
+==================
+
+Membrane maxima (V):
+  00: 0.000
+  10: 0.814
+  01: 0.814
+  11: 1.020
+
+AND membrane maxima (V):
+  00: 0.000
+  10: 0.421
+  01: 0.421
+  11: 0.676
+
+XOR spike maxima (V):
+  00: 0.000
+  10: 1.783
+  01: 1.782
+  11: 0.195
+
+AND spike maxima (V):
+  00: 0.000
+  10: 0.028
+  01: 0.032
+  11: 1.790
+
+Spike threshold: 0.900 V
+
+Output spike counts (XOR branch):
+  00: 0
+  10: 1
+  01: 1
+  11: 0
+
+Case-11 inhibitory spikes (AND branch): 1
+
+First spike 10: 12.104 ns
+First spike 01: 12.090 ns
+First inhibit spike 11: 11.718 ns
+
+OK: XOR truth cases satisfied
+OK: inhibitory coincidence branch is active for 11
+
+=== PASS: XOR spike-domain computation verified ===

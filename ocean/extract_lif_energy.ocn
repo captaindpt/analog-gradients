@@ -1,13 +1,15 @@
 ; extract_lif_energy.ocn
-; Estimate total energy and energy/spike for lif_neuron transient.
+; Estimate total energy and emit waveform trace for uncertainty analysis.
 
-out = outfile("/home/v71349/analog-gradients/competition/analysis/lif_energy_summary.txt" "w")
+out = outfile("competition/analysis/lif_energy_summary.txt" "w")
+csv = outfile("competition/analysis/lif_energy_trace.csv" "w")
 
 fprintf(out "=== LIF Energy Estimate ===\n")
 fprintf(out "Date: %s\n\n" getCurrentTime())
+fprintf(csv "time_ns,current_a,power_w,spike_v\n")
 
 simulator('spectre)
-openResults("/home/v71349/analog-gradients/results/lif_neuron/lif_neuron_energy.raw")
+openResults("results/lif_neuron/lif_neuron_energy.raw")
 selectResult("tran_test-tran")
 
 idd = getData("V_VDD:p")
@@ -15,33 +17,44 @@ vspk = v("spike")
 
 if(idd && vspk then
     vdd = 1.8
-    dt = 500p
+    dt = 100p
     t0 = 0n
     t1 = 200n
 
     energy = 0
-    ts = t0
-    while(ts < t1
-        i0 = value(idd ts)
-        i1 = value(idd ts + dt)
-        p0 = -i0 * vdd
-        p1 = -i1 * vdd
-        energy = energy + 0.5 * (p0 + p1) * dt
-        ts = ts + dt
-    )
-
-    ; Spike counting via threshold crossing.
-    vth = 0.9
     spikes = 0
-    ts = 1n
-    prev = value(vspk ts)
+    vth = 0.9
+
+    ts = t0
+    prev_i = value(idd ts)
+    prev_spk = value(vspk ts)
+    prev_t = ts
+
+    fprintf(csv "%.6f,%.9e,%.9e,%.9f\n" ts*1e9 prev_i (-prev_i*vdd) prev_spk)
     ts = ts + dt
-    while(ts < t1
-        curr = value(vspk ts)
-        if(prev < vth && curr > vth then
+
+    while(ts <= t1
+        curr_i = value(idd ts)
+        curr_spk = value(vspk ts)
+
+        p0 = -prev_i * vdd
+        p1 = -curr_i * vdd
+        energy = energy + 0.5 * (p0 + p1) * (ts - prev_t)
+
+        if(prev_spk < vth && curr_spk > vth then
+            frac = (vth - prev_spk) / (curr_spk - prev_spk)
+            if(frac < 0 then frac = 0)
+            if(frac > 1 then frac = 1)
+            t_cross = prev_t + frac * (ts - prev_t)
             spikes = spikes + 1
+            fprintf(out "Spike %d crossing time: %.6f ns\n" spikes t_cross*1e9)
         )
-        prev = curr
+
+        fprintf(csv "%.6f,%.9e,%.9e,%.9f\n" ts*1e9 curr_i (-curr_i*vdd) curr_spk)
+
+        prev_i = curr_i
+        prev_spk = curr_spk
+        prev_t = ts
         ts = ts + dt
     )
 
@@ -50,13 +63,15 @@ if(idd && vspk then
         e_per_spike = energy / spikes
     )
 
-    fprintf(out "Total energy (0-200ns): %.6e J\n" energy)
+    fprintf(out "\nTotal energy (0-200ns): %.6e J\n" energy)
     fprintf(out "Detected spikes: %d\n" spikes)
     fprintf(out "Energy per spike: %.6e J\n" e_per_spike)
     fprintf(out "Energy per spike: %.6f pJ\n" e_per_spike * 1e12)
+    fprintf(out "Trace CSV: competition/analysis/lif_energy_trace.csv\n")
 else
     fprintf(out "ERROR: Could not access current/spike waveforms\n")
 )
 
+close(csv)
 close(out)
 exit()

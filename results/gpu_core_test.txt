@@ -1,5 +1,83 @@
 === GPU CORE Verification ===
-Date: Feb  2 16:43:45 2026
+Date: Feb  3 15:31:51 2026
 
+Waveform checks:
+================
 
-=== PASS: GPU core verification (PE0 spot checks) ===
+t=5ns (AND)
+  y0_0@5ns=1.800 [PASS]
+  y0_1@5ns=0.000 [PASS]
+  y0_2@5ns=0.000 [PASS]
+  y0_3@5ns=0.000 [PASS]
+  y1_0@5ns=0.000 [PASS]
+  y1_1@5ns=0.000 [PASS]
+  y1_2@5ns=0.000 [PASS]
+  y1_3@5ns=1.800 [PASS]
+  y2_0@5ns=0.000 [PASS]
+  y2_1@5ns=0.000 [PASS]
+  y2_2@5ns=1.800 [PASS]
+  y2_3@5ns=0.000 [PASS]
+  y3_0@5ns=0.000 [PASS]
+  y3_1@5ns=0.000 [PASS]
+  y3_2@5ns=0.000 [PASS]
+  y3_3@5ns=0.000 [PASS]
+
+t=15ns (OR)
+  y0_0@15ns=0.000 [PASS]
+  y0_1@15ns=1.800 [PASS]
+  y0_2@15ns=1.800 [PASS]
+  y0_3@15ns=1.800 [PASS]
+  y1_0@15ns=1.800 [PASS]
+  y1_1@15ns=1.800 [PASS]
+  y1_2@15ns=1.800 [PASS]
+  y1_3@15ns=0.000 [PASS]
+  y2_0@15ns=1.800 [PASS]
+  y2_1@15ns=1.800 [PASS]
+  y2_2@15ns=1.800 [PASS]
+  y2_3@15ns=0.000 [PASS]
+  y3_0@15ns=0.000 [PASS]
+  y3_1@15ns=1.800 [PASS]
+  y3_2@15ns=1.800 [PASS]
+  y3_3@15ns=0.000 [PASS]
+
+t=25ns (XOR)
+  y0_0@25ns=1.800 [PASS]
+  y0_1@25ns=1.800 [PASS]
+  y0_2@25ns=1.800 [PASS]
+  y0_3@25ns=1.800 [PASS]
+  y1_0@25ns=0.000 [PASS]
+  y1_1@25ns=0.000 [PASS]
+  y1_2@25ns=1.800 [PASS]
+  y1_3@25ns=0.000 [PASS]
+  y2_0@25ns=1.800 [PASS]
+  y2_1@25ns=1.800 [PASS]
+  y2_2@25ns=1.800 [PASS]
+  y2_3@25ns=0.000 [PASS]
+  y3_0@25ns=1.800 [PASS]
+  y3_1@25ns=0.000 [PASS]
+  y3_2@25ns=0.000 [PASS]
+  y3_3@25ns=0.000 [PASS]
+
+t=35ns (ADD)
+  y0_0@35ns=0.000 [PASS]
+  y0_1@35ns=0.000 [PASS]
+  y0_2@35ns=0.000 [PASS]
+  y0_3@35ns=0.000 [PASS]
+  cout0@35ns=1.800 [PASS]
+  y1_0@35ns=1.800 [PASS]
+  y1_1@35ns=0.000 [PASS]
+  y1_2@35ns=0.000 [PASS]
+  y1_3@35ns=0.000 [PASS]
+  cout1@35ns=1.800 [PASS]
+  y2_0@35ns=0.000 [PASS]
+  y2_1@35ns=0.000 [PASS]
+  y2_2@35ns=1.800 [PASS]
+  y2_3@35ns=0.000 [PASS]
+  cout2@35ns=1.800 [PASS]
+  y3_0@35ns=0.000 [PASS]
+  y3_1@35ns=0.000 [PASS]
+  y3_2@35ns=1.800 [PASS]
+  y3_3@35ns=1.800 [PASS]
+  cout3@35ns=0.000 [PASS]
+
+=== PASS: GPU core full-array verification complete ===

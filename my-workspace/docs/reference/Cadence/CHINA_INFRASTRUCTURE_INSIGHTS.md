@@ -1,5 +1,8 @@
 # China vs West: Infrastructure & Innovation Insights
 
+> Historical motivation note (Dec 2024), not an execution guide.
+> Use `my-workspace/docs/vision.md` for current project direction.
+
 Notes from Dec 19, 2024 analysis.
 
 ---

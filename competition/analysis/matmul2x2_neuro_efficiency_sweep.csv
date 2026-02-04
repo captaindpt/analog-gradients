@@ -1,0 +1,9 @@
+iin_amp,pass,latency_ns,energy_j,energy_per_op_j
+80u,FAIL,NA,NA,NA
+100u,FAIL,NA,NA,NA
+120u,FAIL,NA,NA,NA
+140u,FAIL,NA,NA,NA
+160u,FAIL,NA,NA,NA
+180u,FAIL,NA,NA,NA
+200u,FAIL,NA,NA,NA
+220u,PASS,2.233,1.120208e-11,9.335063e-13

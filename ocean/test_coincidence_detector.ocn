@@ -1,0 +1,186 @@
+; test_coincidence_detector.ocn - Verify spike-domain coincidence detection
+; Run: ocean -nograph < test_coincidence_detector.ocn
+
+out = outfile("results/coincidence_detector_test.txt" "w")
+fprintf(out "=== Coincidence Detector Verification ===\n")
+fprintf(out "2-input spike-domain temporal AND (coincidence)\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("results/coincidence_detector/coincidence_detector.raw")
+selectResult("tran_test-tran")
+
+vm_a = v("mem_aonly")
+vm_b = v("mem_bonly")
+vm_c = v("mem_coinc")
+vm_o = v("mem_offset")
+vs_a = v("spike_aonly")
+vs_b = v("spike_bonly")
+vs_c = v("spike_coinc")
+vs_o = v("spike_offset")
+
+if(vm_a && vm_b && vm_c && vm_o && vs_a && vs_b && vs_c && vs_o then
+    pass = t
+    dt = 100p
+
+    fprintf(out "Waveform Analysis:\n")
+    fprintf(out "==================\n\n")
+
+    mem_a_max = ymax(vm_a)
+    mem_b_max = ymax(vm_b)
+    mem_c_max = ymax(vm_c)
+    mem_o_max = ymax(vm_o)
+
+    fprintf(out "Membrane maxima (V):\n")
+    fprintf(out "  A-only:     %.3f\n" mem_a_max)
+    fprintf(out "  B-only:     %.3f\n" mem_b_max)
+    fprintf(out "  Coincident: %.3f\n" mem_c_max)
+    fprintf(out "  Offset:     %.3f\n\n" mem_o_max)
+
+    spike_th = 0.9
+    fprintf(out "Spike detection threshold: %.3f V\n\n" spike_th)
+
+    ; Count spikes in A-only channel
+    a_min = ymin(vs_a)
+    a_max = ymax(vs_a)
+    a_th = spike_th
+    a_cnt = 0
+    a_first = nil
+    ts = 1n
+    p = value(vs_a ts)
+    ts = ts + dt
+    while(ts < 80n
+        c = value(vs_a ts)
+        if(p < a_th && c > a_th then
+            frac = (a_th - p) / (c - p)
+            if(frac < 0 then frac = 0)
+            if(frac > 1 then frac = 1)
+            tc = (ts - dt) + frac * dt
+            a_cnt = a_cnt + 1
+            if(a_cnt == 1 then a_first = tc)
+        )
+        p = c
+        ts = ts + dt
+    )
+
+    ; Count spikes in B-only channel
+    b_min = ymin(vs_b)
+    b_max = ymax(vs_b)
+    b_th = spike_th
+    b_cnt = 0
+    b_first = nil
+    ts = 1n
+    p = value(vs_b ts)
+    ts = ts + dt
+    while(ts < 80n
+        c = value(vs_b ts)
+        if(p < b_th && c > b_th then
+            frac = (b_th - p) / (c - p)
+            if(frac < 0 then frac = 0)
+            if(frac > 1 then frac = 1)
+            tc = (ts - dt) + frac * dt
+            b_cnt = b_cnt + 1
+            if(b_cnt == 1 then b_first = tc)
+        )
+        p = c
+        ts = ts + dt
+    )
+
+    ; Count spikes in coincident channel
+    c_min = ymin(vs_c)
+    c_max = ymax(vs_c)
+    c_th = spike_th
+    c_cnt = 0
+    c_first = nil
+    ts = 1n
+    p = value(vs_c ts)
+    ts = ts + dt
+    while(ts < 80n
+        c = value(vs_c ts)
+        if(p < c_th && c > c_th then
+            frac = (c_th - p) / (c - p)
+            if(frac < 0 then frac = 0)
+            if(frac > 1 then frac = 1)
+            tc = (ts - dt) + frac * dt
+            c_cnt = c_cnt + 1
+            if(c_cnt == 1 then c_first = tc)
+        )
+        p = c
+        ts = ts + dt
+    )
+
+    ; Count spikes in offset channel
+    o_min = ymin(vs_o)
+    o_max = ymax(vs_o)
+    o_th = spike_th
+    o_cnt = 0
+    o_first = nil
+    ts = 1n
+    p = value(vs_o ts)
+    ts = ts + dt
+    while(ts < 80n
+        c = value(vs_o ts)
+        if(p < o_th && c > o_th then
+            frac = (o_th - p) / (c - p)
+            if(frac < 0 then frac = 0)
+            if(frac > 1 then frac = 1)
+            tc = (ts - dt) + frac * dt
+            o_cnt = o_cnt + 1
+            if(o_cnt == 1 then o_first = tc)
+        )
+        p = c
+        ts = ts + dt
+    )
+
+    fprintf(out "Spike counts:\n")
+    fprintf(out "  A-only:     %d\n" a_cnt)
+    fprintf(out "  B-only:     %d\n" b_cnt)
+    fprintf(out "  Coincident: %d\n" c_cnt)
+    fprintf(out "  Offset:     %d\n\n" o_cnt)
+    fprintf(out "Spike maxima (V):\n")
+    fprintf(out "  A-only:     %.3f\n" a_max)
+    fprintf(out "  B-only:     %.3f\n" b_max)
+    fprintf(out "  Coincident: %.3f\n" c_max)
+    fprintf(out "  Offset:     %.3f\n\n" o_max)
+
+    if(a_first then fprintf(out "First A-only spike: %.3f ns\n" a_first*1e9))
+    if(b_first then fprintf(out "First B-only spike: %.3f ns\n" b_first*1e9))
+    if(c_first then fprintf(out "First coincident spike: %.3f ns\n" c_first*1e9))
+    if(o_first then fprintf(out "First offset spike: %.3f ns\n" o_first*1e9))
+    fprintf(out "\n")
+
+    ; Coincidence criterion: only coincident channel should emit spike
+    if(c_cnt >= 1 then
+        fprintf(out "OK: coincident input triggers output spike\n")
+    else
+        fprintf(out "FAIL: coincident input did not trigger spike\n")
+        pass = nil
+    )
+
+    if(a_cnt == 0 && b_cnt == 0 && o_cnt == 0 then
+        fprintf(out "OK: non-coincident cases remain subthreshold\n")
+    else
+        fprintf(out "FAIL: one or more non-coincident cases spiked\n")
+        pass = nil
+    )
+
+    if(mem_c_max > mem_o_max + 0.05 then
+        fprintf(out "OK: coincidence channel integrates more strongly than offset\n")
+    else
+        fprintf(out "FAIL: weak separation between coincidence and offset membrane peaks\n")
+        pass = nil
+    )
+
+    fprintf(out "\n")
+    if(pass then
+        fprintf(out "=== PASS: Coincidence detector computes temporal AND ===\n")
+    else
+        fprintf(out "=== FAIL: Coincidence detector verification failed ===\n")
+    )
+else
+    fprintf(out "ERROR: Could not read waveform data\n")
+)
+
+close(out)
+printf("Done. Results in: ~/analog-gradients/results/coincidence_detector_test.txt\n")
+exit()

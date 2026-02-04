@@ -6,14 +6,14 @@ simulator('spectre)
 ; ------------------------------------------------------------
 ; Synapse waveforms
 ; ------------------------------------------------------------
-openResults("/home/v71349/analog-gradients/results/synapse/synapse.raw")
+openResults("results/synapse/synapse.raw")
 selectResult("tran_test-tran")
 
 vpre = v("pre")
 vpost = v("post")
 vout = v("out")
 
-fsyn = outfile("/home/v71349/analog-gradients/competition/data/synapse_waveform.csv" "w")
+fsyn = outfile("competition/data/synapse_waveform.csv" "w")
 fprintf(fsyn "time_ns,pre,post,out\n")
 ts = 0
 while(ts <= 120n
@@ -25,14 +25,14 @@ close(fsyn)
 ; ------------------------------------------------------------
 ; LIF neuron waveforms
 ; ------------------------------------------------------------
-openResults("/home/v71349/analog-gradients/results/lif_neuron/lif_neuron.raw")
+openResults("results/lif_neuron/lif_neuron.raw")
 selectResult("tran_test-tran")
 
 vmem = v("mem")
 vspike = v("spike")
 voutn = v("out")
 
-flif = outfile("/home/v71349/analog-gradients/competition/data/lif_neuron_waveform.csv" "w")
+flif = outfile("competition/data/lif_neuron_waveform.csv" "w")
 fprintf(flif "time_ns,mem,spike,out\n")
 ts = 0
 while(ts <= 200n
@@ -44,14 +44,14 @@ close(flif)
 ; ------------------------------------------------------------
 ; Neuron tile waveforms
 ; ------------------------------------------------------------
-openResults("/home/v71349/analog-gradients/results/neuron_tile/neuron_tile.raw")
+openResults("results/neuron_tile/neuron_tile.raw")
 selectResult("tran_test-tran")
 
 vsyn = v("syn_post")
 vtmem = v("mem")
 vtspike = v("spike")
 
-ftile = outfile("/home/v71349/analog-gradients/competition/data/neuron_tile_waveform.csv" "w")
+ftile = outfile("competition/data/neuron_tile_waveform.csv" "w")
 fprintf(ftile "time_ns,syn_post,mem,spike\n")
 ts = 0
 while(ts <= 250n
@@ -63,7 +63,7 @@ close(ftile)
 ; ------------------------------------------------------------
 ; Neuro Tile4 spikes
 ; ------------------------------------------------------------
-openResults("/home/v71349/analog-gradients/results/neuro_tile4/neuro_tile4.raw")
+openResults("results/neuro_tile4/neuro_tile4.raw")
 selectResult("tran_test-tran")
 
 vsp0 = v("spike0")
@@ -75,7 +75,7 @@ vmm1 = v("mem1")
 vmm2 = v("mem2")
 vmm3 = v("mem3")
 
-ftile4s = outfile("/home/v71349/analog-gradients/competition/data/neuro_tile4_spikes.csv" "w")
+ftile4s = outfile("competition/data/neuro_tile4_spikes.csv" "w")
 fprintf(ftile4s "time_ns,spike0,spike1,spike2,spike3\n")
 ts = 0
 while(ts <= 120n
@@ -85,7 +85,7 @@ while(ts <= 120n
 )
 close(ftile4s)
 
-ftile4m = outfile("/home/v71349/analog-gradients/competition/data/neuro_tile4_mems.csv" "w")
+ftile4m = outfile("competition/data/neuro_tile4_mems.csv" "w")
 fprintf(ftile4m "time_ns,mem0,mem1,mem2,mem3\n")
 ts = 0
 while(ts <= 120n
@@ -98,7 +98,7 @@ close(ftile4m)
 ; ------------------------------------------------------------
 ; Neuro Tile4 Coupled spikes/membranes
 ; ------------------------------------------------------------
-openResults("/home/v71349/analog-gradients/results/neuro_tile4_coupled/neuro_tile4_coupled.raw")
+openResults("results/neuro_tile4_coupled/neuro_tile4_coupled.raw")
 selectResult("tran_test-tran")
 
 vcsp0 = v("spike0")
@@ -110,7 +110,7 @@ vcm1 = v("mem1")
 vcm2 = v("mem2")
 vcm3 = v("mem3")
 
-fcsp = outfile("/home/v71349/analog-gradients/competition/data/neuro_tile4_coupled_spikes.csv" "w")
+fcsp = outfile("competition/data/neuro_tile4_coupled_spikes.csv" "w")
 fprintf(fcsp "time_ns,spike0,spike1,spike2,spike3\n")
 ts = 0
 while(ts <= 120n
@@ -120,7 +120,7 @@ while(ts <= 120n
 )
 close(fcsp)
 
-fcm = outfile("/home/v71349/analog-gradients/competition/data/neuro_tile4_coupled_mems.csv" "w")
+fcm = outfile("competition/data/neuro_tile4_coupled_mems.csv" "w")
 fprintf(fcm "time_ns,mem0,mem1,mem2,mem3\n")
 ts = 0
 while(ts <= 120n

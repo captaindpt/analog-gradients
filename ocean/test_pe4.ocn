@@ -1,17 +1,36 @@
-; test_pe4.ocn - Verify PE4 array (PE0 spot checks)
+; test_pe4.ocn - Verify full PE4 array coverage
 ; Run: ocean -nograph < test_pe4.ocn
 
-out = outfile("/home/v71349/analog-gradients/results/pe4_test.txt" "w")
+out = outfile("results/pe4_test.txt" "w")
 fprintf(out "=== PE4 Verification ===\n")
 fprintf(out "Date: %s\n\n" getCurrentTime())
 
 simulator('spectre)
-openResults("/home/v71349/analog-gradients/results/pe4/pe4.raw")
+openResults("results/pe4/pe4.raw")
 selectResult("tran_test-tran")
 
 vdd = 1.8
 vth_low = 0.2 * vdd
 vth_high = 0.8 * vdd
+
+procedure(check_level(label val expect_high)
+    fprintf(out "  %s=%.3f " label val)
+    if(expect_high then
+        if(val > vth_high then
+            fprintf(out "[PASS]\n")
+        else
+            fprintf(out "[FAIL]\n")
+            pass = nil
+        )
+    else
+        if(val < vth_low then
+            fprintf(out "[PASS]\n")
+        else
+            fprintf(out "[FAIL]\n")
+            pass = nil
+        )
+    )
+)
 
 pass = t
 
@@ -19,59 +38,134 @@ vy0_0 = v("y0_0")
 vy0_1 = v("y0_1")
 vy0_2 = v("y0_2")
 vy0_3 = v("y0_3")
+vy1_0 = v("y1_0")
+vy1_1 = v("y1_1")
+vy1_2 = v("y1_2")
+vy1_3 = v("y1_3")
+vy2_0 = v("y2_0")
+vy2_1 = v("y2_1")
+vy2_2 = v("y2_2")
+vy2_3 = v("y2_3")
+vy3_0 = v("y3_0")
+vy3_1 = v("y3_1")
+vy3_2 = v("y3_2")
+vy3_3 = v("y3_3")
 vcout0 = v("cout0")
+vcout1 = v("cout1")
+vcout2 = v("cout2")
+vcout3 = v("cout3")
 
-if(vy0_0 && vy0_1 && vy0_2 && vy0_3 && vcout0 then
-    ; t=5ns: AND -> Y=0x1
-    v = value(vy0_0 5n)
-    if(v > vth_high then t else pass=nil)
-    v = value(vy0_1 5n)
-    if(v < vth_low then t else pass=nil)
-    v = value(vy0_2 5n)
-    if(v < vth_low then t else pass=nil)
-    v = value(vy0_3 5n)
-    if(v < vth_low then t else pass=nil)
+if(vy0_0 && vy0_1 && vy0_2 && vy0_3 && vy1_0 && vy1_1 && vy1_2 && vy1_3 \
+   && vy2_0 && vy2_1 && vy2_2 && vy2_3 && vy3_0 && vy3_1 && vy3_2 && vy3_3 \
+   && vcout0 && vcout1 && vcout2 && vcout3 then
 
-    ; t=15ns: OR -> Y=0xE
-    v = value(vy0_0 15n)
-    if(v < vth_low then t else pass=nil)
-    v = value(vy0_1 15n)
-    if(v > vth_high then t else pass=nil)
-    v = value(vy0_2 15n)
-    if(v > vth_high then t else pass=nil)
-    v = value(vy0_3 15n)
-    if(v > vth_high then t else pass=nil)
+    fprintf(out "Waveform checks:\n")
+    fprintf(out "================\n\n")
 
-    ; t=25ns: XOR -> Y=0xF
-    v = value(vy0_0 25n)
-    if(v > vth_high then t else pass=nil)
-    v = value(vy0_1 25n)
-    if(v > vth_high then t else pass=nil)
-    v = value(vy0_2 25n)
-    if(v > vth_high then t else pass=nil)
-    v = value(vy0_3 25n)
-    if(v > vth_high then t else pass=nil)
+    fprintf(out "t=5ns (AND)\n")
+    ; PE0 -> 0x1
+    check_level("y0_0@5ns" value(vy0_0 5n) t)
+    check_level("y0_1@5ns" value(vy0_1 5n) nil)
+    check_level("y0_2@5ns" value(vy0_2 5n) nil)
+    check_level("y0_3@5ns" value(vy0_3 5n) nil)
+    ; PE1 -> 0x8
+    check_level("y1_0@5ns" value(vy1_0 5n) nil)
+    check_level("y1_1@5ns" value(vy1_1 5n) nil)
+    check_level("y1_2@5ns" value(vy1_2 5n) nil)
+    check_level("y1_3@5ns" value(vy1_3 5n) t)
+    ; PE2 -> 0x4
+    check_level("y2_0@5ns" value(vy2_0 5n) nil)
+    check_level("y2_1@5ns" value(vy2_1 5n) nil)
+    check_level("y2_2@5ns" value(vy2_2 5n) t)
+    check_level("y2_3@5ns" value(vy2_3 5n) nil)
+    ; PE3 -> 0x0
+    check_level("y3_0@5ns" value(vy3_0 5n) nil)
+    check_level("y3_1@5ns" value(vy3_1 5n) nil)
+    check_level("y3_2@5ns" value(vy3_2 5n) nil)
+    check_level("y3_3@5ns" value(vy3_3 5n) nil)
+    fprintf(out "\n")
 
-    ; t=35ns: ADD -> Y=0x0, COUT=1
-    v = value(vy0_0 35n)
-    if(v < vth_low then t else pass=nil)
-    v = value(vy0_1 35n)
-    if(v < vth_low then t else pass=nil)
-    v = value(vy0_2 35n)
-    if(v < vth_low then t else pass=nil)
-    v = value(vy0_3 35n)
-    if(v < vth_low then t else pass=nil)
-    v = value(vcout0 35n)
-    if(v > vth_high then t else pass=nil)
+    fprintf(out "t=15ns (OR)\n")
+    ; PE0 -> 0xE
+    check_level("y0_0@15ns" value(vy0_0 15n) nil)
+    check_level("y0_1@15ns" value(vy0_1 15n) t)
+    check_level("y0_2@15ns" value(vy0_2 15n) t)
+    check_level("y0_3@15ns" value(vy0_3 15n) t)
+    ; PE1 -> 0x7
+    check_level("y1_0@15ns" value(vy1_0 15n) t)
+    check_level("y1_1@15ns" value(vy1_1 15n) t)
+    check_level("y1_2@15ns" value(vy1_2 15n) t)
+    check_level("y1_3@15ns" value(vy1_3 15n) nil)
+    ; PE2 -> 0x7
+    check_level("y2_0@15ns" value(vy2_0 15n) t)
+    check_level("y2_1@15ns" value(vy2_1 15n) t)
+    check_level("y2_2@15ns" value(vy2_2 15n) t)
+    check_level("y2_3@15ns" value(vy2_3 15n) nil)
+    ; PE3 -> 0x6
+    check_level("y3_0@15ns" value(vy3_0 15n) nil)
+    check_level("y3_1@15ns" value(vy3_1 15n) t)
+    check_level("y3_2@15ns" value(vy3_2 15n) t)
+    check_level("y3_3@15ns" value(vy3_3 15n) nil)
+    fprintf(out "\n")
+
+    fprintf(out "t=25ns (XOR)\n")
+    ; PE0 -> 0xF
+    check_level("y0_0@25ns" value(vy0_0 25n) t)
+    check_level("y0_1@25ns" value(vy0_1 25n) t)
+    check_level("y0_2@25ns" value(vy0_2 25n) t)
+    check_level("y0_3@25ns" value(vy0_3 25n) t)
+    ; PE1 -> 0x4
+    check_level("y1_0@25ns" value(vy1_0 25n) nil)
+    check_level("y1_1@25ns" value(vy1_1 25n) nil)
+    check_level("y1_2@25ns" value(vy1_2 25n) t)
+    check_level("y1_3@25ns" value(vy1_3 25n) nil)
+    ; PE2 -> 0x7
+    check_level("y2_0@25ns" value(vy2_0 25n) t)
+    check_level("y2_1@25ns" value(vy2_1 25n) t)
+    check_level("y2_2@25ns" value(vy2_2 25n) t)
+    check_level("y2_3@25ns" value(vy2_3 25n) nil)
+    ; PE3 -> 0x1
+    check_level("y3_0@25ns" value(vy3_0 25n) t)
+    check_level("y3_1@25ns" value(vy3_1 25n) nil)
+    check_level("y3_2@25ns" value(vy3_2 25n) nil)
+    check_level("y3_3@25ns" value(vy3_3 25n) nil)
+    fprintf(out "\n")
+
+    fprintf(out "t=35ns (ADD)\n")
+    ; PE0 -> 0x0, COUT=1
+    check_level("y0_0@35ns" value(vy0_0 35n) nil)
+    check_level("y0_1@35ns" value(vy0_1 35n) nil)
+    check_level("y0_2@35ns" value(vy0_2 35n) nil)
+    check_level("y0_3@35ns" value(vy0_3 35n) nil)
+    check_level("cout0@35ns" value(vcout0 35n) t)
+    ; PE1 -> 0x1, COUT=1
+    check_level("y1_0@35ns" value(vy1_0 35n) t)
+    check_level("y1_1@35ns" value(vy1_1 35n) nil)
+    check_level("y1_2@35ns" value(vy1_2 35n) nil)
+    check_level("y1_3@35ns" value(vy1_3 35n) nil)
+    check_level("cout1@35ns" value(vcout1 35n) t)
+    ; PE2 -> 0x4, COUT=1
+    check_level("y2_0@35ns" value(vy2_0 35n) nil)
+    check_level("y2_1@35ns" value(vy2_1 35n) nil)
+    check_level("y2_2@35ns" value(vy2_2 35n) t)
+    check_level("y2_3@35ns" value(vy2_3 35n) nil)
+    check_level("cout2@35ns" value(vcout2 35n) t)
+    ; PE3 -> 0xC, COUT=0
+    check_level("y3_0@35ns" value(vy3_0 35n) nil)
+    check_level("y3_1@35ns" value(vy3_1 35n) nil)
+    check_level("y3_2@35ns" value(vy3_2 35n) t)
+    check_level("y3_3@35ns" value(vy3_3 35n) t)
+    check_level("cout3@35ns" value(vcout3 35n) nil)
 else
+    fprintf(out "ERROR: Could not read waveform data\n")
     pass = nil
 )
 
 fprintf(out "\n")
 if(pass then
-    fprintf(out "=== PASS: PE4 verification (PE0 spot checks) ===\n")
+    fprintf(out "=== PASS: PE4 full-array verification complete ===\n")
 else
-    fprintf(out "=== FAIL: PE4 verification failed ===\n")
+    fprintf(out "=== FAIL: PE4 full-array verification failed ===\n")
 )
 
 close(out)

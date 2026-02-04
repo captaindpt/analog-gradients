@@ -1,3 +1,4 @@
-    Hinst Name       Module Name          Inst Count           Total Area
-----------------------------------------------------------------------
-alu4_flow_demo                                    10               20.520
+    Hinst Name       Module Name               Inst Count           Total Area
+---------------------------------------------------------------------------
+alu4_flow_demo                                         99              141.588
+ sub_22              alu4_flow_demo_DW01_sub_0         26               40.356

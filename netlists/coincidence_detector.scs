@@ -1,0 +1,81 @@
+// coincidence_detector.scs - 2-input spike-domain coincidence compute demo
+// Goal: emit spike only for near-simultaneous A/B inputs
+// Run: spectre coincidence_detector.scs -raw coincidence_detector.raw
+
+simulator lang=spectre
+
+parameters vdd_val=1.8 cmem=1p rleak=20k iin_amp=220u inv_wp=2u inv_wn=1u
+
+model nch mos1 type=n vto=0.0 kp=120u
+model pch mos1 type=p vto=0.0 kp=40u
+model nch_cmp mos1 type=n vto=0.5 kp=120u
+model pch_cmp mos1 type=p vto=-0.5 kp=40u
+
+V_VDD (vdd 0) vsource dc=vdd_val
+
+// ============================================================
+// Four test channels in one transient:
+//   1) A-only
+//   2) B-only
+//   3) A+B coincident
+//   4) A+B offset (non-coincident)
+// Each channel uses the same coincidence neuron topology.
+// ============================================================
+
+// ---------------- Channel 1: A-only ----------------
+I_A_AONLY (vdd mem_aonly) isource type=pulse val0=0 val1=iin_amp \
+    delay=10n rise=100p fall=100p width=2n period=200n
+I_B_AONLY (vdd mem_aonly) isource dc=0
+
+C_MEM_AONLY (mem_aonly 0) capacitor c=cmem
+R_LEAK_AONLY (mem_aonly 0) resistor r=rleak
+MP_A1 (spike_aonly_n mem_aonly vdd vdd) pch_cmp w=inv_wp l=1u
+MN_A1 (spike_aonly_n mem_aonly 0 0) nch_cmp w=inv_wn l=1u
+MP_A2 (spike_aonly spike_aonly_n vdd vdd) pch w=2u l=1u
+MN_A2 (spike_aonly spike_aonly_n 0 0) nch w=1u l=1u
+MN_A_RST (mem_aonly spike_aonly 0 0) nch w=500n l=1u
+
+// ---------------- Channel 2: B-only ----------------
+I_A_BONLY (vdd mem_bonly) isource dc=0
+I_B_BONLY (vdd mem_bonly) isource type=pulse val0=0 val1=iin_amp \
+    delay=10n rise=100p fall=100p width=2n period=200n
+
+C_MEM_BONLY (mem_bonly 0) capacitor c=cmem
+R_LEAK_BONLY (mem_bonly 0) resistor r=rleak
+MP_B1 (spike_bonly_n mem_bonly vdd vdd) pch_cmp w=inv_wp l=1u
+MN_B1 (spike_bonly_n mem_bonly 0 0) nch_cmp w=inv_wn l=1u
+MP_B2 (spike_bonly spike_bonly_n vdd vdd) pch w=2u l=1u
+MN_B2 (spike_bonly spike_bonly_n 0 0) nch w=1u l=1u
+MN_B_RST (mem_bonly spike_bonly 0 0) nch w=500n l=1u
+
+// ---------------- Channel 3: coincident A+B ----------------
+I_A_COINC (vdd mem_coinc) isource type=pulse val0=0 val1=iin_amp \
+    delay=10n rise=100p fall=100p width=2n period=200n
+I_B_COINC (vdd mem_coinc) isource type=pulse val0=0 val1=iin_amp \
+    delay=10n rise=100p fall=100p width=2n period=200n
+
+C_MEM_COINC (mem_coinc 0) capacitor c=cmem
+R_LEAK_COINC (mem_coinc 0) resistor r=rleak
+MP_C1 (spike_coinc_n mem_coinc vdd vdd) pch_cmp w=inv_wp l=1u
+MN_C1 (spike_coinc_n mem_coinc 0 0) nch_cmp w=inv_wn l=1u
+MP_C2 (spike_coinc spike_coinc_n vdd vdd) pch w=2u l=1u
+MN_C2 (spike_coinc spike_coinc_n 0 0) nch w=1u l=1u
+MN_C_RST (mem_coinc spike_coinc 0 0) nch w=500n l=1u
+
+// ---------------- Channel 4: offset A then B ----------------
+I_A_OFFSET (vdd mem_offset) isource type=pulse val0=0 val1=iin_amp \
+    delay=10n rise=100p fall=100p width=2n period=200n
+I_B_OFFSET (vdd mem_offset) isource type=pulse val0=0 val1=iin_amp \
+    delay=22n rise=100p fall=100p width=2n period=200n
+
+C_MEM_OFFSET (mem_offset 0) capacitor c=cmem
+R_LEAK_OFFSET (mem_offset 0) resistor r=rleak
+MP_O1 (spike_offset_n mem_offset vdd vdd) pch_cmp w=inv_wp l=1u
+MN_O1 (spike_offset_n mem_offset 0 0) nch_cmp w=inv_wn l=1u
+MP_O2 (spike_offset spike_offset_n vdd vdd) pch w=2u l=1u
+MN_O2 (spike_offset spike_offset_n 0 0) nch w=1u l=1u
+MN_O_RST (mem_offset spike_offset 0 0) nch w=500n l=1u
+
+tran_test tran stop=80n
+save mem_aonly mem_bonly mem_coinc mem_offset \
+     spike_aonly spike_bonly spike_coinc spike_offset

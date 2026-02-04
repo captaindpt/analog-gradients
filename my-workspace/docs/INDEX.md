@@ -2,16 +2,41 @@
 
 This is the primary navigation root for planning and development.
 
-## Source of Truth (Use in This Order)
+## Entry Trail
+
+From repo entry points, the intended context trail is:
+`CLAUDE.md` / `AGENTS.md` -> `my-workspace/README.md` -> this file.
+
+## Canonical Context Trail (Single Source)
+
+Use this exact order for agent bootstrap. Other docs should mirror this list.
+
+1. `AGENTS.md`
+2. `my-workspace/README.md`
+3. `my-workspace/docs/INDEX.md`
+4. `my-workspace/docs/vision.md`
+5. `my-workspace/docs/DEVELOPMENT.md`
+6. `my-workspace/docs/STATUS.md`
+7. `my-workspace/docs/RANDEZVOUS.md`
+8. `my-workspace/docs/armory/snapshot-2026-02-02/armory-summary.md`
+9. `my-workspace/docs/reference/README.md` (secondary context)
+
+## Source of Truth Precedence (When Docs Conflict)
 
 1. Vision and product direction: `my-workspace/docs/vision.md`
 2. Development workflow: `my-workspace/docs/DEVELOPMENT.md`
 3. Technical progress tracker: `my-workspace/docs/STATUS.md`
-4. Agent operating rules: `AGENTS.md`
-5. Tooling quick reference: `skill.md`
+4. Workspace operating loop: `my-workspace/docs/RANDEZVOUS.md`
+5. Reference docs: `my-workspace/docs/reference/README.md`
+
+## Tooling/Agent Quick References
+
+- Agent operating rules: `AGENTS.md`
+- Tooling quick reference: `skill.md`
 
 ## Core Docs
 
+- Workspace rendezvous contract: `my-workspace/docs/RANDEZVOUS.md`
 - GPU demo spec: `my-workspace/docs/gpu-spec.md`
 - Personal roadmap: `my-workspace/docs/mani-plan.md`
 - Full-flow competition demo plan: `competition/full-flow-demo-plan.md`
@@ -30,6 +55,11 @@ This is the primary navigation root for planning and development.
 - Armory index: `my-workspace/docs/armory/README.md`
 - Latest snapshot: `my-workspace/docs/armory/snapshot-2026-02-02/armory-summary.md`
 - Full raw capture: `my-workspace/docs/armory/snapshot-2026-02-02/raw/`
+
+## References
+
+- Reference docs index: `my-workspace/docs/reference/README.md`
+- Cadence setup/troubleshooting notes: `my-workspace/docs/reference/Cadence/`
 
 ## Execution Records
 

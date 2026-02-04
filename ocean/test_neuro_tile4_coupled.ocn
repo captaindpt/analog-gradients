@@ -1,13 +1,13 @@
 ; test_neuro_tile4_coupled.ocn - Verify feed-forward spike propagation
 ; Run: ocean -nograph < test_neuro_tile4_coupled.ocn
 
-out = outfile("/home/v71349/analog-gradients/results/neuro_tile4_coupled_test.txt" "w")
+out = outfile("results/neuro_tile4_coupled_test.txt" "w")
 fprintf(out "=== Neuro Tile4 Coupled Verification ===\n")
 fprintf(out "4-neuron feed-forward coupled tile\n")
 fprintf(out "Date: %s\n\n" getCurrentTime())
 
 simulator('spectre)
-openResults("/home/v71349/analog-gradients/results/neuro_tile4_coupled/neuro_tile4_coupled.raw")
+openResults("results/neuro_tile4_coupled/neuro_tile4_coupled.raw")
 selectResult("tran_test-tran")
 
 vmem0 = v("mem0")
@@ -21,8 +21,10 @@ vspk3 = v("spike3")
 
 if(vmem0 && vmem1 && vmem2 && vmem3 && vspk0 && vspk1 && vspk2 && vspk3 then
     pass = t
+    sample_dt = 100p
     fprintf(out "Waveform Analysis:\n")
     fprintf(out "==================\n\n")
+    fprintf(out "Sampling step for spike detection: %.3f ns\n\n" sample_dt*1e9)
 
     mem0_max = ymax(vmem0)
     mem1_max = ymax(vmem1)
@@ -66,7 +68,7 @@ if(vmem0 && vmem1 && vmem2 && vmem3 && vspk0 && vspk1 && vspk2 && vspk3 then
     p1 = value(vspk1 ts)
     p2 = value(vspk2 ts)
     p3 = value(vspk3 ts)
-    ts = ts + 500p
+    ts = ts + sample_dt
     while(ts < 300n
         v0 = value(vspk0 ts)
         v1 = value(vspk1 ts)
@@ -74,27 +76,43 @@ if(vmem0 && vmem1 && vmem2 && vmem3 && vspk0 && vspk1 && vspk2 && vspk3 then
         v3 = value(vspk3 ts)
 
         if(p0 < th0 && v0 > th0 then
+            frac0 = (th0 - p0) / (v0 - p0)
+            if(frac0 < 0 then frac0 = 0)
+            if(frac0 > 1 then frac0 = 1)
+            tc0 = (ts - sample_dt) + frac0 * sample_dt
             c0 = c0 + 1
-            if(c0 == 1 then f0 = ts)
+            if(c0 == 1 then f0 = tc0)
         )
         if(p1 < th1 && v1 > th1 then
+            frac1 = (th1 - p1) / (v1 - p1)
+            if(frac1 < 0 then frac1 = 0)
+            if(frac1 > 1 then frac1 = 1)
+            tc1 = (ts - sample_dt) + frac1 * sample_dt
             c1 = c1 + 1
-            if(c1 == 1 then f1 = ts)
+            if(c1 == 1 then f1 = tc1)
         )
         if(p2 < th2 && v2 > th2 then
+            frac2 = (th2 - p2) / (v2 - p2)
+            if(frac2 < 0 then frac2 = 0)
+            if(frac2 > 1 then frac2 = 1)
+            tc2 = (ts - sample_dt) + frac2 * sample_dt
             c2 = c2 + 1
-            if(c2 == 1 then f2 = ts)
+            if(c2 == 1 then f2 = tc2)
         )
         if(p3 < th3 && v3 > th3 then
+            frac3 = (th3 - p3) / (v3 - p3)
+            if(frac3 < 0 then frac3 = 0)
+            if(frac3 > 1 then frac3 = 1)
+            tc3 = (ts - sample_dt) + frac3 * sample_dt
             c3 = c3 + 1
-            if(c3 == 1 then f3 = ts)
+            if(c3 == 1 then f3 = tc3)
         )
 
         p0 = v0
         p1 = v1
         p2 = v2
         p3 = v3
-        ts = ts + 500p
+        ts = ts + sample_dt
     )
 
     fprintf(out "\nSpike pulse counts:\n")
@@ -119,7 +137,7 @@ if(vmem0 && vmem1 && vmem2 && vmem3 && vspk0 && vspk1 && vspk2 && vspk3 then
     )
 
     if(f0 && f1 && f2 && f3 then
-        fprintf(out "First spike times (ns): %.1f, %.1f, %.1f, %.1f\n"
+        fprintf(out "First spike times (ns): %.3f, %.3f, %.3f, %.3f\n"
             f0*1e9 f1*1e9 f2*1e9 f3*1e9)
         if(f0 <= f1 && f1 <= f2 && f2 <= f3 then
             fprintf(out "OK: feed-forward ordering preserved\n")

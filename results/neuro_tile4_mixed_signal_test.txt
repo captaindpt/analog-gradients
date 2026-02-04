@@ -1,6 +1,6 @@
 === Neuro Tile4 Mixed-Signal Verification ===
 Digital enable gating of analog spike propagation
-Date: Feb  2 16:44:34 2026
+Date: Feb  3 15:32:41 2026
 
 Waveform Analysis:
 ==================

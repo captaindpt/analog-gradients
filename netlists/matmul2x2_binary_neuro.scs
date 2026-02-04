@@ -1,0 +1,133 @@
+// matmul2x2_binary_neuro.scs - Binary 2x2 matmul proof (neuro path)
+// Scope: binary-only first proof, using coincidence-like partial products
+// and membrane integration for 2-term accumulation.
+
+simulator lang=spectre
+
+parameters vdd_val=1.8 iin_amp=220u cmul=1p rmul=20k csum=700f rsum_leak=15M rsum_in=6k
+parameters a=1 b=0 c=1 d=1 e=1 f=1 g=0 h=1
+parameters a_amp=a*iin_amp b_amp=b*iin_amp c_amp=c*iin_amp d_amp=d*iin_amp
+parameters e_amp=e*iin_amp f_amp=f*iin_amp g_amp=g*iin_amp h_amp=h*iin_amp
+
+model nch mos1 type=n vto=0.0 kp=120u
+model pch mos1 type=p vto=0.0 kp=40u
+model nch_cmp mos1 type=n vto=0.5 kp=120u
+model pch_cmp mos1 type=p vto=-0.5 kp=40u
+
+V_VDD (vdd 0) vsource dc=vdd_val
+
+// ------------------------------------------------------------
+// Partial products (binary AND behavior via dual-current coincidence)
+// p_ae = a*e, p_bg = b*g, p_af = a*f, p_bh = b*h
+// p_ce = c*e, p_dg = d*g, p_cf = c*f, p_dh = d*h
+// ------------------------------------------------------------
+
+// AE
+I_AE_A (vdd mem_ae) isource type=pulse val0=0 val1=a_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_AE_E (vdd mem_ae) isource type=pulse val0=0 val1=e_amp delay=10n rise=100p fall=100p width=2n period=200n
+C_AE (mem_ae 0) capacitor c=cmul
+R_AE (mem_ae 0) resistor r=rmul
+MP_AE1 (p_ae_n mem_ae vdd vdd) pch_cmp w=2u l=1u
+MN_AE1 (p_ae_n mem_ae 0 0) nch_cmp w=1u l=1u
+MP_AE2 (p_ae p_ae_n vdd vdd) pch w=2u l=1u
+MN_AE2 (p_ae p_ae_n 0 0) nch w=1u l=1u
+
+// BG
+I_BG_B (vdd mem_bg) isource type=pulse val0=0 val1=b_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_BG_G (vdd mem_bg) isource type=pulse val0=0 val1=g_amp delay=10n rise=100p fall=100p width=2n period=200n
+C_BG (mem_bg 0) capacitor c=cmul
+R_BG (mem_bg 0) resistor r=rmul
+MP_BG1 (p_bg_n mem_bg vdd vdd) pch_cmp w=2u l=1u
+MN_BG1 (p_bg_n mem_bg 0 0) nch_cmp w=1u l=1u
+MP_BG2 (p_bg p_bg_n vdd vdd) pch w=2u l=1u
+MN_BG2 (p_bg p_bg_n 0 0) nch w=1u l=1u
+
+// AF
+I_AF_A (vdd mem_af) isource type=pulse val0=0 val1=a_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_AF_F (vdd mem_af) isource type=pulse val0=0 val1=f_amp delay=10n rise=100p fall=100p width=2n period=200n
+C_AF (mem_af 0) capacitor c=cmul
+R_AF (mem_af 0) resistor r=rmul
+MP_AF1 (p_af_n mem_af vdd vdd) pch_cmp w=2u l=1u
+MN_AF1 (p_af_n mem_af 0 0) nch_cmp w=1u l=1u
+MP_AF2 (p_af p_af_n vdd vdd) pch w=2u l=1u
+MN_AF2 (p_af p_af_n 0 0) nch w=1u l=1u
+
+// BH
+I_BH_B (vdd mem_bh) isource type=pulse val0=0 val1=b_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_BH_H (vdd mem_bh) isource type=pulse val0=0 val1=h_amp delay=10n rise=100p fall=100p width=2n period=200n
+C_BH (mem_bh 0) capacitor c=cmul
+R_BH (mem_bh 0) resistor r=rmul
+MP_BH1 (p_bh_n mem_bh vdd vdd) pch_cmp w=2u l=1u
+MN_BH1 (p_bh_n mem_bh 0 0) nch_cmp w=1u l=1u
+MP_BH2 (p_bh p_bh_n vdd vdd) pch w=2u l=1u
+MN_BH2 (p_bh p_bh_n 0 0) nch w=1u l=1u
+
+// CE
+I_CE_C (vdd mem_ce) isource type=pulse val0=0 val1=c_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_CE_E (vdd mem_ce) isource type=pulse val0=0 val1=e_amp delay=10n rise=100p fall=100p width=2n period=200n
+C_CE (mem_ce 0) capacitor c=cmul
+R_CE (mem_ce 0) resistor r=rmul
+MP_CE1 (p_ce_n mem_ce vdd vdd) pch_cmp w=2u l=1u
+MN_CE1 (p_ce_n mem_ce 0 0) nch_cmp w=1u l=1u
+MP_CE2 (p_ce p_ce_n vdd vdd) pch w=2u l=1u
+MN_CE2 (p_ce p_ce_n 0 0) nch w=1u l=1u
+
+// DG
+I_DG_D (vdd mem_dg) isource type=pulse val0=0 val1=d_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_DG_G (vdd mem_dg) isource type=pulse val0=0 val1=g_amp delay=10n rise=100p fall=100p width=2n period=200n
+C_DG (mem_dg 0) capacitor c=cmul
+R_DG (mem_dg 0) resistor r=rmul
+MP_DG1 (p_dg_n mem_dg vdd vdd) pch_cmp w=2u l=1u
+MN_DG1 (p_dg_n mem_dg 0 0) nch_cmp w=1u l=1u
+MP_DG2 (p_dg p_dg_n vdd vdd) pch w=2u l=1u
+MN_DG2 (p_dg p_dg_n 0 0) nch w=1u l=1u
+
+// CF
+I_CF_C (vdd mem_cf) isource type=pulse val0=0 val1=c_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_CF_F (vdd mem_cf) isource type=pulse val0=0 val1=f_amp delay=10n rise=100p fall=100p width=2n period=200n
+C_CF (mem_cf 0) capacitor c=cmul
+R_CF (mem_cf 0) resistor r=rmul
+MP_CF1 (p_cf_n mem_cf vdd vdd) pch_cmp w=2u l=1u
+MN_CF1 (p_cf_n mem_cf 0 0) nch_cmp w=1u l=1u
+MP_CF2 (p_cf p_cf_n vdd vdd) pch w=2u l=1u
+MN_CF2 (p_cf p_cf_n 0 0) nch w=1u l=1u
+
+// DH
+I_DH_D (vdd mem_dh) isource type=pulse val0=0 val1=d_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_DH_H (vdd mem_dh) isource type=pulse val0=0 val1=h_amp delay=10n rise=100p fall=100p width=2n period=200n
+C_DH (mem_dh 0) capacitor c=cmul
+R_DH (mem_dh 0) resistor r=rmul
+MP_DH1 (p_dh_n mem_dh vdd vdd) pch_cmp w=2u l=1u
+MN_DH1 (p_dh_n mem_dh 0 0) nch_cmp w=1u l=1u
+MP_DH2 (p_dh p_dh_n vdd vdd) pch w=2u l=1u
+MN_DH2 (p_dh p_dh_n 0 0) nch w=1u l=1u
+
+// ------------------------------------------------------------
+// Output accumulation membranes
+// y11 = ae + bg, y12 = af + bh, y21 = ce + dg, y22 = cf + dh
+// ------------------------------------------------------------
+
+R_AE_Y11 (p_ae y11_mem) resistor r=rsum_in
+R_BG_Y11 (p_bg y11_mem) resistor r=rsum_in
+C_Y11 (y11_mem 0) capacitor c=csum
+R_Y11_LEAK (y11_mem 0) resistor r=rsum_leak
+
+R_AF_Y12 (p_af y12_mem) resistor r=rsum_in
+R_BH_Y12 (p_bh y12_mem) resistor r=rsum_in
+C_Y12 (y12_mem 0) capacitor c=csum
+R_Y12_LEAK (y12_mem 0) resistor r=rsum_leak
+
+R_CE_Y21 (p_ce y21_mem) resistor r=rsum_in
+R_DG_Y21 (p_dg y21_mem) resistor r=rsum_in
+C_Y21 (y21_mem 0) capacitor c=csum
+R_Y21_LEAK (y21_mem 0) resistor r=rsum_leak
+
+R_CF_Y22 (p_cf y22_mem) resistor r=rsum_in
+R_DH_Y22 (p_dh y22_mem) resistor r=rsum_in
+C_Y22 (y22_mem 0) capacitor c=csum
+R_Y22_LEAK (y22_mem 0) resistor r=rsum_leak
+
+tran_test tran stop=90n
+save mem_ae mem_bg mem_af mem_bh mem_ce mem_dg mem_cf mem_dh \
+     p_ae p_bg p_af p_bh p_ce p_dg p_cf p_dh \
+     y11_mem y12_mem y21_mem y22_mem V_VDD:p

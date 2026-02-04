@@ -1,0 +1,6 @@
+# Regex allowlist for Spectre WARNING lines.
+# Any warning code not matching one of these patterns fails strict build checks.
+
+# Tolerance relaxation warning currently present in PE4/GPU-core due high-Z nodes.
+WARNING \(SPECTRE-17191\)
+WARNING \(SPECTRE-17192\)

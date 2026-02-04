@@ -14,16 +14,25 @@ compute core (NeuroCore) while keeping reproducible verification.
 - Vision and product direction: `my-workspace/docs/vision.md`
 - Development workflow: `my-workspace/docs/DEVELOPMENT.md`
 - Technical status: `my-workspace/docs/STATUS.md`
+- Reference docs (secondary): `my-workspace/docs/reference/README.md`
+
+If docs conflict, use precedence:
+`my-workspace/docs/vision.md` -> `my-workspace/docs/DEVELOPMENT.md` ->
+`my-workspace/docs/STATUS.md` -> reference docs.
 
 ## Agent Bootstrap Order
 
-Read these before making changes:
+Canonical trail is defined in `my-workspace/docs/INDEX.md` and starts with this
+file. Continue in this order before making changes:
 
-1. `my-workspace/docs/INDEX.md`
-2. `my-workspace/docs/vision.md`
-3. `my-workspace/docs/DEVELOPMENT.md`
-4. `my-workspace/docs/STATUS.md`
-5. `my-workspace/docs/armory/snapshot-2026-02-02/armory-summary.md`
+1. `my-workspace/README.md`
+2. `my-workspace/docs/INDEX.md`
+3. `my-workspace/docs/vision.md`
+4. `my-workspace/docs/DEVELOPMENT.md`
+5. `my-workspace/docs/STATUS.md`
+6. `my-workspace/docs/RANDEZVOUS.md`
+7. `my-workspace/docs/armory/snapshot-2026-02-02/armory-summary.md`
+8. `my-workspace/docs/reference/README.md` (secondary context only)
 
 ## Your Task
 
@@ -75,11 +84,11 @@ save out in
 
 ```lisp
 ; test_<name>.ocn
-out = outfile("/path/to/results/<name>_test.txt" "w")
+out = outfile("results/<name>_test.txt" "w")
 fprintf(out "=== <NAME> Verification ===\n")
 
 simulator('spectre)
-openResults("/path/to/results/<name>/<name>.raw")
+openResults("results/<name>/<name>.raw")
 selectResult("tran_test-tran")
 
 vout = v("out")
@@ -125,9 +134,16 @@ exit()
 
 - GPU Core: `netlists/gpu_core.scs`
 
-### Experimental / In Progress
+### Competition Analog Path
 
-- LIF Neuron: `netlists/lif_neuron.scs` with `ocean/test_lif_neuron.ocn`
+- Synapse: `netlists/synapse.scs`
+- LIF Neuron: `netlists/lif_neuron.scs`
+- Neuron Tile: `netlists/neuron_tile.scs`
+- Neuro Tile4: `netlists/neuro_tile4.scs`
+- Neuro Tile4 Coupled: `netlists/neuro_tile4_coupled.scs`
+- Neuro Tile4 Mixed Signal: `netlists/neuro_tile4_mixed_signal.scs`
+- Coincidence Detector: `netlists/coincidence_detector.scs`
+- XOR Spike2: `netlists/xor_spike2.scs`
 
 ## Build Hierarchy
 
@@ -144,9 +160,9 @@ Build bottom-up. Each level uses components from the level below.
 
 ## Next Build Track (Neuromorphic)
 
-1. Verify `lif_neuron`
-2. Build neuron array/tile blocks
-3. Integrate with existing PE/GPU scaffold where useful
+1. Preserve strict, fail-closed verification credibility
+2. Expand neuromorphic compute evidence (robustness + benchmark quality)
+3. Keep implementation-flow path reproducible toward manufacturable pre-silicon package
 
 ## File Locations
 

@@ -3,10 +3,10 @@
 
 simulator lang=spectre
 
-parameters vdd_val=1.8 cpost=200f rdecay=80k r_couple=8k cmem=500f rleak=10M r_fb=1500
+parameters vdd_val=1.8 cpost=200f rdecay=80k r_couple=8k cmem=500f rleak=12M r_fb=1500
 
-model nch mos1 type=n vth=0.4 kp=120u
-model pch mos1 type=p vth=-0.4 kp=40u
+model nch mos1 type=n vto=0.0 kp=120u
+model pch mos1 type=p vto=0.0 kp=40u
 
 V_VDD (vdd 0) vsource dc=vdd_val
 
@@ -77,5 +77,5 @@ MN_FB01 (syn1 spike0 vdd 0) nch w=10u l=1u
 MN_FB12 (syn2 spike1 vdd 0) nch w=10u l=1u
 MN_FB23 (syn3 spike2 vdd 0) nch w=10u l=1u
 
-tran_test tran stop=300n
+tran_test tran stop=300n maxstep=100p
 save pre0 pre1 pre2 pre3 mem0 mem1 mem2 mem3 spike0 spike1 spike2 spike3

@@ -1,6 +1,6 @@
 # 0010: Transistor-to-GDS Demo Bring-Up
 
-**Status:** In Progress (tool-license constrained)
+**Status:** In Progress (strict replay unblocked)
 **Priority:** High
 **Created:** 2026-02-02
 
@@ -42,3 +42,26 @@ evidence as bookends.
 - Recording pack added: `competition/recording-pack/`
 - Guided narrator script added: `scripts/demo_narrator.sh`
 - Voiceover script added: `competition/voiceover-script.md`
+
+## Latest Run Snapshot (2026-02-03)
+
+- Replay command: `scripts/run_fullflow_smoke.sh`
+- License defaults are now auto-seeded in flow scripts via:
+  `scripts/setup_fullflow_licenses.sh`
+- DC stage: license checkout succeeds; stage degrades due target-library format
+  (`DB-1` / `UIO-3`) and falls back to mapped netlist
+  (`implementation/fullflow_demo/work/dc/reports/alu4_flow_demo_dc_target_lib.warn`)
+- Innovus stage: PASS; DEF/post-route netlist/GDS generated
+- Calibre stage: PASS with licensed DRC run (`calibrehdrc` + `calibredrc`)
+- Strict replay (`FULLFLOW_STRICT=1`) now fails closed on any degraded stage,
+  including DC target-library fallback.
+
+## Latest Run Snapshot (2026-02-04)
+
+- Replay command: `FULLFLOW_STRICT=1 scripts/run_fullflow_smoke.sh`
+- DC stage: PASS with DB-compatible compiled library
+  (`implementation/fullflow_demo/work/dc/libcache/alu4_min_cells.db`);
+  no `DB-1`/`UIO-3` fallback
+- Innovus stage: PASS; DEF/post-route netlist/GDS generated
+- Calibre stage: PASS; DRC smoke summary reports `TOTAL RESULTS GENERATED = 0`
+- Strict replay now exits cleanly (`exit 0`)

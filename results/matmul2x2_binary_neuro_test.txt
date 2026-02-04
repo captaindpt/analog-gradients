@@ -1,0 +1,35 @@
+=== Binary 2x2 Matmul (Neuro Path) Verification ===
+Binary-only proof: product via coincidence, sum via integration
+Date: Feb  4 09:28:14 2026
+
+Stimulus matrix (fixed proof point):
+  A = [[1 0] [1 1]]
+  B = [[1 1] [0 1]]
+
+Expected output:
+  Y = [[1 1] [1 2]]
+
+Partial product spike counts:
+  ae=1 bg=0 af=1 bh=0 ce=1 dg=0 cf=1 dh=1
+
+Total partial spikes: 5
+
+Partial product maxima (V):
+  ae=0.594 bg=0.051 af=0.594 bh=0.051 ce=0.594 dg=0.051 cf=0.663 dh=0.663
+
+Decoded output from partial products:
+  y11=1 y12=1 y21=1 y22=2
+
+Accumulator membrane maxima (V):
+  y11=0.115 y12=0.115 y21=0.115 y22=0.245
+
+Latency to full output-valid: 2.233 ns
+Total energy (0-90ns): 1.120208e-11 J
+Energy per operation (12 ops): 9.335063e-13 J/op
+Spike-model energy estimate (3.27 pJ/spike): 1.635000e-11 J
+
+OK: binary matmul decoded outputs match expected matrix
+OK: two-term sum output (y22=2) has strongest integrated response
+OK: y=1 outputs integrate above baseline
+
+=== PASS: Binary 2x2 neuro matmul proof verified ===
