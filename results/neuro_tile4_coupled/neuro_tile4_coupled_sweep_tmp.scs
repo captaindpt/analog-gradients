@@ -3,7 +3,7 @@
 
 simulator lang=spectre
 
-parameters vdd_val=1.8 cpost=200f rdecay=80k r_couple=8k cmem=500f rleak=8M r_fb=1000
+parameters vdd_val=1.8 cpost=200f rdecay=80k r_couple=8k cmem=500f rleak=12M r_fb=1500
 
 model nch mos1 type=n vto=0.0 kp=120u
 model pch mos1 type=p vto=0.0 kp=40u

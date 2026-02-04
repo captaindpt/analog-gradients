@@ -77,6 +77,8 @@ if(vmem && vspike then
             fprintf(out "%.0fns " st*1e9)
         )
         fprintf(out "\n")
+        first_spike_time = car(reverse(spike_times))
+        fprintf(out "  First spike time: %.3f ns\n" first_spike_time*1e9)
     )
 
     ; Calculate inter-spike interval if multiple spikes

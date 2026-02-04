@@ -72,6 +72,7 @@ if(vpre && vpost && vout then
     ; Count output pulses with threshold crossing
     vth = 0.9
     pulse_count = 0
+    first_pulse_time = nil
     ts = 1n
     prev_val = value(vout ts)
     ts = ts + 500p
@@ -79,12 +80,18 @@ if(vpre && vpost && vout then
         curr_val = value(vout ts)
         if(prev_val < vth && curr_val > vth then
             pulse_count = pulse_count + 1
+            if(pulse_count == 1 then
+                first_pulse_time = ts
+            )
         )
         prev_val = curr_val
         ts = ts + 500p
     )
 
     fprintf(out "Output pulse count (threshold %.1fV): %d\n" vth pulse_count)
+    if(first_pulse_time then
+        fprintf(out "First output pulse time: %.3f ns\n" first_pulse_time*1e9)
+    )
     if(pulse_count >= 3 then
         fprintf(out "OK: buffered synapse output pulses detected\n")
     else

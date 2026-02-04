@@ -13,11 +13,11 @@
 ## Current Rendezvous Objectives
 
 1. **Full-flow reliability**  
-   - Move DC + Calibre from "license-blocked narrative" to "configured + reproducible".  
-   - Close remaining DC blocker (`DB-1` library format path).
+   - Move DC + Calibre from "license-blocked narrative" to "configured + reproducible". ✅  
+   - Close remaining DC blocker (`DB-1` library format path). ✅
 2. **Analog robustness expansion**  
-   - Extend sweeps beyond `neuro_tile4_coupled` to `synapse`, `lif_neuron`, `neuron_tile`.
-   - Define explicit PASS bands (not only nominal PASS).
+   - Extend sweeps beyond `neuro_tile4_coupled` to `synapse`, `lif_neuron`, `neuron_tile`. ✅
+   - Define explicit PASS bands (not only nominal PASS). ✅
 3. **Scale path ("bigger and bigger things")**  
    - Preserve fail-closed verification guarantees while increasing network size/complexity.
    - Keep every new block script-reproducible and mapped to evidence artifacts.

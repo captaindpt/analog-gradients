@@ -35,6 +35,8 @@ Build path from verified digital GPU stack to a neuromorphic analog core:
 - LIF corner-conditioned ODE/energy evidence (9 corners) ✅ COMPLETE
 - One-terminal transistor->GDSII demo path: planning + bring-up 🔄
 - Founder-thesis evidence track (clockless continuous-time compute): activated 🔄
+- Analog robustness expansion (`synapse`, `lif_neuron`, `neuron_tile`) ✅ COMPLETE
+  - Bundle summary: `competition/sweeps/robustness_summary.md`
 
 ## Workspace Rendezvous (2026-02-03)
 
@@ -186,7 +188,11 @@ Full-flow smoke evidence:
 
 | Block | Sweep | Result | Artifact |
 |-------|-------|--------|----------|
+| Synapse | cpost={150f,200f,250f}, rdecay={60k,80k,100k} | 9/9 PASS (band) | `competition/sweeps/synapse_sweep_summary.md` |
+| LIF Neuron | rleak={8M,10M,12M}, iin={400u,500u,600u} | 9/9 PASS (band) | `competition/sweeps/lif_neuron_sweep_summary.md` |
+| Neuron Tile | r_couple={6k,8k,10k}, rleak={6M,8M,10M} | 9/9 PASS (band) | `competition/sweeps/neuron_tile_sweep_summary.md` |
 | Neuro Tile4 Coupled | r_fb={600..1500}, rleak={5M..12M} | 63/63 PASS | `competition/sweeps/neuro_tile4_coupled_sweep_summary.md` |
+| Bundle Rollup | all above | 90/90 PASS | `competition/sweeps/robustness_summary.md` |
 
 ## Level 5: CMOS Primitives ✅
 

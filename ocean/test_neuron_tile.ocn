@@ -74,6 +74,8 @@ if(vsyn && vmem && vspike then
             fprintf(out "%.0f " st*1e9)
         )
         fprintf(out "\n")
+        first_spike_time = car(reverse(spike_times))
+        fprintf(out "First spike time: %.3f ns\n" first_spike_time*1e9)
     )
 
     if(spike_max > 0.4 && spike_count >= 1 then

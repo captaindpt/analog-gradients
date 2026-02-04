@@ -1,24 +1,25 @@
 === Neuron Tile Verification ===
 Synapse + LIF composition
-Date: Feb  3 15:32:15 2026
+Date: Feb  3 20:43:50 2026
 
 Waveform Analysis:
 ==================
 
 Samples:
-  Vsyn @8ns:  0.784 V
-  Vsyn @16ns: 0.465 V
-  Vmem @8ns:  0.478 V
-  Vmem @30ns: 0.777 V
-  Vmem max:   0.818 V
+  Vsyn @8ns:  0.821 V
+  Vsyn @16ns: 0.434 V
+  Vmem @8ns:  0.422 V
+  Vmem @30ns: 0.740 V
+  Vmem max:   0.816 V
 
   Vspike min: 0.000 V
-  Vspike max: 1.435 V
+  Vspike max: 1.337 V
 
 OK: synapse node exhibits decay after stimulation
 OK: membrane integrates synaptic drive
 Spike node pulses detected: 11
-Spike times (ns): 47 67 87 107 127 148 168 188 208 228 248 
+Spike times (ns): 48 67 87 107 127 148 168 188 208 228 248 
+First spike time: 48.000 ns
 OK: tile emits spikes from composed synapse->neuron path
 
 === PASS: Neuron tile composition verified ===
