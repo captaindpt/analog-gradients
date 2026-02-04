@@ -23,6 +23,8 @@ Goal is a defensible comparison of correctness, latency, and energy.
 - [x] Publish side-by-side comparison summary under `competition/analysis/`
 - [x] Add matrix-size scaling sweep harness (`N=2..16`, density/seed sweep)
 - [x] Generate scaling plots + markdown summary for architecture discussion
+- [x] Add transistor-run 4x4 checkpoint netlists + verifiers (digital + neuro)
+- [x] Publish side-by-side 4x4 checkpoint comparison report
 
 ## Acceptance Criteria
 
@@ -57,8 +59,8 @@ Goal is a defensible comparison of correctness, latency, and energy.
 
 - Upgrade digital baseline from minimal combinational netlist to a clocked
   PE/GPU-core-linked workload harness for a stricter apples-to-apples comparison.
-- Move from model-based scaling extrapolation to transistor-run NxN points
-  (at least `N=4` and `N=8`) for calibration hardening.
+- Move from 4x4 checkpoint to at least one additional transistor-run larger point
+  (`N=8`) for calibration hardening.
 
 ## Latest Progress (2026-02-04, scaling sweep)
 
@@ -72,3 +74,20 @@ Goal is a defensible comparison of correctness, latency, and energy.
   - `competition/analysis/matmul_binary_scaling_pressure.svg`
 - Run snapshots now archived per run:
   - `competition/sweeps/matmul_binary_scaling/<timestamp>/...`
+
+## Latest Progress (2026-02-04, 4x4 transistor checkpoint)
+
+- Added generated checkpoint assets:
+  - `netlists/matmul4x4_binary_digital.scs`
+  - `netlists/matmul4x4_binary_neuro.scs`
+  - `ocean/test_matmul4x4_binary_digital.ocn`
+  - `ocean/test_matmul4x4_binary_neuro.ocn`
+  - `scripts/generate_matmul4x4_checkpoint_assets.py`
+- Added reproducible comparison runner:
+  - `scripts/run_matmul4x4_binary_comparison.sh`
+- Added build targets:
+  - `./build.sh matmul4x4_binary_digital`
+  - `./build.sh matmul4x4_binary_neuro`
+- Published measured comparison artifacts:
+  - `competition/analysis/matmul4x4_binary_comparison.md`
+  - `competition/analysis/matmul4x4_binary_comparison.csv`

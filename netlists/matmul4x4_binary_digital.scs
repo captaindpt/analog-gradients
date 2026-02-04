@@ -1,0 +1,249 @@
+// matmul4x4_binary_digital.scs - Binary 4x4 matmul transistor checkpoint (digital path)
+// Multiply: AND. Accumulate: 4-input popcount -> 3-bit output per cell.
+
+simulator lang=spectre
+
+parameters vdd_val=1.8
+parameters a00=1 a01=0 a02=1 a03=1 a10=0 a11=1 a12=1 a13=0 a20=1 a21=1 a22=0 a23=1 a30=1 a31=0 a32=0 a33=1 b00=1 b01=1 b02=0 b03=1 b10=0 b11=1 b12=1 b13=0 b20=1 b21=0 b22=1 b23=1 b30=0 b31=1 b32=1 b33=1
+parameters a00_v=a00*vdd_val a01_v=a01*vdd_val a02_v=a02*vdd_val a03_v=a03*vdd_val a10_v=a10*vdd_val a11_v=a11*vdd_val a12_v=a12*vdd_val a13_v=a13*vdd_val a20_v=a20*vdd_val a21_v=a21*vdd_val a22_v=a22*vdd_val a23_v=a23*vdd_val a30_v=a30*vdd_val a31_v=a31*vdd_val a32_v=a32*vdd_val a33_v=a33*vdd_val b00_v=b00*vdd_val b01_v=b01*vdd_val b02_v=b02*vdd_val b03_v=b03*vdd_val b10_v=b10*vdd_val b11_v=b11*vdd_val b12_v=b12*vdd_val b13_v=b13*vdd_val b20_v=b20*vdd_val b21_v=b21*vdd_val b22_v=b22*vdd_val b23_v=b23*vdd_val b30_v=b30*vdd_val b31_v=b31*vdd_val b32_v=b32*vdd_val b33_v=b33*vdd_val
+
+model nch mos1 type=n vto=0.4 kp=120u
+model pch mos1 type=p vto=-0.4 kp=40u
+
+V_VDD (vdd 0) vsource dc=vdd_val
+
+// Input event at 10ns. Zero-valued bits keep val1=0.
+V_A00 (a00_in 0) vsource type=pulse val0=0 val1=a00_v delay=10n rise=100p fall=100p width=20n period=200n
+V_A01 (a01_in 0) vsource type=pulse val0=0 val1=a01_v delay=10n rise=100p fall=100p width=20n period=200n
+V_A02 (a02_in 0) vsource type=pulse val0=0 val1=a02_v delay=10n rise=100p fall=100p width=20n period=200n
+V_A03 (a03_in 0) vsource type=pulse val0=0 val1=a03_v delay=10n rise=100p fall=100p width=20n period=200n
+V_A10 (a10_in 0) vsource type=pulse val0=0 val1=a10_v delay=10n rise=100p fall=100p width=20n period=200n
+V_A11 (a11_in 0) vsource type=pulse val0=0 val1=a11_v delay=10n rise=100p fall=100p width=20n period=200n
+V_A12 (a12_in 0) vsource type=pulse val0=0 val1=a12_v delay=10n rise=100p fall=100p width=20n period=200n
+V_A13 (a13_in 0) vsource type=pulse val0=0 val1=a13_v delay=10n rise=100p fall=100p width=20n period=200n
+V_A20 (a20_in 0) vsource type=pulse val0=0 val1=a20_v delay=10n rise=100p fall=100p width=20n period=200n
+V_A21 (a21_in 0) vsource type=pulse val0=0 val1=a21_v delay=10n rise=100p fall=100p width=20n period=200n
+V_A22 (a22_in 0) vsource type=pulse val0=0 val1=a22_v delay=10n rise=100p fall=100p width=20n period=200n
+V_A23 (a23_in 0) vsource type=pulse val0=0 val1=a23_v delay=10n rise=100p fall=100p width=20n period=200n
+V_A30 (a30_in 0) vsource type=pulse val0=0 val1=a30_v delay=10n rise=100p fall=100p width=20n period=200n
+V_A31 (a31_in 0) vsource type=pulse val0=0 val1=a31_v delay=10n rise=100p fall=100p width=20n period=200n
+V_A32 (a32_in 0) vsource type=pulse val0=0 val1=a32_v delay=10n rise=100p fall=100p width=20n period=200n
+V_A33 (a33_in 0) vsource type=pulse val0=0 val1=a33_v delay=10n rise=100p fall=100p width=20n period=200n
+V_B00 (b00_in 0) vsource type=pulse val0=0 val1=b00_v delay=10n rise=100p fall=100p width=20n period=200n
+V_B01 (b01_in 0) vsource type=pulse val0=0 val1=b01_v delay=10n rise=100p fall=100p width=20n period=200n
+V_B02 (b02_in 0) vsource type=pulse val0=0 val1=b02_v delay=10n rise=100p fall=100p width=20n period=200n
+V_B03 (b03_in 0) vsource type=pulse val0=0 val1=b03_v delay=10n rise=100p fall=100p width=20n period=200n
+V_B10 (b10_in 0) vsource type=pulse val0=0 val1=b10_v delay=10n rise=100p fall=100p width=20n period=200n
+V_B11 (b11_in 0) vsource type=pulse val0=0 val1=b11_v delay=10n rise=100p fall=100p width=20n period=200n
+V_B12 (b12_in 0) vsource type=pulse val0=0 val1=b12_v delay=10n rise=100p fall=100p width=20n period=200n
+V_B13 (b13_in 0) vsource type=pulse val0=0 val1=b13_v delay=10n rise=100p fall=100p width=20n period=200n
+V_B20 (b20_in 0) vsource type=pulse val0=0 val1=b20_v delay=10n rise=100p fall=100p width=20n period=200n
+V_B21 (b21_in 0) vsource type=pulse val0=0 val1=b21_v delay=10n rise=100p fall=100p width=20n period=200n
+V_B22 (b22_in 0) vsource type=pulse val0=0 val1=b22_v delay=10n rise=100p fall=100p width=20n period=200n
+V_B23 (b23_in 0) vsource type=pulse val0=0 val1=b23_v delay=10n rise=100p fall=100p width=20n period=200n
+V_B30 (b30_in 0) vsource type=pulse val0=0 val1=b30_v delay=10n rise=100p fall=100p width=20n period=200n
+V_B31 (b31_in 0) vsource type=pulse val0=0 val1=b31_v delay=10n rise=100p fall=100p width=20n period=200n
+V_B32 (b32_in 0) vsource type=pulse val0=0 val1=b32_v delay=10n rise=100p fall=100p width=20n period=200n
+V_B33 (b33_in 0) vsource type=pulse val0=0 val1=b33_v delay=10n rise=100p fall=100p width=20n period=200n
+
+subckt nand2 (a b out vdd)
+    MP0 (out a vdd vdd) pch w=2u l=1u
+    MP1 (out b vdd vdd) pch w=2u l=1u
+    MN0 (out a mid 0) nch w=2u l=1u
+    MN1 (mid b 0 0) nch w=2u l=1u
+ends nand2
+
+subckt inverter (in out vdd)
+    MP0 (out in vdd vdd) pch w=2u l=1u
+    MN0 (out in 0 0) nch w=1u l=1u
+ends inverter
+
+subckt and2 (a b out vdd)
+    XN (a b n_int vdd) nand2
+    XI (n_int out vdd) inverter
+ends and2
+
+subckt xor2 (a b out vdd)
+    X1 (a b n1 vdd) nand2
+    X2 (a n1 n2 vdd) nand2
+    X3 (b n1 n3 vdd) nand2
+    X4 (n2 n3 out vdd) nand2
+ends xor2
+
+subckt half_adder (a b sum carry vdd)
+    XS (a b sum vdd) xor2
+    XC (a b carry vdd) and2
+ends half_adder
+
+subckt full_adder (a b cin sum cout vdd)
+    X0 (a b s0 vdd) xor2
+    X1 (s0 cin sum vdd) xor2
+    X2 (a b c0 vdd) and2
+    X3 (s0 cin c1 vdd) and2
+    X4 (c0 c1 cout vdd) xor2
+ends full_adder
+
+// Partial products + 4-input popcount per output.
+// y00 = sum_k(a0k * bk0)
+X_P0_0_0 (a00_in b00_in p_0_0_0 vdd) and2
+X_P0_0_1 (a01_in b10_in p_0_0_1 vdd) and2
+X_P0_0_2 (a02_in b20_in p_0_0_2 vdd) and2
+X_P0_0_3 (a03_in b30_in p_0_0_3 vdd) and2
+X_Y0_0_HA01 (p_0_0_0 p_0_0_1 y0_0_s01 y0_0_c01 vdd) half_adder
+X_Y0_0_HA23 (p_0_0_2 p_0_0_3 y0_0_s23 y0_0_c23 vdd) half_adder
+X_Y0_0_HA0 (y0_0_s01 y0_0_s23 y00_b0 y0_0_c0 vdd) half_adder
+X_Y0_0_FA1 (y0_0_c01 y0_0_c23 y0_0_c0 y00_b1 y00_b2 vdd) full_adder
+
+// y01 = sum_k(a0k * bk1)
+X_P0_1_0 (a00_in b01_in p_0_1_0 vdd) and2
+X_P0_1_1 (a01_in b11_in p_0_1_1 vdd) and2
+X_P0_1_2 (a02_in b21_in p_0_1_2 vdd) and2
+X_P0_1_3 (a03_in b31_in p_0_1_3 vdd) and2
+X_Y0_1_HA01 (p_0_1_0 p_0_1_1 y0_1_s01 y0_1_c01 vdd) half_adder
+X_Y0_1_HA23 (p_0_1_2 p_0_1_3 y0_1_s23 y0_1_c23 vdd) half_adder
+X_Y0_1_HA0 (y0_1_s01 y0_1_s23 y01_b0 y0_1_c0 vdd) half_adder
+X_Y0_1_FA1 (y0_1_c01 y0_1_c23 y0_1_c0 y01_b1 y01_b2 vdd) full_adder
+
+// y02 = sum_k(a0k * bk2)
+X_P0_2_0 (a00_in b02_in p_0_2_0 vdd) and2
+X_P0_2_1 (a01_in b12_in p_0_2_1 vdd) and2
+X_P0_2_2 (a02_in b22_in p_0_2_2 vdd) and2
+X_P0_2_3 (a03_in b32_in p_0_2_3 vdd) and2
+X_Y0_2_HA01 (p_0_2_0 p_0_2_1 y0_2_s01 y0_2_c01 vdd) half_adder
+X_Y0_2_HA23 (p_0_2_2 p_0_2_3 y0_2_s23 y0_2_c23 vdd) half_adder
+X_Y0_2_HA0 (y0_2_s01 y0_2_s23 y02_b0 y0_2_c0 vdd) half_adder
+X_Y0_2_FA1 (y0_2_c01 y0_2_c23 y0_2_c0 y02_b1 y02_b2 vdd) full_adder
+
+// y03 = sum_k(a0k * bk3)
+X_P0_3_0 (a00_in b03_in p_0_3_0 vdd) and2
+X_P0_3_1 (a01_in b13_in p_0_3_1 vdd) and2
+X_P0_3_2 (a02_in b23_in p_0_3_2 vdd) and2
+X_P0_3_3 (a03_in b33_in p_0_3_3 vdd) and2
+X_Y0_3_HA01 (p_0_3_0 p_0_3_1 y0_3_s01 y0_3_c01 vdd) half_adder
+X_Y0_3_HA23 (p_0_3_2 p_0_3_3 y0_3_s23 y0_3_c23 vdd) half_adder
+X_Y0_3_HA0 (y0_3_s01 y0_3_s23 y03_b0 y0_3_c0 vdd) half_adder
+X_Y0_3_FA1 (y0_3_c01 y0_3_c23 y0_3_c0 y03_b1 y03_b2 vdd) full_adder
+
+// y10 = sum_k(a1k * bk0)
+X_P1_0_0 (a10_in b00_in p_1_0_0 vdd) and2
+X_P1_0_1 (a11_in b10_in p_1_0_1 vdd) and2
+X_P1_0_2 (a12_in b20_in p_1_0_2 vdd) and2
+X_P1_0_3 (a13_in b30_in p_1_0_3 vdd) and2
+X_Y1_0_HA01 (p_1_0_0 p_1_0_1 y1_0_s01 y1_0_c01 vdd) half_adder
+X_Y1_0_HA23 (p_1_0_2 p_1_0_3 y1_0_s23 y1_0_c23 vdd) half_adder
+X_Y1_0_HA0 (y1_0_s01 y1_0_s23 y10_b0 y1_0_c0 vdd) half_adder
+X_Y1_0_FA1 (y1_0_c01 y1_0_c23 y1_0_c0 y10_b1 y10_b2 vdd) full_adder
+
+// y11 = sum_k(a1k * bk1)
+X_P1_1_0 (a10_in b01_in p_1_1_0 vdd) and2
+X_P1_1_1 (a11_in b11_in p_1_1_1 vdd) and2
+X_P1_1_2 (a12_in b21_in p_1_1_2 vdd) and2
+X_P1_1_3 (a13_in b31_in p_1_1_3 vdd) and2
+X_Y1_1_HA01 (p_1_1_0 p_1_1_1 y1_1_s01 y1_1_c01 vdd) half_adder
+X_Y1_1_HA23 (p_1_1_2 p_1_1_3 y1_1_s23 y1_1_c23 vdd) half_adder
+X_Y1_1_HA0 (y1_1_s01 y1_1_s23 y11_b0 y1_1_c0 vdd) half_adder
+X_Y1_1_FA1 (y1_1_c01 y1_1_c23 y1_1_c0 y11_b1 y11_b2 vdd) full_adder
+
+// y12 = sum_k(a1k * bk2)
+X_P1_2_0 (a10_in b02_in p_1_2_0 vdd) and2
+X_P1_2_1 (a11_in b12_in p_1_2_1 vdd) and2
+X_P1_2_2 (a12_in b22_in p_1_2_2 vdd) and2
+X_P1_2_3 (a13_in b32_in p_1_2_3 vdd) and2
+X_Y1_2_HA01 (p_1_2_0 p_1_2_1 y1_2_s01 y1_2_c01 vdd) half_adder
+X_Y1_2_HA23 (p_1_2_2 p_1_2_3 y1_2_s23 y1_2_c23 vdd) half_adder
+X_Y1_2_HA0 (y1_2_s01 y1_2_s23 y12_b0 y1_2_c0 vdd) half_adder
+X_Y1_2_FA1 (y1_2_c01 y1_2_c23 y1_2_c0 y12_b1 y12_b2 vdd) full_adder
+
+// y13 = sum_k(a1k * bk3)
+X_P1_3_0 (a10_in b03_in p_1_3_0 vdd) and2
+X_P1_3_1 (a11_in b13_in p_1_3_1 vdd) and2
+X_P1_3_2 (a12_in b23_in p_1_3_2 vdd) and2
+X_P1_3_3 (a13_in b33_in p_1_3_3 vdd) and2
+X_Y1_3_HA01 (p_1_3_0 p_1_3_1 y1_3_s01 y1_3_c01 vdd) half_adder
+X_Y1_3_HA23 (p_1_3_2 p_1_3_3 y1_3_s23 y1_3_c23 vdd) half_adder
+X_Y1_3_HA0 (y1_3_s01 y1_3_s23 y13_b0 y1_3_c0 vdd) half_adder
+X_Y1_3_FA1 (y1_3_c01 y1_3_c23 y1_3_c0 y13_b1 y13_b2 vdd) full_adder
+
+// y20 = sum_k(a2k * bk0)
+X_P2_0_0 (a20_in b00_in p_2_0_0 vdd) and2
+X_P2_0_1 (a21_in b10_in p_2_0_1 vdd) and2
+X_P2_0_2 (a22_in b20_in p_2_0_2 vdd) and2
+X_P2_0_3 (a23_in b30_in p_2_0_3 vdd) and2
+X_Y2_0_HA01 (p_2_0_0 p_2_0_1 y2_0_s01 y2_0_c01 vdd) half_adder
+X_Y2_0_HA23 (p_2_0_2 p_2_0_3 y2_0_s23 y2_0_c23 vdd) half_adder
+X_Y2_0_HA0 (y2_0_s01 y2_0_s23 y20_b0 y2_0_c0 vdd) half_adder
+X_Y2_0_FA1 (y2_0_c01 y2_0_c23 y2_0_c0 y20_b1 y20_b2 vdd) full_adder
+
+// y21 = sum_k(a2k * bk1)
+X_P2_1_0 (a20_in b01_in p_2_1_0 vdd) and2
+X_P2_1_1 (a21_in b11_in p_2_1_1 vdd) and2
+X_P2_1_2 (a22_in b21_in p_2_1_2 vdd) and2
+X_P2_1_3 (a23_in b31_in p_2_1_3 vdd) and2
+X_Y2_1_HA01 (p_2_1_0 p_2_1_1 y2_1_s01 y2_1_c01 vdd) half_adder
+X_Y2_1_HA23 (p_2_1_2 p_2_1_3 y2_1_s23 y2_1_c23 vdd) half_adder
+X_Y2_1_HA0 (y2_1_s01 y2_1_s23 y21_b0 y2_1_c0 vdd) half_adder
+X_Y2_1_FA1 (y2_1_c01 y2_1_c23 y2_1_c0 y21_b1 y21_b2 vdd) full_adder
+
+// y22 = sum_k(a2k * bk2)
+X_P2_2_0 (a20_in b02_in p_2_2_0 vdd) and2
+X_P2_2_1 (a21_in b12_in p_2_2_1 vdd) and2
+X_P2_2_2 (a22_in b22_in p_2_2_2 vdd) and2
+X_P2_2_3 (a23_in b32_in p_2_2_3 vdd) and2
+X_Y2_2_HA01 (p_2_2_0 p_2_2_1 y2_2_s01 y2_2_c01 vdd) half_adder
+X_Y2_2_HA23 (p_2_2_2 p_2_2_3 y2_2_s23 y2_2_c23 vdd) half_adder
+X_Y2_2_HA0 (y2_2_s01 y2_2_s23 y22_b0 y2_2_c0 vdd) half_adder
+X_Y2_2_FA1 (y2_2_c01 y2_2_c23 y2_2_c0 y22_b1 y22_b2 vdd) full_adder
+
+// y23 = sum_k(a2k * bk3)
+X_P2_3_0 (a20_in b03_in p_2_3_0 vdd) and2
+X_P2_3_1 (a21_in b13_in p_2_3_1 vdd) and2
+X_P2_3_2 (a22_in b23_in p_2_3_2 vdd) and2
+X_P2_3_3 (a23_in b33_in p_2_3_3 vdd) and2
+X_Y2_3_HA01 (p_2_3_0 p_2_3_1 y2_3_s01 y2_3_c01 vdd) half_adder
+X_Y2_3_HA23 (p_2_3_2 p_2_3_3 y2_3_s23 y2_3_c23 vdd) half_adder
+X_Y2_3_HA0 (y2_3_s01 y2_3_s23 y23_b0 y2_3_c0 vdd) half_adder
+X_Y2_3_FA1 (y2_3_c01 y2_3_c23 y2_3_c0 y23_b1 y23_b2 vdd) full_adder
+
+// y30 = sum_k(a3k * bk0)
+X_P3_0_0 (a30_in b00_in p_3_0_0 vdd) and2
+X_P3_0_1 (a31_in b10_in p_3_0_1 vdd) and2
+X_P3_0_2 (a32_in b20_in p_3_0_2 vdd) and2
+X_P3_0_3 (a33_in b30_in p_3_0_3 vdd) and2
+X_Y3_0_HA01 (p_3_0_0 p_3_0_1 y3_0_s01 y3_0_c01 vdd) half_adder
+X_Y3_0_HA23 (p_3_0_2 p_3_0_3 y3_0_s23 y3_0_c23 vdd) half_adder
+X_Y3_0_HA0 (y3_0_s01 y3_0_s23 y30_b0 y3_0_c0 vdd) half_adder
+X_Y3_0_FA1 (y3_0_c01 y3_0_c23 y3_0_c0 y30_b1 y30_b2 vdd) full_adder
+
+// y31 = sum_k(a3k * bk1)
+X_P3_1_0 (a30_in b01_in p_3_1_0 vdd) and2
+X_P3_1_1 (a31_in b11_in p_3_1_1 vdd) and2
+X_P3_1_2 (a32_in b21_in p_3_1_2 vdd) and2
+X_P3_1_3 (a33_in b31_in p_3_1_3 vdd) and2
+X_Y3_1_HA01 (p_3_1_0 p_3_1_1 y3_1_s01 y3_1_c01 vdd) half_adder
+X_Y3_1_HA23 (p_3_1_2 p_3_1_3 y3_1_s23 y3_1_c23 vdd) half_adder
+X_Y3_1_HA0 (y3_1_s01 y3_1_s23 y31_b0 y3_1_c0 vdd) half_adder
+X_Y3_1_FA1 (y3_1_c01 y3_1_c23 y3_1_c0 y31_b1 y31_b2 vdd) full_adder
+
+// y32 = sum_k(a3k * bk2)
+X_P3_2_0 (a30_in b02_in p_3_2_0 vdd) and2
+X_P3_2_1 (a31_in b12_in p_3_2_1 vdd) and2
+X_P3_2_2 (a32_in b22_in p_3_2_2 vdd) and2
+X_P3_2_3 (a33_in b32_in p_3_2_3 vdd) and2
+X_Y3_2_HA01 (p_3_2_0 p_3_2_1 y3_2_s01 y3_2_c01 vdd) half_adder
+X_Y3_2_HA23 (p_3_2_2 p_3_2_3 y3_2_s23 y3_2_c23 vdd) half_adder
+X_Y3_2_HA0 (y3_2_s01 y3_2_s23 y32_b0 y3_2_c0 vdd) half_adder
+X_Y3_2_FA1 (y3_2_c01 y3_2_c23 y3_2_c0 y32_b1 y32_b2 vdd) full_adder
+
+// y33 = sum_k(a3k * bk3)
+X_P3_3_0 (a30_in b03_in p_3_3_0 vdd) and2
+X_P3_3_1 (a31_in b13_in p_3_3_1 vdd) and2
+X_P3_3_2 (a32_in b23_in p_3_3_2 vdd) and2
+X_P3_3_3 (a33_in b33_in p_3_3_3 vdd) and2
+X_Y3_3_HA01 (p_3_3_0 p_3_3_1 y3_3_s01 y3_3_c01 vdd) half_adder
+X_Y3_3_HA23 (p_3_3_2 p_3_3_3 y3_3_s23 y3_3_c23 vdd) half_adder
+X_Y3_3_HA0 (y3_3_s01 y3_3_s23 y33_b0 y3_3_c0 vdd) half_adder
+X_Y3_3_FA1 (y3_3_c01 y3_3_c23 y3_3_c0 y33_b1 y33_b2 vdd) full_adder
+
+tran_test tran stop=120n
+save p_0_0_0 p_0_0_1 p_0_0_2 p_0_0_3 p_0_1_0 p_0_1_1 p_0_1_2 p_0_1_3 p_0_2_0 p_0_2_1 p_0_2_2 p_0_2_3 p_0_3_0 p_0_3_1 p_0_3_2 p_0_3_3 p_1_0_0 p_1_0_1 p_1_0_2 p_1_0_3 p_1_1_0 p_1_1_1 p_1_1_2 p_1_1_3 p_1_2_0 p_1_2_1 p_1_2_2 p_1_2_3 p_1_3_0 p_1_3_1 p_1_3_2 p_1_3_3 p_2_0_0 p_2_0_1 p_2_0_2 p_2_0_3 p_2_1_0 p_2_1_1 p_2_1_2 p_2_1_3 p_2_2_0 p_2_2_1 p_2_2_2 p_2_2_3 p_2_3_0 p_2_3_1 p_2_3_2 p_2_3_3 p_3_0_0 p_3_0_1 p_3_0_2 p_3_0_3 p_3_1_0 p_3_1_1 p_3_1_2 p_3_1_3 p_3_2_0 p_3_2_1 p_3_2_2 p_3_2_3 p_3_3_0 p_3_3_1 p_3_3_2 p_3_3_3 y00_b0 y00_b1 y00_b2 y01_b0 y01_b1 y01_b2 y02_b0 y02_b1 y02_b2 y03_b0 y03_b1 y03_b2 y10_b0 y10_b1 y10_b2 y11_b0 y11_b1 y11_b2 y12_b0 y12_b1 y12_b2 y13_b0 y13_b1 y13_b2 y20_b0 y20_b1 y20_b2 y21_b0 y21_b1 y21_b2 y22_b0 y22_b1 y22_b2 y23_b0 y23_b1 y23_b2 y30_b0 y30_b1 y30_b2 y31_b0 y31_b1 y31_b2 y32_b0 y32_b1 y32_b2 y33_b0 y33_b1 y33_b2 V_VDD:p
+

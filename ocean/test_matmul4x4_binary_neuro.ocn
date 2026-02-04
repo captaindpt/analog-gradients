@@ -1,0 +1,1455 @@
+; test_matmul4x4_binary_neuro.ocn
+; Verify 4x4 binary matmul neuro transistor checkpoint.
+
+out = outfile("results/matmul4x4_binary_neuro_test.txt" "w")
+fprintf(out "=== Binary 4x4 Matmul (Neuro Path) Verification ===\n")
+fprintf(out "Transistor checkpoint: coincidence products + membrane accumulation\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("results/matmul4x4_binary_neuro/matmul4x4_binary_neuro.raw")
+selectResult("tran_test-tran")
+
+procedure(countRising(sig th dt tstart tstop)
+  let((cnt ts prev curr)
+    cnt = 0
+    ts = tstart
+    prev = value(sig ts)
+    ts = ts + dt
+    while(ts < tstop
+      curr = value(sig ts)
+      if(prev < th && curr > th then
+        cnt = cnt + 1
+      )
+      prev = curr
+      ts = ts + dt
+    )
+    cnt
+  )
+)
+
+procedure(firstCross(sig th dt tstart tstop)
+  let((ts prev curr frac tcross found)
+    tcross = nil
+    found = nil
+    ts = tstart
+    prev = value(sig ts)
+    ts = ts + dt
+    while(ts < tstop && !found
+      curr = value(sig ts)
+      if(prev < th && curr > th then
+        frac = (th - prev) / (curr - prev)
+        if(frac < 0 then frac = 0)
+        if(frac > 1 then frac = 1)
+        tcross = (ts - dt) + frac * dt
+        found = t
+      )
+      prev = curr
+      ts = ts + dt
+    )
+    tcross
+  )
+)
+
+vp_0_0_0 = v("p_0_0_0")
+vp_0_0_1 = v("p_0_0_1")
+vp_0_0_2 = v("p_0_0_2")
+vp_0_0_3 = v("p_0_0_3")
+vp_0_1_0 = v("p_0_1_0")
+vp_0_1_1 = v("p_0_1_1")
+vp_0_1_2 = v("p_0_1_2")
+vp_0_1_3 = v("p_0_1_3")
+vp_0_2_0 = v("p_0_2_0")
+vp_0_2_1 = v("p_0_2_1")
+vp_0_2_2 = v("p_0_2_2")
+vp_0_2_3 = v("p_0_2_3")
+vp_0_3_0 = v("p_0_3_0")
+vp_0_3_1 = v("p_0_3_1")
+vp_0_3_2 = v("p_0_3_2")
+vp_0_3_3 = v("p_0_3_3")
+vp_1_0_0 = v("p_1_0_0")
+vp_1_0_1 = v("p_1_0_1")
+vp_1_0_2 = v("p_1_0_2")
+vp_1_0_3 = v("p_1_0_3")
+vp_1_1_0 = v("p_1_1_0")
+vp_1_1_1 = v("p_1_1_1")
+vp_1_1_2 = v("p_1_1_2")
+vp_1_1_3 = v("p_1_1_3")
+vp_1_2_0 = v("p_1_2_0")
+vp_1_2_1 = v("p_1_2_1")
+vp_1_2_2 = v("p_1_2_2")
+vp_1_2_3 = v("p_1_2_3")
+vp_1_3_0 = v("p_1_3_0")
+vp_1_3_1 = v("p_1_3_1")
+vp_1_3_2 = v("p_1_3_2")
+vp_1_3_3 = v("p_1_3_3")
+vp_2_0_0 = v("p_2_0_0")
+vp_2_0_1 = v("p_2_0_1")
+vp_2_0_2 = v("p_2_0_2")
+vp_2_0_3 = v("p_2_0_3")
+vp_2_1_0 = v("p_2_1_0")
+vp_2_1_1 = v("p_2_1_1")
+vp_2_1_2 = v("p_2_1_2")
+vp_2_1_3 = v("p_2_1_3")
+vp_2_2_0 = v("p_2_2_0")
+vp_2_2_1 = v("p_2_2_1")
+vp_2_2_2 = v("p_2_2_2")
+vp_2_2_3 = v("p_2_2_3")
+vp_2_3_0 = v("p_2_3_0")
+vp_2_3_1 = v("p_2_3_1")
+vp_2_3_2 = v("p_2_3_2")
+vp_2_3_3 = v("p_2_3_3")
+vp_3_0_0 = v("p_3_0_0")
+vp_3_0_1 = v("p_3_0_1")
+vp_3_0_2 = v("p_3_0_2")
+vp_3_0_3 = v("p_3_0_3")
+vp_3_1_0 = v("p_3_1_0")
+vp_3_1_1 = v("p_3_1_1")
+vp_3_1_2 = v("p_3_1_2")
+vp_3_1_3 = v("p_3_1_3")
+vp_3_2_0 = v("p_3_2_0")
+vp_3_2_1 = v("p_3_2_1")
+vp_3_2_2 = v("p_3_2_2")
+vp_3_2_3 = v("p_3_2_3")
+vp_3_3_0 = v("p_3_3_0")
+vp_3_3_1 = v("p_3_3_1")
+vp_3_3_2 = v("p_3_3_2")
+vp_3_3_3 = v("p_3_3_3")
+vy00 = v("y00_mem")
+vy01 = v("y01_mem")
+vy02 = v("y02_mem")
+vy03 = v("y03_mem")
+vy10 = v("y10_mem")
+vy11 = v("y11_mem")
+vy12 = v("y12_mem")
+vy13 = v("y13_mem")
+vy20 = v("y20_mem")
+vy21 = v("y21_mem")
+vy22 = v("y22_mem")
+vy23 = v("y23_mem")
+vy30 = v("y30_mem")
+vy31 = v("y31_mem")
+vy32 = v("y32_mem")
+vy33 = v("y33_mem")
+idd = getData("V_VDD:p")
+
+if(vp_0_0_0 && vp_0_0_1 && vp_0_0_2 && vp_0_0_3 && vp_0_1_0 && vp_0_1_1 && vp_0_1_2 && vp_0_1_3 && vp_0_2_0 && vp_0_2_1 && vp_0_2_2 && vp_0_2_3 && vp_0_3_0 && vp_0_3_1 && vp_0_3_2 && vp_0_3_3 && vp_1_0_0 && vp_1_0_1 && vp_1_0_2 && vp_1_0_3 && vp_1_1_0 && vp_1_1_1 && vp_1_1_2 && vp_1_1_3 && vp_1_2_0 && vp_1_2_1 && vp_1_2_2 && vp_1_2_3 && vp_1_3_0 && vp_1_3_1 && vp_1_3_2 && vp_1_3_3 && vp_2_0_0 && vp_2_0_1 && vp_2_0_2 && vp_2_0_3 && vp_2_1_0 && vp_2_1_1 && vp_2_1_2 && vp_2_1_3 && vp_2_2_0 && vp_2_2_1 && vp_2_2_2 && vp_2_2_3 && vp_2_3_0 && vp_2_3_1 && vp_2_3_2 && vp_2_3_3 && vp_3_0_0 && vp_3_0_1 && vp_3_0_2 && vp_3_0_3 && vp_3_1_0 && vp_3_1_1 && vp_3_1_2 && vp_3_1_3 && vp_3_2_0 && vp_3_2_1 && vp_3_2_2 && vp_3_2_3 && vp_3_3_0 && vp_3_3_1 && vp_3_3_2 && vp_3_3_3 && vy00 && vy01 && vy02 && vy03 && vy10 && vy11 && vy12 && vy13 && vy20 && vy21 && vy22 && vy23 && vy30 && vy31 && vy32 && vy33 && idd then
+    pass = t
+    dt = 100p
+    t_in = 10n
+    total_partial_spikes = 0
+    latest_active_t = nil
+
+    p_0_0_0_min = ymin(vp_0_0_0)
+    p_0_0_0_max = ymax(vp_0_0_0)
+    if(p_0_0_0_max > 0.4 then
+      p_0_0_0_th = (p_0_0_0_max + p_0_0_0_min)/2
+      p_0_0_0_cnt = countRising(vp_0_0_0 p_0_0_0_th dt 1n 120n)
+      p_0_0_0_t = firstCross(vp_0_0_0 p_0_0_0_th dt 1n 120n)
+    else
+      p_0_0_0_cnt = 0
+      p_0_0_0_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_0_0_0_cnt
+    if(p_0_0_0_t then
+      if(latest_active_t then
+        if(p_0_0_0_t > latest_active_t then latest_active_t = p_0_0_0_t)
+      else
+        latest_active_t = p_0_0_0_t
+      )
+    )
+
+    p_0_0_1_min = ymin(vp_0_0_1)
+    p_0_0_1_max = ymax(vp_0_0_1)
+    if(p_0_0_1_max > 0.4 then
+      p_0_0_1_th = (p_0_0_1_max + p_0_0_1_min)/2
+      p_0_0_1_cnt = countRising(vp_0_0_1 p_0_0_1_th dt 1n 120n)
+      p_0_0_1_t = firstCross(vp_0_0_1 p_0_0_1_th dt 1n 120n)
+    else
+      p_0_0_1_cnt = 0
+      p_0_0_1_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_0_0_1_cnt
+    if(p_0_0_1_t then
+      if(latest_active_t then
+        if(p_0_0_1_t > latest_active_t then latest_active_t = p_0_0_1_t)
+      else
+        latest_active_t = p_0_0_1_t
+      )
+    )
+
+    p_0_0_2_min = ymin(vp_0_0_2)
+    p_0_0_2_max = ymax(vp_0_0_2)
+    if(p_0_0_2_max > 0.4 then
+      p_0_0_2_th = (p_0_0_2_max + p_0_0_2_min)/2
+      p_0_0_2_cnt = countRising(vp_0_0_2 p_0_0_2_th dt 1n 120n)
+      p_0_0_2_t = firstCross(vp_0_0_2 p_0_0_2_th dt 1n 120n)
+    else
+      p_0_0_2_cnt = 0
+      p_0_0_2_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_0_0_2_cnt
+    if(p_0_0_2_t then
+      if(latest_active_t then
+        if(p_0_0_2_t > latest_active_t then latest_active_t = p_0_0_2_t)
+      else
+        latest_active_t = p_0_0_2_t
+      )
+    )
+
+    p_0_0_3_min = ymin(vp_0_0_3)
+    p_0_0_3_max = ymax(vp_0_0_3)
+    if(p_0_0_3_max > 0.4 then
+      p_0_0_3_th = (p_0_0_3_max + p_0_0_3_min)/2
+      p_0_0_3_cnt = countRising(vp_0_0_3 p_0_0_3_th dt 1n 120n)
+      p_0_0_3_t = firstCross(vp_0_0_3 p_0_0_3_th dt 1n 120n)
+    else
+      p_0_0_3_cnt = 0
+      p_0_0_3_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_0_0_3_cnt
+    if(p_0_0_3_t then
+      if(latest_active_t then
+        if(p_0_0_3_t > latest_active_t then latest_active_t = p_0_0_3_t)
+      else
+        latest_active_t = p_0_0_3_t
+      )
+    )
+
+    p_0_1_0_min = ymin(vp_0_1_0)
+    p_0_1_0_max = ymax(vp_0_1_0)
+    if(p_0_1_0_max > 0.4 then
+      p_0_1_0_th = (p_0_1_0_max + p_0_1_0_min)/2
+      p_0_1_0_cnt = countRising(vp_0_1_0 p_0_1_0_th dt 1n 120n)
+      p_0_1_0_t = firstCross(vp_0_1_0 p_0_1_0_th dt 1n 120n)
+    else
+      p_0_1_0_cnt = 0
+      p_0_1_0_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_0_1_0_cnt
+    if(p_0_1_0_t then
+      if(latest_active_t then
+        if(p_0_1_0_t > latest_active_t then latest_active_t = p_0_1_0_t)
+      else
+        latest_active_t = p_0_1_0_t
+      )
+    )
+
+    p_0_1_1_min = ymin(vp_0_1_1)
+    p_0_1_1_max = ymax(vp_0_1_1)
+    if(p_0_1_1_max > 0.4 then
+      p_0_1_1_th = (p_0_1_1_max + p_0_1_1_min)/2
+      p_0_1_1_cnt = countRising(vp_0_1_1 p_0_1_1_th dt 1n 120n)
+      p_0_1_1_t = firstCross(vp_0_1_1 p_0_1_1_th dt 1n 120n)
+    else
+      p_0_1_1_cnt = 0
+      p_0_1_1_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_0_1_1_cnt
+    if(p_0_1_1_t then
+      if(latest_active_t then
+        if(p_0_1_1_t > latest_active_t then latest_active_t = p_0_1_1_t)
+      else
+        latest_active_t = p_0_1_1_t
+      )
+    )
+
+    p_0_1_2_min = ymin(vp_0_1_2)
+    p_0_1_2_max = ymax(vp_0_1_2)
+    if(p_0_1_2_max > 0.4 then
+      p_0_1_2_th = (p_0_1_2_max + p_0_1_2_min)/2
+      p_0_1_2_cnt = countRising(vp_0_1_2 p_0_1_2_th dt 1n 120n)
+      p_0_1_2_t = firstCross(vp_0_1_2 p_0_1_2_th dt 1n 120n)
+    else
+      p_0_1_2_cnt = 0
+      p_0_1_2_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_0_1_2_cnt
+    if(p_0_1_2_t then
+      if(latest_active_t then
+        if(p_0_1_2_t > latest_active_t then latest_active_t = p_0_1_2_t)
+      else
+        latest_active_t = p_0_1_2_t
+      )
+    )
+
+    p_0_1_3_min = ymin(vp_0_1_3)
+    p_0_1_3_max = ymax(vp_0_1_3)
+    if(p_0_1_3_max > 0.4 then
+      p_0_1_3_th = (p_0_1_3_max + p_0_1_3_min)/2
+      p_0_1_3_cnt = countRising(vp_0_1_3 p_0_1_3_th dt 1n 120n)
+      p_0_1_3_t = firstCross(vp_0_1_3 p_0_1_3_th dt 1n 120n)
+    else
+      p_0_1_3_cnt = 0
+      p_0_1_3_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_0_1_3_cnt
+    if(p_0_1_3_t then
+      if(latest_active_t then
+        if(p_0_1_3_t > latest_active_t then latest_active_t = p_0_1_3_t)
+      else
+        latest_active_t = p_0_1_3_t
+      )
+    )
+
+    p_0_2_0_min = ymin(vp_0_2_0)
+    p_0_2_0_max = ymax(vp_0_2_0)
+    if(p_0_2_0_max > 0.4 then
+      p_0_2_0_th = (p_0_2_0_max + p_0_2_0_min)/2
+      p_0_2_0_cnt = countRising(vp_0_2_0 p_0_2_0_th dt 1n 120n)
+      p_0_2_0_t = firstCross(vp_0_2_0 p_0_2_0_th dt 1n 120n)
+    else
+      p_0_2_0_cnt = 0
+      p_0_2_0_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_0_2_0_cnt
+    if(p_0_2_0_t then
+      if(latest_active_t then
+        if(p_0_2_0_t > latest_active_t then latest_active_t = p_0_2_0_t)
+      else
+        latest_active_t = p_0_2_0_t
+      )
+    )
+
+    p_0_2_1_min = ymin(vp_0_2_1)
+    p_0_2_1_max = ymax(vp_0_2_1)
+    if(p_0_2_1_max > 0.4 then
+      p_0_2_1_th = (p_0_2_1_max + p_0_2_1_min)/2
+      p_0_2_1_cnt = countRising(vp_0_2_1 p_0_2_1_th dt 1n 120n)
+      p_0_2_1_t = firstCross(vp_0_2_1 p_0_2_1_th dt 1n 120n)
+    else
+      p_0_2_1_cnt = 0
+      p_0_2_1_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_0_2_1_cnt
+    if(p_0_2_1_t then
+      if(latest_active_t then
+        if(p_0_2_1_t > latest_active_t then latest_active_t = p_0_2_1_t)
+      else
+        latest_active_t = p_0_2_1_t
+      )
+    )
+
+    p_0_2_2_min = ymin(vp_0_2_2)
+    p_0_2_2_max = ymax(vp_0_2_2)
+    if(p_0_2_2_max > 0.4 then
+      p_0_2_2_th = (p_0_2_2_max + p_0_2_2_min)/2
+      p_0_2_2_cnt = countRising(vp_0_2_2 p_0_2_2_th dt 1n 120n)
+      p_0_2_2_t = firstCross(vp_0_2_2 p_0_2_2_th dt 1n 120n)
+    else
+      p_0_2_2_cnt = 0
+      p_0_2_2_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_0_2_2_cnt
+    if(p_0_2_2_t then
+      if(latest_active_t then
+        if(p_0_2_2_t > latest_active_t then latest_active_t = p_0_2_2_t)
+      else
+        latest_active_t = p_0_2_2_t
+      )
+    )
+
+    p_0_2_3_min = ymin(vp_0_2_3)
+    p_0_2_3_max = ymax(vp_0_2_3)
+    if(p_0_2_3_max > 0.4 then
+      p_0_2_3_th = (p_0_2_3_max + p_0_2_3_min)/2
+      p_0_2_3_cnt = countRising(vp_0_2_3 p_0_2_3_th dt 1n 120n)
+      p_0_2_3_t = firstCross(vp_0_2_3 p_0_2_3_th dt 1n 120n)
+    else
+      p_0_2_3_cnt = 0
+      p_0_2_3_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_0_2_3_cnt
+    if(p_0_2_3_t then
+      if(latest_active_t then
+        if(p_0_2_3_t > latest_active_t then latest_active_t = p_0_2_3_t)
+      else
+        latest_active_t = p_0_2_3_t
+      )
+    )
+
+    p_0_3_0_min = ymin(vp_0_3_0)
+    p_0_3_0_max = ymax(vp_0_3_0)
+    if(p_0_3_0_max > 0.4 then
+      p_0_3_0_th = (p_0_3_0_max + p_0_3_0_min)/2
+      p_0_3_0_cnt = countRising(vp_0_3_0 p_0_3_0_th dt 1n 120n)
+      p_0_3_0_t = firstCross(vp_0_3_0 p_0_3_0_th dt 1n 120n)
+    else
+      p_0_3_0_cnt = 0
+      p_0_3_0_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_0_3_0_cnt
+    if(p_0_3_0_t then
+      if(latest_active_t then
+        if(p_0_3_0_t > latest_active_t then latest_active_t = p_0_3_0_t)
+      else
+        latest_active_t = p_0_3_0_t
+      )
+    )
+
+    p_0_3_1_min = ymin(vp_0_3_1)
+    p_0_3_1_max = ymax(vp_0_3_1)
+    if(p_0_3_1_max > 0.4 then
+      p_0_3_1_th = (p_0_3_1_max + p_0_3_1_min)/2
+      p_0_3_1_cnt = countRising(vp_0_3_1 p_0_3_1_th dt 1n 120n)
+      p_0_3_1_t = firstCross(vp_0_3_1 p_0_3_1_th dt 1n 120n)
+    else
+      p_0_3_1_cnt = 0
+      p_0_3_1_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_0_3_1_cnt
+    if(p_0_3_1_t then
+      if(latest_active_t then
+        if(p_0_3_1_t > latest_active_t then latest_active_t = p_0_3_1_t)
+      else
+        latest_active_t = p_0_3_1_t
+      )
+    )
+
+    p_0_3_2_min = ymin(vp_0_3_2)
+    p_0_3_2_max = ymax(vp_0_3_2)
+    if(p_0_3_2_max > 0.4 then
+      p_0_3_2_th = (p_0_3_2_max + p_0_3_2_min)/2
+      p_0_3_2_cnt = countRising(vp_0_3_2 p_0_3_2_th dt 1n 120n)
+      p_0_3_2_t = firstCross(vp_0_3_2 p_0_3_2_th dt 1n 120n)
+    else
+      p_0_3_2_cnt = 0
+      p_0_3_2_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_0_3_2_cnt
+    if(p_0_3_2_t then
+      if(latest_active_t then
+        if(p_0_3_2_t > latest_active_t then latest_active_t = p_0_3_2_t)
+      else
+        latest_active_t = p_0_3_2_t
+      )
+    )
+
+    p_0_3_3_min = ymin(vp_0_3_3)
+    p_0_3_3_max = ymax(vp_0_3_3)
+    if(p_0_3_3_max > 0.4 then
+      p_0_3_3_th = (p_0_3_3_max + p_0_3_3_min)/2
+      p_0_3_3_cnt = countRising(vp_0_3_3 p_0_3_3_th dt 1n 120n)
+      p_0_3_3_t = firstCross(vp_0_3_3 p_0_3_3_th dt 1n 120n)
+    else
+      p_0_3_3_cnt = 0
+      p_0_3_3_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_0_3_3_cnt
+    if(p_0_3_3_t then
+      if(latest_active_t then
+        if(p_0_3_3_t > latest_active_t then latest_active_t = p_0_3_3_t)
+      else
+        latest_active_t = p_0_3_3_t
+      )
+    )
+
+    p_1_0_0_min = ymin(vp_1_0_0)
+    p_1_0_0_max = ymax(vp_1_0_0)
+    if(p_1_0_0_max > 0.4 then
+      p_1_0_0_th = (p_1_0_0_max + p_1_0_0_min)/2
+      p_1_0_0_cnt = countRising(vp_1_0_0 p_1_0_0_th dt 1n 120n)
+      p_1_0_0_t = firstCross(vp_1_0_0 p_1_0_0_th dt 1n 120n)
+    else
+      p_1_0_0_cnt = 0
+      p_1_0_0_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_1_0_0_cnt
+    if(p_1_0_0_t then
+      if(latest_active_t then
+        if(p_1_0_0_t > latest_active_t then latest_active_t = p_1_0_0_t)
+      else
+        latest_active_t = p_1_0_0_t
+      )
+    )
+
+    p_1_0_1_min = ymin(vp_1_0_1)
+    p_1_0_1_max = ymax(vp_1_0_1)
+    if(p_1_0_1_max > 0.4 then
+      p_1_0_1_th = (p_1_0_1_max + p_1_0_1_min)/2
+      p_1_0_1_cnt = countRising(vp_1_0_1 p_1_0_1_th dt 1n 120n)
+      p_1_0_1_t = firstCross(vp_1_0_1 p_1_0_1_th dt 1n 120n)
+    else
+      p_1_0_1_cnt = 0
+      p_1_0_1_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_1_0_1_cnt
+    if(p_1_0_1_t then
+      if(latest_active_t then
+        if(p_1_0_1_t > latest_active_t then latest_active_t = p_1_0_1_t)
+      else
+        latest_active_t = p_1_0_1_t
+      )
+    )
+
+    p_1_0_2_min = ymin(vp_1_0_2)
+    p_1_0_2_max = ymax(vp_1_0_2)
+    if(p_1_0_2_max > 0.4 then
+      p_1_0_2_th = (p_1_0_2_max + p_1_0_2_min)/2
+      p_1_0_2_cnt = countRising(vp_1_0_2 p_1_0_2_th dt 1n 120n)
+      p_1_0_2_t = firstCross(vp_1_0_2 p_1_0_2_th dt 1n 120n)
+    else
+      p_1_0_2_cnt = 0
+      p_1_0_2_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_1_0_2_cnt
+    if(p_1_0_2_t then
+      if(latest_active_t then
+        if(p_1_0_2_t > latest_active_t then latest_active_t = p_1_0_2_t)
+      else
+        latest_active_t = p_1_0_2_t
+      )
+    )
+
+    p_1_0_3_min = ymin(vp_1_0_3)
+    p_1_0_3_max = ymax(vp_1_0_3)
+    if(p_1_0_3_max > 0.4 then
+      p_1_0_3_th = (p_1_0_3_max + p_1_0_3_min)/2
+      p_1_0_3_cnt = countRising(vp_1_0_3 p_1_0_3_th dt 1n 120n)
+      p_1_0_3_t = firstCross(vp_1_0_3 p_1_0_3_th dt 1n 120n)
+    else
+      p_1_0_3_cnt = 0
+      p_1_0_3_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_1_0_3_cnt
+    if(p_1_0_3_t then
+      if(latest_active_t then
+        if(p_1_0_3_t > latest_active_t then latest_active_t = p_1_0_3_t)
+      else
+        latest_active_t = p_1_0_3_t
+      )
+    )
+
+    p_1_1_0_min = ymin(vp_1_1_0)
+    p_1_1_0_max = ymax(vp_1_1_0)
+    if(p_1_1_0_max > 0.4 then
+      p_1_1_0_th = (p_1_1_0_max + p_1_1_0_min)/2
+      p_1_1_0_cnt = countRising(vp_1_1_0 p_1_1_0_th dt 1n 120n)
+      p_1_1_0_t = firstCross(vp_1_1_0 p_1_1_0_th dt 1n 120n)
+    else
+      p_1_1_0_cnt = 0
+      p_1_1_0_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_1_1_0_cnt
+    if(p_1_1_0_t then
+      if(latest_active_t then
+        if(p_1_1_0_t > latest_active_t then latest_active_t = p_1_1_0_t)
+      else
+        latest_active_t = p_1_1_0_t
+      )
+    )
+
+    p_1_1_1_min = ymin(vp_1_1_1)
+    p_1_1_1_max = ymax(vp_1_1_1)
+    if(p_1_1_1_max > 0.4 then
+      p_1_1_1_th = (p_1_1_1_max + p_1_1_1_min)/2
+      p_1_1_1_cnt = countRising(vp_1_1_1 p_1_1_1_th dt 1n 120n)
+      p_1_1_1_t = firstCross(vp_1_1_1 p_1_1_1_th dt 1n 120n)
+    else
+      p_1_1_1_cnt = 0
+      p_1_1_1_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_1_1_1_cnt
+    if(p_1_1_1_t then
+      if(latest_active_t then
+        if(p_1_1_1_t > latest_active_t then latest_active_t = p_1_1_1_t)
+      else
+        latest_active_t = p_1_1_1_t
+      )
+    )
+
+    p_1_1_2_min = ymin(vp_1_1_2)
+    p_1_1_2_max = ymax(vp_1_1_2)
+    if(p_1_1_2_max > 0.4 then
+      p_1_1_2_th = (p_1_1_2_max + p_1_1_2_min)/2
+      p_1_1_2_cnt = countRising(vp_1_1_2 p_1_1_2_th dt 1n 120n)
+      p_1_1_2_t = firstCross(vp_1_1_2 p_1_1_2_th dt 1n 120n)
+    else
+      p_1_1_2_cnt = 0
+      p_1_1_2_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_1_1_2_cnt
+    if(p_1_1_2_t then
+      if(latest_active_t then
+        if(p_1_1_2_t > latest_active_t then latest_active_t = p_1_1_2_t)
+      else
+        latest_active_t = p_1_1_2_t
+      )
+    )
+
+    p_1_1_3_min = ymin(vp_1_1_3)
+    p_1_1_3_max = ymax(vp_1_1_3)
+    if(p_1_1_3_max > 0.4 then
+      p_1_1_3_th = (p_1_1_3_max + p_1_1_3_min)/2
+      p_1_1_3_cnt = countRising(vp_1_1_3 p_1_1_3_th dt 1n 120n)
+      p_1_1_3_t = firstCross(vp_1_1_3 p_1_1_3_th dt 1n 120n)
+    else
+      p_1_1_3_cnt = 0
+      p_1_1_3_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_1_1_3_cnt
+    if(p_1_1_3_t then
+      if(latest_active_t then
+        if(p_1_1_3_t > latest_active_t then latest_active_t = p_1_1_3_t)
+      else
+        latest_active_t = p_1_1_3_t
+      )
+    )
+
+    p_1_2_0_min = ymin(vp_1_2_0)
+    p_1_2_0_max = ymax(vp_1_2_0)
+    if(p_1_2_0_max > 0.4 then
+      p_1_2_0_th = (p_1_2_0_max + p_1_2_0_min)/2
+      p_1_2_0_cnt = countRising(vp_1_2_0 p_1_2_0_th dt 1n 120n)
+      p_1_2_0_t = firstCross(vp_1_2_0 p_1_2_0_th dt 1n 120n)
+    else
+      p_1_2_0_cnt = 0
+      p_1_2_0_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_1_2_0_cnt
+    if(p_1_2_0_t then
+      if(latest_active_t then
+        if(p_1_2_0_t > latest_active_t then latest_active_t = p_1_2_0_t)
+      else
+        latest_active_t = p_1_2_0_t
+      )
+    )
+
+    p_1_2_1_min = ymin(vp_1_2_1)
+    p_1_2_1_max = ymax(vp_1_2_1)
+    if(p_1_2_1_max > 0.4 then
+      p_1_2_1_th = (p_1_2_1_max + p_1_2_1_min)/2
+      p_1_2_1_cnt = countRising(vp_1_2_1 p_1_2_1_th dt 1n 120n)
+      p_1_2_1_t = firstCross(vp_1_2_1 p_1_2_1_th dt 1n 120n)
+    else
+      p_1_2_1_cnt = 0
+      p_1_2_1_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_1_2_1_cnt
+    if(p_1_2_1_t then
+      if(latest_active_t then
+        if(p_1_2_1_t > latest_active_t then latest_active_t = p_1_2_1_t)
+      else
+        latest_active_t = p_1_2_1_t
+      )
+    )
+
+    p_1_2_2_min = ymin(vp_1_2_2)
+    p_1_2_2_max = ymax(vp_1_2_2)
+    if(p_1_2_2_max > 0.4 then
+      p_1_2_2_th = (p_1_2_2_max + p_1_2_2_min)/2
+      p_1_2_2_cnt = countRising(vp_1_2_2 p_1_2_2_th dt 1n 120n)
+      p_1_2_2_t = firstCross(vp_1_2_2 p_1_2_2_th dt 1n 120n)
+    else
+      p_1_2_2_cnt = 0
+      p_1_2_2_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_1_2_2_cnt
+    if(p_1_2_2_t then
+      if(latest_active_t then
+        if(p_1_2_2_t > latest_active_t then latest_active_t = p_1_2_2_t)
+      else
+        latest_active_t = p_1_2_2_t
+      )
+    )
+
+    p_1_2_3_min = ymin(vp_1_2_3)
+    p_1_2_3_max = ymax(vp_1_2_3)
+    if(p_1_2_3_max > 0.4 then
+      p_1_2_3_th = (p_1_2_3_max + p_1_2_3_min)/2
+      p_1_2_3_cnt = countRising(vp_1_2_3 p_1_2_3_th dt 1n 120n)
+      p_1_2_3_t = firstCross(vp_1_2_3 p_1_2_3_th dt 1n 120n)
+    else
+      p_1_2_3_cnt = 0
+      p_1_2_3_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_1_2_3_cnt
+    if(p_1_2_3_t then
+      if(latest_active_t then
+        if(p_1_2_3_t > latest_active_t then latest_active_t = p_1_2_3_t)
+      else
+        latest_active_t = p_1_2_3_t
+      )
+    )
+
+    p_1_3_0_min = ymin(vp_1_3_0)
+    p_1_3_0_max = ymax(vp_1_3_0)
+    if(p_1_3_0_max > 0.4 then
+      p_1_3_0_th = (p_1_3_0_max + p_1_3_0_min)/2
+      p_1_3_0_cnt = countRising(vp_1_3_0 p_1_3_0_th dt 1n 120n)
+      p_1_3_0_t = firstCross(vp_1_3_0 p_1_3_0_th dt 1n 120n)
+    else
+      p_1_3_0_cnt = 0
+      p_1_3_0_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_1_3_0_cnt
+    if(p_1_3_0_t then
+      if(latest_active_t then
+        if(p_1_3_0_t > latest_active_t then latest_active_t = p_1_3_0_t)
+      else
+        latest_active_t = p_1_3_0_t
+      )
+    )
+
+    p_1_3_1_min = ymin(vp_1_3_1)
+    p_1_3_1_max = ymax(vp_1_3_1)
+    if(p_1_3_1_max > 0.4 then
+      p_1_3_1_th = (p_1_3_1_max + p_1_3_1_min)/2
+      p_1_3_1_cnt = countRising(vp_1_3_1 p_1_3_1_th dt 1n 120n)
+      p_1_3_1_t = firstCross(vp_1_3_1 p_1_3_1_th dt 1n 120n)
+    else
+      p_1_3_1_cnt = 0
+      p_1_3_1_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_1_3_1_cnt
+    if(p_1_3_1_t then
+      if(latest_active_t then
+        if(p_1_3_1_t > latest_active_t then latest_active_t = p_1_3_1_t)
+      else
+        latest_active_t = p_1_3_1_t
+      )
+    )
+
+    p_1_3_2_min = ymin(vp_1_3_2)
+    p_1_3_2_max = ymax(vp_1_3_2)
+    if(p_1_3_2_max > 0.4 then
+      p_1_3_2_th = (p_1_3_2_max + p_1_3_2_min)/2
+      p_1_3_2_cnt = countRising(vp_1_3_2 p_1_3_2_th dt 1n 120n)
+      p_1_3_2_t = firstCross(vp_1_3_2 p_1_3_2_th dt 1n 120n)
+    else
+      p_1_3_2_cnt = 0
+      p_1_3_2_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_1_3_2_cnt
+    if(p_1_3_2_t then
+      if(latest_active_t then
+        if(p_1_3_2_t > latest_active_t then latest_active_t = p_1_3_2_t)
+      else
+        latest_active_t = p_1_3_2_t
+      )
+    )
+
+    p_1_3_3_min = ymin(vp_1_3_3)
+    p_1_3_3_max = ymax(vp_1_3_3)
+    if(p_1_3_3_max > 0.4 then
+      p_1_3_3_th = (p_1_3_3_max + p_1_3_3_min)/2
+      p_1_3_3_cnt = countRising(vp_1_3_3 p_1_3_3_th dt 1n 120n)
+      p_1_3_3_t = firstCross(vp_1_3_3 p_1_3_3_th dt 1n 120n)
+    else
+      p_1_3_3_cnt = 0
+      p_1_3_3_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_1_3_3_cnt
+    if(p_1_3_3_t then
+      if(latest_active_t then
+        if(p_1_3_3_t > latest_active_t then latest_active_t = p_1_3_3_t)
+      else
+        latest_active_t = p_1_3_3_t
+      )
+    )
+
+    p_2_0_0_min = ymin(vp_2_0_0)
+    p_2_0_0_max = ymax(vp_2_0_0)
+    if(p_2_0_0_max > 0.4 then
+      p_2_0_0_th = (p_2_0_0_max + p_2_0_0_min)/2
+      p_2_0_0_cnt = countRising(vp_2_0_0 p_2_0_0_th dt 1n 120n)
+      p_2_0_0_t = firstCross(vp_2_0_0 p_2_0_0_th dt 1n 120n)
+    else
+      p_2_0_0_cnt = 0
+      p_2_0_0_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_2_0_0_cnt
+    if(p_2_0_0_t then
+      if(latest_active_t then
+        if(p_2_0_0_t > latest_active_t then latest_active_t = p_2_0_0_t)
+      else
+        latest_active_t = p_2_0_0_t
+      )
+    )
+
+    p_2_0_1_min = ymin(vp_2_0_1)
+    p_2_0_1_max = ymax(vp_2_0_1)
+    if(p_2_0_1_max > 0.4 then
+      p_2_0_1_th = (p_2_0_1_max + p_2_0_1_min)/2
+      p_2_0_1_cnt = countRising(vp_2_0_1 p_2_0_1_th dt 1n 120n)
+      p_2_0_1_t = firstCross(vp_2_0_1 p_2_0_1_th dt 1n 120n)
+    else
+      p_2_0_1_cnt = 0
+      p_2_0_1_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_2_0_1_cnt
+    if(p_2_0_1_t then
+      if(latest_active_t then
+        if(p_2_0_1_t > latest_active_t then latest_active_t = p_2_0_1_t)
+      else
+        latest_active_t = p_2_0_1_t
+      )
+    )
+
+    p_2_0_2_min = ymin(vp_2_0_2)
+    p_2_0_2_max = ymax(vp_2_0_2)
+    if(p_2_0_2_max > 0.4 then
+      p_2_0_2_th = (p_2_0_2_max + p_2_0_2_min)/2
+      p_2_0_2_cnt = countRising(vp_2_0_2 p_2_0_2_th dt 1n 120n)
+      p_2_0_2_t = firstCross(vp_2_0_2 p_2_0_2_th dt 1n 120n)
+    else
+      p_2_0_2_cnt = 0
+      p_2_0_2_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_2_0_2_cnt
+    if(p_2_0_2_t then
+      if(latest_active_t then
+        if(p_2_0_2_t > latest_active_t then latest_active_t = p_2_0_2_t)
+      else
+        latest_active_t = p_2_0_2_t
+      )
+    )
+
+    p_2_0_3_min = ymin(vp_2_0_3)
+    p_2_0_3_max = ymax(vp_2_0_3)
+    if(p_2_0_3_max > 0.4 then
+      p_2_0_3_th = (p_2_0_3_max + p_2_0_3_min)/2
+      p_2_0_3_cnt = countRising(vp_2_0_3 p_2_0_3_th dt 1n 120n)
+      p_2_0_3_t = firstCross(vp_2_0_3 p_2_0_3_th dt 1n 120n)
+    else
+      p_2_0_3_cnt = 0
+      p_2_0_3_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_2_0_3_cnt
+    if(p_2_0_3_t then
+      if(latest_active_t then
+        if(p_2_0_3_t > latest_active_t then latest_active_t = p_2_0_3_t)
+      else
+        latest_active_t = p_2_0_3_t
+      )
+    )
+
+    p_2_1_0_min = ymin(vp_2_1_0)
+    p_2_1_0_max = ymax(vp_2_1_0)
+    if(p_2_1_0_max > 0.4 then
+      p_2_1_0_th = (p_2_1_0_max + p_2_1_0_min)/2
+      p_2_1_0_cnt = countRising(vp_2_1_0 p_2_1_0_th dt 1n 120n)
+      p_2_1_0_t = firstCross(vp_2_1_0 p_2_1_0_th dt 1n 120n)
+    else
+      p_2_1_0_cnt = 0
+      p_2_1_0_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_2_1_0_cnt
+    if(p_2_1_0_t then
+      if(latest_active_t then
+        if(p_2_1_0_t > latest_active_t then latest_active_t = p_2_1_0_t)
+      else
+        latest_active_t = p_2_1_0_t
+      )
+    )
+
+    p_2_1_1_min = ymin(vp_2_1_1)
+    p_2_1_1_max = ymax(vp_2_1_1)
+    if(p_2_1_1_max > 0.4 then
+      p_2_1_1_th = (p_2_1_1_max + p_2_1_1_min)/2
+      p_2_1_1_cnt = countRising(vp_2_1_1 p_2_1_1_th dt 1n 120n)
+      p_2_1_1_t = firstCross(vp_2_1_1 p_2_1_1_th dt 1n 120n)
+    else
+      p_2_1_1_cnt = 0
+      p_2_1_1_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_2_1_1_cnt
+    if(p_2_1_1_t then
+      if(latest_active_t then
+        if(p_2_1_1_t > latest_active_t then latest_active_t = p_2_1_1_t)
+      else
+        latest_active_t = p_2_1_1_t
+      )
+    )
+
+    p_2_1_2_min = ymin(vp_2_1_2)
+    p_2_1_2_max = ymax(vp_2_1_2)
+    if(p_2_1_2_max > 0.4 then
+      p_2_1_2_th = (p_2_1_2_max + p_2_1_2_min)/2
+      p_2_1_2_cnt = countRising(vp_2_1_2 p_2_1_2_th dt 1n 120n)
+      p_2_1_2_t = firstCross(vp_2_1_2 p_2_1_2_th dt 1n 120n)
+    else
+      p_2_1_2_cnt = 0
+      p_2_1_2_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_2_1_2_cnt
+    if(p_2_1_2_t then
+      if(latest_active_t then
+        if(p_2_1_2_t > latest_active_t then latest_active_t = p_2_1_2_t)
+      else
+        latest_active_t = p_2_1_2_t
+      )
+    )
+
+    p_2_1_3_min = ymin(vp_2_1_3)
+    p_2_1_3_max = ymax(vp_2_1_3)
+    if(p_2_1_3_max > 0.4 then
+      p_2_1_3_th = (p_2_1_3_max + p_2_1_3_min)/2
+      p_2_1_3_cnt = countRising(vp_2_1_3 p_2_1_3_th dt 1n 120n)
+      p_2_1_3_t = firstCross(vp_2_1_3 p_2_1_3_th dt 1n 120n)
+    else
+      p_2_1_3_cnt = 0
+      p_2_1_3_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_2_1_3_cnt
+    if(p_2_1_3_t then
+      if(latest_active_t then
+        if(p_2_1_3_t > latest_active_t then latest_active_t = p_2_1_3_t)
+      else
+        latest_active_t = p_2_1_3_t
+      )
+    )
+
+    p_2_2_0_min = ymin(vp_2_2_0)
+    p_2_2_0_max = ymax(vp_2_2_0)
+    if(p_2_2_0_max > 0.4 then
+      p_2_2_0_th = (p_2_2_0_max + p_2_2_0_min)/2
+      p_2_2_0_cnt = countRising(vp_2_2_0 p_2_2_0_th dt 1n 120n)
+      p_2_2_0_t = firstCross(vp_2_2_0 p_2_2_0_th dt 1n 120n)
+    else
+      p_2_2_0_cnt = 0
+      p_2_2_0_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_2_2_0_cnt
+    if(p_2_2_0_t then
+      if(latest_active_t then
+        if(p_2_2_0_t > latest_active_t then latest_active_t = p_2_2_0_t)
+      else
+        latest_active_t = p_2_2_0_t
+      )
+    )
+
+    p_2_2_1_min = ymin(vp_2_2_1)
+    p_2_2_1_max = ymax(vp_2_2_1)
+    if(p_2_2_1_max > 0.4 then
+      p_2_2_1_th = (p_2_2_1_max + p_2_2_1_min)/2
+      p_2_2_1_cnt = countRising(vp_2_2_1 p_2_2_1_th dt 1n 120n)
+      p_2_2_1_t = firstCross(vp_2_2_1 p_2_2_1_th dt 1n 120n)
+    else
+      p_2_2_1_cnt = 0
+      p_2_2_1_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_2_2_1_cnt
+    if(p_2_2_1_t then
+      if(latest_active_t then
+        if(p_2_2_1_t > latest_active_t then latest_active_t = p_2_2_1_t)
+      else
+        latest_active_t = p_2_2_1_t
+      )
+    )
+
+    p_2_2_2_min = ymin(vp_2_2_2)
+    p_2_2_2_max = ymax(vp_2_2_2)
+    if(p_2_2_2_max > 0.4 then
+      p_2_2_2_th = (p_2_2_2_max + p_2_2_2_min)/2
+      p_2_2_2_cnt = countRising(vp_2_2_2 p_2_2_2_th dt 1n 120n)
+      p_2_2_2_t = firstCross(vp_2_2_2 p_2_2_2_th dt 1n 120n)
+    else
+      p_2_2_2_cnt = 0
+      p_2_2_2_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_2_2_2_cnt
+    if(p_2_2_2_t then
+      if(latest_active_t then
+        if(p_2_2_2_t > latest_active_t then latest_active_t = p_2_2_2_t)
+      else
+        latest_active_t = p_2_2_2_t
+      )
+    )
+
+    p_2_2_3_min = ymin(vp_2_2_3)
+    p_2_2_3_max = ymax(vp_2_2_3)
+    if(p_2_2_3_max > 0.4 then
+      p_2_2_3_th = (p_2_2_3_max + p_2_2_3_min)/2
+      p_2_2_3_cnt = countRising(vp_2_2_3 p_2_2_3_th dt 1n 120n)
+      p_2_2_3_t = firstCross(vp_2_2_3 p_2_2_3_th dt 1n 120n)
+    else
+      p_2_2_3_cnt = 0
+      p_2_2_3_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_2_2_3_cnt
+    if(p_2_2_3_t then
+      if(latest_active_t then
+        if(p_2_2_3_t > latest_active_t then latest_active_t = p_2_2_3_t)
+      else
+        latest_active_t = p_2_2_3_t
+      )
+    )
+
+    p_2_3_0_min = ymin(vp_2_3_0)
+    p_2_3_0_max = ymax(vp_2_3_0)
+    if(p_2_3_0_max > 0.4 then
+      p_2_3_0_th = (p_2_3_0_max + p_2_3_0_min)/2
+      p_2_3_0_cnt = countRising(vp_2_3_0 p_2_3_0_th dt 1n 120n)
+      p_2_3_0_t = firstCross(vp_2_3_0 p_2_3_0_th dt 1n 120n)
+    else
+      p_2_3_0_cnt = 0
+      p_2_3_0_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_2_3_0_cnt
+    if(p_2_3_0_t then
+      if(latest_active_t then
+        if(p_2_3_0_t > latest_active_t then latest_active_t = p_2_3_0_t)
+      else
+        latest_active_t = p_2_3_0_t
+      )
+    )
+
+    p_2_3_1_min = ymin(vp_2_3_1)
+    p_2_3_1_max = ymax(vp_2_3_1)
+    if(p_2_3_1_max > 0.4 then
+      p_2_3_1_th = (p_2_3_1_max + p_2_3_1_min)/2
+      p_2_3_1_cnt = countRising(vp_2_3_1 p_2_3_1_th dt 1n 120n)
+      p_2_3_1_t = firstCross(vp_2_3_1 p_2_3_1_th dt 1n 120n)
+    else
+      p_2_3_1_cnt = 0
+      p_2_3_1_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_2_3_1_cnt
+    if(p_2_3_1_t then
+      if(latest_active_t then
+        if(p_2_3_1_t > latest_active_t then latest_active_t = p_2_3_1_t)
+      else
+        latest_active_t = p_2_3_1_t
+      )
+    )
+
+    p_2_3_2_min = ymin(vp_2_3_2)
+    p_2_3_2_max = ymax(vp_2_3_2)
+    if(p_2_3_2_max > 0.4 then
+      p_2_3_2_th = (p_2_3_2_max + p_2_3_2_min)/2
+      p_2_3_2_cnt = countRising(vp_2_3_2 p_2_3_2_th dt 1n 120n)
+      p_2_3_2_t = firstCross(vp_2_3_2 p_2_3_2_th dt 1n 120n)
+    else
+      p_2_3_2_cnt = 0
+      p_2_3_2_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_2_3_2_cnt
+    if(p_2_3_2_t then
+      if(latest_active_t then
+        if(p_2_3_2_t > latest_active_t then latest_active_t = p_2_3_2_t)
+      else
+        latest_active_t = p_2_3_2_t
+      )
+    )
+
+    p_2_3_3_min = ymin(vp_2_3_3)
+    p_2_3_3_max = ymax(vp_2_3_3)
+    if(p_2_3_3_max > 0.4 then
+      p_2_3_3_th = (p_2_3_3_max + p_2_3_3_min)/2
+      p_2_3_3_cnt = countRising(vp_2_3_3 p_2_3_3_th dt 1n 120n)
+      p_2_3_3_t = firstCross(vp_2_3_3 p_2_3_3_th dt 1n 120n)
+    else
+      p_2_3_3_cnt = 0
+      p_2_3_3_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_2_3_3_cnt
+    if(p_2_3_3_t then
+      if(latest_active_t then
+        if(p_2_3_3_t > latest_active_t then latest_active_t = p_2_3_3_t)
+      else
+        latest_active_t = p_2_3_3_t
+      )
+    )
+
+    p_3_0_0_min = ymin(vp_3_0_0)
+    p_3_0_0_max = ymax(vp_3_0_0)
+    if(p_3_0_0_max > 0.4 then
+      p_3_0_0_th = (p_3_0_0_max + p_3_0_0_min)/2
+      p_3_0_0_cnt = countRising(vp_3_0_0 p_3_0_0_th dt 1n 120n)
+      p_3_0_0_t = firstCross(vp_3_0_0 p_3_0_0_th dt 1n 120n)
+    else
+      p_3_0_0_cnt = 0
+      p_3_0_0_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_3_0_0_cnt
+    if(p_3_0_0_t then
+      if(latest_active_t then
+        if(p_3_0_0_t > latest_active_t then latest_active_t = p_3_0_0_t)
+      else
+        latest_active_t = p_3_0_0_t
+      )
+    )
+
+    p_3_0_1_min = ymin(vp_3_0_1)
+    p_3_0_1_max = ymax(vp_3_0_1)
+    if(p_3_0_1_max > 0.4 then
+      p_3_0_1_th = (p_3_0_1_max + p_3_0_1_min)/2
+      p_3_0_1_cnt = countRising(vp_3_0_1 p_3_0_1_th dt 1n 120n)
+      p_3_0_1_t = firstCross(vp_3_0_1 p_3_0_1_th dt 1n 120n)
+    else
+      p_3_0_1_cnt = 0
+      p_3_0_1_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_3_0_1_cnt
+    if(p_3_0_1_t then
+      if(latest_active_t then
+        if(p_3_0_1_t > latest_active_t then latest_active_t = p_3_0_1_t)
+      else
+        latest_active_t = p_3_0_1_t
+      )
+    )
+
+    p_3_0_2_min = ymin(vp_3_0_2)
+    p_3_0_2_max = ymax(vp_3_0_2)
+    if(p_3_0_2_max > 0.4 then
+      p_3_0_2_th = (p_3_0_2_max + p_3_0_2_min)/2
+      p_3_0_2_cnt = countRising(vp_3_0_2 p_3_0_2_th dt 1n 120n)
+      p_3_0_2_t = firstCross(vp_3_0_2 p_3_0_2_th dt 1n 120n)
+    else
+      p_3_0_2_cnt = 0
+      p_3_0_2_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_3_0_2_cnt
+    if(p_3_0_2_t then
+      if(latest_active_t then
+        if(p_3_0_2_t > latest_active_t then latest_active_t = p_3_0_2_t)
+      else
+        latest_active_t = p_3_0_2_t
+      )
+    )
+
+    p_3_0_3_min = ymin(vp_3_0_3)
+    p_3_0_3_max = ymax(vp_3_0_3)
+    if(p_3_0_3_max > 0.4 then
+      p_3_0_3_th = (p_3_0_3_max + p_3_0_3_min)/2
+      p_3_0_3_cnt = countRising(vp_3_0_3 p_3_0_3_th dt 1n 120n)
+      p_3_0_3_t = firstCross(vp_3_0_3 p_3_0_3_th dt 1n 120n)
+    else
+      p_3_0_3_cnt = 0
+      p_3_0_3_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_3_0_3_cnt
+    if(p_3_0_3_t then
+      if(latest_active_t then
+        if(p_3_0_3_t > latest_active_t then latest_active_t = p_3_0_3_t)
+      else
+        latest_active_t = p_3_0_3_t
+      )
+    )
+
+    p_3_1_0_min = ymin(vp_3_1_0)
+    p_3_1_0_max = ymax(vp_3_1_0)
+    if(p_3_1_0_max > 0.4 then
+      p_3_1_0_th = (p_3_1_0_max + p_3_1_0_min)/2
+      p_3_1_0_cnt = countRising(vp_3_1_0 p_3_1_0_th dt 1n 120n)
+      p_3_1_0_t = firstCross(vp_3_1_0 p_3_1_0_th dt 1n 120n)
+    else
+      p_3_1_0_cnt = 0
+      p_3_1_0_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_3_1_0_cnt
+    if(p_3_1_0_t then
+      if(latest_active_t then
+        if(p_3_1_0_t > latest_active_t then latest_active_t = p_3_1_0_t)
+      else
+        latest_active_t = p_3_1_0_t
+      )
+    )
+
+    p_3_1_1_min = ymin(vp_3_1_1)
+    p_3_1_1_max = ymax(vp_3_1_1)
+    if(p_3_1_1_max > 0.4 then
+      p_3_1_1_th = (p_3_1_1_max + p_3_1_1_min)/2
+      p_3_1_1_cnt = countRising(vp_3_1_1 p_3_1_1_th dt 1n 120n)
+      p_3_1_1_t = firstCross(vp_3_1_1 p_3_1_1_th dt 1n 120n)
+    else
+      p_3_1_1_cnt = 0
+      p_3_1_1_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_3_1_1_cnt
+    if(p_3_1_1_t then
+      if(latest_active_t then
+        if(p_3_1_1_t > latest_active_t then latest_active_t = p_3_1_1_t)
+      else
+        latest_active_t = p_3_1_1_t
+      )
+    )
+
+    p_3_1_2_min = ymin(vp_3_1_2)
+    p_3_1_2_max = ymax(vp_3_1_2)
+    if(p_3_1_2_max > 0.4 then
+      p_3_1_2_th = (p_3_1_2_max + p_3_1_2_min)/2
+      p_3_1_2_cnt = countRising(vp_3_1_2 p_3_1_2_th dt 1n 120n)
+      p_3_1_2_t = firstCross(vp_3_1_2 p_3_1_2_th dt 1n 120n)
+    else
+      p_3_1_2_cnt = 0
+      p_3_1_2_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_3_1_2_cnt
+    if(p_3_1_2_t then
+      if(latest_active_t then
+        if(p_3_1_2_t > latest_active_t then latest_active_t = p_3_1_2_t)
+      else
+        latest_active_t = p_3_1_2_t
+      )
+    )
+
+    p_3_1_3_min = ymin(vp_3_1_3)
+    p_3_1_3_max = ymax(vp_3_1_3)
+    if(p_3_1_3_max > 0.4 then
+      p_3_1_3_th = (p_3_1_3_max + p_3_1_3_min)/2
+      p_3_1_3_cnt = countRising(vp_3_1_3 p_3_1_3_th dt 1n 120n)
+      p_3_1_3_t = firstCross(vp_3_1_3 p_3_1_3_th dt 1n 120n)
+    else
+      p_3_1_3_cnt = 0
+      p_3_1_3_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_3_1_3_cnt
+    if(p_3_1_3_t then
+      if(latest_active_t then
+        if(p_3_1_3_t > latest_active_t then latest_active_t = p_3_1_3_t)
+      else
+        latest_active_t = p_3_1_3_t
+      )
+    )
+
+    p_3_2_0_min = ymin(vp_3_2_0)
+    p_3_2_0_max = ymax(vp_3_2_0)
+    if(p_3_2_0_max > 0.4 then
+      p_3_2_0_th = (p_3_2_0_max + p_3_2_0_min)/2
+      p_3_2_0_cnt = countRising(vp_3_2_0 p_3_2_0_th dt 1n 120n)
+      p_3_2_0_t = firstCross(vp_3_2_0 p_3_2_0_th dt 1n 120n)
+    else
+      p_3_2_0_cnt = 0
+      p_3_2_0_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_3_2_0_cnt
+    if(p_3_2_0_t then
+      if(latest_active_t then
+        if(p_3_2_0_t > latest_active_t then latest_active_t = p_3_2_0_t)
+      else
+        latest_active_t = p_3_2_0_t
+      )
+    )
+
+    p_3_2_1_min = ymin(vp_3_2_1)
+    p_3_2_1_max = ymax(vp_3_2_1)
+    if(p_3_2_1_max > 0.4 then
+      p_3_2_1_th = (p_3_2_1_max + p_3_2_1_min)/2
+      p_3_2_1_cnt = countRising(vp_3_2_1 p_3_2_1_th dt 1n 120n)
+      p_3_2_1_t = firstCross(vp_3_2_1 p_3_2_1_th dt 1n 120n)
+    else
+      p_3_2_1_cnt = 0
+      p_3_2_1_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_3_2_1_cnt
+    if(p_3_2_1_t then
+      if(latest_active_t then
+        if(p_3_2_1_t > latest_active_t then latest_active_t = p_3_2_1_t)
+      else
+        latest_active_t = p_3_2_1_t
+      )
+    )
+
+    p_3_2_2_min = ymin(vp_3_2_2)
+    p_3_2_2_max = ymax(vp_3_2_2)
+    if(p_3_2_2_max > 0.4 then
+      p_3_2_2_th = (p_3_2_2_max + p_3_2_2_min)/2
+      p_3_2_2_cnt = countRising(vp_3_2_2 p_3_2_2_th dt 1n 120n)
+      p_3_2_2_t = firstCross(vp_3_2_2 p_3_2_2_th dt 1n 120n)
+    else
+      p_3_2_2_cnt = 0
+      p_3_2_2_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_3_2_2_cnt
+    if(p_3_2_2_t then
+      if(latest_active_t then
+        if(p_3_2_2_t > latest_active_t then latest_active_t = p_3_2_2_t)
+      else
+        latest_active_t = p_3_2_2_t
+      )
+    )
+
+    p_3_2_3_min = ymin(vp_3_2_3)
+    p_3_2_3_max = ymax(vp_3_2_3)
+    if(p_3_2_3_max > 0.4 then
+      p_3_2_3_th = (p_3_2_3_max + p_3_2_3_min)/2
+      p_3_2_3_cnt = countRising(vp_3_2_3 p_3_2_3_th dt 1n 120n)
+      p_3_2_3_t = firstCross(vp_3_2_3 p_3_2_3_th dt 1n 120n)
+    else
+      p_3_2_3_cnt = 0
+      p_3_2_3_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_3_2_3_cnt
+    if(p_3_2_3_t then
+      if(latest_active_t then
+        if(p_3_2_3_t > latest_active_t then latest_active_t = p_3_2_3_t)
+      else
+        latest_active_t = p_3_2_3_t
+      )
+    )
+
+    p_3_3_0_min = ymin(vp_3_3_0)
+    p_3_3_0_max = ymax(vp_3_3_0)
+    if(p_3_3_0_max > 0.4 then
+      p_3_3_0_th = (p_3_3_0_max + p_3_3_0_min)/2
+      p_3_3_0_cnt = countRising(vp_3_3_0 p_3_3_0_th dt 1n 120n)
+      p_3_3_0_t = firstCross(vp_3_3_0 p_3_3_0_th dt 1n 120n)
+    else
+      p_3_3_0_cnt = 0
+      p_3_3_0_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_3_3_0_cnt
+    if(p_3_3_0_t then
+      if(latest_active_t then
+        if(p_3_3_0_t > latest_active_t then latest_active_t = p_3_3_0_t)
+      else
+        latest_active_t = p_3_3_0_t
+      )
+    )
+
+    p_3_3_1_min = ymin(vp_3_3_1)
+    p_3_3_1_max = ymax(vp_3_3_1)
+    if(p_3_3_1_max > 0.4 then
+      p_3_3_1_th = (p_3_3_1_max + p_3_3_1_min)/2
+      p_3_3_1_cnt = countRising(vp_3_3_1 p_3_3_1_th dt 1n 120n)
+      p_3_3_1_t = firstCross(vp_3_3_1 p_3_3_1_th dt 1n 120n)
+    else
+      p_3_3_1_cnt = 0
+      p_3_3_1_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_3_3_1_cnt
+    if(p_3_3_1_t then
+      if(latest_active_t then
+        if(p_3_3_1_t > latest_active_t then latest_active_t = p_3_3_1_t)
+      else
+        latest_active_t = p_3_3_1_t
+      )
+    )
+
+    p_3_3_2_min = ymin(vp_3_3_2)
+    p_3_3_2_max = ymax(vp_3_3_2)
+    if(p_3_3_2_max > 0.4 then
+      p_3_3_2_th = (p_3_3_2_max + p_3_3_2_min)/2
+      p_3_3_2_cnt = countRising(vp_3_3_2 p_3_3_2_th dt 1n 120n)
+      p_3_3_2_t = firstCross(vp_3_3_2 p_3_3_2_th dt 1n 120n)
+    else
+      p_3_3_2_cnt = 0
+      p_3_3_2_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_3_3_2_cnt
+    if(p_3_3_2_t then
+      if(latest_active_t then
+        if(p_3_3_2_t > latest_active_t then latest_active_t = p_3_3_2_t)
+      else
+        latest_active_t = p_3_3_2_t
+      )
+    )
+
+    p_3_3_3_min = ymin(vp_3_3_3)
+    p_3_3_3_max = ymax(vp_3_3_3)
+    if(p_3_3_3_max > 0.4 then
+      p_3_3_3_th = (p_3_3_3_max + p_3_3_3_min)/2
+      p_3_3_3_cnt = countRising(vp_3_3_3 p_3_3_3_th dt 1n 120n)
+      p_3_3_3_t = firstCross(vp_3_3_3 p_3_3_3_th dt 1n 120n)
+    else
+      p_3_3_3_cnt = 0
+      p_3_3_3_t = nil
+    )
+    total_partial_spikes = total_partial_spikes + p_3_3_3_cnt
+    if(p_3_3_3_t then
+      if(latest_active_t then
+        if(p_3_3_3_t > latest_active_t then latest_active_t = p_3_3_3_t)
+      else
+        latest_active_t = p_3_3_3_t
+      )
+    )
+
+    y00_est = p_0_0_0_cnt + p_0_0_1_cnt + p_0_0_2_cnt + p_0_0_3_cnt
+    y00_max = ymax(vy00)
+    y01_est = p_0_1_0_cnt + p_0_1_1_cnt + p_0_1_2_cnt + p_0_1_3_cnt
+    y01_max = ymax(vy01)
+    y02_est = p_0_2_0_cnt + p_0_2_1_cnt + p_0_2_2_cnt + p_0_2_3_cnt
+    y02_max = ymax(vy02)
+    y03_est = p_0_3_0_cnt + p_0_3_1_cnt + p_0_3_2_cnt + p_0_3_3_cnt
+    y03_max = ymax(vy03)
+    y10_est = p_1_0_0_cnt + p_1_0_1_cnt + p_1_0_2_cnt + p_1_0_3_cnt
+    y10_max = ymax(vy10)
+    y11_est = p_1_1_0_cnt + p_1_1_1_cnt + p_1_1_2_cnt + p_1_1_3_cnt
+    y11_max = ymax(vy11)
+    y12_est = p_1_2_0_cnt + p_1_2_1_cnt + p_1_2_2_cnt + p_1_2_3_cnt
+    y12_max = ymax(vy12)
+    y13_est = p_1_3_0_cnt + p_1_3_1_cnt + p_1_3_2_cnt + p_1_3_3_cnt
+    y13_max = ymax(vy13)
+    y20_est = p_2_0_0_cnt + p_2_0_1_cnt + p_2_0_2_cnt + p_2_0_3_cnt
+    y20_max = ymax(vy20)
+    y21_est = p_2_1_0_cnt + p_2_1_1_cnt + p_2_1_2_cnt + p_2_1_3_cnt
+    y21_max = ymax(vy21)
+    y22_est = p_2_2_0_cnt + p_2_2_1_cnt + p_2_2_2_cnt + p_2_2_3_cnt
+    y22_max = ymax(vy22)
+    y23_est = p_2_3_0_cnt + p_2_3_1_cnt + p_2_3_2_cnt + p_2_3_3_cnt
+    y23_max = ymax(vy23)
+    y30_est = p_3_0_0_cnt + p_3_0_1_cnt + p_3_0_2_cnt + p_3_0_3_cnt
+    y30_max = ymax(vy30)
+    y31_est = p_3_1_0_cnt + p_3_1_1_cnt + p_3_1_2_cnt + p_3_1_3_cnt
+    y31_max = ymax(vy31)
+    y32_est = p_3_2_0_cnt + p_3_2_1_cnt + p_3_2_2_cnt + p_3_2_3_cnt
+    y32_max = ymax(vy32)
+    y33_est = p_3_3_0_cnt + p_3_3_1_cnt + p_3_3_2_cnt + p_3_3_3_cnt
+    y33_max = ymax(vy33)
+
+    if(latest_active_t then
+      latency_ns = (latest_active_t - t_in) * 1e9
+    else
+      latency_ns = -1
+      pass = nil
+      fprintf(out "FAIL: could not determine full-output latency\n")
+    )
+
+    t0 = 0n
+    t1 = 120n
+    energy = 0
+    ts = t0
+    prev_i = value(idd ts)
+    prev_t = ts
+    ts = ts + dt
+    while(ts <= t1
+      curr_i = value(idd ts)
+      p0 = -prev_i * 1.8
+      p1 = -curr_i * 1.8
+      energy = energy + 0.5 * (p0 + p1) * (ts - prev_t)
+      prev_i = curr_i
+      prev_t = ts
+      ts = ts + dt
+    )
+    energy_per_op = energy / 112
+    spike_energy_est = total_partial_spikes * 3.27e-12
+
+    fprintf(out "Stimulus matrices (fixed checkpoint point):\n")
+    fprintf(out "  A = [[1 0 1 1] [0 1 1 0] [1 1 0 1] [1 0 0 1]]\n")
+    fprintf(out "  B = [[1 1 0 1] [0 1 1 0] [1 0 1 1] [0 1 1 1]]\n\n")
+    fprintf(out "Expected output Y = [[2 2 2 3] [1 1 2 1] [1 3 2 2] [1 2 1 2]]\n\n")
+
+    fprintf(out "Decoded output from partial products:\n")
+    fprintf(out "  row0: %d %d %d %d\n" y00_est y01_est y02_est y03_est)
+    fprintf(out "  row1: %d %d %d %d\n" y10_est y11_est y12_est y13_est)
+    fprintf(out "  row2: %d %d %d %d\n" y20_est y21_est y22_est y23_est)
+    fprintf(out "  row3: %d %d %d %d\n" y30_est y31_est y32_est y33_est)
+    fprintf(out "\nDecoded output vector: %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n\n" y00_est y01_est y02_est y03_est y10_est y11_est y12_est y13_est y20_est y21_est y22_est y23_est y30_est y31_est y32_est y33_est)
+    fprintf(out "Total partial spikes: %d\n" total_partial_spikes)
+    fprintf(out "Latency to full output-valid: %.3f ns\n" latency_ns)
+    fprintf(out "Total energy (0-120ns): %.6e J\n" energy)
+    fprintf(out "Energy per operation (112 ops): %.6e J/op\n" energy_per_op)
+    fprintf(out "Spike-model energy estimate (3.27 pJ/spike): %.6e J\n\n" spike_energy_est)
+
+    if(y00_est == 2 && y01_est == 2 && y02_est == 2 && y03_est == 3 && y10_est == 1 && y11_est == 1 && y12_est == 2 && y13_est == 1 && y20_est == 1 && y21_est == 3 && y22_est == 2 && y23_est == 2 && y30_est == 1 && y31_est == 2 && y32_est == 1 && y33_est == 2 then
+      fprintf(out "OK: decoded outputs match expected 4x4 matrix\n")
+    else
+      fprintf(out "FAIL: decoded outputs do not match expected 4x4 matrix\n")
+      pass = nil
+    )
+
+    fprintf(out "\n")
+    if(pass then
+      fprintf(out "=== PASS: Binary 4x4 neuro matmul checkpoint verified ===\n")
+    else
+      fprintf(out "=== FAIL: Binary 4x4 neuro matmul checkpoint failed ===\n")
+    )
+else
+    fprintf(out "ERROR: Could not read waveform data\n")
+)
+
+close(out)
+printf("Done. Results in: ~/analog-gradients/results/matmul4x4_binary_neuro_test.txt\n")
+exit()

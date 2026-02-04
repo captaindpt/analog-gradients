@@ -43,6 +43,8 @@ Build path from verified digital GPU stack to a neuromorphic analog core:
     `competition/analysis/matmul2x2_binary_comparison.md`
   - Matrix-size scaling sweep added (model-based):
     `competition/analysis/matmul_binary_scaling_summary.md`
+  - 4x4 transistor checkpoint run published:
+    `competition/analysis/matmul4x4_binary_comparison.md`
 
 ## Workspace Rendezvous (2026-02-03)
 
@@ -191,6 +193,8 @@ Full-flow smoke evidence:
 | XOR Spike2 | ✅ | ✅ | ✅ PASS | spike-domain XOR: output spikes for 10/01, suppressed for 00/11 |
 | Matmul2x2 Binary Neuro | ✅ | ✅ | ✅ PASS | binary 2x2 proof point decodes expected `[[1 1] [1 2]]` |
 | Matmul2x2 Binary Digital | ✅ | ✅ | ✅ PASS | binary 2x2 digital baseline decodes expected `[[1 1] [1 2]]` |
+| Matmul4x4 Binary Neuro | ✅ | ✅ | ✅ PASS | 4x4 checkpoint decodes expected `[[2 2 2 3] [1 1 2 1] [1 3 2 2] [1 2 1 2]]` |
+| Matmul4x4 Binary Digital | ✅ | ✅ | ✅ PASS | 4x4 digital checkpoint decodes expected `[[2 2 2 3] [1 1 2 1] [1 3 2 2] [1 2 1 2]]` |
 
 ## Competition Path: Robustness Snapshot
 
@@ -207,14 +211,20 @@ Full-flow smoke evidence:
 - Added scaling harness for binary matmul architecture discussion:
   - `scripts/run_matmul_binary_scaling_sweep.sh`
   - `scripts/analyze_matmul_binary_scaling.py`
+- Added transistor checkpoint harness for `N=4`:
+  - `scripts/generate_matmul4x4_checkpoint_assets.py`
+  - `scripts/run_matmul4x4_binary_comparison.sh`
 - Latest sweep artifacts:
   - `competition/sweeps/matmul_binary_scaling_sweep.csv`
   - `competition/analysis/matmul_binary_scaling_summary.md`
   - `competition/analysis/matmul_binary_scaling_energy.svg`
   - `competition/analysis/matmul_binary_scaling_pressure.svg`
+- Latest `N=4` measured comparison:
+  - `competition/analysis/matmul4x4_binary_comparison.md`
+  - `competition/analysis/matmul4x4_binary_comparison.csv`
 - Scope caveat:
-  - this sweep is calibrated from verified 2x2 transistor runs and extrapolated
-    algorithmically for larger `N`; it is not yet a transistor-run NxN netlist flow.
+  - sweep curves are still model-extrapolated for larger `N`; measured transistor
+    checkpoints currently cover `N=2` and `N=4`, with `N=8` pending.
 
 ## Level 5: CMOS Primitives ✅
 

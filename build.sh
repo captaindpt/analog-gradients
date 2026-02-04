@@ -396,7 +396,7 @@ echo "Run manifest: $RUN_MANIFEST"
 echo ""
 
 case "$COMPONENT" in
-  inverter|nand2|nor2|and2|or2|xor2|xnor2|mux2|half_adder|full_adder|alu1|alu4|pe1|pe4|gpu_core|synapse|lif_neuron|neuron_tile|neuro_tile4|neuro_tile4_coupled|neuro_tile4_mixed_signal|coincidence_detector|xor_spike2|matmul2x2_binary_neuro|matmul2x2_binary_digital)
+  inverter|nand2|nor2|and2|or2|xor2|xnor2|mux2|half_adder|full_adder|alu1|alu4|pe1|pe4|gpu_core|synapse|lif_neuron|neuron_tile|neuro_tile4|neuro_tile4_coupled|neuro_tile4_mixed_signal|coincidence_detector|xor_spike2|matmul2x2_binary_neuro|matmul2x2_binary_digital|matmul4x4_binary_neuro|matmul4x4_binary_digital)
     run_component "$COMPONENT"
     ;;
   all)
@@ -407,14 +407,14 @@ case "$COMPONENT" in
     run_sequence "Building Level 1: Functional Blocks" pe1 pe4
     run_sequence "Building Level 0: System" gpu_core
     run_sequence "Building Competition Analog Primitives" synapse lif_neuron
-    run_sequence "Building Competition Analog Compositions" neuron_tile neuro_tile4 neuro_tile4_coupled neuro_tile4_mixed_signal coincidence_detector xor_spike2 matmul2x2_binary_neuro
-    run_sequence "Building Binary Matmul Comparison Baselines" matmul2x2_binary_digital
+    run_sequence "Building Competition Analog Compositions" neuron_tile neuro_tile4 neuro_tile4_coupled neuro_tile4_mixed_signal coincidence_detector xor_spike2 matmul2x2_binary_neuro matmul4x4_binary_neuro
+    run_sequence "Building Binary Matmul Comparison Baselines" matmul2x2_binary_digital matmul4x4_binary_digital
     echo "=================================="
     echo -e "${GREEN}All Level 0-5 components + analog competition path verified!${NC}"
     ;;
   *)
     echo "Unknown component: $COMPONENT"
-    echo "Available: inverter, nand2, nor2, and2, or2, xor2, xnor2, mux2, half_adder, full_adder, alu1, alu4, pe1, pe4, gpu_core, synapse, lif_neuron, neuron_tile, neuro_tile4, neuro_tile4_coupled, neuro_tile4_mixed_signal, coincidence_detector, xor_spike2, matmul2x2_binary_neuro, matmul2x2_binary_digital, all"
+    echo "Available: inverter, nand2, nor2, and2, or2, xor2, xnor2, mux2, half_adder, full_adder, alu1, alu4, pe1, pe4, gpu_core, synapse, lif_neuron, neuron_tile, neuro_tile4, neuro_tile4_coupled, neuro_tile4_mixed_signal, coincidence_detector, xor_spike2, matmul2x2_binary_neuro, matmul2x2_binary_digital, matmul4x4_binary_neuro, matmul4x4_binary_digital, all"
     exit 1
     ;;
 esac
