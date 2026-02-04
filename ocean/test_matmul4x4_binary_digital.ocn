@@ -1,0 +1,269 @@
+; test_matmul4x4_binary_digital.ocn
+; Verify 4x4 binary matmul digital transistor checkpoint.
+
+out = outfile("results/matmul4x4_binary_digital_test.txt" "w")
+fprintf(out "=== Binary 4x4 Matmul (Digital Baseline) Verification ===\n")
+fprintf(out "Transistor checkpoint: AND partial products + popcount adders\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("results/matmul4x4_binary_digital/matmul4x4_binary_digital.raw")
+selectResult("tran_test-tran")
+
+procedure(firstCross(sig th dt tstart tstop)
+  let((ts prev curr frac tcross found)
+    tcross = nil
+    found = nil
+    ts = tstart
+    prev = value(sig ts)
+    ts = ts + dt
+    while(ts < tstop && !found
+      curr = value(sig ts)
+      if(prev < th && curr > th then
+        frac = (th - prev) / (curr - prev)
+        if(frac < 0 then frac = 0)
+        if(frac > 1 then frac = 1)
+        tcross = (ts - dt) + frac * dt
+        found = t
+      )
+      prev = curr
+      ts = ts + dt
+    )
+    tcross
+  )
+)
+
+procedure(bitAt(sig tsample vth_low vth_high)
+  let((vv)
+    vv = value(sig tsample)
+    if(vv < vth_low then
+      0
+    else
+      if(vv > vth_high then 1 else -1)
+    )
+  )
+)
+
+vy00_b0 = v("y00_b0")
+vy00_b1 = v("y00_b1")
+vy00_b2 = v("y00_b2")
+vy01_b0 = v("y01_b0")
+vy01_b1 = v("y01_b1")
+vy01_b2 = v("y01_b2")
+vy02_b0 = v("y02_b0")
+vy02_b1 = v("y02_b1")
+vy02_b2 = v("y02_b2")
+vy03_b0 = v("y03_b0")
+vy03_b1 = v("y03_b1")
+vy03_b2 = v("y03_b2")
+vy10_b0 = v("y10_b0")
+vy10_b1 = v("y10_b1")
+vy10_b2 = v("y10_b2")
+vy11_b0 = v("y11_b0")
+vy11_b1 = v("y11_b1")
+vy11_b2 = v("y11_b2")
+vy12_b0 = v("y12_b0")
+vy12_b1 = v("y12_b1")
+vy12_b2 = v("y12_b2")
+vy13_b0 = v("y13_b0")
+vy13_b1 = v("y13_b1")
+vy13_b2 = v("y13_b2")
+vy20_b0 = v("y20_b0")
+vy20_b1 = v("y20_b1")
+vy20_b2 = v("y20_b2")
+vy21_b0 = v("y21_b0")
+vy21_b1 = v("y21_b1")
+vy21_b2 = v("y21_b2")
+vy22_b0 = v("y22_b0")
+vy22_b1 = v("y22_b1")
+vy22_b2 = v("y22_b2")
+vy23_b0 = v("y23_b0")
+vy23_b1 = v("y23_b1")
+vy23_b2 = v("y23_b2")
+vy30_b0 = v("y30_b0")
+vy30_b1 = v("y30_b1")
+vy30_b2 = v("y30_b2")
+vy31_b0 = v("y31_b0")
+vy31_b1 = v("y31_b1")
+vy31_b2 = v("y31_b2")
+vy32_b0 = v("y32_b0")
+vy32_b1 = v("y32_b1")
+vy32_b2 = v("y32_b2")
+vy33_b0 = v("y33_b0")
+vy33_b1 = v("y33_b1")
+vy33_b2 = v("y33_b2")
+idd = getData("V_VDD:p")
+
+if(vy00_b0 && vy00_b1 && vy00_b2 && vy01_b0 && vy01_b1 && vy01_b2 && vy02_b0 && vy02_b1 && vy02_b2 && vy03_b0 && vy03_b1 && vy03_b2 && vy10_b0 && vy10_b1 && vy10_b2 && vy11_b0 && vy11_b1 && vy11_b2 && vy12_b0 && vy12_b1 && vy12_b2 && vy13_b0 && vy13_b1 && vy13_b2 && vy20_b0 && vy20_b1 && vy20_b2 && vy21_b0 && vy21_b1 && vy21_b2 && vy22_b0 && vy22_b1 && vy22_b2 && vy23_b0 && vy23_b1 && vy23_b2 && vy30_b0 && vy30_b1 && vy30_b2 && vy31_b0 && vy31_b1 && vy31_b2 && vy32_b0 && vy32_b1 && vy32_b2 && vy33_b0 && vy33_b1 && vy33_b2 && idd then
+    pass = t
+    dt = 50p
+    t_in = 10n
+    t_sample = 25n
+    vdd = 1.8
+    vth_low = 0.2 * vdd
+    vth_high = 0.8 * vdd
+
+    y00_b0 = bitAt(vy00_b0 t_sample vth_low vth_high)
+    y00_b1 = bitAt(vy00_b1 t_sample vth_low vth_high)
+    y00_b2 = bitAt(vy00_b2 t_sample vth_low vth_high)
+    y01_b0 = bitAt(vy01_b0 t_sample vth_low vth_high)
+    y01_b1 = bitAt(vy01_b1 t_sample vth_low vth_high)
+    y01_b2 = bitAt(vy01_b2 t_sample vth_low vth_high)
+    y02_b0 = bitAt(vy02_b0 t_sample vth_low vth_high)
+    y02_b1 = bitAt(vy02_b1 t_sample vth_low vth_high)
+    y02_b2 = bitAt(vy02_b2 t_sample vth_low vth_high)
+    y03_b0 = bitAt(vy03_b0 t_sample vth_low vth_high)
+    y03_b1 = bitAt(vy03_b1 t_sample vth_low vth_high)
+    y03_b2 = bitAt(vy03_b2 t_sample vth_low vth_high)
+    y10_b0 = bitAt(vy10_b0 t_sample vth_low vth_high)
+    y10_b1 = bitAt(vy10_b1 t_sample vth_low vth_high)
+    y10_b2 = bitAt(vy10_b2 t_sample vth_low vth_high)
+    y11_b0 = bitAt(vy11_b0 t_sample vth_low vth_high)
+    y11_b1 = bitAt(vy11_b1 t_sample vth_low vth_high)
+    y11_b2 = bitAt(vy11_b2 t_sample vth_low vth_high)
+    y12_b0 = bitAt(vy12_b0 t_sample vth_low vth_high)
+    y12_b1 = bitAt(vy12_b1 t_sample vth_low vth_high)
+    y12_b2 = bitAt(vy12_b2 t_sample vth_low vth_high)
+    y13_b0 = bitAt(vy13_b0 t_sample vth_low vth_high)
+    y13_b1 = bitAt(vy13_b1 t_sample vth_low vth_high)
+    y13_b2 = bitAt(vy13_b2 t_sample vth_low vth_high)
+    y20_b0 = bitAt(vy20_b0 t_sample vth_low vth_high)
+    y20_b1 = bitAt(vy20_b1 t_sample vth_low vth_high)
+    y20_b2 = bitAt(vy20_b2 t_sample vth_low vth_high)
+    y21_b0 = bitAt(vy21_b0 t_sample vth_low vth_high)
+    y21_b1 = bitAt(vy21_b1 t_sample vth_low vth_high)
+    y21_b2 = bitAt(vy21_b2 t_sample vth_low vth_high)
+    y22_b0 = bitAt(vy22_b0 t_sample vth_low vth_high)
+    y22_b1 = bitAt(vy22_b1 t_sample vth_low vth_high)
+    y22_b2 = bitAt(vy22_b2 t_sample vth_low vth_high)
+    y23_b0 = bitAt(vy23_b0 t_sample vth_low vth_high)
+    y23_b1 = bitAt(vy23_b1 t_sample vth_low vth_high)
+    y23_b2 = bitAt(vy23_b2 t_sample vth_low vth_high)
+    y30_b0 = bitAt(vy30_b0 t_sample vth_low vth_high)
+    y30_b1 = bitAt(vy30_b1 t_sample vth_low vth_high)
+    y30_b2 = bitAt(vy30_b2 t_sample vth_low vth_high)
+    y31_b0 = bitAt(vy31_b0 t_sample vth_low vth_high)
+    y31_b1 = bitAt(vy31_b1 t_sample vth_low vth_high)
+    y31_b2 = bitAt(vy31_b2 t_sample vth_low vth_high)
+    y32_b0 = bitAt(vy32_b0 t_sample vth_low vth_high)
+    y32_b1 = bitAt(vy32_b1 t_sample vth_low vth_high)
+    y32_b2 = bitAt(vy32_b2 t_sample vth_low vth_high)
+    y33_b0 = bitAt(vy33_b0 t_sample vth_low vth_high)
+    y33_b1 = bitAt(vy33_b1 t_sample vth_low vth_high)
+    y33_b2 = bitAt(vy33_b2 t_sample vth_low vth_high)
+
+    if(y00_b0 < 0 || y00_b1 < 0 || y00_b2 < 0 || y01_b0 < 0 || y01_b1 < 0 || y01_b2 < 0 || y02_b0 < 0 || y02_b1 < 0 || y02_b2 < 0 || y03_b0 < 0 || y03_b1 < 0 || y03_b2 < 0 || y10_b0 < 0 || y10_b1 < 0 || y10_b2 < 0 || y11_b0 < 0 || y11_b1 < 0 || y11_b2 < 0 || y12_b0 < 0 || y12_b1 < 0 || y12_b2 < 0 || y13_b0 < 0 || y13_b1 < 0 || y13_b2 < 0 || y20_b0 < 0 || y20_b1 < 0 || y20_b2 < 0 || y21_b0 < 0 || y21_b1 < 0 || y21_b2 < 0 || y22_b0 < 0 || y22_b1 < 0 || y22_b2 < 0 || y23_b0 < 0 || y23_b1 < 0 || y23_b2 < 0 || y30_b0 < 0 || y30_b1 < 0 || y30_b2 < 0 || y31_b0 < 0 || y31_b1 < 0 || y31_b2 < 0 || y32_b0 < 0 || y32_b1 < 0 || y32_b2 < 0 || y33_b0 < 0 || y33_b1 < 0 || y33_b2 < 0 then
+        fprintf(out "FAIL: one or more output bits are undefined at sample time\n")
+        pass = nil
+    )
+
+    y00 = y00_b0 + 2*y00_b1 + 4*y00_b2
+    y01 = y01_b0 + 2*y01_b1 + 4*y01_b2
+    y02 = y02_b0 + 2*y02_b1 + 4*y02_b2
+    y03 = y03_b0 + 2*y03_b1 + 4*y03_b2
+    y10 = y10_b0 + 2*y10_b1 + 4*y10_b2
+    y11 = y11_b0 + 2*y11_b1 + 4*y11_b2
+    y12 = y12_b0 + 2*y12_b1 + 4*y12_b2
+    y13 = y13_b0 + 2*y13_b1 + 4*y13_b2
+    y20 = y20_b0 + 2*y20_b1 + 4*y20_b2
+    y21 = y21_b0 + 2*y21_b1 + 4*y21_b2
+    y22 = y22_b0 + 2*y22_b1 + 4*y22_b2
+    y23 = y23_b0 + 2*y23_b1 + 4*y23_b2
+    y30 = y30_b0 + 2*y30_b1 + 4*y30_b2
+    y31 = y31_b0 + 2*y31_b1 + 4*y31_b2
+    y32 = y32_b0 + 2*y32_b1 + 4*y32_b2
+    y33 = y33_b0 + 2*y33_b1 + 4*y33_b2
+
+    t_y00_b1 = firstCross(vy00_b1 vth_high dt 1n 120n)
+    t_y01_b1 = firstCross(vy01_b1 vth_high dt 1n 120n)
+    t_y02_b1 = firstCross(vy02_b1 vth_high dt 1n 120n)
+    t_y03_b0 = firstCross(vy03_b0 vth_high dt 1n 120n)
+    t_y03_b1 = firstCross(vy03_b1 vth_high dt 1n 120n)
+    t_y10_b0 = firstCross(vy10_b0 vth_high dt 1n 120n)
+    t_y11_b0 = firstCross(vy11_b0 vth_high dt 1n 120n)
+    t_y12_b1 = firstCross(vy12_b1 vth_high dt 1n 120n)
+    t_y13_b0 = firstCross(vy13_b0 vth_high dt 1n 120n)
+    t_y20_b0 = firstCross(vy20_b0 vth_high dt 1n 120n)
+    t_y21_b0 = firstCross(vy21_b0 vth_high dt 1n 120n)
+    t_y21_b1 = firstCross(vy21_b1 vth_high dt 1n 120n)
+    t_y22_b1 = firstCross(vy22_b1 vth_high dt 1n 120n)
+    t_y23_b1 = firstCross(vy23_b1 vth_high dt 1n 120n)
+    t_y30_b0 = firstCross(vy30_b0 vth_high dt 1n 120n)
+    t_y31_b1 = firstCross(vy31_b1 vth_high dt 1n 120n)
+    t_y32_b0 = firstCross(vy32_b0 vth_high dt 1n 120n)
+    t_y33_b1 = firstCross(vy33_b1 vth_high dt 1n 120n)
+
+    latest_valid_t = nil
+    foreach(tt list(t_y00_b1 t_y01_b1 t_y02_b1 t_y03_b0 t_y03_b1 t_y10_b0 t_y11_b0 t_y12_b1 t_y13_b0 t_y20_b0 t_y21_b0 t_y21_b1 t_y22_b1 t_y23_b1 t_y30_b0 t_y31_b1 t_y32_b0 t_y33_b1)
+      if(tt then
+        if(latest_valid_t then
+          if(tt > latest_valid_t then latest_valid_t = tt)
+        else
+          latest_valid_t = tt
+        )
+      else
+        pass = nil
+        fprintf(out "FAIL: missing expected rising edge in output bits\n")
+      )
+    )
+
+    if(latest_valid_t then
+      latency_ns = (latest_valid_t - t_in) * 1e9
+    else
+      latency_ns = -1
+      pass = nil
+    )
+
+    t0 = 0n
+    t1 = 120n
+    energy = 0
+    ts = t0
+    prev_i = value(idd ts)
+    prev_t = ts
+    ts = ts + dt
+    while(ts <= t1
+      curr_i = value(idd ts)
+      p0 = -prev_i * vdd
+      p1 = -curr_i * vdd
+      energy = energy + 0.5 * (p0 + p1) * (ts - prev_t)
+      prev_i = curr_i
+      prev_t = ts
+      ts = ts + dt
+    )
+    e_per_op = energy / 112
+
+    fprintf(out "Stimulus matrices (fixed checkpoint point):\n")
+    fprintf(out "  A = [[1 0 1 1] [0 1 1 0] [1 1 0 1] [1 0 0 1]]\n")
+    fprintf(out "  B = [[1 1 0 1] [0 1 1 0] [1 0 1 1] [0 1 1 1]]\n\n")
+    fprintf(out "Expected output Y = [[2 2 2 3] [1 1 2 1] [1 3 2 2] [1 2 1 2]]\n\n")
+
+    fprintf(out "Decoded output matrix:\n")
+    fprintf(out "  row0: %d %d %d %d\n" y00 y01 y02 y03)
+    fprintf(out "  row1: %d %d %d %d\n" y10 y11 y12 y13)
+    fprintf(out "  row2: %d %d %d %d\n" y20 y21 y22 y23)
+    fprintf(out "  row3: %d %d %d %d\n" y30 y31 y32 y33)
+    fprintf(out "\nDecoded output vector: %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n\n" y00 y01 y02 y03 y10 y11 y12 y13 y20 y21 y22 y23 y30 y31 y32 y33)
+    fprintf(out "Latency to full output-valid: %.3f ns\n" latency_ns)
+    fprintf(out "Total energy (0-120ns): %.6e J\n" energy)
+    fprintf(out "Energy per operation (112 ops): %.6e J/op\n\n" e_per_op)
+
+    if(y00 == 2 && y01 == 2 && y02 == 2 && y03 == 3 && y10 == 1 && y11 == 1 && y12 == 2 && y13 == 1 && y20 == 1 && y21 == 3 && y22 == 2 && y23 == 2 && y30 == 1 && y31 == 2 && y32 == 1 && y33 == 2 then
+      fprintf(out "OK: decoded outputs match expected 4x4 matrix\n")
+    else
+      fprintf(out "FAIL: decoded outputs do not match expected 4x4 matrix\n")
+      pass = nil
+    )
+
+    fprintf(out "\n")
+    if(pass then
+      fprintf(out "=== PASS: Binary 4x4 digital matmul checkpoint verified ===\n")
+    else
+      fprintf(out "=== FAIL: Binary 4x4 digital matmul checkpoint failed ===\n")
+    )
+else
+    fprintf(out "ERROR: Could not read waveform data\n")
+)
+
+close(out)
+printf("Done. Results in: ~/analog-gradients/results/matmul4x4_binary_digital_test.txt\n")
+exit()

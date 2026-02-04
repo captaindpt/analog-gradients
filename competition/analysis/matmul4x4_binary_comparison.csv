@@ -1,0 +1,3 @@
+architecture,operations,decoded_ok,latency_ns,energy_j,energy_pj,energy_per_op_pj,spike_count,spike_energy_est_pj,decoded_vector,result_file
+digital_baseline,112,True,0.190000,5.459367000e-13,0.545937,0.004874,,,2 2 2 3 1 1 2 1 1 3 2 2 1 2 1 2,/home/v71349/analog-gradients/results/matmul4x4_binary_digital_test.txt
+neuro_path,112,True,2.239000,7.666180000e-11,76.661800,0.684480,28,91.560000,2 2 2 3 1 1 2 1 1 3 2 2 1 2 1 2,/home/v71349/analog-gradients/results/matmul4x4_binary_neuro_test.txt
