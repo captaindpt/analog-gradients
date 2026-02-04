@@ -1,0 +1,25 @@
+=== Binary 4x4 Matmul (Digital Baseline) Verification ===
+Transistor checkpoint: AND partial products + popcount adders
+Date: Feb  4 13:57:30 2026
+
+Stimulus matrices:
+  A = [[0 0 0 0] [0 0 0 0] [0 0 0 0] [0 0 0 0]]
+  B = [[0 0 0 0] [0 0 0 0] [0 0 0 0] [0 0 0 0]]
+
+Expected output Y = [[0 0 0 0] [0 0 0 0] [0 0 0 0] [0 0 0 0]]
+
+Decoded output matrix:
+  row0: 0 0 0 0
+  row1: 0 0 0 0
+  row2: 0 0 0 0
+  row3: 0 0 0 0
+
+Decoded output vector: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+Latency to full output-valid: 0.000 ns
+Total energy (0-120ns): 2.540138e-16 J
+Energy per operation (112 ops): 2.267980e-18 J/op
+
+OK: decoded outputs match expected 4x4 matrix
+
+=== PASS: Binary 4x4 digital matmul checkpoint verified ===

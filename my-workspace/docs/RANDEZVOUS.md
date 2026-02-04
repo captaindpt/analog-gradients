@@ -45,3 +45,4 @@ scripts/run_fullflow_smoke.sh
 - `my-workspace/tickets/0011-competition-paper-workthrough.md`
 - `my-workspace/tickets/0015-workspace-rendezvous-and-scale-ramp.md`
 - `my-workspace/tickets/0016-binary-matmul-architecture-comparison.md`
+- `my-workspace/tickets/0017-temporal-gradient-learning-loop.md`

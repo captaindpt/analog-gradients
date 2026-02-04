@@ -1,6 +1,6 @@
 # Binary 4x4 Matmul: Digital vs Neuro Checkpoint
 
-Generated: 2026-02-04 17:45:36 UTC
+Generated: 2026-02-04 18:50:12 UTC
 
 Scope: binary-only transistor checkpoint (`A,B ∈ {0,1}`), fixed stimulus point.
 - A = `[[1,0,1,1],[0,1,1,0],[1,1,0,1],[1,0,0,1]]`
@@ -12,13 +12,13 @@ Scope: binary-only transistor checkpoint (`A,B ∈ {0,1}`), fixed stimulus point
 | Operations | 112 | 112 |
 | Decoded output match | `True` | `True` |
 | Latency to full output-valid | 0.190 ns | 2.239 ns |
-| Measured energy (0-120ns) | 0.546 pJ | 76.662 pJ |
-| Energy / op (112 ops) | 0.005 pJ/op | 0.684 pJ/op |
+| Measured energy (0-120ns) | 0.546 pJ | 53.377 pJ |
+| Energy / op (112 ops) | 0.005 pJ/op | 0.477 pJ/op |
 | Neuro partial spikes | n/a | 28 |
 | Neuro spike-model estimate | n/a | 91.560 pJ |
 
 Derived deltas:
-- Neuro measured energy vs digital: `+13942.25%`.
+- Neuro measured energy vs digital: `+9677.13%`.
 - Neuro/digital latency ratio: `11.784x`.
 
 Reproduce:

@@ -1,0 +1,16 @@
+run_id=20260204_151222
+start_utc=2026-02-04T20:12:22Z
+iters=4
+trace_delays_ns=5.0,8.0
+target_mode=measured_anchor_shift
+target_spikes_ns=47.5,49.5,51.5,53.5
+target_shift_ns=1.0,1.0,1.0,1.0
+target_spike_counts=15,15,15,15
+use_anchor_counts=1
+energy_weight=2.0
+end_utc=2026-02-04T20:20:56Z
+run_dir=/home/v71349/analog-gradients/competition/sweeps/temporal_gradient_learning/20260204_151222
+latest_eval_csv=/home/v71349/analog-gradients/competition/analysis/temporal_gradient_learning.csv
+latest_trace_csv=/home/v71349/analog-gradients/competition/analysis/temporal_gradient_trace.csv
+latest_summary_md=/home/v71349/analog-gradients/competition/analysis/temporal_gradient_learning_summary.md
+latest_loss_svg=/home/v71349/analog-gradients/competition/analysis/temporal_gradient_learning_loss.svg

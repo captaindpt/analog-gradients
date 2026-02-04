@@ -14,8 +14,7 @@ model pch_cmp mos1 type=p vto=-0.5 kp=40u
 V_VDD (vdd 0) vsource dc=vdd_val
 
 // p_0_0_0 = a00 * b00
-I_P_0_0_0_A (vdd mem_p_0_0_0) isource type=pulse val0=0 val1=a00*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_0_0_0_B (vdd mem_p_0_0_0) isource type=pulse val0=0 val1=b00*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_0_0_0 (vdd mem_p_0_0_0) isource type=pulse val0=0 val1=(a00*b00)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_0_0_0 (mem_p_0_0_0 0) capacitor c=cmul
 R_P_0_0_0 (mem_p_0_0_0 0) resistor r=rmul
 MP_P_0_0_0_1 (p_0_0_0_n mem_p_0_0_0 vdd vdd) pch_cmp w=2u l=1u
@@ -24,8 +23,7 @@ MP_P_0_0_0_2 (p_0_0_0 p_0_0_0_n vdd vdd) pch w=2u l=1u
 MN_P_0_0_0_2 (p_0_0_0 p_0_0_0_n 0 0) nch w=1u l=1u
 
 // p_0_0_1 = a01 * b10
-I_P_0_0_1_A (vdd mem_p_0_0_1) isource type=pulse val0=0 val1=a01*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_0_0_1_B (vdd mem_p_0_0_1) isource type=pulse val0=0 val1=b10*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_0_0_1 (vdd mem_p_0_0_1) isource type=pulse val0=0 val1=(a01*b10)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_0_0_1 (mem_p_0_0_1 0) capacitor c=cmul
 R_P_0_0_1 (mem_p_0_0_1 0) resistor r=rmul
 MP_P_0_0_1_1 (p_0_0_1_n mem_p_0_0_1 vdd vdd) pch_cmp w=2u l=1u
@@ -34,8 +32,7 @@ MP_P_0_0_1_2 (p_0_0_1 p_0_0_1_n vdd vdd) pch w=2u l=1u
 MN_P_0_0_1_2 (p_0_0_1 p_0_0_1_n 0 0) nch w=1u l=1u
 
 // p_0_0_2 = a02 * b20
-I_P_0_0_2_A (vdd mem_p_0_0_2) isource type=pulse val0=0 val1=a02*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_0_0_2_B (vdd mem_p_0_0_2) isource type=pulse val0=0 val1=b20*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_0_0_2 (vdd mem_p_0_0_2) isource type=pulse val0=0 val1=(a02*b20)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_0_0_2 (mem_p_0_0_2 0) capacitor c=cmul
 R_P_0_0_2 (mem_p_0_0_2 0) resistor r=rmul
 MP_P_0_0_2_1 (p_0_0_2_n mem_p_0_0_2 vdd vdd) pch_cmp w=2u l=1u
@@ -44,8 +41,7 @@ MP_P_0_0_2_2 (p_0_0_2 p_0_0_2_n vdd vdd) pch w=2u l=1u
 MN_P_0_0_2_2 (p_0_0_2 p_0_0_2_n 0 0) nch w=1u l=1u
 
 // p_0_0_3 = a03 * b30
-I_P_0_0_3_A (vdd mem_p_0_0_3) isource type=pulse val0=0 val1=a03*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_0_0_3_B (vdd mem_p_0_0_3) isource type=pulse val0=0 val1=b30*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_0_0_3 (vdd mem_p_0_0_3) isource type=pulse val0=0 val1=(a03*b30)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_0_0_3 (mem_p_0_0_3 0) capacitor c=cmul
 R_P_0_0_3 (mem_p_0_0_3 0) resistor r=rmul
 MP_P_0_0_3_1 (p_0_0_3_n mem_p_0_0_3 vdd vdd) pch_cmp w=2u l=1u
@@ -54,8 +50,7 @@ MP_P_0_0_3_2 (p_0_0_3 p_0_0_3_n vdd vdd) pch w=2u l=1u
 MN_P_0_0_3_2 (p_0_0_3 p_0_0_3_n 0 0) nch w=1u l=1u
 
 // p_0_1_0 = a00 * b01
-I_P_0_1_0_A (vdd mem_p_0_1_0) isource type=pulse val0=0 val1=a00*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_0_1_0_B (vdd mem_p_0_1_0) isource type=pulse val0=0 val1=b01*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_0_1_0 (vdd mem_p_0_1_0) isource type=pulse val0=0 val1=(a00*b01)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_0_1_0 (mem_p_0_1_0 0) capacitor c=cmul
 R_P_0_1_0 (mem_p_0_1_0 0) resistor r=rmul
 MP_P_0_1_0_1 (p_0_1_0_n mem_p_0_1_0 vdd vdd) pch_cmp w=2u l=1u
@@ -64,8 +59,7 @@ MP_P_0_1_0_2 (p_0_1_0 p_0_1_0_n vdd vdd) pch w=2u l=1u
 MN_P_0_1_0_2 (p_0_1_0 p_0_1_0_n 0 0) nch w=1u l=1u
 
 // p_0_1_1 = a01 * b11
-I_P_0_1_1_A (vdd mem_p_0_1_1) isource type=pulse val0=0 val1=a01*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_0_1_1_B (vdd mem_p_0_1_1) isource type=pulse val0=0 val1=b11*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_0_1_1 (vdd mem_p_0_1_1) isource type=pulse val0=0 val1=(a01*b11)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_0_1_1 (mem_p_0_1_1 0) capacitor c=cmul
 R_P_0_1_1 (mem_p_0_1_1 0) resistor r=rmul
 MP_P_0_1_1_1 (p_0_1_1_n mem_p_0_1_1 vdd vdd) pch_cmp w=2u l=1u
@@ -74,8 +68,7 @@ MP_P_0_1_1_2 (p_0_1_1 p_0_1_1_n vdd vdd) pch w=2u l=1u
 MN_P_0_1_1_2 (p_0_1_1 p_0_1_1_n 0 0) nch w=1u l=1u
 
 // p_0_1_2 = a02 * b21
-I_P_0_1_2_A (vdd mem_p_0_1_2) isource type=pulse val0=0 val1=a02*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_0_1_2_B (vdd mem_p_0_1_2) isource type=pulse val0=0 val1=b21*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_0_1_2 (vdd mem_p_0_1_2) isource type=pulse val0=0 val1=(a02*b21)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_0_1_2 (mem_p_0_1_2 0) capacitor c=cmul
 R_P_0_1_2 (mem_p_0_1_2 0) resistor r=rmul
 MP_P_0_1_2_1 (p_0_1_2_n mem_p_0_1_2 vdd vdd) pch_cmp w=2u l=1u
@@ -84,8 +77,7 @@ MP_P_0_1_2_2 (p_0_1_2 p_0_1_2_n vdd vdd) pch w=2u l=1u
 MN_P_0_1_2_2 (p_0_1_2 p_0_1_2_n 0 0) nch w=1u l=1u
 
 // p_0_1_3 = a03 * b31
-I_P_0_1_3_A (vdd mem_p_0_1_3) isource type=pulse val0=0 val1=a03*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_0_1_3_B (vdd mem_p_0_1_3) isource type=pulse val0=0 val1=b31*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_0_1_3 (vdd mem_p_0_1_3) isource type=pulse val0=0 val1=(a03*b31)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_0_1_3 (mem_p_0_1_3 0) capacitor c=cmul
 R_P_0_1_3 (mem_p_0_1_3 0) resistor r=rmul
 MP_P_0_1_3_1 (p_0_1_3_n mem_p_0_1_3 vdd vdd) pch_cmp w=2u l=1u
@@ -94,8 +86,7 @@ MP_P_0_1_3_2 (p_0_1_3 p_0_1_3_n vdd vdd) pch w=2u l=1u
 MN_P_0_1_3_2 (p_0_1_3 p_0_1_3_n 0 0) nch w=1u l=1u
 
 // p_0_2_0 = a00 * b02
-I_P_0_2_0_A (vdd mem_p_0_2_0) isource type=pulse val0=0 val1=a00*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_0_2_0_B (vdd mem_p_0_2_0) isource type=pulse val0=0 val1=b02*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_0_2_0 (vdd mem_p_0_2_0) isource type=pulse val0=0 val1=(a00*b02)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_0_2_0 (mem_p_0_2_0 0) capacitor c=cmul
 R_P_0_2_0 (mem_p_0_2_0 0) resistor r=rmul
 MP_P_0_2_0_1 (p_0_2_0_n mem_p_0_2_0 vdd vdd) pch_cmp w=2u l=1u
@@ -104,8 +95,7 @@ MP_P_0_2_0_2 (p_0_2_0 p_0_2_0_n vdd vdd) pch w=2u l=1u
 MN_P_0_2_0_2 (p_0_2_0 p_0_2_0_n 0 0) nch w=1u l=1u
 
 // p_0_2_1 = a01 * b12
-I_P_0_2_1_A (vdd mem_p_0_2_1) isource type=pulse val0=0 val1=a01*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_0_2_1_B (vdd mem_p_0_2_1) isource type=pulse val0=0 val1=b12*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_0_2_1 (vdd mem_p_0_2_1) isource type=pulse val0=0 val1=(a01*b12)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_0_2_1 (mem_p_0_2_1 0) capacitor c=cmul
 R_P_0_2_1 (mem_p_0_2_1 0) resistor r=rmul
 MP_P_0_2_1_1 (p_0_2_1_n mem_p_0_2_1 vdd vdd) pch_cmp w=2u l=1u
@@ -114,8 +104,7 @@ MP_P_0_2_1_2 (p_0_2_1 p_0_2_1_n vdd vdd) pch w=2u l=1u
 MN_P_0_2_1_2 (p_0_2_1 p_0_2_1_n 0 0) nch w=1u l=1u
 
 // p_0_2_2 = a02 * b22
-I_P_0_2_2_A (vdd mem_p_0_2_2) isource type=pulse val0=0 val1=a02*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_0_2_2_B (vdd mem_p_0_2_2) isource type=pulse val0=0 val1=b22*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_0_2_2 (vdd mem_p_0_2_2) isource type=pulse val0=0 val1=(a02*b22)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_0_2_2 (mem_p_0_2_2 0) capacitor c=cmul
 R_P_0_2_2 (mem_p_0_2_2 0) resistor r=rmul
 MP_P_0_2_2_1 (p_0_2_2_n mem_p_0_2_2 vdd vdd) pch_cmp w=2u l=1u
@@ -124,8 +113,7 @@ MP_P_0_2_2_2 (p_0_2_2 p_0_2_2_n vdd vdd) pch w=2u l=1u
 MN_P_0_2_2_2 (p_0_2_2 p_0_2_2_n 0 0) nch w=1u l=1u
 
 // p_0_2_3 = a03 * b32
-I_P_0_2_3_A (vdd mem_p_0_2_3) isource type=pulse val0=0 val1=a03*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_0_2_3_B (vdd mem_p_0_2_3) isource type=pulse val0=0 val1=b32*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_0_2_3 (vdd mem_p_0_2_3) isource type=pulse val0=0 val1=(a03*b32)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_0_2_3 (mem_p_0_2_3 0) capacitor c=cmul
 R_P_0_2_3 (mem_p_0_2_3 0) resistor r=rmul
 MP_P_0_2_3_1 (p_0_2_3_n mem_p_0_2_3 vdd vdd) pch_cmp w=2u l=1u
@@ -134,8 +122,7 @@ MP_P_0_2_3_2 (p_0_2_3 p_0_2_3_n vdd vdd) pch w=2u l=1u
 MN_P_0_2_3_2 (p_0_2_3 p_0_2_3_n 0 0) nch w=1u l=1u
 
 // p_0_3_0 = a00 * b03
-I_P_0_3_0_A (vdd mem_p_0_3_0) isource type=pulse val0=0 val1=a00*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_0_3_0_B (vdd mem_p_0_3_0) isource type=pulse val0=0 val1=b03*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_0_3_0 (vdd mem_p_0_3_0) isource type=pulse val0=0 val1=(a00*b03)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_0_3_0 (mem_p_0_3_0 0) capacitor c=cmul
 R_P_0_3_0 (mem_p_0_3_0 0) resistor r=rmul
 MP_P_0_3_0_1 (p_0_3_0_n mem_p_0_3_0 vdd vdd) pch_cmp w=2u l=1u
@@ -144,8 +131,7 @@ MP_P_0_3_0_2 (p_0_3_0 p_0_3_0_n vdd vdd) pch w=2u l=1u
 MN_P_0_3_0_2 (p_0_3_0 p_0_3_0_n 0 0) nch w=1u l=1u
 
 // p_0_3_1 = a01 * b13
-I_P_0_3_1_A (vdd mem_p_0_3_1) isource type=pulse val0=0 val1=a01*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_0_3_1_B (vdd mem_p_0_3_1) isource type=pulse val0=0 val1=b13*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_0_3_1 (vdd mem_p_0_3_1) isource type=pulse val0=0 val1=(a01*b13)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_0_3_1 (mem_p_0_3_1 0) capacitor c=cmul
 R_P_0_3_1 (mem_p_0_3_1 0) resistor r=rmul
 MP_P_0_3_1_1 (p_0_3_1_n mem_p_0_3_1 vdd vdd) pch_cmp w=2u l=1u
@@ -154,8 +140,7 @@ MP_P_0_3_1_2 (p_0_3_1 p_0_3_1_n vdd vdd) pch w=2u l=1u
 MN_P_0_3_1_2 (p_0_3_1 p_0_3_1_n 0 0) nch w=1u l=1u
 
 // p_0_3_2 = a02 * b23
-I_P_0_3_2_A (vdd mem_p_0_3_2) isource type=pulse val0=0 val1=a02*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_0_3_2_B (vdd mem_p_0_3_2) isource type=pulse val0=0 val1=b23*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_0_3_2 (vdd mem_p_0_3_2) isource type=pulse val0=0 val1=(a02*b23)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_0_3_2 (mem_p_0_3_2 0) capacitor c=cmul
 R_P_0_3_2 (mem_p_0_3_2 0) resistor r=rmul
 MP_P_0_3_2_1 (p_0_3_2_n mem_p_0_3_2 vdd vdd) pch_cmp w=2u l=1u
@@ -164,8 +149,7 @@ MP_P_0_3_2_2 (p_0_3_2 p_0_3_2_n vdd vdd) pch w=2u l=1u
 MN_P_0_3_2_2 (p_0_3_2 p_0_3_2_n 0 0) nch w=1u l=1u
 
 // p_0_3_3 = a03 * b33
-I_P_0_3_3_A (vdd mem_p_0_3_3) isource type=pulse val0=0 val1=a03*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_0_3_3_B (vdd mem_p_0_3_3) isource type=pulse val0=0 val1=b33*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_0_3_3 (vdd mem_p_0_3_3) isource type=pulse val0=0 val1=(a03*b33)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_0_3_3 (mem_p_0_3_3 0) capacitor c=cmul
 R_P_0_3_3 (mem_p_0_3_3 0) resistor r=rmul
 MP_P_0_3_3_1 (p_0_3_3_n mem_p_0_3_3 vdd vdd) pch_cmp w=2u l=1u
@@ -174,8 +158,7 @@ MP_P_0_3_3_2 (p_0_3_3 p_0_3_3_n vdd vdd) pch w=2u l=1u
 MN_P_0_3_3_2 (p_0_3_3 p_0_3_3_n 0 0) nch w=1u l=1u
 
 // p_1_0_0 = a10 * b00
-I_P_1_0_0_A (vdd mem_p_1_0_0) isource type=pulse val0=0 val1=a10*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_1_0_0_B (vdd mem_p_1_0_0) isource type=pulse val0=0 val1=b00*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_1_0_0 (vdd mem_p_1_0_0) isource type=pulse val0=0 val1=(a10*b00)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_1_0_0 (mem_p_1_0_0 0) capacitor c=cmul
 R_P_1_0_0 (mem_p_1_0_0 0) resistor r=rmul
 MP_P_1_0_0_1 (p_1_0_0_n mem_p_1_0_0 vdd vdd) pch_cmp w=2u l=1u
@@ -184,8 +167,7 @@ MP_P_1_0_0_2 (p_1_0_0 p_1_0_0_n vdd vdd) pch w=2u l=1u
 MN_P_1_0_0_2 (p_1_0_0 p_1_0_0_n 0 0) nch w=1u l=1u
 
 // p_1_0_1 = a11 * b10
-I_P_1_0_1_A (vdd mem_p_1_0_1) isource type=pulse val0=0 val1=a11*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_1_0_1_B (vdd mem_p_1_0_1) isource type=pulse val0=0 val1=b10*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_1_0_1 (vdd mem_p_1_0_1) isource type=pulse val0=0 val1=(a11*b10)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_1_0_1 (mem_p_1_0_1 0) capacitor c=cmul
 R_P_1_0_1 (mem_p_1_0_1 0) resistor r=rmul
 MP_P_1_0_1_1 (p_1_0_1_n mem_p_1_0_1 vdd vdd) pch_cmp w=2u l=1u
@@ -194,8 +176,7 @@ MP_P_1_0_1_2 (p_1_0_1 p_1_0_1_n vdd vdd) pch w=2u l=1u
 MN_P_1_0_1_2 (p_1_0_1 p_1_0_1_n 0 0) nch w=1u l=1u
 
 // p_1_0_2 = a12 * b20
-I_P_1_0_2_A (vdd mem_p_1_0_2) isource type=pulse val0=0 val1=a12*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_1_0_2_B (vdd mem_p_1_0_2) isource type=pulse val0=0 val1=b20*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_1_0_2 (vdd mem_p_1_0_2) isource type=pulse val0=0 val1=(a12*b20)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_1_0_2 (mem_p_1_0_2 0) capacitor c=cmul
 R_P_1_0_2 (mem_p_1_0_2 0) resistor r=rmul
 MP_P_1_0_2_1 (p_1_0_2_n mem_p_1_0_2 vdd vdd) pch_cmp w=2u l=1u
@@ -204,8 +185,7 @@ MP_P_1_0_2_2 (p_1_0_2 p_1_0_2_n vdd vdd) pch w=2u l=1u
 MN_P_1_0_2_2 (p_1_0_2 p_1_0_2_n 0 0) nch w=1u l=1u
 
 // p_1_0_3 = a13 * b30
-I_P_1_0_3_A (vdd mem_p_1_0_3) isource type=pulse val0=0 val1=a13*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_1_0_3_B (vdd mem_p_1_0_3) isource type=pulse val0=0 val1=b30*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_1_0_3 (vdd mem_p_1_0_3) isource type=pulse val0=0 val1=(a13*b30)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_1_0_3 (mem_p_1_0_3 0) capacitor c=cmul
 R_P_1_0_3 (mem_p_1_0_3 0) resistor r=rmul
 MP_P_1_0_3_1 (p_1_0_3_n mem_p_1_0_3 vdd vdd) pch_cmp w=2u l=1u
@@ -214,8 +194,7 @@ MP_P_1_0_3_2 (p_1_0_3 p_1_0_3_n vdd vdd) pch w=2u l=1u
 MN_P_1_0_3_2 (p_1_0_3 p_1_0_3_n 0 0) nch w=1u l=1u
 
 // p_1_1_0 = a10 * b01
-I_P_1_1_0_A (vdd mem_p_1_1_0) isource type=pulse val0=0 val1=a10*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_1_1_0_B (vdd mem_p_1_1_0) isource type=pulse val0=0 val1=b01*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_1_1_0 (vdd mem_p_1_1_0) isource type=pulse val0=0 val1=(a10*b01)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_1_1_0 (mem_p_1_1_0 0) capacitor c=cmul
 R_P_1_1_0 (mem_p_1_1_0 0) resistor r=rmul
 MP_P_1_1_0_1 (p_1_1_0_n mem_p_1_1_0 vdd vdd) pch_cmp w=2u l=1u
@@ -224,8 +203,7 @@ MP_P_1_1_0_2 (p_1_1_0 p_1_1_0_n vdd vdd) pch w=2u l=1u
 MN_P_1_1_0_2 (p_1_1_0 p_1_1_0_n 0 0) nch w=1u l=1u
 
 // p_1_1_1 = a11 * b11
-I_P_1_1_1_A (vdd mem_p_1_1_1) isource type=pulse val0=0 val1=a11*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_1_1_1_B (vdd mem_p_1_1_1) isource type=pulse val0=0 val1=b11*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_1_1_1 (vdd mem_p_1_1_1) isource type=pulse val0=0 val1=(a11*b11)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_1_1_1 (mem_p_1_1_1 0) capacitor c=cmul
 R_P_1_1_1 (mem_p_1_1_1 0) resistor r=rmul
 MP_P_1_1_1_1 (p_1_1_1_n mem_p_1_1_1 vdd vdd) pch_cmp w=2u l=1u
@@ -234,8 +212,7 @@ MP_P_1_1_1_2 (p_1_1_1 p_1_1_1_n vdd vdd) pch w=2u l=1u
 MN_P_1_1_1_2 (p_1_1_1 p_1_1_1_n 0 0) nch w=1u l=1u
 
 // p_1_1_2 = a12 * b21
-I_P_1_1_2_A (vdd mem_p_1_1_2) isource type=pulse val0=0 val1=a12*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_1_1_2_B (vdd mem_p_1_1_2) isource type=pulse val0=0 val1=b21*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_1_1_2 (vdd mem_p_1_1_2) isource type=pulse val0=0 val1=(a12*b21)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_1_1_2 (mem_p_1_1_2 0) capacitor c=cmul
 R_P_1_1_2 (mem_p_1_1_2 0) resistor r=rmul
 MP_P_1_1_2_1 (p_1_1_2_n mem_p_1_1_2 vdd vdd) pch_cmp w=2u l=1u
@@ -244,8 +221,7 @@ MP_P_1_1_2_2 (p_1_1_2 p_1_1_2_n vdd vdd) pch w=2u l=1u
 MN_P_1_1_2_2 (p_1_1_2 p_1_1_2_n 0 0) nch w=1u l=1u
 
 // p_1_1_3 = a13 * b31
-I_P_1_1_3_A (vdd mem_p_1_1_3) isource type=pulse val0=0 val1=a13*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_1_1_3_B (vdd mem_p_1_1_3) isource type=pulse val0=0 val1=b31*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_1_1_3 (vdd mem_p_1_1_3) isource type=pulse val0=0 val1=(a13*b31)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_1_1_3 (mem_p_1_1_3 0) capacitor c=cmul
 R_P_1_1_3 (mem_p_1_1_3 0) resistor r=rmul
 MP_P_1_1_3_1 (p_1_1_3_n mem_p_1_1_3 vdd vdd) pch_cmp w=2u l=1u
@@ -254,8 +230,7 @@ MP_P_1_1_3_2 (p_1_1_3 p_1_1_3_n vdd vdd) pch w=2u l=1u
 MN_P_1_1_3_2 (p_1_1_3 p_1_1_3_n 0 0) nch w=1u l=1u
 
 // p_1_2_0 = a10 * b02
-I_P_1_2_0_A (vdd mem_p_1_2_0) isource type=pulse val0=0 val1=a10*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_1_2_0_B (vdd mem_p_1_2_0) isource type=pulse val0=0 val1=b02*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_1_2_0 (vdd mem_p_1_2_0) isource type=pulse val0=0 val1=(a10*b02)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_1_2_0 (mem_p_1_2_0 0) capacitor c=cmul
 R_P_1_2_0 (mem_p_1_2_0 0) resistor r=rmul
 MP_P_1_2_0_1 (p_1_2_0_n mem_p_1_2_0 vdd vdd) pch_cmp w=2u l=1u
@@ -264,8 +239,7 @@ MP_P_1_2_0_2 (p_1_2_0 p_1_2_0_n vdd vdd) pch w=2u l=1u
 MN_P_1_2_0_2 (p_1_2_0 p_1_2_0_n 0 0) nch w=1u l=1u
 
 // p_1_2_1 = a11 * b12
-I_P_1_2_1_A (vdd mem_p_1_2_1) isource type=pulse val0=0 val1=a11*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_1_2_1_B (vdd mem_p_1_2_1) isource type=pulse val0=0 val1=b12*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_1_2_1 (vdd mem_p_1_2_1) isource type=pulse val0=0 val1=(a11*b12)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_1_2_1 (mem_p_1_2_1 0) capacitor c=cmul
 R_P_1_2_1 (mem_p_1_2_1 0) resistor r=rmul
 MP_P_1_2_1_1 (p_1_2_1_n mem_p_1_2_1 vdd vdd) pch_cmp w=2u l=1u
@@ -274,8 +248,7 @@ MP_P_1_2_1_2 (p_1_2_1 p_1_2_1_n vdd vdd) pch w=2u l=1u
 MN_P_1_2_1_2 (p_1_2_1 p_1_2_1_n 0 0) nch w=1u l=1u
 
 // p_1_2_2 = a12 * b22
-I_P_1_2_2_A (vdd mem_p_1_2_2) isource type=pulse val0=0 val1=a12*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_1_2_2_B (vdd mem_p_1_2_2) isource type=pulse val0=0 val1=b22*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_1_2_2 (vdd mem_p_1_2_2) isource type=pulse val0=0 val1=(a12*b22)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_1_2_2 (mem_p_1_2_2 0) capacitor c=cmul
 R_P_1_2_2 (mem_p_1_2_2 0) resistor r=rmul
 MP_P_1_2_2_1 (p_1_2_2_n mem_p_1_2_2 vdd vdd) pch_cmp w=2u l=1u
@@ -284,8 +257,7 @@ MP_P_1_2_2_2 (p_1_2_2 p_1_2_2_n vdd vdd) pch w=2u l=1u
 MN_P_1_2_2_2 (p_1_2_2 p_1_2_2_n 0 0) nch w=1u l=1u
 
 // p_1_2_3 = a13 * b32
-I_P_1_2_3_A (vdd mem_p_1_2_3) isource type=pulse val0=0 val1=a13*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_1_2_3_B (vdd mem_p_1_2_3) isource type=pulse val0=0 val1=b32*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_1_2_3 (vdd mem_p_1_2_3) isource type=pulse val0=0 val1=(a13*b32)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_1_2_3 (mem_p_1_2_3 0) capacitor c=cmul
 R_P_1_2_3 (mem_p_1_2_3 0) resistor r=rmul
 MP_P_1_2_3_1 (p_1_2_3_n mem_p_1_2_3 vdd vdd) pch_cmp w=2u l=1u
@@ -294,8 +266,7 @@ MP_P_1_2_3_2 (p_1_2_3 p_1_2_3_n vdd vdd) pch w=2u l=1u
 MN_P_1_2_3_2 (p_1_2_3 p_1_2_3_n 0 0) nch w=1u l=1u
 
 // p_1_3_0 = a10 * b03
-I_P_1_3_0_A (vdd mem_p_1_3_0) isource type=pulse val0=0 val1=a10*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_1_3_0_B (vdd mem_p_1_3_0) isource type=pulse val0=0 val1=b03*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_1_3_0 (vdd mem_p_1_3_0) isource type=pulse val0=0 val1=(a10*b03)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_1_3_0 (mem_p_1_3_0 0) capacitor c=cmul
 R_P_1_3_0 (mem_p_1_3_0 0) resistor r=rmul
 MP_P_1_3_0_1 (p_1_3_0_n mem_p_1_3_0 vdd vdd) pch_cmp w=2u l=1u
@@ -304,8 +275,7 @@ MP_P_1_3_0_2 (p_1_3_0 p_1_3_0_n vdd vdd) pch w=2u l=1u
 MN_P_1_3_0_2 (p_1_3_0 p_1_3_0_n 0 0) nch w=1u l=1u
 
 // p_1_3_1 = a11 * b13
-I_P_1_3_1_A (vdd mem_p_1_3_1) isource type=pulse val0=0 val1=a11*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_1_3_1_B (vdd mem_p_1_3_1) isource type=pulse val0=0 val1=b13*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_1_3_1 (vdd mem_p_1_3_1) isource type=pulse val0=0 val1=(a11*b13)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_1_3_1 (mem_p_1_3_1 0) capacitor c=cmul
 R_P_1_3_1 (mem_p_1_3_1 0) resistor r=rmul
 MP_P_1_3_1_1 (p_1_3_1_n mem_p_1_3_1 vdd vdd) pch_cmp w=2u l=1u
@@ -314,8 +284,7 @@ MP_P_1_3_1_2 (p_1_3_1 p_1_3_1_n vdd vdd) pch w=2u l=1u
 MN_P_1_3_1_2 (p_1_3_1 p_1_3_1_n 0 0) nch w=1u l=1u
 
 // p_1_3_2 = a12 * b23
-I_P_1_3_2_A (vdd mem_p_1_3_2) isource type=pulse val0=0 val1=a12*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_1_3_2_B (vdd mem_p_1_3_2) isource type=pulse val0=0 val1=b23*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_1_3_2 (vdd mem_p_1_3_2) isource type=pulse val0=0 val1=(a12*b23)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_1_3_2 (mem_p_1_3_2 0) capacitor c=cmul
 R_P_1_3_2 (mem_p_1_3_2 0) resistor r=rmul
 MP_P_1_3_2_1 (p_1_3_2_n mem_p_1_3_2 vdd vdd) pch_cmp w=2u l=1u
@@ -324,8 +293,7 @@ MP_P_1_3_2_2 (p_1_3_2 p_1_3_2_n vdd vdd) pch w=2u l=1u
 MN_P_1_3_2_2 (p_1_3_2 p_1_3_2_n 0 0) nch w=1u l=1u
 
 // p_1_3_3 = a13 * b33
-I_P_1_3_3_A (vdd mem_p_1_3_3) isource type=pulse val0=0 val1=a13*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_1_3_3_B (vdd mem_p_1_3_3) isource type=pulse val0=0 val1=b33*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_1_3_3 (vdd mem_p_1_3_3) isource type=pulse val0=0 val1=(a13*b33)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_1_3_3 (mem_p_1_3_3 0) capacitor c=cmul
 R_P_1_3_3 (mem_p_1_3_3 0) resistor r=rmul
 MP_P_1_3_3_1 (p_1_3_3_n mem_p_1_3_3 vdd vdd) pch_cmp w=2u l=1u
@@ -334,8 +302,7 @@ MP_P_1_3_3_2 (p_1_3_3 p_1_3_3_n vdd vdd) pch w=2u l=1u
 MN_P_1_3_3_2 (p_1_3_3 p_1_3_3_n 0 0) nch w=1u l=1u
 
 // p_2_0_0 = a20 * b00
-I_P_2_0_0_A (vdd mem_p_2_0_0) isource type=pulse val0=0 val1=a20*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_2_0_0_B (vdd mem_p_2_0_0) isource type=pulse val0=0 val1=b00*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_2_0_0 (vdd mem_p_2_0_0) isource type=pulse val0=0 val1=(a20*b00)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_2_0_0 (mem_p_2_0_0 0) capacitor c=cmul
 R_P_2_0_0 (mem_p_2_0_0 0) resistor r=rmul
 MP_P_2_0_0_1 (p_2_0_0_n mem_p_2_0_0 vdd vdd) pch_cmp w=2u l=1u
@@ -344,8 +311,7 @@ MP_P_2_0_0_2 (p_2_0_0 p_2_0_0_n vdd vdd) pch w=2u l=1u
 MN_P_2_0_0_2 (p_2_0_0 p_2_0_0_n 0 0) nch w=1u l=1u
 
 // p_2_0_1 = a21 * b10
-I_P_2_0_1_A (vdd mem_p_2_0_1) isource type=pulse val0=0 val1=a21*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_2_0_1_B (vdd mem_p_2_0_1) isource type=pulse val0=0 val1=b10*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_2_0_1 (vdd mem_p_2_0_1) isource type=pulse val0=0 val1=(a21*b10)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_2_0_1 (mem_p_2_0_1 0) capacitor c=cmul
 R_P_2_0_1 (mem_p_2_0_1 0) resistor r=rmul
 MP_P_2_0_1_1 (p_2_0_1_n mem_p_2_0_1 vdd vdd) pch_cmp w=2u l=1u
@@ -354,8 +320,7 @@ MP_P_2_0_1_2 (p_2_0_1 p_2_0_1_n vdd vdd) pch w=2u l=1u
 MN_P_2_0_1_2 (p_2_0_1 p_2_0_1_n 0 0) nch w=1u l=1u
 
 // p_2_0_2 = a22 * b20
-I_P_2_0_2_A (vdd mem_p_2_0_2) isource type=pulse val0=0 val1=a22*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_2_0_2_B (vdd mem_p_2_0_2) isource type=pulse val0=0 val1=b20*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_2_0_2 (vdd mem_p_2_0_2) isource type=pulse val0=0 val1=(a22*b20)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_2_0_2 (mem_p_2_0_2 0) capacitor c=cmul
 R_P_2_0_2 (mem_p_2_0_2 0) resistor r=rmul
 MP_P_2_0_2_1 (p_2_0_2_n mem_p_2_0_2 vdd vdd) pch_cmp w=2u l=1u
@@ -364,8 +329,7 @@ MP_P_2_0_2_2 (p_2_0_2 p_2_0_2_n vdd vdd) pch w=2u l=1u
 MN_P_2_0_2_2 (p_2_0_2 p_2_0_2_n 0 0) nch w=1u l=1u
 
 // p_2_0_3 = a23 * b30
-I_P_2_0_3_A (vdd mem_p_2_0_3) isource type=pulse val0=0 val1=a23*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_2_0_3_B (vdd mem_p_2_0_3) isource type=pulse val0=0 val1=b30*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_2_0_3 (vdd mem_p_2_0_3) isource type=pulse val0=0 val1=(a23*b30)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_2_0_3 (mem_p_2_0_3 0) capacitor c=cmul
 R_P_2_0_3 (mem_p_2_0_3 0) resistor r=rmul
 MP_P_2_0_3_1 (p_2_0_3_n mem_p_2_0_3 vdd vdd) pch_cmp w=2u l=1u
@@ -374,8 +338,7 @@ MP_P_2_0_3_2 (p_2_0_3 p_2_0_3_n vdd vdd) pch w=2u l=1u
 MN_P_2_0_3_2 (p_2_0_3 p_2_0_3_n 0 0) nch w=1u l=1u
 
 // p_2_1_0 = a20 * b01
-I_P_2_1_0_A (vdd mem_p_2_1_0) isource type=pulse val0=0 val1=a20*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_2_1_0_B (vdd mem_p_2_1_0) isource type=pulse val0=0 val1=b01*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_2_1_0 (vdd mem_p_2_1_0) isource type=pulse val0=0 val1=(a20*b01)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_2_1_0 (mem_p_2_1_0 0) capacitor c=cmul
 R_P_2_1_0 (mem_p_2_1_0 0) resistor r=rmul
 MP_P_2_1_0_1 (p_2_1_0_n mem_p_2_1_0 vdd vdd) pch_cmp w=2u l=1u
@@ -384,8 +347,7 @@ MP_P_2_1_0_2 (p_2_1_0 p_2_1_0_n vdd vdd) pch w=2u l=1u
 MN_P_2_1_0_2 (p_2_1_0 p_2_1_0_n 0 0) nch w=1u l=1u
 
 // p_2_1_1 = a21 * b11
-I_P_2_1_1_A (vdd mem_p_2_1_1) isource type=pulse val0=0 val1=a21*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_2_1_1_B (vdd mem_p_2_1_1) isource type=pulse val0=0 val1=b11*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_2_1_1 (vdd mem_p_2_1_1) isource type=pulse val0=0 val1=(a21*b11)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_2_1_1 (mem_p_2_1_1 0) capacitor c=cmul
 R_P_2_1_1 (mem_p_2_1_1 0) resistor r=rmul
 MP_P_2_1_1_1 (p_2_1_1_n mem_p_2_1_1 vdd vdd) pch_cmp w=2u l=1u
@@ -394,8 +356,7 @@ MP_P_2_1_1_2 (p_2_1_1 p_2_1_1_n vdd vdd) pch w=2u l=1u
 MN_P_2_1_1_2 (p_2_1_1 p_2_1_1_n 0 0) nch w=1u l=1u
 
 // p_2_1_2 = a22 * b21
-I_P_2_1_2_A (vdd mem_p_2_1_2) isource type=pulse val0=0 val1=a22*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_2_1_2_B (vdd mem_p_2_1_2) isource type=pulse val0=0 val1=b21*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_2_1_2 (vdd mem_p_2_1_2) isource type=pulse val0=0 val1=(a22*b21)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_2_1_2 (mem_p_2_1_2 0) capacitor c=cmul
 R_P_2_1_2 (mem_p_2_1_2 0) resistor r=rmul
 MP_P_2_1_2_1 (p_2_1_2_n mem_p_2_1_2 vdd vdd) pch_cmp w=2u l=1u
@@ -404,8 +365,7 @@ MP_P_2_1_2_2 (p_2_1_2 p_2_1_2_n vdd vdd) pch w=2u l=1u
 MN_P_2_1_2_2 (p_2_1_2 p_2_1_2_n 0 0) nch w=1u l=1u
 
 // p_2_1_3 = a23 * b31
-I_P_2_1_3_A (vdd mem_p_2_1_3) isource type=pulse val0=0 val1=a23*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_2_1_3_B (vdd mem_p_2_1_3) isource type=pulse val0=0 val1=b31*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_2_1_3 (vdd mem_p_2_1_3) isource type=pulse val0=0 val1=(a23*b31)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_2_1_3 (mem_p_2_1_3 0) capacitor c=cmul
 R_P_2_1_3 (mem_p_2_1_3 0) resistor r=rmul
 MP_P_2_1_3_1 (p_2_1_3_n mem_p_2_1_3 vdd vdd) pch_cmp w=2u l=1u
@@ -414,8 +374,7 @@ MP_P_2_1_3_2 (p_2_1_3 p_2_1_3_n vdd vdd) pch w=2u l=1u
 MN_P_2_1_3_2 (p_2_1_3 p_2_1_3_n 0 0) nch w=1u l=1u
 
 // p_2_2_0 = a20 * b02
-I_P_2_2_0_A (vdd mem_p_2_2_0) isource type=pulse val0=0 val1=a20*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_2_2_0_B (vdd mem_p_2_2_0) isource type=pulse val0=0 val1=b02*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_2_2_0 (vdd mem_p_2_2_0) isource type=pulse val0=0 val1=(a20*b02)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_2_2_0 (mem_p_2_2_0 0) capacitor c=cmul
 R_P_2_2_0 (mem_p_2_2_0 0) resistor r=rmul
 MP_P_2_2_0_1 (p_2_2_0_n mem_p_2_2_0 vdd vdd) pch_cmp w=2u l=1u
@@ -424,8 +383,7 @@ MP_P_2_2_0_2 (p_2_2_0 p_2_2_0_n vdd vdd) pch w=2u l=1u
 MN_P_2_2_0_2 (p_2_2_0 p_2_2_0_n 0 0) nch w=1u l=1u
 
 // p_2_2_1 = a21 * b12
-I_P_2_2_1_A (vdd mem_p_2_2_1) isource type=pulse val0=0 val1=a21*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_2_2_1_B (vdd mem_p_2_2_1) isource type=pulse val0=0 val1=b12*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_2_2_1 (vdd mem_p_2_2_1) isource type=pulse val0=0 val1=(a21*b12)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_2_2_1 (mem_p_2_2_1 0) capacitor c=cmul
 R_P_2_2_1 (mem_p_2_2_1 0) resistor r=rmul
 MP_P_2_2_1_1 (p_2_2_1_n mem_p_2_2_1 vdd vdd) pch_cmp w=2u l=1u
@@ -434,8 +392,7 @@ MP_P_2_2_1_2 (p_2_2_1 p_2_2_1_n vdd vdd) pch w=2u l=1u
 MN_P_2_2_1_2 (p_2_2_1 p_2_2_1_n 0 0) nch w=1u l=1u
 
 // p_2_2_2 = a22 * b22
-I_P_2_2_2_A (vdd mem_p_2_2_2) isource type=pulse val0=0 val1=a22*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_2_2_2_B (vdd mem_p_2_2_2) isource type=pulse val0=0 val1=b22*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_2_2_2 (vdd mem_p_2_2_2) isource type=pulse val0=0 val1=(a22*b22)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_2_2_2 (mem_p_2_2_2 0) capacitor c=cmul
 R_P_2_2_2 (mem_p_2_2_2 0) resistor r=rmul
 MP_P_2_2_2_1 (p_2_2_2_n mem_p_2_2_2 vdd vdd) pch_cmp w=2u l=1u
@@ -444,8 +401,7 @@ MP_P_2_2_2_2 (p_2_2_2 p_2_2_2_n vdd vdd) pch w=2u l=1u
 MN_P_2_2_2_2 (p_2_2_2 p_2_2_2_n 0 0) nch w=1u l=1u
 
 // p_2_2_3 = a23 * b32
-I_P_2_2_3_A (vdd mem_p_2_2_3) isource type=pulse val0=0 val1=a23*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_2_2_3_B (vdd mem_p_2_2_3) isource type=pulse val0=0 val1=b32*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_2_2_3 (vdd mem_p_2_2_3) isource type=pulse val0=0 val1=(a23*b32)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_2_2_3 (mem_p_2_2_3 0) capacitor c=cmul
 R_P_2_2_3 (mem_p_2_2_3 0) resistor r=rmul
 MP_P_2_2_3_1 (p_2_2_3_n mem_p_2_2_3 vdd vdd) pch_cmp w=2u l=1u
@@ -454,8 +410,7 @@ MP_P_2_2_3_2 (p_2_2_3 p_2_2_3_n vdd vdd) pch w=2u l=1u
 MN_P_2_2_3_2 (p_2_2_3 p_2_2_3_n 0 0) nch w=1u l=1u
 
 // p_2_3_0 = a20 * b03
-I_P_2_3_0_A (vdd mem_p_2_3_0) isource type=pulse val0=0 val1=a20*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_2_3_0_B (vdd mem_p_2_3_0) isource type=pulse val0=0 val1=b03*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_2_3_0 (vdd mem_p_2_3_0) isource type=pulse val0=0 val1=(a20*b03)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_2_3_0 (mem_p_2_3_0 0) capacitor c=cmul
 R_P_2_3_0 (mem_p_2_3_0 0) resistor r=rmul
 MP_P_2_3_0_1 (p_2_3_0_n mem_p_2_3_0 vdd vdd) pch_cmp w=2u l=1u
@@ -464,8 +419,7 @@ MP_P_2_3_0_2 (p_2_3_0 p_2_3_0_n vdd vdd) pch w=2u l=1u
 MN_P_2_3_0_2 (p_2_3_0 p_2_3_0_n 0 0) nch w=1u l=1u
 
 // p_2_3_1 = a21 * b13
-I_P_2_3_1_A (vdd mem_p_2_3_1) isource type=pulse val0=0 val1=a21*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_2_3_1_B (vdd mem_p_2_3_1) isource type=pulse val0=0 val1=b13*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_2_3_1 (vdd mem_p_2_3_1) isource type=pulse val0=0 val1=(a21*b13)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_2_3_1 (mem_p_2_3_1 0) capacitor c=cmul
 R_P_2_3_1 (mem_p_2_3_1 0) resistor r=rmul
 MP_P_2_3_1_1 (p_2_3_1_n mem_p_2_3_1 vdd vdd) pch_cmp w=2u l=1u
@@ -474,8 +428,7 @@ MP_P_2_3_1_2 (p_2_3_1 p_2_3_1_n vdd vdd) pch w=2u l=1u
 MN_P_2_3_1_2 (p_2_3_1 p_2_3_1_n 0 0) nch w=1u l=1u
 
 // p_2_3_2 = a22 * b23
-I_P_2_3_2_A (vdd mem_p_2_3_2) isource type=pulse val0=0 val1=a22*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_2_3_2_B (vdd mem_p_2_3_2) isource type=pulse val0=0 val1=b23*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_2_3_2 (vdd mem_p_2_3_2) isource type=pulse val0=0 val1=(a22*b23)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_2_3_2 (mem_p_2_3_2 0) capacitor c=cmul
 R_P_2_3_2 (mem_p_2_3_2 0) resistor r=rmul
 MP_P_2_3_2_1 (p_2_3_2_n mem_p_2_3_2 vdd vdd) pch_cmp w=2u l=1u
@@ -484,8 +437,7 @@ MP_P_2_3_2_2 (p_2_3_2 p_2_3_2_n vdd vdd) pch w=2u l=1u
 MN_P_2_3_2_2 (p_2_3_2 p_2_3_2_n 0 0) nch w=1u l=1u
 
 // p_2_3_3 = a23 * b33
-I_P_2_3_3_A (vdd mem_p_2_3_3) isource type=pulse val0=0 val1=a23*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_2_3_3_B (vdd mem_p_2_3_3) isource type=pulse val0=0 val1=b33*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_2_3_3 (vdd mem_p_2_3_3) isource type=pulse val0=0 val1=(a23*b33)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_2_3_3 (mem_p_2_3_3 0) capacitor c=cmul
 R_P_2_3_3 (mem_p_2_3_3 0) resistor r=rmul
 MP_P_2_3_3_1 (p_2_3_3_n mem_p_2_3_3 vdd vdd) pch_cmp w=2u l=1u
@@ -494,8 +446,7 @@ MP_P_2_3_3_2 (p_2_3_3 p_2_3_3_n vdd vdd) pch w=2u l=1u
 MN_P_2_3_3_2 (p_2_3_3 p_2_3_3_n 0 0) nch w=1u l=1u
 
 // p_3_0_0 = a30 * b00
-I_P_3_0_0_A (vdd mem_p_3_0_0) isource type=pulse val0=0 val1=a30*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_3_0_0_B (vdd mem_p_3_0_0) isource type=pulse val0=0 val1=b00*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_3_0_0 (vdd mem_p_3_0_0) isource type=pulse val0=0 val1=(a30*b00)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_3_0_0 (mem_p_3_0_0 0) capacitor c=cmul
 R_P_3_0_0 (mem_p_3_0_0 0) resistor r=rmul
 MP_P_3_0_0_1 (p_3_0_0_n mem_p_3_0_0 vdd vdd) pch_cmp w=2u l=1u
@@ -504,8 +455,7 @@ MP_P_3_0_0_2 (p_3_0_0 p_3_0_0_n vdd vdd) pch w=2u l=1u
 MN_P_3_0_0_2 (p_3_0_0 p_3_0_0_n 0 0) nch w=1u l=1u
 
 // p_3_0_1 = a31 * b10
-I_P_3_0_1_A (vdd mem_p_3_0_1) isource type=pulse val0=0 val1=a31*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_3_0_1_B (vdd mem_p_3_0_1) isource type=pulse val0=0 val1=b10*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_3_0_1 (vdd mem_p_3_0_1) isource type=pulse val0=0 val1=(a31*b10)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_3_0_1 (mem_p_3_0_1 0) capacitor c=cmul
 R_P_3_0_1 (mem_p_3_0_1 0) resistor r=rmul
 MP_P_3_0_1_1 (p_3_0_1_n mem_p_3_0_1 vdd vdd) pch_cmp w=2u l=1u
@@ -514,8 +464,7 @@ MP_P_3_0_1_2 (p_3_0_1 p_3_0_1_n vdd vdd) pch w=2u l=1u
 MN_P_3_0_1_2 (p_3_0_1 p_3_0_1_n 0 0) nch w=1u l=1u
 
 // p_3_0_2 = a32 * b20
-I_P_3_0_2_A (vdd mem_p_3_0_2) isource type=pulse val0=0 val1=a32*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_3_0_2_B (vdd mem_p_3_0_2) isource type=pulse val0=0 val1=b20*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_3_0_2 (vdd mem_p_3_0_2) isource type=pulse val0=0 val1=(a32*b20)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_3_0_2 (mem_p_3_0_2 0) capacitor c=cmul
 R_P_3_0_2 (mem_p_3_0_2 0) resistor r=rmul
 MP_P_3_0_2_1 (p_3_0_2_n mem_p_3_0_2 vdd vdd) pch_cmp w=2u l=1u
@@ -524,8 +473,7 @@ MP_P_3_0_2_2 (p_3_0_2 p_3_0_2_n vdd vdd) pch w=2u l=1u
 MN_P_3_0_2_2 (p_3_0_2 p_3_0_2_n 0 0) nch w=1u l=1u
 
 // p_3_0_3 = a33 * b30
-I_P_3_0_3_A (vdd mem_p_3_0_3) isource type=pulse val0=0 val1=a33*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_3_0_3_B (vdd mem_p_3_0_3) isource type=pulse val0=0 val1=b30*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_3_0_3 (vdd mem_p_3_0_3) isource type=pulse val0=0 val1=(a33*b30)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_3_0_3 (mem_p_3_0_3 0) capacitor c=cmul
 R_P_3_0_3 (mem_p_3_0_3 0) resistor r=rmul
 MP_P_3_0_3_1 (p_3_0_3_n mem_p_3_0_3 vdd vdd) pch_cmp w=2u l=1u
@@ -534,8 +482,7 @@ MP_P_3_0_3_2 (p_3_0_3 p_3_0_3_n vdd vdd) pch w=2u l=1u
 MN_P_3_0_3_2 (p_3_0_3 p_3_0_3_n 0 0) nch w=1u l=1u
 
 // p_3_1_0 = a30 * b01
-I_P_3_1_0_A (vdd mem_p_3_1_0) isource type=pulse val0=0 val1=a30*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_3_1_0_B (vdd mem_p_3_1_0) isource type=pulse val0=0 val1=b01*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_3_1_0 (vdd mem_p_3_1_0) isource type=pulse val0=0 val1=(a30*b01)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_3_1_0 (mem_p_3_1_0 0) capacitor c=cmul
 R_P_3_1_0 (mem_p_3_1_0 0) resistor r=rmul
 MP_P_3_1_0_1 (p_3_1_0_n mem_p_3_1_0 vdd vdd) pch_cmp w=2u l=1u
@@ -544,8 +491,7 @@ MP_P_3_1_0_2 (p_3_1_0 p_3_1_0_n vdd vdd) pch w=2u l=1u
 MN_P_3_1_0_2 (p_3_1_0 p_3_1_0_n 0 0) nch w=1u l=1u
 
 // p_3_1_1 = a31 * b11
-I_P_3_1_1_A (vdd mem_p_3_1_1) isource type=pulse val0=0 val1=a31*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_3_1_1_B (vdd mem_p_3_1_1) isource type=pulse val0=0 val1=b11*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_3_1_1 (vdd mem_p_3_1_1) isource type=pulse val0=0 val1=(a31*b11)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_3_1_1 (mem_p_3_1_1 0) capacitor c=cmul
 R_P_3_1_1 (mem_p_3_1_1 0) resistor r=rmul
 MP_P_3_1_1_1 (p_3_1_1_n mem_p_3_1_1 vdd vdd) pch_cmp w=2u l=1u
@@ -554,8 +500,7 @@ MP_P_3_1_1_2 (p_3_1_1 p_3_1_1_n vdd vdd) pch w=2u l=1u
 MN_P_3_1_1_2 (p_3_1_1 p_3_1_1_n 0 0) nch w=1u l=1u
 
 // p_3_1_2 = a32 * b21
-I_P_3_1_2_A (vdd mem_p_3_1_2) isource type=pulse val0=0 val1=a32*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_3_1_2_B (vdd mem_p_3_1_2) isource type=pulse val0=0 val1=b21*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_3_1_2 (vdd mem_p_3_1_2) isource type=pulse val0=0 val1=(a32*b21)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_3_1_2 (mem_p_3_1_2 0) capacitor c=cmul
 R_P_3_1_2 (mem_p_3_1_2 0) resistor r=rmul
 MP_P_3_1_2_1 (p_3_1_2_n mem_p_3_1_2 vdd vdd) pch_cmp w=2u l=1u
@@ -564,8 +509,7 @@ MP_P_3_1_2_2 (p_3_1_2 p_3_1_2_n vdd vdd) pch w=2u l=1u
 MN_P_3_1_2_2 (p_3_1_2 p_3_1_2_n 0 0) nch w=1u l=1u
 
 // p_3_1_3 = a33 * b31
-I_P_3_1_3_A (vdd mem_p_3_1_3) isource type=pulse val0=0 val1=a33*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_3_1_3_B (vdd mem_p_3_1_3) isource type=pulse val0=0 val1=b31*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_3_1_3 (vdd mem_p_3_1_3) isource type=pulse val0=0 val1=(a33*b31)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_3_1_3 (mem_p_3_1_3 0) capacitor c=cmul
 R_P_3_1_3 (mem_p_3_1_3 0) resistor r=rmul
 MP_P_3_1_3_1 (p_3_1_3_n mem_p_3_1_3 vdd vdd) pch_cmp w=2u l=1u
@@ -574,8 +518,7 @@ MP_P_3_1_3_2 (p_3_1_3 p_3_1_3_n vdd vdd) pch w=2u l=1u
 MN_P_3_1_3_2 (p_3_1_3 p_3_1_3_n 0 0) nch w=1u l=1u
 
 // p_3_2_0 = a30 * b02
-I_P_3_2_0_A (vdd mem_p_3_2_0) isource type=pulse val0=0 val1=a30*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_3_2_0_B (vdd mem_p_3_2_0) isource type=pulse val0=0 val1=b02*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_3_2_0 (vdd mem_p_3_2_0) isource type=pulse val0=0 val1=(a30*b02)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_3_2_0 (mem_p_3_2_0 0) capacitor c=cmul
 R_P_3_2_0 (mem_p_3_2_0 0) resistor r=rmul
 MP_P_3_2_0_1 (p_3_2_0_n mem_p_3_2_0 vdd vdd) pch_cmp w=2u l=1u
@@ -584,8 +527,7 @@ MP_P_3_2_0_2 (p_3_2_0 p_3_2_0_n vdd vdd) pch w=2u l=1u
 MN_P_3_2_0_2 (p_3_2_0 p_3_2_0_n 0 0) nch w=1u l=1u
 
 // p_3_2_1 = a31 * b12
-I_P_3_2_1_A (vdd mem_p_3_2_1) isource type=pulse val0=0 val1=a31*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_3_2_1_B (vdd mem_p_3_2_1) isource type=pulse val0=0 val1=b12*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_3_2_1 (vdd mem_p_3_2_1) isource type=pulse val0=0 val1=(a31*b12)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_3_2_1 (mem_p_3_2_1 0) capacitor c=cmul
 R_P_3_2_1 (mem_p_3_2_1 0) resistor r=rmul
 MP_P_3_2_1_1 (p_3_2_1_n mem_p_3_2_1 vdd vdd) pch_cmp w=2u l=1u
@@ -594,8 +536,7 @@ MP_P_3_2_1_2 (p_3_2_1 p_3_2_1_n vdd vdd) pch w=2u l=1u
 MN_P_3_2_1_2 (p_3_2_1 p_3_2_1_n 0 0) nch w=1u l=1u
 
 // p_3_2_2 = a32 * b22
-I_P_3_2_2_A (vdd mem_p_3_2_2) isource type=pulse val0=0 val1=a32*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_3_2_2_B (vdd mem_p_3_2_2) isource type=pulse val0=0 val1=b22*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_3_2_2 (vdd mem_p_3_2_2) isource type=pulse val0=0 val1=(a32*b22)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_3_2_2 (mem_p_3_2_2 0) capacitor c=cmul
 R_P_3_2_2 (mem_p_3_2_2 0) resistor r=rmul
 MP_P_3_2_2_1 (p_3_2_2_n mem_p_3_2_2 vdd vdd) pch_cmp w=2u l=1u
@@ -604,8 +545,7 @@ MP_P_3_2_2_2 (p_3_2_2 p_3_2_2_n vdd vdd) pch w=2u l=1u
 MN_P_3_2_2_2 (p_3_2_2 p_3_2_2_n 0 0) nch w=1u l=1u
 
 // p_3_2_3 = a33 * b32
-I_P_3_2_3_A (vdd mem_p_3_2_3) isource type=pulse val0=0 val1=a33*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_3_2_3_B (vdd mem_p_3_2_3) isource type=pulse val0=0 val1=b32*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_3_2_3 (vdd mem_p_3_2_3) isource type=pulse val0=0 val1=(a33*b32)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_3_2_3 (mem_p_3_2_3 0) capacitor c=cmul
 R_P_3_2_3 (mem_p_3_2_3 0) resistor r=rmul
 MP_P_3_2_3_1 (p_3_2_3_n mem_p_3_2_3 vdd vdd) pch_cmp w=2u l=1u
@@ -614,8 +554,7 @@ MP_P_3_2_3_2 (p_3_2_3 p_3_2_3_n vdd vdd) pch w=2u l=1u
 MN_P_3_2_3_2 (p_3_2_3 p_3_2_3_n 0 0) nch w=1u l=1u
 
 // p_3_3_0 = a30 * b03
-I_P_3_3_0_A (vdd mem_p_3_3_0) isource type=pulse val0=0 val1=a30*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_3_3_0_B (vdd mem_p_3_3_0) isource type=pulse val0=0 val1=b03*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_3_3_0 (vdd mem_p_3_3_0) isource type=pulse val0=0 val1=(a30*b03)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_3_3_0 (mem_p_3_3_0 0) capacitor c=cmul
 R_P_3_3_0 (mem_p_3_3_0 0) resistor r=rmul
 MP_P_3_3_0_1 (p_3_3_0_n mem_p_3_3_0 vdd vdd) pch_cmp w=2u l=1u
@@ -624,8 +563,7 @@ MP_P_3_3_0_2 (p_3_3_0 p_3_3_0_n vdd vdd) pch w=2u l=1u
 MN_P_3_3_0_2 (p_3_3_0 p_3_3_0_n 0 0) nch w=1u l=1u
 
 // p_3_3_1 = a31 * b13
-I_P_3_3_1_A (vdd mem_p_3_3_1) isource type=pulse val0=0 val1=a31*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_3_3_1_B (vdd mem_p_3_3_1) isource type=pulse val0=0 val1=b13*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_3_3_1 (vdd mem_p_3_3_1) isource type=pulse val0=0 val1=(a31*b13)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_3_3_1 (mem_p_3_3_1 0) capacitor c=cmul
 R_P_3_3_1 (mem_p_3_3_1 0) resistor r=rmul
 MP_P_3_3_1_1 (p_3_3_1_n mem_p_3_3_1 vdd vdd) pch_cmp w=2u l=1u
@@ -634,8 +572,7 @@ MP_P_3_3_1_2 (p_3_3_1 p_3_3_1_n vdd vdd) pch w=2u l=1u
 MN_P_3_3_1_2 (p_3_3_1 p_3_3_1_n 0 0) nch w=1u l=1u
 
 // p_3_3_2 = a32 * b23
-I_P_3_3_2_A (vdd mem_p_3_3_2) isource type=pulse val0=0 val1=a32*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_3_3_2_B (vdd mem_p_3_3_2) isource type=pulse val0=0 val1=b23*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_3_3_2 (vdd mem_p_3_3_2) isource type=pulse val0=0 val1=(a32*b23)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_3_3_2 (mem_p_3_3_2 0) capacitor c=cmul
 R_P_3_3_2 (mem_p_3_3_2 0) resistor r=rmul
 MP_P_3_3_2_1 (p_3_3_2_n mem_p_3_3_2 vdd vdd) pch_cmp w=2u l=1u
@@ -644,8 +581,7 @@ MP_P_3_3_2_2 (p_3_3_2 p_3_3_2_n vdd vdd) pch w=2u l=1u
 MN_P_3_3_2_2 (p_3_3_2 p_3_3_2_n 0 0) nch w=1u l=1u
 
 // p_3_3_3 = a33 * b33
-I_P_3_3_3_A (vdd mem_p_3_3_3) isource type=pulse val0=0 val1=a33*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
-I_P_3_3_3_B (vdd mem_p_3_3_3) isource type=pulse val0=0 val1=b33*iin_amp delay=10n rise=100p fall=100p width=2n period=200n
+I_P_3_3_3 (vdd mem_p_3_3_3) isource type=pulse val0=0 val1=(a33*b33)*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n
 C_P_3_3_3 (mem_p_3_3_3 0) capacitor c=cmul
 R_P_3_3_3 (mem_p_3_3_3 0) resistor r=rmul
 MP_P_3_3_3_1 (p_3_3_3_n mem_p_3_3_3 vdd vdd) pch_cmp w=2u l=1u

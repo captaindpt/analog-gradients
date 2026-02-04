@@ -1,0 +1,44 @@
+Cadence IC23.10.140 + Spectre23.10.802 ready
+  virtuoso: /CMC/tools/cadence/IC23.10.140_lnx86/tools.lnx86/dfII/bin/virtuoso
+  ocean:    /CMC/tools/cadence/IC23.10.140_lnx86/tools.lnx86/dfII/bin/ocean
+  spectre:  /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/bin/spectre
+  license:  LM_LICENSE_FILE=<unset> CDS_LIC_FILE=6055@licaccess.cmc.ca
+========================================
+GPU Building Blocks - Build & Test
+========================================
+Run log: /home/v71349/analog-gradients/results/_runlogs/build_matmul4x4_binary_neuro_20260204_140243.log
+Run manifest: /home/v71349/analog-gradients/results/_runlogs/build_matmul4x4_binary_neuro_20260204_140243.manifest.txt
+
+=== Building matmul4x4_binary_neuro ===
+Running Spectre simulation...
+Simulation: OK
+Running OCEAN verification...
+Verification verdict is not PASS: FAIL
+Verification: FAILED
+=== Binary 4x4 Matmul (Neuro Path) Verification ===
+Transistor checkpoint: coincidence products + membrane accumulation
+Date: Feb  4 14:02:49 2026
+
+Stimulus matrices:
+  A = [[0 0 0 0] [0 0 0 0] [0 1 0 0] [0 1 0 0]]
+  B = [[0 0 0 1] [1 0 0 0] [0 0 1 0] [0 0 0 0]]
+
+Expected output Y = [[0 0 0 0] [0 0 0 0] [1 0 0 0] [1 0 0 0]]
+
+Decoded output from partial products:
+  row0: 0 0 0 0
+  row1: 0 0 0 0
+  row2: 0 0 0 0
+  row3: 0 0 0 0
+
+Decoded output vector: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+Total partial spikes: 0
+Latency to full output-valid: 0.000 ns
+Total energy (0-120ns): 1.512049e-12 J
+Energy per operation (112 ops): 1.350043e-14 J/op
+Spike-model energy estimate (3.27 pJ/spike): 0.000000e+00 J
+
+FAIL: decoded outputs do not match expected 4x4 matrix
+
+=== FAIL: Binary 4x4 neuro matmul checkpoint failed ===

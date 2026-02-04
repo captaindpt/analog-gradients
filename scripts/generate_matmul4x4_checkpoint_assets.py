@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Generate 4x4 binary matmul transistor checkpoint assets."""
 
+import argparse
+import json
+import random
 from pathlib import Path
 
 
@@ -8,19 +11,22 @@ REPO_DIR = Path(__file__).resolve().parent.parent
 NETLIST_DIR = REPO_DIR / "netlists"
 OCEAN_DIR = REPO_DIR / "ocean"
 
-A = [
+DEFAULT_A = [
     [1, 0, 1, 1],
     [0, 1, 1, 0],
     [1, 1, 0, 1],
     [1, 0, 0, 1],
 ]
-B = [
+DEFAULT_B = [
     [1, 1, 0, 1],
     [0, 1, 1, 0],
     [1, 0, 1, 1],
     [0, 1, 1, 1],
 ]
 N = 4
+A = [row[:] for row in DEFAULT_A]
+B = [row[:] for row in DEFAULT_B]
+Y = []
 
 
 def expected_matrix():
@@ -31,7 +37,28 @@ def expected_matrix():
     return y
 
 
-Y = expected_matrix()
+def matrix_line(mat):
+    return "[{}]".format(" ".join("[{}]".format(" ".join(str(v) for v in row)) for row in mat))
+
+
+def matrix_list(mat):
+    return "[{}]".format(",".join("[{}]".format(",".join(str(v) for v in row)) for row in mat))
+
+
+def active_products(mat):
+    return sum(sum(row) for row in mat)
+
+
+def configure_matrices(density, seed):
+    global A, B, Y
+    if density is None:
+        A = [row[:] for row in DEFAULT_A]
+        B = [row[:] for row in DEFAULT_B]
+    else:
+        rng = random.Random(seed)
+        A = [[1 if rng.random() < density else 0 for _ in range(N)] for _ in range(N)]
+        B = [[1 if rng.random() < density else 0 for _ in range(N)] for _ in range(N)]
+    Y = expected_matrix()
 
 
 def chunks(items, n):
@@ -314,12 +341,12 @@ def render_digital_ocean():
         lines.append("      )")
         lines.append("    )")
     else:
-        lines.append("    latest_valid_t = nil")
+        lines.append("    latest_valid_t = t_in")
     lines.append("")
     lines.append("    if(latest_valid_t then")
     lines.append("      latency_ns = (latest_valid_t - t_in) * 1e9")
     lines.append("    else")
-    lines.append("      latency_ns = -1")
+    lines.append("      latency_ns = -1.0")
     lines.append("      pass = nil")
     lines.append("    )")
     lines.append("")
@@ -342,10 +369,10 @@ def render_digital_ocean():
     lines.append("    )")
     lines.append("    e_per_op = energy / 112")
     lines.append("")
-    lines.append('    fprintf(out "Stimulus matrices (fixed checkpoint point):\\n")')
-    lines.append('    fprintf(out "  A = [[1 0 1 1] [0 1 1 0] [1 1 0 1] [1 0 0 1]]\\n")')
-    lines.append('    fprintf(out "  B = [[1 1 0 1] [0 1 1 0] [1 0 1 1] [0 1 1 1]]\\n\\n")')
-    lines.append('    fprintf(out "Expected output Y = [[2 2 2 3] [1 1 2 1] [1 3 2 2] [1 2 1 2]]\\n\\n")')
+    lines.append('    fprintf(out "Stimulus matrices:\\n")')
+    lines.append('    fprintf(out "  A = {}\\n")'.format(matrix_line(A)))
+    lines.append('    fprintf(out "  B = {}\\n\\n")'.format(matrix_line(B)))
+    lines.append('    fprintf(out "Expected output Y = {}\\n\\n")'.format(matrix_line(Y)))
     lines.append("")
     lines.append('    fprintf(out "Decoded output matrix:\\n")')
     for i in range(N):
@@ -419,13 +446,8 @@ def render_neuro_netlist():
                 mem = "mem_p_{}_{}_{}".format(i, j, k)
                 lines.append("// p_{}_{}_{} = a{}{} * b{}{}".format(i, j, k, i, k, k, j))
                 lines.append(
-                    "I_P_{}_{}_{}_A (vdd {}) isource type=pulse val0=0 val1=a{}{}*iin_amp delay=10n rise=100p fall=100p width=2n period=200n".format(
-                        i, j, k, mem, i, k
-                    )
-                )
-                lines.append(
-                    "I_P_{}_{}_{}_B (vdd {}) isource type=pulse val0=0 val1=b{}{}*iin_amp delay=10n rise=100p fall=100p width=2n period=200n".format(
-                        i, j, k, mem, k, j
+                    "I_P_{}_{}_{} (vdd {}) isource type=pulse val0=0 val1=(a{}{}*b{}{})*(2*iin_amp) delay=10n rise=100p fall=100p width=2n period=200n".format(
+                        i, j, k, mem, i, k, k, j
                     )
                 )
                 lines.append("C_P_{}_{}_{} ({} 0) capacitor c=cmul".format(i, j, k, mem))
@@ -606,9 +628,13 @@ def render_neuro_ocean():
     lines.append("    if(latest_active_t then")
     lines.append("      latency_ns = (latest_active_t - t_in) * 1e9")
     lines.append("    else")
-    lines.append("      latency_ns = -1")
-    lines.append("      pass = nil")
-    lines.append('      fprintf(out "FAIL: could not determine full-output latency\\n")')
+    lines.append("      if(total_partial_spikes == 0 then")
+    lines.append("        latency_ns = 0.0")
+    lines.append("      else")
+    lines.append("        latency_ns = -1.0")
+    lines.append("        pass = nil")
+    lines.append('        fprintf(out "FAIL: could not determine full-output latency\\n")')
+    lines.append("      )")
     lines.append("    )")
     lines.append("")
     lines.append("    t0 = 0n")
@@ -630,10 +656,10 @@ def render_neuro_ocean():
     lines.append("    energy_per_op = energy / 112")
     lines.append("    spike_energy_est = total_partial_spikes * 3.27e-12")
     lines.append("")
-    lines.append('    fprintf(out "Stimulus matrices (fixed checkpoint point):\\n")')
-    lines.append('    fprintf(out "  A = [[1 0 1 1] [0 1 1 0] [1 1 0 1] [1 0 0 1]]\\n")')
-    lines.append('    fprintf(out "  B = [[1 1 0 1] [0 1 1 0] [1 0 1 1] [0 1 1 1]]\\n\\n")')
-    lines.append('    fprintf(out "Expected output Y = [[2 2 2 3] [1 1 2 1] [1 3 2 2] [1 2 1 2]]\\n\\n")')
+    lines.append('    fprintf(out "Stimulus matrices:\\n")')
+    lines.append('    fprintf(out "  A = {}\\n")'.format(matrix_line(A)))
+    lines.append('    fprintf(out "  B = {}\\n\\n")'.format(matrix_line(B)))
+    lines.append('    fprintf(out "Expected output Y = {}\\n\\n")'.format(matrix_line(Y)))
     lines.append("")
     lines.append('    fprintf(out "Decoded output from partial products:\\n")')
     for i in range(N):
@@ -686,12 +712,61 @@ def render_neuro_ocean():
     (OCEAN_DIR / "test_matmul4x4_binary_neuro.ocn").write_text("\n".join(lines), encoding="utf-8")
 
 
+def write_metadata(path, density, seed):
+    data = {
+        "n": N,
+        "density": density,
+        "seed": seed,
+        "A": A,
+        "B": B,
+        "Y": Y,
+        "active_products": active_products(Y),
+    }
+    Path(path).write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Generate 4x4 binary matmul checkpoint assets.")
+    parser.add_argument(
+        "--density",
+        type=float,
+        default=None,
+        help="Optional Bernoulli density in [0,1] for random A/B generation.",
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=1,
+        help="Random seed used when --density is provided.",
+    )
+    parser.add_argument(
+        "--metadata-out",
+        default=None,
+        help="Optional path to write generated A/B/Y metadata JSON.",
+    )
+    return parser.parse_args()
+
+
 def main():
+    args = parse_args()
+    if args.density is not None and (args.density < 0.0 or args.density > 1.0):
+        raise SystemExit("--density must be in [0,1]")
+    configure_matrices(args.density, args.seed)
     render_digital_netlist()
     render_digital_ocean()
     render_neuro_netlist()
     render_neuro_ocean()
-    print("Generated 4x4 checkpoint assets.")
+    if args.metadata_out:
+        write_metadata(args.metadata_out, args.density, args.seed)
+    mode = "default-checkpoint" if args.density is None else "random-density"
+    print(
+        "Generated 4x4 checkpoint assets (mode={}, density={}, seed={}, active_products={}).".format(
+            mode,
+            "default" if args.density is None else "{:.4f}".format(args.density),
+            args.seed,
+            active_products(Y),
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -50,3 +50,35 @@ Recent update (2026-02-03):
 - LIF ODE output now reports phase-aware fit metrics and baseline comparison.
 - Energy report now includes per-event variation, CV, and bootstrap CI.
 - Corner-conditioned LIF ODE/energy sweep added (9-point baseline run).
+
+## Sparse Temporal Benchmark (Calibrated, Trace-Driven)
+
+- `sparse_temporal_benchmark_summary.md`
+- `sparse_temporal_benchmark.csv`
+- `sparse_temporal_benchmark_ratio.svg`
+- `sparse_temporal_benchmark_eptp.svg`
+- Uses measured active/idle energy windows from:
+  `competition/sweeps/matmul4x4_crossover/matmul4x4_crossover.csv`
+- Uses neuro detection-quality/latency extraction from:
+  `results/coincidence_detector_test.txt`
+
+Regeneration command:
+
+```bash
+scripts/run_sparse_temporal_benchmark.sh
+```
+
+## Temporal Gradient Learning (Finite Difference)
+
+- `temporal_gradient_learning_summary.md`
+- `temporal_gradient_learning.csv`
+- `temporal_gradient_trace.csv`
+- `temporal_gradient_learning_loss.svg`
+- Uses direct transistor simulations of `neuro_tile4_coupled` with
+  finite-difference gradient updates on trainable physical parameters.
+
+Regeneration command:
+
+```bash
+scripts/run_temporal_gradient_benchmark.sh
+```

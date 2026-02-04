@@ -1,0 +1,116 @@
+; auto-generated metrics extraction for temporal gradient training
+out = outfile("/home/v71349/analog-gradients/competition/sweeps/temporal_gradient_learning/20260204_153516/anchor_probe/trace_02_6.500ns/metrics.txt" "w")
+
+simulator('spectre)
+openResults("/home/v71349/analog-gradients/competition/sweeps/temporal_gradient_learning/20260204_153516/anchor_probe/trace_02_6.500ns/neuro_tile4_coupled.raw")
+selectResult("tran_test-tran")
+
+procedure(countRising(sig th dt tstart tstop)
+  let((cnt ts prev curr)
+    cnt = 0
+    ts = tstart
+    prev = value(sig ts)
+    ts = ts + dt
+    while(ts < tstop
+      curr = value(sig ts)
+      if(prev < th && curr > th then
+        cnt = cnt + 1
+      )
+      prev = curr
+      ts = ts + dt
+    )
+    cnt
+  )
+)
+
+procedure(firstCross(sig th dt tstart tstop)
+  let((ts prev curr frac tcross found)
+    tcross = nil
+    found = nil
+    ts = tstart
+    prev = value(sig ts)
+    ts = ts + dt
+    while(ts < tstop && !found
+      curr = value(sig ts)
+      if(prev < th && curr > th then
+        frac = (th - prev) / (curr - prev)
+        if(frac < 0 then frac = 0)
+        if(frac > 1 then frac = 1)
+        tcross = (ts - dt) + frac * dt
+        found = t
+      )
+      prev = curr
+      ts = ts + dt
+    )
+    tcross
+  )
+)
+
+vspk0 = v("spike0")
+vspk1 = v("spike1")
+vspk2 = v("spike2")
+vspk3 = v("spike3")
+idd = getData("V_VDD:p")
+
+if(vspk0 && vspk1 && vspk2 && vspk3 && idd then
+  dt = 100p
+  t0 = 1n
+  t1 = 300.0n
+
+  s0min = ymin(vspk0)
+  s1min = ymin(vspk1)
+  s2min = ymin(vspk2)
+  s3min = ymin(vspk3)
+  s0max = ymax(vspk0)
+  s1max = ymax(vspk1)
+  s2max = ymax(vspk2)
+  s3max = ymax(vspk3)
+
+  th0 = (s0max + s0min) / 2
+  th1 = (s1max + s1min) / 2
+  th2 = (s2max + s2min) / 2
+  th3 = (s3max + s3min) / 2
+
+  c0 = countRising(vspk0 th0 dt t0 t1)
+  c1 = countRising(vspk1 th1 dt t0 t1)
+  c2 = countRising(vspk2 th2 dt t0 t1)
+  c3 = countRising(vspk3 th3 dt t0 t1)
+
+  f0 = firstCross(vspk0 th0 dt t0 t1)
+  f1 = firstCross(vspk1 th1 dt t0 t1)
+  f2 = firstCross(vspk2 th2 dt t0 t1)
+  f3 = firstCross(vspk3 th3 dt t0 t1)
+
+  energy = 0
+  ts = 0n
+  prev_i = value(idd ts)
+  prev_t = ts
+  ts = ts + dt
+  while(ts <= 300.0n
+    curr_i = value(idd ts)
+    p0 = -prev_i * 1.8
+    p1 = -curr_i * 1.8
+    energy = energy + 0.5 * (p0 + p1) * (ts - prev_t)
+    prev_i = curr_i
+    prev_t = ts
+    ts = ts + dt
+  )
+
+  fprintf(out "status=OK\n")
+  fprintf(out "spike0_count=%d\n" c0)
+  fprintf(out "spike1_count=%d\n" c1)
+  fprintf(out "spike2_count=%d\n" c2)
+  fprintf(out "spike3_count=%d\n" c3)
+
+  if(f0 then fprintf(out "spike0_first_ns=%.9f\n" f0*1e9) else fprintf(out "spike0_first_ns=-1\n"))
+  if(f1 then fprintf(out "spike1_first_ns=%.9f\n" f1*1e9) else fprintf(out "spike1_first_ns=-1\n"))
+  if(f2 then fprintf(out "spike2_first_ns=%.9f\n" f2*1e9) else fprintf(out "spike2_first_ns=-1\n"))
+  if(f3 then fprintf(out "spike3_first_ns=%.9f\n" f3*1e9) else fprintf(out "spike3_first_ns=-1\n"))
+
+  fprintf(out "energy_j=%.12e\n" energy)
+else
+  fprintf(out "status=ERROR\n")
+)
+
+close(out)
+exit()

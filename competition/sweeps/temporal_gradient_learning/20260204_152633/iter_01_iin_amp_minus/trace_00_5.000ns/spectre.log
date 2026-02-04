@@ -1,0 +1,179 @@
+
+Spectre (R) Circuit Simulator
+Version 23.1.0.802.isr17 64bit -- 10 Apr 2025
+Copyright (C) 1989-2025 Cadence Design Systems, Inc. All rights reserved worldwide. Cadence and Spectre are registered trademarks of Cadence Design Systems, Inc. All others are the property of their respective holders.
+
+Includes RSA BSAFE(R) Cryptographic or Security Protocol Software from RSA Security, Inc.
+
+User: v71349   Host: vcl-vm0-159   HostID: 10AC9F79   PID: 2149813
+Memory  available: 13.1727 GB  physical: 16.2294 GB
+Linux   : Rocky Linux release 8.10 (Green Obsidian)
+CPU Type: Intel(R) Xeon(R) Gold 6248R CPU @ 3.00GHz
+All processors running at 2993.0 MHz
+        Socket: Processors
+        0:       0
+        2:       1
+        4:       2
+        6:       3
+        
+System load averages (1min, 5min, 15min) : 31.8 %, 21.0 %, 15.8 %
+This is a virtual machine
+
+
+Simulating `/home/v71349/analog-gradients/competition/sweeps/temporal_gradient_learning/20260204_152633/iter_01_iin_amp_minus/trace_00_5.000ns/neuro_tile4_coupled_train.scs' on vcl-vm0-159 at 3:31:27 PM, Wed Feb 4, 2026 (process id: 2149813).
+Current working directory: /home/v71349/analog-gradients/competition/sweeps/temporal_gradient_learning/20260204_152633/iter_01_iin_amp_minus/trace_00_5.000ns
+Command line:
+    /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/bin/spectre  \
+        -64  \
+        /home/v71349/analog-gradients/competition/sweeps/temporal_gradient_learning/20260204_152633/iter_01_iin_amp_minus/trace_00_5.000ns/neuro_tile4_coupled_train.scs  \
+        -raw neuro_tile4_coupled.raw +log spectre.log
+
+Licensing Information:
+[15:31:27.502681] Configured Lic search path (22.01-s002): 6055@licaccess.cmc.ca
+
+Licensing Information:
+[15:31:28.242064] Periodic Lic check successful
+
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libinfineon_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libphilips_I_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libphilips_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libsparam_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libstmodels_sh.so ...
+Reading file:  /home/v71349/analog-gradients/competition/sweeps/temporal_gradient_learning/20260204_152633/iter_01_iin_amp_minus/trace_00_5.000ns/neuro_tile4_coupled_train.scs
+Reading file:  /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/etc/configs/spectre.cfg
+Time for NDB Parsing: CPU = 66.61 ms, elapsed = 506.579 ms.
+Time accumulated: CPU = 136.806 ms, elapsed = 506.581 ms.
+Peak resident memory used = 174 Mbytes.
+
+Time for Elaboration: CPU = 14.957 ms, elapsed = 15.0859 ms.
+Time accumulated: CPU = 151.834 ms, elapsed = 521.737 ms.
+Peak resident memory used = 182 Mbytes.
+
+
+Time for EDB Visiting: CPU = 654 us, elapsed = 659.943 us.
+Time accumulated: CPU = 152.564 ms, elapsed = 522.47 ms.
+Peak resident memory used = 183 Mbytes.
+
+
+Notice from spectre during initial setup.
+    pch: The saturation channel conductance is zero in the model.  This could result in enormous gain and cause convergence or overflow problems.  Check the value of lambda or kappa.
+    pch: `cgso' is not specified.  0.1um * Cox is used.
+    pch: `cgdo' is not specified.  0.1um * Cox is used.
+    nch: The saturation channel conductance is zero in the model.  This could result in enormous gain and cause convergence or overflow problems.  Check the value of lambda or kappa.
+    nch: `cgso' is not specified.  0.1um * Cox is used.
+    nch: `cgdo' is not specified.  0.1um * Cox is used.
+
+
+Netlist title:
+        // neuro_tile4_coupled.scs - 4-neuron tile with feed-forward coupling
+
+
+Global user options:
+
+Scoped user options:
+
+Circuit inventory:
+              nodes 21
+          capacitor 8     
+               mos1 27    
+           resistor 15    
+            vsource 5     
+
+Analysis and control statement inventory:
+               tran 1     
+
+Output statements:
+             .probe 0     
+           .measure 0     
+               save 1     
+
+
+Notice from spectre during initial setup.
+    pch: The saturation channel conductance is zero in the model.  This could result in enormous gain and cause convergence or overflow problems.  Check the value of lambda or kappa.
+    nch: The saturation channel conductance is zero in the model.  This could result in enormous gain and cause convergence or overflow problems.  Check the value of lambda or kappa.
+
+Time for parsing: CPU = 1.61 ms, elapsed = 10.082 ms.
+Time accumulated: CPU = 154.229 ms, elapsed = 532.607 ms.
+Peak resident memory used = 185 Mbytes.
+
+~~~~~~~~~~~~~~~~~~~~~~
+Pre-Simulation Summary
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+
+******************************************************
+Transient Analysis `tran_test': time = (0 s -> 300 ns)
+******************************************************
+
+Notice from spectre during IC analysis, during transient analysis `tran_test'.
+    Bad pivoting is found during DC analysis. Option dc_pivot_check=yes is recommended for possible improvement of convergence.
+
+Convergence achieved in 12 iterations.
+DC simulation time: CPU = 435 us, elapsed = 441.074 us.
+
+Opening the PSFXL file neuro_tile4_coupled.raw/tran_test.tran.tran ...
+Important parameter values:
+    start = 0 s
+    outputstart = 0 s
+    stop = 300 ns
+    step = 300 ps
+    maxstep = 6 ns
+    ic = all
+    useprevic = no
+    skipdc = no
+    reltol = 1e-03
+    abstol(V) = 1 uV
+    abstol(I) = 1 pA
+    temp = 27 C
+    tnom = 27 C
+    tempeffects = all
+    errpreset = moderate
+    method = traponly
+    lteratio = 3.5
+    relref = sigglobal
+    cmin = 0 F
+    gmin = 1 pS
+
+
+Output and IC/nodeset summary:
+                 save   1       (current)
+                 save   12      (voltage)
+
+......9......8......7......6......5......4......3......2......1......0
+Number of accepted tran steps =             2773
+
+Maximum value achieved for any signal of each quantity: 
+V: V(spike0_n) = 1.8 V
+I: I(V_VDD:p) = 646.8 uA
+If your circuit contains signals of the same quantity that are vastly different in size (such as high voltage circuitry combined with low voltage control circuitry), you should consider specifying global option `bin_relref=yes'.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Post-Transient Simulation Summary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   -   To further speed up simulation, consider
+          add ++aps on command line
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+During simulation, the CPU load for active processors is :
+         0 (1.7 %)       1 (28.8 %)      3 (5.1 %)      
+        Total: 35.6%
+Initial condition solution time: CPU = 457 us, elapsed = 463.963 us.
+Intrinsic tran analysis time:    CPU = 74.809 ms, elapsed = 79.2069 ms.
+Total time required for tran analysis `tran_test': CPU = 76.258 ms, elapsed = 80.6651 ms, util. = 94.5%.
+Time accumulated: CPU = 238.415 ms, elapsed = 623.639 ms.
+Peak resident memory used = 191 Mbytes.
+
+Licensing Information:
+Lic Summary:
+[15:31:28.403337] Cdslmd servers:6055@licaccess.cmc.ca
+[15:31:28.403353] Feature usage summary:
+[15:31:28.403353] Virtuoso_Multi_mode_Simulation
+
+
+Aggregate audit (3:31:28 PM, Wed Feb 4, 2026):
+Time used: CPU = 240 ms, elapsed = 626 ms, util. = 38.2%.
+Time spent in licensing: elapsed = 324 ms, percentage of total = 51.7%.
+Peak memory used = 192 Mbytes.
+Simulation started at: 3:31:27 PM, Wed Feb 4, 2026, ended at: 3:31:28 PM, Wed Feb 4, 2026, with elapsed time (wall clock): 626 ms.
+spectre completes with 0 errors, 0 warnings, and 10 notices.
