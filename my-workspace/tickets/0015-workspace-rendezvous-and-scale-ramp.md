@@ -15,7 +15,7 @@ neuromorphic block integration.
 - [x] Publish workspace rendezvous contract and operating loop
 - [x] Tighten repository hygiene for local scratch/probe artifacts
 - [x] Update full-flow scripts/docs to reflect license-env preconditions by default
-- [ ] Resolve DC `DB-1` target-library path issue for strict full-flow replay
+- [x] Resolve DC `DB-1` target-library path issue for strict full-flow replay
 - [ ] Expand robustness sweeps to `synapse`, `lif_neuron`, and `neuron_tile`
 - [ ] Define and enforce robust PASS bands for expanded sweep set
 - [ ] Propose next larger integration target beyond current 4-neuron compute demos

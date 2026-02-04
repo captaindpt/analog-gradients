@@ -20,43 +20,43 @@ WARNING: Software tree location not set or invalid, using $CALIBRE_HOME=/CMC/too
 //  Entries in /proc/meminfo:
 //
 //  MemTotal:       15849072 kB
-//  MemFree:         3017264 kB
-//  MemAvailable:   11037964 kB
-//  Buffers:            4240 kB
-//  Cached:          6239916 kB
-//  SwapCached:            0 kB
-//  Active:          4040352 kB
-//  Inactive:        5702660 kB
-//  Active(anon):     144692 kB
-//  Inactive(anon):  3619144 kB
-//  Active(file):    3895660 kB
-//  Inactive(file):  2083516 kB
+//  MemFree:         1815424 kB
+//  MemAvailable:   10742568 kB
+//  Buffers:            3272 kB
+//  Cached:          6090308 kB
+//  SwapCached:          580 kB
+//  Active:          4416368 kB
+//  Inactive:        5240272 kB
+//  Active(anon):     142728 kB
+//  Inactive(anon):  3700620 kB
+//  Active(file):    4273640 kB
+//  Inactive(file):  1539652 kB
 //  Unevictable:           0 kB
 //  Mlocked:               0 kB
 //  SwapTotal:      16773116 kB
-//  SwapFree:       16773116 kB
-//  Dirty:               544 kB
+//  SwapFree:       16771568 kB
+//  Dirty:               488 kB
 //  Writeback:             0 kB
-//  AnonPages:       3492388 kB
-//  Mapped:           508316 kB
-//  Shmem:            264996 kB
-//  KReclaimable:    2377988 kB
-//  Slab:            2736452 kB
-//  SReclaimable:    2377988 kB
-//  SUnreclaim:       358464 kB
-//  KernelStack:       11184 kB
-//  PageTables:        51624 kB
+//  AnonPages:       3551604 kB
+//  Mapped:           517716 kB
+//  Shmem:            280304 kB
+//  KReclaimable:    3548620 kB
+//  Slab:            4025068 kB
+//  SReclaimable:    3548620 kB
+//  SUnreclaim:       476448 kB
+//  KernelStack:       11208 kB
+//  PageTables:        57056 kB
 //  NFS_Unstable:          0 kB
 //  Bounce:                0 kB
 //  WritebackTmp:          0 kB
 //  CommitLimit:    24697652 kB
-//  Committed_AS:    4850784 kB
+//  Committed_AS:    4970168 kB
 //  VmallocTotal:   34359738367 kB
-//  VmallocUsed:       64764 kB
+//  VmallocUsed:       64860 kB
 //  VmallocChunk:          0 kB
 //  Percpu:            87040 kB
 //  HardwareCorrupted:     0 kB
-//  AnonHugePages:   1695744 kB
+//  AnonHugePages:   1701888 kB
 //  ShmemHugePages:        0 kB
 //  ShmemPmdMapped:        0 kB
 //  FileHugePages:         0 kB
@@ -67,9 +67,9 @@ WARNING: Software tree location not set or invalid, using $CALIBRE_HOME=/CMC/too
 //  HugePages_Surp:        0
 //  Hugepagesize:       2048 kB
 //  Hugetlb:               0 kB
-//  DirectMap4k:      614208 kB
-//  DirectMap2M:    13803520 kB
-//  DirectMap1G:     2097152 kB
+//  DirectMap4k:      694080 kB
+//  DirectMap2M:    14772224 kB
+//  DirectMap1G:     1048576 kB
 //
 //  User limits:
 //
@@ -90,9 +90,9 @@ WARNING: Software tree location not set or invalid, using $CALIBRE_HOME=/CMC/too
 //  Max file descriptors: 262144
 //  64 bit virtual addressing enabled
 //  Running aok_cal_2025.4_24/pkgs/icv/pvt/calibre -drc -hier /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc_smoke.svrf
-//  Process ID: 1366580
+//  Process ID: 1475309
 //
-//  Starting time: Tue Feb  3 15:34:27 2026
+//  Starting time: Tue Feb  3 19:57:18 2026
 //
 
 --- CALIBRE_* ENVIRONMENT VARIABLES:
@@ -101,14 +101,14 @@ CALIBRE_ATOMIC_LVHEAP=0
 CALIBRE_CMD_LINE='/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv/pvt/calibre  -drc -hier /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc_smoke.svrf'
 CALIBRE_HOME=/CMC/tools/siemens/aok_cal_2025.4_24
 CALIBRE_INITIAL_CMD_LINE='/CMC/tools/siemens/aok_cal_2025.4_24/bin/calibre -drc -hier /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc_smoke.svrf'
-CALIBRE_MTFLEX_LOGTAG=vcl-vm0-159.1366580.2026_0203_1534
+CALIBRE_MTFLEX_LOGTAG=vcl-vm0-159.1475309.2026_0203_1957
 CALIBRE_READDB_LD_LIBRARY_PATH=/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv/julia/1.5/lib/julia:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv/julia/1.5/lib:/CMC/tools/siemens/aok_cal_2025.4_24/shared/pkgs/icv/tools/calibre_client/lib/64:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/calibre_base/lib64:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv_lib/lib64:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv_qt5_comp/plugins:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv_oa/22.41p004/lib/linux_rhel68_gcc44x_64/opt
 CALIBRE_SKIP_OS_CHECKS=
 //  Running on 1 CPU (pending licensing) 
 //
 //
 
---- CALIBRE::DRC-H - Tue Feb  3 15:34:27 2026
+--- CALIBRE::DRC-H - Tue Feb  3 19:57:18 2026
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -148,7 +148,7 @@ CALIBRE_ATOMIC_LVHEAP=0
 CALIBRE_CMD_LINE='/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv/pvt/calibre  -drc -hier /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc_smoke.svrf'
 CALIBRE_HOME=/CMC/tools/siemens/aok_cal_2025.4_24
 CALIBRE_INITIAL_CMD_LINE='/CMC/tools/siemens/aok_cal_2025.4_24/bin/calibre -drc -hier /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc_smoke.svrf'
-CALIBRE_MTFLEX_LOGTAG=vcl-vm0-159.1366580.2026_0203_1534
+CALIBRE_MTFLEX_LOGTAG=vcl-vm0-159.1475309.2026_0203_1957
 CALIBRE_READDB_LD_LIBRARY_PATH=/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv/julia/1.5/lib/julia:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv/julia/1.5/lib:/CMC/tools/siemens/aok_cal_2025.4_24/shared/pkgs/icv/tools/calibre_client/lib/64:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/calibre_base/lib64:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv_lib/lib64:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv_qt5_comp/plugins:/CMC/tools/siemens/aok_cal_2025.4_24/pkgs/icv_oa/22.41p004/lib/linux_rhel68_gcc44x_64/opt
 CALIBRE_SKIP_OS_CHECKS=
 
@@ -199,31 +199,37 @@ CALIBRE_SKIP_OS_CHECKS=
 GDS FILENAME:        /home/v71349/analog-gradients/implementation/fullflow_demo/work/innovus/out/alu4_flow_demo.gds
 GDS VERSION:         5
 LIBRARY NAME:        DesignLib
-LAST MODIFIED:       ON 2026/2/3 AT 15:34:25
-LAST ACCESSED:       ON 2026/2/3 AT 15:34:25
+LAST MODIFIED:       ON 2026/2/3 AT 19:57:16
+LAST ACCESSED:       ON 2026/2/3 AT 19:57:16
 DATABASE PRECISION:  0.001 user units per database unit
 PHYSICAL PRECISION:  1e-09 meters per database unit
 MAGNIFICATION:       1
-SIZE:                21692
+SIZE:                83080
 
 --------------------------------------------------------------------------------
 -----                 GDS INPUT DATA FOR INDIVIDUAL CELLS                  -----
 --------------------------------------------------------------------------------
      CELL NAME                  PLACEMENTS   ARRAYS   POLYGONS    PATHS    TEXTS
 --------------------------------------------------------------------------------
-alu4_flow_demo                          31        0         11       22       33
-M2_M1_1x2_VV_C                           0        0          4        0        0
-M2_M1_1x2_HV_S                           0        0          4        0        0
+alu4_flow_demo                         444        0        134      481      218
+M2_M1_HH                                 0        0          3        0        0
+M3_M2_1x2_VH_N                           0        0          4        0        0
 M2_M1_1x2_HV_N                           0        0          4        0        0
-M3_M2_2x1_VH_W                           0        0          4        0        0
+M3_M2_1x2_VH_S                           0        0          4        0        0
+M2_M1_1x2_VV_S                           0        0          4        0        0
+M2_M1_VV                                 0        0          3        0        0
 M2_M1_2x1_HV_E                           0        0          4        0        0
+M3_M2_2x1_VH_W                           0        0          4        0        0
 M3_M2_2x1_VH_E                           0        0          4        0        0
+M2_M1_1x2_HV_S                           0        0          4        0        0
 M2_M1_1x2_VV_N                           0        0          4        0        0
 M2_M1_HV                                 0        0          3        0        0
-M2_M1_1x2_VV_S                           0        0          4        0        0
+M2_M1_2x1_HH_W                           0        0          4        0        0
+M2_M1_2x1_HV_W                           0        0          4        0        0
 OR2X1                                    0        0         48        2       11
 XOR2X1                                   0        0         70        2       11
 AND2X1                                   0        0         47        2       11
+INVX1                                    0        0         31        2        9
 
 --------------------------------------------------------------------------------
 -----                LAYOUT DATABASE CONSTRUCTOR CONCLUSION                -----
@@ -270,7 +276,7 @@ WRAPUP:                             CPU TIME = 0  REAL TIME = 0
 CONSTRUCTING HIERARCHICAL DATABASE
     COPYING LAYOUT DATABASE
     COPY COMPLETE. CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4
-    (P=31 A=0(0) AX=0(0) AY=0(0) AD=0(0) D=0)
+    (P=444 A=0(0) AX=0(0) AY=0(0) AD=0(0) D=0)
     RULE FILE INFO  A:0 C:0 F:0 L:0 M:0
     CLONE STATE: LCTP(Y/N/U) = U LCRP(Y/N/U) = U LCXP(Y/N/U) = U LCYP(Y/N/U) = U LITHO(0/1/2) = 0 DFM(0/1/2) = 0 MAGXY(0/1) = 0
     PROCESSING TEXT
@@ -278,18 +284,24 @@ CONSTRUCTING HIERARCHICAL DATABASE
     DUPLICATE TEXT ELIMINATION COMPLETE (0 -> 0 = 0). CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4
     ELIMINATING EMPTY CELLS
         alu4_flow_demo
-        M2_M1_1x2_VV_C
+        M2_M1_HH
         M2_M1_1x2_HV_S
-        M2_M1_1x2_HV_N
-        M3_M2_2x1_VH_W
-        M3_M2_2x1_VH_E
-        M2_M1_2x1_HV_E
-        M2_M1_1x2_VV_S
-        M2_M1_1x2_VV_N
+        M3_M2_1x2_VH_N
+        M2_M1_2x1_HV_W
+        M2_M1_VV
+        M3_M2_1x2_VH_S
         M2_M1_HV
-        OR2X1
+        M2_M1_1x2_VV_N
+        M3_M2_2x1_VH_W
+        M2_M1_2x1_HV_E
+        M2_M1_1x2_HV_N
+        M2_M1_1x2_VV_S
+        M3_M2_2x1_VH_E
+        M2_M1_2x1_HH_W
         XOR2X1
         AND2X1
+        OR2X1
+        INVX1
     EMPTY CELL ELIMINATION COMPLETE CPU TIME = 0  REAL TIME = 0  LVHEAP = 1/3/4
     EXPANDING UNIQUE ICV PLACEMENTS
     MERGING TOP/MP LAYER CELLS
@@ -416,7 +428,7 @@ LAYER_OVER_BUMP                        1         Y       0
 LAYER_BUMP_DUPLICATE                   0         Y       0         
 UNUSED_DATA                            1         Y       19        
 MAGNIFICATION_AUTO                     0         Y       0         
-BOX_RECORD                             0         Y       13        
+BOX_RECORD                             0         Y       19        
 CIRCLE                                 2         Y       0         
 CIRCLE_RADIUS_ZERO                     1         Y       0         
 CTRAPEZOID_AREA_ZERO                   1         Y       0         
@@ -424,7 +436,7 @@ CTRAPEZOID_DEGENERATE                  2         Y       0
 TRAPEZOID_AREA_ZERO                    1         Y       0         
 TRAPEZOID_DEGENERATE                   2         Y       0         
 XGEOMETRY_UNSUPPORTED                  2         Y       0         
-NODE_RECORD                            0         Y       13        
+NODE_RECORD                            0         Y       19        
 XELEMENT_UNSUPPORTED                   2         Y       0         
 XNAME_UNSUPPORTED                      2         Y       0         
 PATH_ACUTE                             1         Y       0         
@@ -598,7 +610,7 @@ Cumulative RDB Time: CPU = 0  REAL = 0
 --- TOTAL DENSITY RDB RESULTS GENERATED = 0
 --- DRC RESULTS DATABASE FILE = /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc.results (ASCII)
 
---- CALIBRE::DRC-H COMPLETED - Tue Feb  3 15:34:28 2026
+--- CALIBRE::DRC-H COMPLETED - Tue Feb  3 19:57:19 2026
 --- TOTAL CPU TIME = 0  REAL TIME = 0
 --- PROCESSOR COUNT = 1
 --- SUMMARY REPORT FILE = /home/v71349/analog-gradients/implementation/fullflow_demo/work/calibre/alu4_flow_demo_drc.summary

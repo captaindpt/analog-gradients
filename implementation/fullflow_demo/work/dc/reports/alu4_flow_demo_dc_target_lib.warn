@@ -1,5 +1,0 @@
-DC synthesis reached runtime but target library setup is incompatible (DB-1).
-Current DC_TARGET_LIB:
-  /CMC/kits/cadence/GPDK045/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib
-Fallback gate-level netlist was used:
-  implementation/fullflow_demo/rtl/alu4_flow_demo_fallback_mapped.v

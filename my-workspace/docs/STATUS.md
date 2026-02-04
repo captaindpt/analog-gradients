@@ -1,6 +1,6 @@
 # GPU Building Blocks - Status
 
-**Last Updated:** 2026-02-03
+**Last Updated:** 2026-02-04
 
 ## Build Hierarchy
 
@@ -47,7 +47,8 @@ Build path from verified digital GPU stack to a neuromorphic analog core:
 - License investigation reference:
   `my-workspace/logs/2026-02-03-license-unblock-investigation.md`
   - DC and Calibre license failures are config-fixable in this environment
-  - Current full-flow blocker after license env is DC `DB-1` library-path issue
+  - DC `DB-1` blocker resolved via LC-compiled minimal Liberty DB path
+    (`implementation/fullflow_demo/work/dc/libcache/alu4_min_cells.db`)
 
 ## Milestone: Founder Thesis Activated (2026-02-02)
 
@@ -134,7 +135,7 @@ Audit hardening snapshot:
 | Stage | Toolchain | Status | Target Artifact |
 |-------|-----------|--------|-----------------|
 | Flow strategy and script plan | docs + bash/tcl planning | ✅ | `competition/full-flow-demo-plan.md` |
-| Synthesis smoke test | Synopsys Design Compiler | ⚠️ license env validated; now blocked by `DB-1` library-path issue | mapped netlist + timing reports |
+| Synthesis smoke test | Synopsys Design Compiler | ✅ | mapped netlist + timing reports |
 | Place and route smoke test | Cadence Innovus | ✅ | DEF + routed netlist + GDS + reports |
 | Physical verification smoke test | Siemens Calibre | ✅ with license env configured | DRC smoke summary + logs |
 | Single-command demo orchestration | repo scripts | ✅ | `scripts/run_fullflow_smoke.sh` |
