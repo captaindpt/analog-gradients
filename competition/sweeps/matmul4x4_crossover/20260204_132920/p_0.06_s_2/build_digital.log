@@ -1,0 +1,67 @@
+Cadence IC23.10.140 + Spectre23.10.802 ready
+  virtuoso: /CMC/tools/cadence/IC23.10.140_lnx86/tools.lnx86/dfII/bin/virtuoso
+  ocean:    /CMC/tools/cadence/IC23.10.140_lnx86/tools.lnx86/dfII/bin/ocean
+  spectre:  /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/bin/spectre
+  license:  LM_LICENSE_FILE=<unset> CDS_LIC_FILE=6055@licaccess.cmc.ca
+========================================
+GPU Building Blocks - Build & Test
+========================================
+Run log: /home/v71349/analog-gradients/results/_runlogs/build_matmul4x4_binary_digital_20260204_132938.log
+Run manifest: /home/v71349/analog-gradients/results/_runlogs/build_matmul4x4_binary_digital_20260204_132938.manifest.txt
+
+=== Building matmul4x4_binary_digital ===
+Running Spectre simulation...
+Simulation: OK
+Running OCEAN verification...
+OCEAN runtime errors detected in /home/v71349/analog-gradients/results/matmul4x4_binary_digital/ocean.log
+Verification: FAILED
+> srrWave:0x40652060
+> srrWave:0x40652070
+> srrWave:0x40652080
+> srrWave:0x40652090
+> srrWave:0x406520a0
+> srrWave:0x406520b0
+> srrWave:0x406520c0
+> srrWave:0x406520d0
+> srrWave:0x406520e0
+> srrWave:0x406520f0
+> srrWave:0x40652100
+> srrWave:0x40652110
+> srrWave:0x40652120
+> srrWave:0x40652130
+> srrWave:0x40652140
+> srrWave:0x40652150
+> srrWave:0x40652160
+> srrWave:0x40652170
+> srrWave:0x40652180
+> srrWave:0x40652190
+> srrWave:0x406521a0
+> srrWave:0x406521b0
+> srrWave:0x406521c0
+> srrWave:0x406521d0
+> srrWave:0x406521e0
+> srrWave:0x406521f0
+> srrWave:0x40652200
+> srrWave:0x40652210
+> srrWave:0x40652220
+> srrWave:0x40652230
+> srrWave:0x40652240
+> srrWave:0x40652250
+> srrWave:0x40652260
+> srrWave:0x40652270
+> srrWave:0x40652280
+> srrWave:0x40652290
+> srrWave:0x406522a0
+> srrWave:0x406522b0
+> srrWave:0x406522c0
+> srrWave:0x406522d0
+> srrWave:0x406522e0
+> srrWave:0x406522f0
+> srrWave:0x40652300
+> srrWave:0x40652310
+> srrWave:0x40652320
+> > *Error* fprintf/sprintf: format spec. incompatible with data - "Format is 'Latency to full output-valid: %.3f ns\n', argument #1 is -1"
+> > t
+> Done. Results in: ~/analog-gradients/results/matmul4x4_binary_digital_test.txt
+t
+> 

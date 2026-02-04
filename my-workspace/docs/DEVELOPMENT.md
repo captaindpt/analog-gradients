@@ -81,6 +81,8 @@ Current analysis commands:
 - `./build.sh coincidence_detector` (spike-domain temporal AND compute demo)
 - `./build.sh xor_spike2` (spike-domain XOR compute demo)
 - `./build.sh neuro_tile4_mixed_signal` (digital-enable / analog-propagation smoke)
+- `scripts/run_sparse_temporal_benchmark.sh` (quality-gated sparse event benchmark)
+- `scripts/run_temporal_gradient_benchmark.sh` (finite-difference temporal learning loop)
 
 Reference thesis: `competition/founder-thesis.md`
 

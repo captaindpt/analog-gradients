@@ -1,0 +1,15 @@
+run_id=20260204_163109
+start_utc=2026-02-04T21:31:09Z
+iters=4
+trace_delays_ns=<unset>
+train_trace_delays_ns=5.0,8.0
+holdout_trace_delays_ns=6.5,9.5
+target_mode=absolute
+target_spikes_ns=9.388,11.896,12.985,13.640
+target_shift_ns=1.0,1.0,1.0,1.0
+target_spike_counts=15,15,15,15
+use_anchor_counts=1
+anchor_probe_split=train
+energy_weight=1.0
+energy_weight_start=0.25
+energy_weight_end=1.0

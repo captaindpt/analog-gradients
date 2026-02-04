@@ -1,0 +1,27 @@
+=== Binary 4x4 Matmul (Neuro Path) Verification ===
+Transistor checkpoint: coincidence products + membrane accumulation
+Date: Feb  4 13:51:32 2026
+
+Stimulus matrices:
+  A = [[0 0 0 0] [1 0 0 0] [0 0 0 0] [0 0 0 0]]
+  B = [[0 0 0 0] [0 0 0 0] [0 1 0 0] [0 0 0 1]]
+
+Expected output Y = [[0 0 0 0] [0 0 0 0] [0 0 0 0] [0 0 0 0]]
+
+Decoded output from partial products:
+  row0: 0 0 0 0
+  row1: 0 0 0 0
+  row2: 0 0 0 0
+  row3: 0 0 0 0
+
+Decoded output vector: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+Total partial spikes: 0
+Latency to full output-valid: 0.000 ns
+Total energy (0-120ns): 5.004288e-17 J
+Energy per operation (112 ops): 4.468114e-19 J/op
+Spike-model energy estimate (3.27 pJ/spike): 0.000000e+00 J
+
+OK: decoded outputs match expected 4x4 matrix
+
+=== PASS: Binary 4x4 neuro matmul checkpoint verified ===

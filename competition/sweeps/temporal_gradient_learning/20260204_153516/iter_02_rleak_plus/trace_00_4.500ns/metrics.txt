@@ -1,0 +1,10 @@
+status=OK
+spike0_count=15
+spike1_count=15
+spike2_count=15
+spike3_count=15
+spike0_first_ns=9.274888523
+spike1_first_ns=11.847398567
+spike2_first_ns=12.820328563
+spike3_first_ns=13.333163950
+energy_j=1.328335169902e-10

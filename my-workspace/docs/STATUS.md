@@ -45,6 +45,11 @@ Build path from verified digital GPU stack to a neuromorphic analog core:
     `competition/analysis/matmul_binary_scaling_summary.md`
   - 4x4 transistor checkpoint run published:
     `competition/analysis/matmul4x4_binary_comparison.md`
+  - 4x4 sparse crossover sweep (measured) published:
+    `competition/analysis/matmul4x4_crossover_summary.md`
+- Temporal gradient learning loop (ticket 0017) 🔄
+  - Hardened finite-difference benchmark runs published (train+holdout):
+    `competition/analysis/temporal_gradient_learning_summary.md`
 
 ## Workspace Rendezvous (2026-02-03)
 
@@ -214,6 +219,15 @@ Full-flow smoke evidence:
 - Added transistor checkpoint harness for `N=4`:
   - `scripts/generate_matmul4x4_checkpoint_assets.py`
   - `scripts/run_matmul4x4_binary_comparison.sh`
+- Added sparse measured crossover harness (`N=4`):
+  - `scripts/run_matmul4x4_crossover_sweep.sh`
+- Added neuro `iin_amp` tuning harness (sparse fixed point):
+  - `scripts/sweep_matmul4x4_neuro_iin.sh`
+- Added sparse temporal benchmark harness (quality-gated, trace-driven):
+  - `scripts/run_sparse_temporal_benchmark.sh`
+  - `scripts/analyze_sparse_temporal_benchmark.py`
+- Updated 4x4 neuro source model to binary-product-gated injection in generator:
+  - `scripts/generate_matmul4x4_checkpoint_assets.py`
 - Latest sweep artifacts:
   - `competition/sweeps/matmul_binary_scaling_sweep.csv`
   - `competition/analysis/matmul_binary_scaling_summary.md`
@@ -222,9 +236,64 @@ Full-flow smoke evidence:
 - Latest `N=4` measured comparison:
   - `competition/analysis/matmul4x4_binary_comparison.md`
   - `competition/analysis/matmul4x4_binary_comparison.csv`
+- Latest `N=4` sparse measured sweep:
+  - `competition/sweeps/matmul4x4_crossover/matmul4x4_crossover.csv`
+  - `competition/analysis/matmul4x4_crossover_summary.md`
+  - `competition/analysis/matmul4x4_crossover_regime_summary.md`
+- Latest sparse-point neuro tuning sweep:
+  - `competition/analysis/matmul4x4_neuro_iin_sweep.csv`
+  - `competition/analysis/matmul4x4_neuro_iin_sweep_summary.md`
+- Latest sparse temporal benchmark artifacts:
+  - `competition/analysis/sparse_temporal_benchmark_summary.md`
+  - `competition/analysis/sparse_temporal_benchmark.csv`
+  - `competition/analysis/sparse_temporal_benchmark_ratio.svg`
+  - `competition/analysis/sparse_temporal_benchmark_eptp.svg`
 - Scope caveat:
   - sweep curves are still model-extrapolated for larger `N`; measured transistor
     checkpoints currently cover `N=2` and `N=4`, with `N=8` pending.
+  - measured sparse `N=4` sweep currently shows no active-point crossover;
+    this reveals substantial neuro static/event overhead not captured by simple
+    spike-count-only model extrapolation.
+  - sparse fixed-point `iin_amp` reduction lowers neuro energy but also collapses
+    spike activity/decoder correctness before approaching digital-energy parity.
+  - product-gated source update reduced dense 4x4 neuro energy (about 30% drop
+    vs prior checkpoint), but active-point sparse crossover is still not observed.
+  - sparse temporal benchmark currently predicts crossover at extreme idle duty
+    cycle (`~0.0085%` active windows), consistent with measured regime split;
+    this is a calibrated trace model, not yet a transistor detector-vs-detector
+    matched pair.
+
+## Temporal Gradient Learning (Ticket 0017)
+
+- Added finite-difference trainer:
+  - `scripts/train_temporal_gradient_loop.py`
+- Added benchmark runner:
+  - `scripts/run_temporal_gradient_benchmark.sh`
+- Objective/optimizer hardening after review:
+  - `target_mode=absolute` promoted to default for headline runs
+  - `target_mode=measured_anchor_shift` retained for dev/debug only
+  - holdout leakage reduced: anchor probing now defaults to train-only delays
+  - count mismatch loss (`abs(actual_count-expected_count)`)
+  - magnitude-sensitive ordering loss (`violation^2`)
+  - finite-difference denominator uses actual perturbation span at bounds
+  - normalized-gradient update rule (less clip-dominated behavior)
+  - normalized energy weighting (`energy_weight * energy/energy_ref`) with optional schedule
+  - per-term loss contribution percentages now logged per iteration
+- Latest artifacts:
+  - `competition/analysis/temporal_gradient_learning.csv`
+  - `competition/analysis/temporal_gradient_trace.csv`
+  - `competition/analysis/temporal_gradient_learning_summary.md`
+  - `competition/analysis/temporal_gradient_learning_loss.svg`
+- Latest run archive:
+  - `competition/sweeps/temporal_gradient_learning/20260204_155533/`
+- Current method-demo result (`ITERS=6`):
+  - train loss `3.008759 -> 2.290754`, holdout loss `2.991241 -> 2.276373`
+  - final penalties remained zero for this sampled delay family.
+- Scope caveat:
+  - this is currently a **method demo** on `neuro_tile4_coupled`, not yet an
+    externally valid benchmark.
+  - **externally valid benchmark pending:** train/val/test over pattern families,
+    plus matched digital temporal-detector baseline under identical scoring.
 
 ## Level 5: CMOS Primitives ✅
 

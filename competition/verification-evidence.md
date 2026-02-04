@@ -32,6 +32,8 @@ python3 scripts/analyze_lif_ode_fit.py
 python3 scripts/analyze_temporal_sensitivity.py
 scripts/analyze_lif_energy.sh
 scripts/run_lif_corner_evidence.sh
+scripts/run_sparse_temporal_benchmark.sh
+scripts/run_temporal_gradient_benchmark.sh
 ```
 
 ## Verified Artifacts
@@ -101,6 +103,8 @@ scripts/run_lif_corner_evidence.sh
 - Computation demo summaries:
   - `results/coincidence_detector_test.txt`
   - `results/xor_spike2_test.txt`
+  - `competition/analysis/sparse_temporal_benchmark_summary.md`
+  - `competition/analysis/temporal_gradient_learning_summary.md`
 
 Computation-demo highlight (temporal AND / coincidence):
 - A-only -> `0` spikes
