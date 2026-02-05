@@ -1,0 +1,13 @@
+{
+  "n": 4,
+  "mode": "random",
+  "min": -1.0,
+  "max": 1.0,
+  "step": 0.5,
+  "samples": 64,
+  "seed": 7,
+  "temperature": 1.0,
+  "quantize_bits": 8,
+  "vectors": 64,
+  "csv": "competition/data/nonlinearity/softmax_vectors_n4.csv"
+}
