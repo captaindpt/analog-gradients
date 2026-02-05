@@ -356,7 +356,7 @@ def evaluate_trace(
     rc = run_cmd(
         [
             "spectre",
-            str(netlist_path),
+            str(netlist_path.name),
             "-raw",
             str(raw_dir.name),
             "+log",
@@ -632,7 +632,7 @@ def main() -> None:
     parser.add_argument("--count-penalty", type=float, default=12.0)
     parser.add_argument("--order-penalty", type=float, default=35.0)
     parser.add_argument("--order-margin-ns", type=float, default=0.20)
-    parser.add_argument("--energy-weight", type=float, default=1.0)
+    parser.add_argument("--energy-weight", type=float, default=0.03)
     parser.add_argument("--energy-weight-start", type=float, default=None)
     parser.add_argument("--energy-weight-end", type=float, default=None)
 
@@ -721,7 +721,7 @@ def main() -> None:
 
     source_netlist_text = args.netlist_source.read_text(encoding="utf-8")
 
-    out_dir = args.out_dir
+    out_dir = args.out_dir.resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
     eval_csv_path = out_dir / "temporal_gradient_learning.csv"
@@ -1125,6 +1125,10 @@ def main() -> None:
     summary_lines.append("")
     summary_lines.append("Finite-difference learning on transistor simulations (`neuro_tile4_coupled`).")
     summary_lines.append("")
+    summary_lines.append("Claim scope:")
+    summary_lines.append("- Classification: **method demo** (internal objective + limited delay-family generalization).")
+    summary_lines.append("- Not yet an externally valid benchmark against matched digital training/eval protocol.")
+    summary_lines.append("")
     summary_lines.append("Training objective:")
     summary_lines.append("- Match target first-spike times across trace delays.")
     summary_lines.append("- Penalize missing spikes and ordering violations.")
@@ -1136,7 +1140,10 @@ def main() -> None:
     summary_lines.append(f"- train trace delays (ns): `{','.join(f'{x:.3f}' for x in train_trace_delays_ns)}`")
     summary_lines.append(f"- holdout trace delays (ns): `{','.join(f'{x:.3f}' for x in holdout_trace_delays_ns) if holdout_trace_delays_ns else 'none'}`")
     summary_lines.append(f"- base target spikes (ns): `{','.join(f'{x:.3f}' for x in target_base)}`")
-    summary_lines.append(f"- target shift (ns): `{','.join(f'{x:.3f}' for x in target_shift)}`")
+    if args.target_mode == "measured_anchor_shift":
+        summary_lines.append(f"- target shift (ns): `{','.join(f'{x:.3f}' for x in target_shift)}`")
+    else:
+        summary_lines.append("- target shift (ns): `n/a (absolute mode)`")
     summary_lines.append(f"- target spike counts: `{','.join(str(x) for x in target_counts)}`")
     summary_lines.append(
         f"- penalties: missing=`{args.missing_penalty_ns2}`, count_weight=`{args.count_penalty}`, "

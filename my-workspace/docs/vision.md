@@ -83,7 +83,8 @@ Before any packaging/bureaucracy work, the technical bar is:
 2. **Robustness evidence**, not only nominal-point PASS (sweeps, jitter tolerance, clear PASS bands).
 3. **Eye-popping compute proof** at behavior level (coincidence + XOR + mixed-signal gating with reproducible data).
 4. **Comparative credibility** against a digital baseline on at least one clear metric (energy/latency/task behavior).
-5. **Single-command replay** for judges (`./build.sh all` plus scripted evidence regeneration).
+5. **Nonlinearity benchmark**: analog softmax vs digital softmax on matched inputs.
+6. **Single-command replay** for judges (`./build.sh all` plus scripted evidence regeneration).
 
 ## Key References
 

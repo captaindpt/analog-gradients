@@ -47,3 +47,31 @@ Loading exportDie.cxt
 Loading dal.cxt 
 Loading awv.cxt 
 Loading vdsil.cxt 
+Loading analog.cxt 
+Loading asimenv.cxt 
+Loading spectrei.cxt 
+Loading adexlCore.cxt 
+Loading socket.cxt 
+Loading par.cxt 
+Loading alvs.cxt 
+Loading caa.cxt 
+Loading amps.cxt 
+Loading adexl.cxt 
+Loading te.cxt 
+Loading schHDL.cxt 
+Loading devCheck.cxt 
+Loading relXpert.cxt 
+Loading simui.cxt 
+spectre
+> "/home/v71349/analog-gradients/competition/sweeps/temporal_gradient_learning/20260204_163109/iter_03_iin_amp_plus/trace_01_8.000ns/neuro_tile4_coupled.raw"
+> stdobj@0x3ef1e038
+> > countRising
+> > firstCross
+> > srrWave:0x3f4f9020
+> srrWave:0x3f4f9030
+> srrWave:0x3f4f9040
+> srrWave:0x3f4f9050
+> srrWave:0x3f4f9060
+> > t
+> > t
+> 

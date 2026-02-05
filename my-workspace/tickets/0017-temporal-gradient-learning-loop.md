@@ -35,15 +35,21 @@ parameter updates are driven by measured timing loss from transistor runs.
 - Added runner:
   - `scripts/run_temporal_gradient_benchmark.sh`
 - Hardened learning objective after review:
-  - added `target_mode=measured_anchor_shift` to avoid unreachable timing targets
+  - promoted `target_mode=absolute` as default for headline runs
+  - kept `target_mode=measured_anchor_shift` as explicit dev/debug mode
+  - default absolute targets now come from measured coupled-tile verification regime
   - count penalty now uses absolute count mismatch vs expected counts
   - ordering penalty now scales with inversion magnitude squared
   - finite-difference gradient denominator now uses actual perturbed span at bounds
   - update rule now uses normalized gradients (avoids repeated clip-dominated steps)
   - energy term now uses normalized weight/reference (no longer negligible by default)
+  - added optional energy-weight schedule (`energy_weight_start/end`)
+  - added per-term contribution percentages (timing/count/order/energy) in CSV + summary
 - Added train/holdout generalization split:
   - independent `train_trace_delays` and `holdout_trace_delays`
   - per-iteration holdout loss logging in eval CSV + summary
+  - anchor probe now defaults to train-only delays (`anchor_probe_split=train`)
+    to avoid holdout leakage in `measured_anchor_shift` mode
 - Ran extended benchmark with stronger trace batch:
   - command:
     `ITERS=6 TRAIN_TRACE_DELAYS_NS=4.5,5.5,7.5 HOLDOUT_TRACE_DELAYS_NS=6.5,9.0,10.5 scripts/run_temporal_gradient_benchmark.sh`
@@ -60,11 +66,20 @@ parameter updates are driven by measured timing loss from transistor runs.
   - `competition/analysis/temporal_gradient_learning_summary.md`
   - `competition/analysis/temporal_gradient_learning_loss.svg`
 - Latest run archive:
-  - `competition/sweeps/temporal_gradient_learning/20260204_155533/`
+  - `competition/sweeps/temporal_gradient_learning/20260204_183829/`
 - Current outcome:
-  - finite-difference updates reduced objective in benchmark runs (`ITERS=2`, `ITERS=6`)
-  - no missing-spike, count-mismatch, or ordering penalties in latest final point
-  - both train and holdout losses decreased; final generalization gap stayed small.
+  - absolute-target run (`ENERGY_WEIGHT=0.03`) reduced objective with blind holdout:
+    - train `0.098085 -> 0.095554`
+    - holdout `0.096863 -> 0.095044`
+  - latest run shows timing-dominant contribution (`~69% timing / ~31% energy`)
+  - no missing-spike, count-mismatch, or ordering penalties in latest final point.
+- Penalty activation stress checks (to verify hardening is exercised):
+  - count mismatch stress (`target_spike_counts=1,1,1,1`):
+    `competition/sweeps/temporal_gradient_learning/20260204_185340_count_stress3/`
+    (count penalty active at `672.0`).
+  - order stress (`order_margin_ns=5.0`):
+    `competition/sweeps/temporal_gradient_learning/20260204_185702_order_stress/`
+    (order penalty active at `1481.4` and reduced after one update).
 
 ## Notes
 

@@ -19,6 +19,8 @@ This folder contains supporting reference notes.
 - `Cadence/CHINA_INFRASTRUCTURE_INSIGHTS.md`: motivation/thesis context (archival).
 - `BINARY_MATMUL_PROOF_PLAN.md`: binary 2x2 matmul proof architecture
   and comparison method (digital vs neuro).
+- `NONLINEARITY_COMPARISON_PLAN.md`: analog vs digital nonlinearity benchmark
+  protocol (softmax/exp/sum/div).
 
 ## Manufacturing-Readiness Goals
 

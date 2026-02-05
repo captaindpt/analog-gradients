@@ -1,0 +1,38 @@
+// softmax4_digital_toy.scs - Toy digital softmax baseline (behavioral)
+// NOTE: Development-only. Output is behavioral; power is modeled by idigital.
+
+simulator lang=spectre
+
+parameters vdd_val=1.8
+parameters in0=0 in1=0 in2=0 in3=0
+parameters kexp=2.0 eps=1e-12
+parameters idigital=1m
+
+// Toy MOS models (unused by behavioral sources, kept for consistency)
+model nch mos1 type=n vto=0.0 kp=120u
+model pch mos1 type=p vto=0.0 kp=40u
+
+V_VDD (vdd 0) vsource dc=vdd_val
+
+// Input voltages (logits)
+V_IN0 (vin0 0) vsource dc=in0
+V_IN1 (vin1 0) vsource dc=in1
+V_IN2 (vin2 0) vsource dc=in2
+V_IN3 (vin3 0) vsource dc=in3
+
+// Idealized digital power draw (placeholder)
+I_DIG (vdd 0) isource dc=idigital
+
+// Behavioral outputs (ideal softmax)
+BOUT0 (out0 0) bsource v=exp(kexp*V(vin0))/(exp(kexp*V(vin0))+exp(kexp*V(vin1))+exp(kexp*V(vin2))+exp(kexp*V(vin3))+eps)
+BOUT1 (out1 0) bsource v=exp(kexp*V(vin1))/(exp(kexp*V(vin0))+exp(kexp*V(vin1))+exp(kexp*V(vin2))+exp(kexp*V(vin3))+eps)
+BOUT2 (out2 0) bsource v=exp(kexp*V(vin2))/(exp(kexp*V(vin0))+exp(kexp*V(vin1))+exp(kexp*V(vin2))+exp(kexp*V(vin3))+eps)
+BOUT3 (out3 0) bsource v=exp(kexp*V(vin3))/(exp(kexp*V(vin0))+exp(kexp*V(vin1))+exp(kexp*V(vin2))+exp(kexp*V(vin3))+eps)
+
+C_OUT0 (out0 0) capacitor c=1p
+C_OUT1 (out1 0) capacitor c=1p
+C_OUT2 (out2 0) capacitor c=1p
+C_OUT3 (out3 0) capacitor c=1p
+
+tran_test tran stop=50n
+save vin0 vin1 vin2 vin3 out0 out1 out2 out3 vdd V_VDD:p

@@ -1,6 +1,6 @@
 # GPU Building Blocks - Status
 
-**Last Updated:** 2026-02-04
+**Last Updated:** 2026-02-05
 
 ## Build Hierarchy
 
@@ -37,6 +37,9 @@ Build path from verified digital GPU stack to a neuromorphic analog core:
 - Founder-thesis evidence track (clockless continuous-time compute): activated 🔄
 - Analog robustness expansion (`synapse`, `lif_neuron`, `neuron_tile`) ✅ COMPLETE
   - Bundle summary: `competition/sweeps/robustness_summary.md`
+- Workspace rendezvous scale-ramp planning (ticket 0015) ✅ COMPLETE
+  - Follow-on target ticket:
+    `my-workspace/tickets/0018-neuro-tile16-hierarchical-integration.md`
 - Binary 2x2 architecture comparison demo (ticket 0016) 🔄
   - Neuro path proof v0 PASS: `results/matmul2x2_binary_neuro_test.txt`
   - Two-substrate comparison run published:
@@ -50,12 +53,23 @@ Build path from verified digital GPU stack to a neuromorphic analog core:
 - Temporal gradient learning loop (ticket 0017) 🔄
   - Hardened finite-difference benchmark runs published (train+holdout):
     `competition/analysis/temporal_gradient_learning_summary.md`
+- Next-scale hierarchical integration target (ticket 0018) 🔄
+  - Planned block: `neuro_tile16_hier`
+  - Planned verifier: `ocean/test_neuro_tile16_hier.ocn`
+- Analog vs digital nonlinearity benchmark (ticket 0019) 🔄
+  - Protocol: `my-workspace/docs/reference/NONLINEARITY_COMPARISON_PLAN.md`
+  - Vector set: `competition/data/nonlinearity/softmax_vectors_n4.csv`
+  - Harness: `scripts/run_nonlinearity_vector_benchmark.py`
+  - Toy softmax netlists: `netlists/softmax4_analog_toy.scs`, `netlists/softmax4_digital_toy.scs`
+  - Runner: `scripts/run_softmax4_nonlinearity_benchmark.sh`
 
 ## Workspace Rendezvous (2026-02-03)
 
 - Operating contract added: `my-workspace/docs/RANDEZVOUS.md`
-- New integration ticket opened:
+- Rendezvous ticket completed:
   `my-workspace/tickets/0015-workspace-rendezvous-and-scale-ramp.md`
+- Next-scale integration ticket opened:
+  `my-workspace/tickets/0018-neuro-tile16-hierarchical-integration.md`
 - Workspace hygiene tightened for local probe/scratch artifacts in `.gitignore`
 - Full-flow scripts now auto-seed Synopsys/Siemens license env defaults:
   `scripts/setup_fullflow_licenses.sh`
@@ -285,10 +299,16 @@ Full-flow smoke evidence:
   - `competition/analysis/temporal_gradient_learning_summary.md`
   - `competition/analysis/temporal_gradient_learning_loss.svg`
 - Latest run archive:
-  - `competition/sweeps/temporal_gradient_learning/20260204_155533/`
-- Current method-demo result (`ITERS=6`):
-  - train loss `3.008759 -> 2.290754`, holdout loss `2.991241 -> 2.276373`
+  - `competition/sweeps/temporal_gradient_learning/20260204_183829/`
+- Current method-demo result (`ITERS=4`, `target_mode=absolute`, `energy_weight=0.03`):
+  - train loss `0.098085 -> 0.095554`, holdout loss `0.096863 -> 0.095044`
+  - final loss composition: timing `~68.6%`, energy `~31.4%`, count/order `0%`
   - final penalties remained zero for this sampled delay family.
+- Penalty activation checks:
+  - count mismatch stress archive:
+    `competition/sweeps/temporal_gradient_learning/20260204_185340_count_stress3/`
+  - order-margin stress archive:
+    `competition/sweeps/temporal_gradient_learning/20260204_185702_order_stress/`
 - Scope caveat:
   - this is currently a **method demo** on `neuro_tile4_coupled`, not yet an
     externally valid benchmark.

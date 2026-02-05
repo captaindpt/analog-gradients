@@ -36,20 +36,23 @@ simulations.
 ## Latest Run
 
 - Command:
-  - `ITERS=6 TRAIN_TRACE_DELAYS_NS=4.5,5.5,7.5 HOLDOUT_TRACE_DELAYS_NS=6.5,9.0,10.5 scripts/run_temporal_gradient_benchmark.sh`
+  - `ITERS=4 ENERGY_WEIGHT=0.03 scripts/run_temporal_gradient_benchmark.sh`
 - Archive:
-  - `competition/sweeps/temporal_gradient_learning/20260204_155533/`
+  - `competition/sweeps/temporal_gradient_learning/20260204_183829/`
 - Outcome:
-  - train objective: `3.008759 -> 2.290754` over 6 iterations
-  - holdout objective: `2.991241 -> 2.276373` (generalization gap stayed small: `-0.014381`)
-  - final point had no missing/count/order penalties with reachable targets
-  - mean train energy term decreased (energy from `134.527 pJ` to `127.563 pJ`).
+  - absolute-target objective: `0.098085 -> 0.095554` over 4 iterations
+  - holdout objective: `0.096863 -> 0.095044` (gap: `-0.000510`)
+  - final point had no missing/count/order penalties
+  - term mix stayed timing-dominant (`~68.6% timing`, `~31.4% energy`).
+  - summary now explicitly labels claim scope as method demo.
 
 ## Post-Review Fixes Applied
 
 - Targeting:
-  - added `target_mode=measured_anchor_shift` so training targets are anchored
-    to measured baseline timings of this block, then shifted by configurable deltas.
+  - default mode switched to `target_mode=absolute` for headline runs.
+  - `measured_anchor_shift` retained for development/debug.
+  - default absolute targets set to measured coupled-tile regime
+    (`9.388,11.896,12.985,13.640 ns` at base delay).
 - Count loss:
   - changed from only `count < 1` penalty to explicit count-mismatch penalty
     (`abs(actual - expected)` per channel).
@@ -65,9 +68,29 @@ simulations.
 - Energy weighting:
   - replaced near-zero raw lambda with normalized energy term:
     `energy_weight * (energy_pJ / energy_ref_pJ)`.
+  - added optional schedule (`--energy-weight-start/--energy-weight-end`) and
+    per-iteration contribution percentages in reports.
 - Generalization split:
   - added separate train/holdout delay sets and per-iteration holdout-loss
     reporting in summary + CSV.
+  - anchor probing now defaults to train-only delays (`anchor_probe_split=train`)
+    to prevent holdout leakage in adaptive-target mode.
+- Runtime robustness:
+  - fixed relative `--out-dir` handling (Spectre netlist path + out-dir normalization)
+    so direct trainer invocation works from relative and absolute output paths.
+
+## Penalty Stress Checks (Post-Hardening)
+
+- Count-penalty activation run:
+  - command: `... --target-spike-counts 1,1,1,1 --iters 1`
+  - archive:
+    `competition/sweeps/temporal_gradient_learning/20260204_185340_count_stress3/`
+  - result: count penalty active (`672.0`) and dominates objective as expected.
+- Order-penalty activation run:
+  - command: `... --order-margin-ns 5.0 --iters 1`
+  - archive:
+    `competition/sweeps/temporal_gradient_learning/20260204_185702_order_stress/`
+  - result: order penalty active (`~1481.4`) and reduced after one update.
 
 ## Caveat
 

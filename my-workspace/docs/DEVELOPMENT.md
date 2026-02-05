@@ -86,6 +86,20 @@ Current analysis commands:
 
 Reference thesis: `competition/founder-thesis.md`
 
+## Nonlinearity Benchmark Workflow (Analog vs Digital)
+
+Goal: compare analog vs digital softmax using matched inputs with energy,
+latency, and accuracy metrics.
+
+1. Generate vector set:
+   - `python3 scripts/generate_softmax_vectors.py --n 4 --mode random --samples 64`
+2. Run benchmark harness (per-vector CSV output):
+   - `python3 scripts/run_nonlinearity_vector_benchmark.py --help`
+3. Publish summary under `competition/analysis/`.
+
+Protocol reference:
+`my-workspace/docs/reference/NONLINEARITY_COMPARISON_PLAN.md`
+
 ### Current Smoke Command Set
 
 - Stage-by-stage:

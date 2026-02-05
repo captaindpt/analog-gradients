@@ -1,6 +1,6 @@
 # 0015: Workspace Rendezvous and Scale Ramp
 
-**Status:** In Progress
+**Status:** Complete
 **Priority:** High
 **Created:** 2026-02-03
 
@@ -18,7 +18,7 @@ neuromorphic block integration.
 - [x] Resolve DC `DB-1` target-library path issue for strict full-flow replay
 - [x] Expand robustness sweeps to `synapse`, `lif_neuron`, and `neuron_tile`
 - [x] Define and enforce robust PASS bands for expanded sweep set
-- [ ] Propose next larger integration target beyond current 4-neuron compute demos
+- [x] Propose next larger integration target beyond current 4-neuron compute demos
 
 ## Acceptance Criteria
 
@@ -44,3 +44,6 @@ neuromorphic block integration.
 - 2026-02-04: Enforced pass-band based `overall_pass` for expanded sweeps and
   regenerated bundle evidence:
   - `competition/sweeps/robustness_summary.md`
+- 2026-02-05: Defined next-scale integration target as ticket 0018 with
+  concrete netlist + verifier plan:
+  - `my-workspace/tickets/0018-neuro-tile16-hierarchical-integration.md`

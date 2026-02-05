@@ -43,6 +43,7 @@ scripts/run_fullflow_smoke.sh
 - `my-workspace/tickets/0009-neurocore-robustness-sweeps.md`
 - `my-workspace/tickets/0010-transistor-to-gds-demo-bringup.md`
 - `my-workspace/tickets/0011-competition-paper-workthrough.md`
-- `my-workspace/tickets/0015-workspace-rendezvous-and-scale-ramp.md`
 - `my-workspace/tickets/0016-binary-matmul-architecture-comparison.md`
 - `my-workspace/tickets/0017-temporal-gradient-learning-loop.md`
+- `my-workspace/tickets/0018-neuro-tile16-hierarchical-integration.md`
+- `my-workspace/tickets/0019-analog-vs-digital-nonlinearity-comparison.md`
