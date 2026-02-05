@@ -95,6 +95,9 @@ latency, and accuracy metrics.
    - `python3 scripts/generate_softmax_vectors.py --n 4 --mode random --samples 64`
 2. Run benchmark harness (per-vector CSV output):
    - `python3 scripts/run_nonlinearity_vector_benchmark.py --help`
+3. Run end-to-end softmax4 harness:
+   - `scripts/run_softmax4_nonlinearity_benchmark.sh` (toy)
+   - `MODEL_CLASS=pdk scripts/run_softmax4_nonlinearity_benchmark.sh` (GPDK180)
 3. Publish summary under `competition/analysis/`.
 
 Protocol reference:

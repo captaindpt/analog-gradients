@@ -62,6 +62,7 @@ Build path from verified digital GPU stack to a neuromorphic analog core:
   - Harness: `scripts/run_nonlinearity_vector_benchmark.py`
   - Toy softmax netlists: `netlists/softmax4_analog_toy.scs`, `netlists/softmax4_digital_toy.scs`
   - Runner: `scripts/run_softmax4_nonlinearity_benchmark.sh`
+  - GPDK180 netlists: `netlists/softmax4_analog_gpdk180.scs`, `netlists/softmax4_digital_gpdk180.scs`
 
 ## Workspace Rendezvous (2026-02-03)
 

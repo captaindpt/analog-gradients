@@ -18,6 +18,10 @@ the repo as a proper testbed for energy/latency/accuracy comparisons.
   - `netlists/softmax4_analog_toy.scs`
   - `netlists/softmax4_digital_toy.scs`
   - `scripts/run_softmax4_nonlinearity_benchmark.sh`
+- Added GPDK180-compatible softmax netlists:
+  - `netlists/softmax4_analog_gpdk180.scs`
+  - `netlists/softmax4_digital_gpdk180.scs`
+- Benchmark harness now supports output scaling/inversion for PDK runs.
 - Generated initial softmax vector set (N=4, 64 samples):
   - `competition/data/nonlinearity/softmax_vectors_n4.csv`
   - `competition/data/nonlinearity/softmax_vectors_n4.json`

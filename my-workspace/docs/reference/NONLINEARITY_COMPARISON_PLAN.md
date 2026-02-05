@@ -57,6 +57,12 @@ Minimum:
 - RMSE per vector (optional).
 - Pass/fail threshold explicitly defined (e.g., `L∞ <= 0.02`).
 
+### Output Scaling
+
+For current-mode analog outputs, apply a documented linear transform:
+`p_i = scale * (offset - v_out_i)` or `scale * (v_out_i - offset)` to map
+to probability space. Scaling must be declared in run metadata.
+
 ## Model-Fidelity Gate
 
 Results are only **claimable** if the analog path uses a real CMOS PDK
