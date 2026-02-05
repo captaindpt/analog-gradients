@@ -87,12 +87,16 @@ def build_metrics_ocn(
     energy_dt_ps: float,
     vdd_node: str,
     vdd_source: str,
+    output_scale: float,
+    output_offset: float,
+    output_invert: bool,
     latency_tol: Optional[float],
     latency_hold_ns: float,
 ) -> str:
-    node_lines = "\n".join([f'vout{i} = v("{n}")' for i, n in enumerate(output_nodes)])
+    node_lines = "\n".join([f'vraw{i} = v("{n}")' for i, n in enumerate(output_nodes)])
     out_lines = []
     for i, _ in enumerate(output_nodes):
+        out_lines.append(f'  fprintf(out "raw{i}=%.9f\\n" value(vraw{i} t_eval))')
         out_lines.append(f'  fprintf(out "out{i}=%.9f\\n" value(vout{i} t_eval))')
     target_lines = ""
     latency_proc = ""
@@ -138,6 +142,12 @@ procedure(firstWithin(sig targ tol dt tstart tstop hold_ns)
             + [f'  fprintf(out "lat{i}_ns=%.9f\\n" lat{i}*1e9)' for i, _ in enumerate(output_nodes)]
         )
 
+    transform_lines = ["  scale = {}".format(output_scale), "  offset = {}".format(output_offset)]
+    if output_invert:
+        transform_lines += [f"  vout{i} = scale * (offset - vraw{i})" for i in range(len(output_nodes))]
+    else:
+        transform_lines += [f"  vout{i} = scale * (vraw{i} - offset)" for i in range(len(output_nodes))]
+
     return f"""; auto-generated nonlinearity metrics extraction
 out = outfile("{out_file.as_posix()}" "w")
 
@@ -149,7 +159,7 @@ selectResult("tran_test-tran")
 idd = getData("{vdd_source}:p")
 vvdd = v("{vdd_node}")
 
-if({ " && ".join([f"vout{i}" for i in range(len(output_nodes))] + ["idd", "vvdd"]) } then
+if({ " && ".join([f"vraw{i}" for i in range(len(output_nodes))] + ["idd", "vvdd"]) } then
   dt = {energy_dt_ps}p
   t_start = {t_start_ns}n
   t_stop = {tstop_ns}n
@@ -157,6 +167,7 @@ if({ " && ".join([f"vout{i}" for i in range(len(output_nodes))] + ["idd", "vvdd"
 
 {target_lines}
 {latency_proc}
+{chr(10).join(transform_lines)}
 
   energy = 0
   ts = t_start
@@ -206,6 +217,9 @@ def main() -> None:
     parser.add_argument("--vdd-source", type=str, default="V_VDD")
     parser.add_argument("--vdd-val", type=float, default=None)
     parser.add_argument("--extra-params", type=str, default="")
+    parser.add_argument("--output-scale", type=float, default=1.0)
+    parser.add_argument("--output-offset", type=float, default=0.0)
+    parser.add_argument("--output-invert", action="store_true")
     parser.add_argument("--accuracy-tol", type=float, default=0.02)
     parser.add_argument("--latency-tol", type=float, default=None)
     parser.add_argument("--latency-hold-ns", type=float, default=0.0)
@@ -311,6 +325,9 @@ def main() -> None:
             energy_dt_ps=args.energy_dt_ps,
             vdd_node=args.vdd_node,
             vdd_source=args.vdd_source,
+            output_scale=args.output_scale,
+            output_offset=args.output_offset,
+            output_invert=args.output_invert,
             latency_tol=args.latency_tol,
             latency_hold_ns=args.latency_hold_ns,
         )
@@ -360,6 +377,12 @@ def main() -> None:
             row[col] = vec[col]
         for i, out in enumerate(outputs):
             row[f"out{i}"] = f"{out:.9f}" if out == out else ""
+            raw = metrics.get(f"raw{i}")
+            if raw is not None:
+                try:
+                    row[f"raw{i}"] = f"{float(raw):.9f}"
+                except ValueError:
+                    row[f"raw{i}"] = raw
         if target_vals is not None:
             for i, t in enumerate(target_vals):
                 row[f"target{i}"] = f"{t:.9f}"
@@ -415,6 +438,9 @@ def main() -> None:
                 "vdd_node": args.vdd_node,
                 "vdd_source": args.vdd_source,
                 "extra_params": extra_params,
+                "output_scale": args.output_scale,
+                "output_offset": args.output_offset,
+                "output_invert": args.output_invert,
                 "accuracy_tol": args.accuracy_tol,
                 "latency_tol": args.latency_tol,
                 "latency_hold_ns": args.latency_hold_ns,

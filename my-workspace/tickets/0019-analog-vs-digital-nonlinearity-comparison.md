@@ -20,6 +20,7 @@ Reference plan:
 - [x] Add vector generator script for softmax test vectors
 - [x] Add benchmark runner harness (per-vector energy/latency/accuracy)
 - [x] Add toy analog/digital softmax netlists + runner for harness validation
+- [x] Add GPDK180-compatible softmax netlists (analog + digital proxy)
 - [ ] Implement analog exp/sum/div/softmax with real PDK models
 - [ ] Implement digital baseline (LUT or polynomial) with matched accuracy spec
 - [ ] Write OCEAN verifiers for analog + digital softmax blocks
