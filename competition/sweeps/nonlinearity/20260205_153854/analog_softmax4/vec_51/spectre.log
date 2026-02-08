@@ -1,0 +1,88 @@
+
+Spectre (R) Circuit Simulator
+Version 23.1.0.802.isr17 64bit -- 10 Apr 2025
+Copyright (C) 1989-2025 Cadence Design Systems, Inc. All rights reserved worldwide. Cadence and Spectre are registered trademarks of Cadence Design Systems, Inc. All others are the property of their respective holders.
+
+Includes RSA BSAFE(R) Cryptographic or Security Protocol Software from RSA Security, Inc.
+
+User: v71349   Host: vcl-vm0-159   HostID: 10AC9F79   PID: 2762354
+Memory  available: 13.1388 GB  physical: 16.2294 GB
+Linux   : Rocky Linux release 8.10 (Green Obsidian)
+CPU Type: Intel(R) Xeon(R) Gold 6248R CPU @ 3.00GHz
+All processors running at 2993.0 MHz
+        Socket: Processors
+        0:       0
+        2:       1
+        4:       2
+        6:       3
+        
+System load averages (1min, 5min, 15min) : 11.2 %, 12.0 %, 5.5 %
+This is a virtual machine
+
+
+Simulating `softmax4_analog_gpdk180.scs' on vcl-vm0-159 at 3:39:47 PM, Thur Feb 5, 2026 (process id: 2762354).
+Current working directory: /home/v71349/analog-gradients/competition/sweeps/nonlinearity/20260205_153854/analog_softmax4/vec_51
+Command line:
+    /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/bin/spectre  \
+        -64 softmax4_analog_gpdk180.scs -raw  \
+        softmax4_analog_gpdk180.raw +log spectre.log
+
+Licensing Information:
+[15:39:47.502761] Configured Lic search path (22.01-s002): 6055@licaccess.cmc.ca
+
+Licensing Information:
+[15:39:47.395072] Periodic Lic check successful
+
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libinfineon_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libphilips_I_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libphilips_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libsparam_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libstmodels_sh.so ...
+Reading file:  /home/v71349/analog-gradients/competition/sweeps/nonlinearity/20260205_153854/analog_softmax4/vec_51/softmax4_analog_gpdk180.scs
+Reading file:  /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/etc/configs/spectre.cfg
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/gpdk.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/mos25gen.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/nmos1.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/pmos1.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/resistor.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/capacitor.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/diode.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/bipolar.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/rfmos.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/xjvar_nf36.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/xjvar_w40.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/snacapacitor.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/cmodel.scs
+Time for NDB Parsing: CPU = 91.615 ms, elapsed = 836.206 ms.
+Time accumulated: CPU = 171.873 ms, elapsed = 836.209 ms.
+Peak resident memory used = 175 Mbytes.
+
+
+Error found by spectre during circuit read-in.
+    ERROR (SFE-59): "softmax4_analog_gpdk180.scs" 9: Cannot run the simulation because parameter `in0' has already been defined. To allow duplicate parameter definitions, set the value of `redefinedparams' to `ignore' or `warning' in the netlist to consider the parameter defined later. Next, rerun the simulation.
+    ERROR (SFE-59): "softmax4_analog_gpdk180.scs" 9: Cannot run the simulation because parameter `in1' has already been defined. To allow duplicate parameter definitions, set the value of `redefinedparams' to `ignore' or `warning' in the netlist to consider the parameter defined later. Next, rerun the simulation.
+    ERROR (SFE-59): "softmax4_analog_gpdk180.scs" 9: Cannot run the simulation because parameter `in2' has already been defined. To allow duplicate parameter definitions, set the value of `redefinedparams' to `ignore' or `warning' in the netlist to consider the parameter defined later. Next, rerun the simulation.
+    ERROR (SFE-59): "softmax4_analog_gpdk180.scs" 9: Cannot run the simulation because parameter `in3' has already been defined. To allow duplicate parameter definitions, set the value of `redefinedparams' to `ignore' or `warning' in the netlist to consider the parameter defined later. Next, rerun the simulation.
+    ERROR (SFE-59): "softmax4_analog_gpdk180.scs" 10: Cannot run the simulation because parameter `itail' has already been defined. To allow duplicate parameter definitions, set the value of `redefinedparams' to `ignore' or `warning' in the netlist to consider the parameter defined later. Next, rerun the simulation.
+    ERROR (SFE-59): "softmax4_analog_gpdk180.scs" 10: Cannot run the simulation because parameter `rout' has already been defined. To allow duplicate parameter definitions, set the value of `redefinedparams' to `ignore' or `warning' in the netlist to consider the parameter defined later. Next, rerun the simulation.
+    ERROR (SFE-59): "softmax4_analog_gpdk180.scs" 11: Cannot run the simulation because parameter `w_exp' has already been defined. To allow duplicate parameter definitions, set the value of `redefinedparams' to `ignore' or `warning' in the netlist to consider the parameter defined later. Next, rerun the simulation.
+    ERROR (SFE-59): "softmax4_analog_gpdk180.scs" 11: Cannot run the simulation because parameter `l_exp' has already been defined. To allow duplicate parameter definitions, set the value of `redefinedparams' to `ignore' or `warning' in the netlist to consider the parameter defined later. Next, rerun the simulation.
+
+Time for Elaboration: CPU = 18.244 ms, elapsed = 18.373 ms.
+Time accumulated: CPU = 190.192 ms, elapsed = 854.655 ms.
+Peak resident memory used = 183 Mbytes.
+
+Licensing Information:
+Lic Summary:
+[15:39:47.469952] Cdslmd servers:6055@licaccess.cmc.ca
+[15:39:47.469968] Feature usage summary:
+[15:39:47.469969] Virtuoso_Multi_mode_Simulation
+
+
+Aggregate audit (3:39:47 PM, Thur Feb 5, 2026):
+Time used: CPU = 191 ms, elapsed = 855 ms, util. = 22.3%.
+Time spent in licensing: elapsed = 855 ms, percentage of total = 100%.
+Peak memory used = 184 Mbytes.
+Simulation started at: 3:39:47 PM, Thur Feb 5, 2026, ended at: 3:39:47 PM, Thur Feb 5, 2026, with elapsed time (wall clock): 855 ms.
+spectre completes with 8 errors, 0 warnings, and 0 notices.
+spectre terminated prematurely due to fatal error.

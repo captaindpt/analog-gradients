@@ -1,0 +1,239 @@
+
+Spectre (R) Circuit Simulator
+Version 23.1.0.802.isr17 64bit -- 10 Apr 2025
+Copyright (C) 1989-2025 Cadence Design Systems, Inc. All rights reserved worldwide. Cadence and Spectre are registered trademarks of Cadence Design Systems, Inc. All others are the property of their respective holders.
+
+Includes RSA BSAFE(R) Cryptographic or Security Protocol Software from RSA Security, Inc.
+
+User: v71349   Host: vcl-vm0-159   HostID: 10AC9F79   PID: 3005168
+Memory  available: 13.0676 GB  physical: 16.2294 GB
+Linux   : Rocky Linux release 8.10 (Green Obsidian)
+CPU Type: Intel(R) Xeon(R) Gold 6248R CPU @ 3.00GHz
+All processors running at 2993.0 MHz
+        Socket: Processors
+        0:       0
+        2:       1
+        4:       2
+        6:       3
+        
+System load averages (1min, 5min, 15min) : 49.0 %, 36.2 %, 27.3 %
+This is a virtual machine
+
+
+Simulating `softmax4_digital_gpdk180.scs' on vcl-vm0-159 at 4:49:06 PM, Thur Feb 5, 2026 (process id: 3005168).
+Current working directory: /home/v71349/analog-gradients/competition/sweeps/nonlinearity/20260205_163724/digital_softmax4/vec_13
+Command line:
+    /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/bin/spectre  \
+        -64 softmax4_digital_gpdk180.scs -raw  \
+        softmax4_digital_gpdk180.raw +log spectre.log
+
+Licensing Information:
+[16:49:06.502737] Configured Lic search path (22.01-s002): 6055@licaccess.cmc.ca
+
+Licensing Information:
+[16:49:06.451824] Periodic Lic check successful
+
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libinfineon_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libphilips_I_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libphilips_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libsparam_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libstmodels_sh.so ...
+Reading file:  /home/v71349/analog-gradients/competition/sweeps/nonlinearity/20260205_163724/digital_softmax4/vec_13/softmax4_digital_gpdk180.scs
+Reading file:  /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/etc/configs/spectre.cfg
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/gpdk.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/mos25gen.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/nmos1.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/pmos1.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/resistor.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/capacitor.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/diode.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/bipolar.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/rfmos.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/xjvar_nf36.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/xjvar_w40.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/snacapacitor.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/cmodel.scs
+Time for NDB Parsing: CPU = 88.95 ms, elapsed = 517.585 ms.
+Time accumulated: CPU = 159.458 ms, elapsed = 517.586 ms.
+Peak resident memory used = 178 Mbytes.
+
+Reading link:  /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/etc/ahdl/discipline.h
+Reading file:  /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/etc/ahdl/disciplines.vams
+Reading link:  /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/etc/ahdl/constants.h
+Reading file:  /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/etc/ahdl/constants.vams
+Created directory ./softmax4_digital_gpdk180.ahdlSimDB/ (775)
+Created directory ./softmax4_digital_gpdk180.ahdlSimDB//bsource_a30422.va.bsource_a30422.ahdlcmi/ (775)
+Created directory ./softmax4_digital_gpdk180.ahdlSimDB//bsource_a30422.va.bsource_a30422.ahdlcmi/Linux-64/ (775)
+Compiling ahdlcmi module library for bsource_a30422.
+Finished compilation in 1.43 s (elapsed) for bsource_a30422.
+Installed compiled interface for bsource_a30422.
+Opening directory ./softmax4_digital_gpdk180.ahdlSimDB/ (775)
+Created directory ./softmax4_digital_gpdk180.ahdlSimDB//bsource_11a63b.va.bsource_11a63b.ahdlcmi/ (775)
+Created directory ./softmax4_digital_gpdk180.ahdlSimDB//bsource_11a63b.va.bsource_11a63b.ahdlcmi/Linux-64/ (775)
+Compiling ahdlcmi module library for bsource_11a63b.
+Finished compilation in 1.44 s (elapsed) for bsource_11a63b.
+Installed compiled interface for bsource_11a63b.
+Opening directory ./softmax4_digital_gpdk180.ahdlSimDB/ (775)
+Created directory ./softmax4_digital_gpdk180.ahdlSimDB//bsource_d6fe02.va.bsource_d6fe02.ahdlcmi/ (775)
+Created directory ./softmax4_digital_gpdk180.ahdlSimDB//bsource_d6fe02.va.bsource_d6fe02.ahdlcmi/Linux-64/ (775)
+Compiling ahdlcmi module library for bsource_d6fe02.
+Finished compilation in 1.45 s (elapsed) for bsource_d6fe02.
+Installed compiled interface for bsource_d6fe02.
+Opening directory ./softmax4_digital_gpdk180.ahdlSimDB/ (775)
+Created directory ./softmax4_digital_gpdk180.ahdlSimDB//bsource_252009.va.bsource_252009.ahdlcmi/ (775)
+Created directory ./softmax4_digital_gpdk180.ahdlSimDB//bsource_252009.va.bsource_252009.ahdlcmi/Linux-64/ (775)
+Compiling ahdlcmi module library for bsource_252009.
+Finished compilation in 1.45 s (elapsed) for bsource_252009.
+Installed compiled interface for bsource_252009.
+Time for Elaboration: CPU = 104.988 ms, elapsed = 5.88732 s.
+Time accumulated: CPU = 264.516 ms, elapsed = 6.40498 s.
+Peak resident memory used = 197 Mbytes.
+
+
+Time for EDB Visiting: CPU = 849 us, elapsed = 854.969 us.
+Time accumulated: CPU = 265.449 ms, elapsed = 6.40592 s.
+Peak resident memory used = 197 Mbytes.
+
+
+Netlist title:
+        // softmax4_digital_gpdk180.scs - GPDK180-compatible digital softmax proxy
+
+
+Global user options:
+
+Scoped user options:
+
+Circuit inventory:
+              nodes 9
+     bsource_11a63b 1     
+     bsource_252009 1     
+     bsource_a30422 1     
+     bsource_d6fe02 1     
+          capacitor 4     
+            isource 1     
+            vsource 5     
+
+Analysis and control statement inventory:
+               tran 1     
+
+Output statements:
+             .probe 0     
+           .measure 0     
+               save 1     
+
+Time for parsing: CPU = 1.555 ms, elapsed = 7.72405 ms.
+Time accumulated: CPU = 267.062 ms, elapsed = 6.4137 s.
+Peak resident memory used = 200 Mbytes.
+
+~~~~~~~~~~~~~~~~~~~~~~
+Pre-Simulation Summary
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+
+*****************************************************
+Transient Analysis `tran_test': time = (0 s -> 50 ns)
+*****************************************************
+Convergence achieved in 3 iterations.
+DC simulation time: CPU = 334 us, elapsed = 334.978 us.
+
+Opening the PSFXL file softmax4_digital_gpdk180.raw/tran_test.tran.tran ...
+Important parameter values:
+    start = 0 s
+    outputstart = 0 s
+    stop = 50 ns
+    step = 50 ps
+    maxstep = 1 ns
+    ic = all
+    useprevic = no
+    skipdc = no
+    reltol = 1e-03
+    abstol(V) = 1 uV
+    abstol(I) = 1 pA
+    temp = 27 C
+    tnom = 27 C
+    tempeffects = all
+    errpreset = moderate
+    method = traponly
+    lteratio = 3.5
+    relref = sigglobal
+    cmin = 0 F
+    gmin = 1 pS
+
+
+Output and IC/nodeset summary:
+                 save   1       (current)
+                 save   9       (voltage)
+
+....
+
+Notice from spectre at time = 3.55 ns during transient analysis `tran_test'.
+    Found trapezoidal ringing on node BOUT1:bs_p1_bs_p2_flow.
+
+.....
+
+Notice from spectre at time = 4.55 ns during transient analysis `tran_test'.
+    Found trapezoidal ringing on node BOUT1:bs_p1_bs_p2_flow.
+
+......
+
+Notice from spectre at time = 5.55 ns during transient analysis `tran_test'.
+    Found trapezoidal ringing on node BOUT1:bs_p1_bs_p2_flow.
+
+......9.
+
+Notice from spectre at time = 6.55 ns during transient analysis `tran_test'.
+    Found trapezoidal ringing on node BOUT1:bs_p1_bs_p2_flow.
+
+......9..
+
+Notice from spectre at time = 7.55 ns during transient analysis `tran_test'.
+    Found trapezoidal ringing on node BOUT1:bs_p1_bs_p2_flow.
+        Further occurrences of this notice will be suppressed.
+
+......9......8......7......6......5......4......3......2......1......0
+Number of accepted tran steps =             54
+
+Notice from spectre during transient analysis `tran_test'.
+    Trapezoidal ringing is detected during tran analysis.
+        Please use method=trap for better results and performance.
+
+
+Maximum value achieved for any signal of each quantity: 
+V: V(vdd) = 1.8 V
+I: I(V_VDD:p) = 100 uA
+If your circuit contains signals of the same quantity that are vastly different in size (such as high voltage circuitry combined with low voltage control circuitry), you should consider specifying global option `bin_relref=yes'.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Post-Transient Simulation Summary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   -   To further speed up simulation, consider
+          add ++aps on command line
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+During simulation, the CPU load for active processors is :
+         0 (24.6 %)      1 (32.3 %)      2 (29.5 %)      3 (34.5 %)
+        Total: 120.9%
+Initial condition solution time: CPU = 364 us, elapsed = 365.019 us.
+Intrinsic tran analysis time:    CPU = 3.005 ms, elapsed = 7.864 ms.
+Total time required for tran analysis `tran_test': CPU = 4.305 ms, elapsed = 9.17697 ms, util. = 46.9%.
+Time accumulated: CPU = 278.261 ms, elapsed = 6.4318 s.
+Peak resident memory used = 203 Mbytes.
+
+
+Notice from spectre.
+    43 notices suppressed.
+
+Licensing Information:
+Lic Summary:
+[16:49:12.418402] Cdslmd servers:6055@licaccess.cmc.ca
+[16:49:12.418426] Feature usage summary:
+[16:49:12.418427] Virtuoso_Multi_mode_Simulation
+
+
+Aggregate audit (4:49:12 PM, Thur Feb 5, 2026):
+Time used: CPU = 280 ms, elapsed = 6.44 s, util. = 4.35%.
+Time spent in licensing: elapsed = 313 ms.
+Peak memory used = 203 Mbytes.
+Simulation started at: 4:49:06 PM, Thur Feb 5, 2026, ended at: 4:49:12 PM, Thur Feb 5, 2026, with elapsed time (wall clock): 6.44 s.
+spectre completes with 0 errors, 0 warnings, and 8 notices.

@@ -3,10 +3,7 @@
 
 simulator lang=spectre
 
-parameters vdd_val=1.8
-parameters in0=0 in1=0 in2=0 in3=0
-parameters kexp=2.0 eps=1e-12
-parameters idigital=1m
+parameters vdd_val=1.8 in0=0 in1=0 in2=0 in3=0 kexp=1.0 eps=1e-12 idigital=1m
 
 // Toy MOS models (unused by behavioral sources, kept for consistency)
 model nch mos1 type=n vto=0.0 kp=120u

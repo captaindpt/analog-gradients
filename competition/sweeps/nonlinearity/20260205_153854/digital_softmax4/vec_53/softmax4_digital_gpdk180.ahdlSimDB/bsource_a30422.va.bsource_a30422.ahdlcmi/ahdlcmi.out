@@ -1,0 +1,186 @@
+ahdlcmicompile: Compiling ahdlcmi in ./softmax4_digital_gpdk180.ahdlSimDB//bsource_a30422.va.bsource_a30422.ahdlcmi/Linux-64/ for Linux-64 with optimize using gcc on Thu Feb  5 15:51:16 EST 2026 [5.0]
+ahdlcmicompile: Generating makefile
+PATH:  /CMC/tools/cadence/SPECTRE23.10.802_lnx86/bin:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/bin/64bit:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/bin:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/bin:/CMC/tools/cadence/IC23.10.140_lnx86/tools.lnx86/dfII/bin:/CMC/tools/cadence/IC23.10.140_lnx86/tools.lnx86/bin:/CMC/tools/cadence/IC23.10.140_lnx86/bin:/home/v71349/.local/bin:/home/v71349/bin:/home/v71349/.codex/tmp/path/codex-arg0sdQaoM:/home/v71349/.local/bin:/home/v71349/.vscode-server/cli/servers/Stable-c9d77990917f3102ada88be140d28b038d1dd7c7/server/bin/remote-cli:/home/v71349/.local/bin:/home/v71349/.local/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/bin
+LD_LIBRARY_PATH:  /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/TPtools/libstdc++6/lib/64bit:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/TPtools/cuda/lib64:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/giganta/lib/64bit:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/mdl/lib/64bit:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/mmsim/lib/64bit:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/hdf/lib/64bit:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/python/64bit/lib:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/inca/lib/64bit:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/awrmwo/lib/64bit:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/lib/64bit:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/dfII/lib/64bit:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/TPtools/zlib/lib64:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/TPtools/grpc/lib:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/TPtools/grpc/lib64:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/fmc/lib/64bit:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/lib/64bit:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/lib/64bit:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/lib:/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/lib/64bit/RHEL/RHEL8
+2026/02/05 15:51:17 INFO (/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/bin/cdnsEnvCheck): Rocky Linux release 8.10 (Green Obsidian) detected (set environment variable CDS_SKIP_OS_CHECK_ON_STARTUP=1 to suppress).
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/bin/gnumake -j1 -f GNUmakefile
+Cleaning ./obj/optimize/5.0
+rm -f -rf ./obj/optimize/5.0
+Compiling C file bsource_a30422_func.c (optimize)
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/bin/64bit/ahdlcc 0 /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cdsgcc/gcc/9.3/bin/gcc  -ffast-math  -fno-unsafe-math-optimizations -Wno-error=int-conversion -O3 -m64 -DSYSV -DSVR4 -D_REENTRANT -fPIC   -DconfigSPECTRE -I. -I/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include -c bsource_a30422_func.c -o obj/optimize/5.0/bsource_a30422_func.o || rm -f -f obj/optimize/5.0/bsource_a30422_func.o
+rm -f -rf bsource_a30422_func.c
+Compiling C file bsource_a30422_DcFuncDerLoad.c (optimize)
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/bin/64bit/ahdlcc 0 /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cdsgcc/gcc/9.3/bin/gcc  -ffast-math  -fno-unsafe-math-optimizations -Wno-error=int-conversion -O3 -m64 -DSYSV -DSVR4 -D_REENTRANT -fPIC   -DconfigSPECTRE -I. -I/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include -c bsource_a30422_DcFuncDerLoad.c -o obj/optimize/5.0/bsource_a30422_DcFuncDerLoad.o || rm -f -f obj/optimize/5.0/bsource_a30422_DcFuncDerLoad.o
+<stdin>: In function 'bsource_a30422_DcFuncDerLoad':
+<stdin>:223:49: warning: passing argument 1 of 'aslDevInterAddStaticElement' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2300:62: note: expected 'void *' but argument is of type 'long int'
+ 2300 | ASL_FUNC_DECL_START extern long aslDevInterAddStaticElement( void *, double, struct ahdlFuncModeParam * );
+      |                                                              ^~~~~~
+<stdin>:225:49: warning: passing argument 1 of 'aslDevInterAddStaticElement' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2300:62: note: expected 'void *' but argument is of type 'long int'
+ 2300 | ASL_FUNC_DECL_START extern long aslDevInterAddStaticElement( void *, double, struct ahdlFuncModeParam * );
+      |                                                              ^~~~~~
+<stdin>:227:49: warning: passing argument 1 of 'aslDevInterAddStaticElement' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2300:62: note: expected 'void *' but argument is of type 'long int'
+ 2300 | ASL_FUNC_DECL_START extern long aslDevInterAddStaticElement( void *, double, struct ahdlFuncModeParam * );
+      |                                                              ^~~~~~
+<stdin>:229:49: warning: passing argument 1 of 'aslDevInterAddStaticElement' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2300:62: note: expected 'void *' but argument is of type 'long int'
+ 2300 | ASL_FUNC_DECL_START extern long aslDevInterAddStaticElement( void *, double, struct ahdlFuncModeParam * );
+      |                                                              ^~~~~~
+<stdin>:231:49: warning: passing argument 1 of 'aslDevInterAddStaticElement' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2300:62: note: expected 'void *' but argument is of type 'long int'
+ 2300 | ASL_FUNC_DECL_START extern long aslDevInterAddStaticElement( void *, double, struct ahdlFuncModeParam * );
+      |                                                              ^~~~~~
+<stdin>:233:49: warning: passing argument 1 of 'aslDevInterAddStaticElement' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2300:62: note: expected 'void *' but argument is of type 'long int'
+ 2300 | ASL_FUNC_DECL_START extern long aslDevInterAddStaticElement( void *, double, struct ahdlFuncModeParam * );
+      |                                                              ^~~~~~
+<stdin>:235:49: warning: passing argument 1 of 'aslDevInterAddStaticElement' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2300:62: note: expected 'void *' but argument is of type 'long int'
+ 2300 | ASL_FUNC_DECL_START extern long aslDevInterAddStaticElement( void *, double, struct ahdlFuncModeParam * );
+      |                                                              ^~~~~~
+<stdin>:237:49: warning: passing argument 1 of 'aslDevInterAddStaticElement' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2300:62: note: expected 'void *' but argument is of type 'long int'
+ 2300 | ASL_FUNC_DECL_START extern long aslDevInterAddStaticElement( void *, double, struct ahdlFuncModeParam * );
+      |                                                              ^~~~~~
+rm -f -rf bsource_a30422_DcFuncDerLoad.c
+Compiling C file bsource_a30422_DcFuncLoad.c (optimize)
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/bin/64bit/ahdlcc 0 /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cdsgcc/gcc/9.3/bin/gcc  -ffast-math  -fno-unsafe-math-optimizations -Wno-error=int-conversion -O3 -m64 -DSYSV -DSVR4 -D_REENTRANT -fPIC   -DconfigSPECTRE -I. -I/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include -c bsource_a30422_DcFuncLoad.c -o obj/optimize/5.0/bsource_a30422_DcFuncLoad.o || rm -f -f obj/optimize/5.0/bsource_a30422_DcFuncLoad.o
+rm -f -rf bsource_a30422_DcFuncLoad.c
+Compiling C file bsource_a30422_TranFuncDerLoad.c (optimize)
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/bin/64bit/ahdlcc 0 /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cdsgcc/gcc/9.3/bin/gcc  -ffast-math  -fno-unsafe-math-optimizations -Wno-error=int-conversion -O3 -m64 -DSYSV -DSVR4 -D_REENTRANT -fPIC   -DconfigSPECTRE -I. -I/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include -c bsource_a30422_TranFuncDerLoad.c -o obj/optimize/5.0/bsource_a30422_TranFuncDerLoad.o || rm -f -f obj/optimize/5.0/bsource_a30422_TranFuncDerLoad.o
+<stdin>: In function 'bsource_a30422_TranFuncDerLoad':
+<stdin>:223:49: warning: passing argument 1 of 'aslDevInterAddStaticElement' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2300:62: note: expected 'void *' but argument is of type 'long int'
+ 2300 | ASL_FUNC_DECL_START extern long aslDevInterAddStaticElement( void *, double, struct ahdlFuncModeParam * );
+      |                                                              ^~~~~~
+<stdin>:225:49: warning: passing argument 1 of 'aslDevInterAddStaticElement' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2300:62: note: expected 'void *' but argument is of type 'long int'
+ 2300 | ASL_FUNC_DECL_START extern long aslDevInterAddStaticElement( void *, double, struct ahdlFuncModeParam * );
+      |                                                              ^~~~~~
+<stdin>:227:49: warning: passing argument 1 of 'aslDevInterAddStaticElement' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2300:62: note: expected 'void *' but argument is of type 'long int'
+ 2300 | ASL_FUNC_DECL_START extern long aslDevInterAddStaticElement( void *, double, struct ahdlFuncModeParam * );
+      |                                                              ^~~~~~
+<stdin>:229:49: warning: passing argument 1 of 'aslDevInterAddStaticElement' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2300:62: note: expected 'void *' but argument is of type 'long int'
+ 2300 | ASL_FUNC_DECL_START extern long aslDevInterAddStaticElement( void *, double, struct ahdlFuncModeParam * );
+      |                                                              ^~~~~~
+<stdin>:231:49: warning: passing argument 1 of 'aslDevInterAddStaticElement' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2300:62: note: expected 'void *' but argument is of type 'long int'
+ 2300 | ASL_FUNC_DECL_START extern long aslDevInterAddStaticElement( void *, double, struct ahdlFuncModeParam * );
+      |                                                              ^~~~~~
+<stdin>:233:49: warning: passing argument 1 of 'aslDevInterAddStaticElement' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2300:62: note: expected 'void *' but argument is of type 'long int'
+ 2300 | ASL_FUNC_DECL_START extern long aslDevInterAddStaticElement( void *, double, struct ahdlFuncModeParam * );
+      |                                                              ^~~~~~
+<stdin>:235:49: warning: passing argument 1 of 'aslDevInterAddStaticElement' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2300:62: note: expected 'void *' but argument is of type 'long int'
+ 2300 | ASL_FUNC_DECL_START extern long aslDevInterAddStaticElement( void *, double, struct ahdlFuncModeParam * );
+      |                                                              ^~~~~~
+<stdin>:237:49: warning: passing argument 1 of 'aslDevInterAddStaticElement' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2300:62: note: expected 'void *' but argument is of type 'long int'
+ 2300 | ASL_FUNC_DECL_START extern long aslDevInterAddStaticElement( void *, double, struct ahdlFuncModeParam * );
+      |                                                              ^~~~~~
+rm -f -rf bsource_a30422_TranFuncDerLoad.c
+Compiling C file bsource_a30422_TranFuncLoad.c (optimize)
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/bin/64bit/ahdlcc 0 /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cdsgcc/gcc/9.3/bin/gcc  -ffast-math  -fno-unsafe-math-optimizations -Wno-error=int-conversion -O3 -m64 -DSYSV -DSVR4 -D_REENTRANT -fPIC   -DconfigSPECTRE -I. -I/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include -c bsource_a30422_TranFuncLoad.c -o obj/optimize/5.0/bsource_a30422_TranFuncLoad.o || rm -f -f obj/optimize/5.0/bsource_a30422_TranFuncLoad.o
+rm -f -rf bsource_a30422_TranFuncLoad.c
+Compiling C file bsource_a30422_OpPointCalc.c (optimize)
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/bin/64bit/ahdlcc 0 /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cdsgcc/gcc/9.3/bin/gcc  -ffast-math  -fno-unsafe-math-optimizations -Wno-error=int-conversion -O3 -m64 -DSYSV -DSVR4 -D_REENTRANT -fPIC   -DconfigSPECTRE -I. -I/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include -c bsource_a30422_OpPointCalc.c -o obj/optimize/5.0/bsource_a30422_OpPointCalc.o || rm -f -f obj/optimize/5.0/bsource_a30422_OpPointCalc.o
+rm -f -rf bsource_a30422_OpPointCalc.c
+Compiling C file bsource_a30422_cmi_c.c (optimize)
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/bin/64bit/ahdlcc 0 /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cdsgcc/gcc/9.3/bin/gcc  -ffast-math  -fno-unsafe-math-optimizations -Wno-error=int-conversion -O3 -m64 -DSYSV -DSVR4 -D_REENTRANT -fPIC   -DconfigSPECTRE -I. -I/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include -I/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/include -c bsource_a30422_cmi_c.c -o obj/optimize/5.0/bsource_a30422_cmi_c.o || rm -f -f obj/optimize/5.0/bsource_a30422_cmi_c.o
+<stdin>: In function 'bsource_a30422_pPrintDescription':
+<stdin>:703:3: warning: implicit declaration of function 'msgWrite' [-Wimplicit-function-declaration]
+<stdin>:705:67: warning: implicit declaration of function 'devGetRFinFreqDomain' [-Wimplicit-function-declaration]
+<stdin>: In function 'bsource_a30422_pGetInstanceParams':
+<stdin>:934:69: warning: implicit declaration of function 'devGetInstKnotStatus'; did you mean 'devGetInstState'? [-Wimplicit-function-declaration]
+<stdin>: In function 'bsource_a30422_pDC_Load':
+<stdin>:1220:41: warning: passing argument 1 of 'aslDevFillZeorDiagonalElemet' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2884:63: note: expected 'void *' but argument is of type 'long int'
+ 2884 | ASL_FUNC_DECL_START extern void aslDevFillZeorDiagonalElemet( void *, int, unsigned int, struct ahdlFuncModeParam * );
+      |                                                               ^~~~~~
+<stdin>: In function 'bsource_a30422_pCloneStencil':
+<stdin>:1588:36: warning: assignment to 'long int' from 'void *' makes integer from pointer without a cast [-Wint-conversion]
+<stdin>:1589:33: warning: passing argument 1 of 'aslDevMemcpy_wrap' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:1371:34: note: expected 'void *' but argument is of type 'long int'
+ 1371 | ASL_FUNC_DECL_START extern void *aslDevMemcpy_wrap( void *, const void *, size_t );
+      |                                  ^~~~~~~~~~~~~~~~~
+<stdin>:1589:67: warning: passing argument 2 of 'aslDevMemcpy_wrap' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:1371:34: note: expected 'const void *' but argument is of type 'long int'
+ 1371 | ASL_FUNC_DECL_START extern void *aslDevMemcpy_wrap( void *, const void *, size_t );
+      |                                  ^~~~~~~~~~~~~~~~~
+<stdin>: In function 'bsource_a30422_pCompare':
+<stdin>:1701:3: warning: implicit declaration of function 'spReplaceMatrixPointer'; did you mean 'aslDevLaplaceGetMatrixPointer'? [-Wimplicit-function-declaration]
+<stdin>:1713:37: warning: assignment to 'long int' from 'long int *' makes integer from pointer without a cast [-Wint-conversion]
+<stdin>:1714:23: warning: passing argument 1 of 'memcpy' makes pointer from integer without a cast [-Wint-conversion]
+In file included from /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlPiCmi.h:5,
+                 from /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:80,
+                 from <stdin>:24:
+/usr/include/string.h:43:14: note: expected 'void * restrict' but argument is of type 'long int'
+   43 | extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
+      |              ^~~~~~
+<stdin>:1714:58: warning: passing argument 2 of 'memcpy' makes pointer from integer without a cast [-Wint-conversion]
+In file included from /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlPiCmi.h:5,
+                 from /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:80,
+                 from <stdin>:24:
+/usr/include/string.h:43:14: note: expected 'const void * restrict' but argument is of type 'long int'
+   43 | extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
+      |              ^~~~~~
+<stdin>:1716:37: warning: assignment to 'long int' from 'void *' makes integer from pointer without a cast [-Wint-conversion]
+<stdin>: In function 'bsource_a30422_pMapSignals':
+<stdin>:1776:26: warning: comparison between pointer and integer
+<stdin>: In function 'bsource_a30422_pGetMatrixPointers':
+<stdin>:1896:34: warning: assignment to 'long int' from 'void *' makes integer from pointer without a cast [-Wint-conversion]
+<stdin>: In function 'bsource_a30422_pAnalTranLoad':
+<stdin>:2659:42: warning: passing argument 1 of 'aslDevFillZeorDiagonalElemet' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2884:63: note: expected 'void *' but argument is of type 'long int'
+ 2884 | ASL_FUNC_DECL_START extern void aslDevFillZeorDiagonalElemet( void *, int, unsigned int, struct ahdlFuncModeParam * );
+      |                                                               ^~~~~~
+<stdin>: In function 'bsource_a30422_pSaveRestart':
+<stdin>:2922:4: warning: implicit declaration of function 'pklAccessDouble' [-Wimplicit-function-declaration]
+<stdin>:2923:30: warning: passing argument 2 of 'aslDevAvarSR' from incompatible pointer type [-Wincompatible-pointer-types]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:1230:58: note: expected 'struct ahdlAnalogVar *' but argument is of type 'char *'
+ 1230 | ASL_FUNC_DECL_START extern PklError_e aslDevAvarSR( int, struct ahdlAnalogVar *, char *, char *, char *, PklJar_t * );
+      |                                                          ^~~~~~~~~~~~~~~~~~~~~~
+<stdin>: In function 'bsource_a30422_pSaveRestartInst':
+<stdin>:3003:28: warning: passing argument 2 of 'aslDevAvarSR' from incompatible pointer type [-Wincompatible-pointer-types]
+In file included from <stdin>:24:
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:1230:58: note: expected 'struct ahdlAnalogVar *' but argument is of type 'char *'
+ 1230 | ASL_FUNC_DECL_START extern PklError_e aslDevAvarSR( int, struct ahdlAnalogVar *, char *, char *, char *, PklJar_t * );
+      |                                                          ^~~~~~~~~~~~~~~~~~~~~~
+<stdin>: In function 'ahdlbsource_a30422DescInstall':
+<stdin>:3160:2: warning: implicit declaration of function 'descSetDeviceType'; did you mean 'descSetType'? [-Wimplicit-function-declaration]
+<stdin>:3162:2: warning: implicit declaration of function 'descSetSetContrInfoPtr' [-Wimplicit-function-declaration]
+<stdin>:3170:2: warning: implicit declaration of function 'descSetCopySignals'; did you mean 'descSetMapSignals'? [-Wimplicit-function-declaration]
+<stdin>:3171:2: warning: implicit declaration of function 'descSetCloneStencil'; did you mean 'descSetDeleteStencil'? [-Wimplicit-function-declaration]
+<stdin>:3199:2: warning: implicit declaration of function 'descSetPrintDescription' [-Wimplicit-function-declaration]
+<stdin>:3201:2: warning: implicit declaration of function 'descSetVATermInfo'; did you mean 'descSetGetInfo'? [-Wimplicit-function-declaration]
+<stdin>:3202:2: warning: implicit declaration of function 'descSetGetNodeNamesForBranch' [-Wimplicit-function-declaration]
+<stdin>:3203:2: warning: implicit declaration of function 'descSetGetLinearityFactor' [-Wimplicit-function-declaration]
+rm -f -rf bsource_a30422_cmi_c.c
+/CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cdsgcc/gcc/9.3/bin/gcc -shared -O3 -m64 -fPIC -o obj/optimize/5.0/libahdlcmi_bsource_a30422.so ./obj/optimize/5.0/bsource_a30422_func.o ./obj/optimize/5.0/bsource_a30422_DcFuncDerLoad.o ./obj/optimize/5.0/bsource_a30422_DcFuncLoad.o ./obj/optimize/5.0/bsource_a30422_TranFuncDerLoad.o ./obj/optimize/5.0/bsource_a30422_TranFuncLoad.o ./obj/optimize/5.0/bsource_a30422_OpPointCalc.o ./obj/optimize/5.0/bsource_a30422_cmi_c.o  -Wl,-rpath,/usr/lib -Wl,-rpath,/lib -lm -s 
+rm -f -f ./obj/optimize/5.0/bsource_a30422_func.o ./obj/optimize/5.0/bsource_a30422_DcFuncDerLoad.o ./obj/optimize/5.0/bsource_a30422_DcFuncLoad.o ./obj/optimize/5.0/bsource_a30422_TranFuncDerLoad.o ./obj/optimize/5.0/bsource_a30422_TranFuncLoad.o ./obj/optimize/5.0/bsource_a30422_OpPointCalc.o ./obj/optimize/5.0/bsource_a30422_cmi_c.o 

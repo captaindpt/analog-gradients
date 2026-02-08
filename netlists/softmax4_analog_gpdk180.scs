@@ -5,10 +5,7 @@
 simulator lang=spectre
 global 0
 
-parameters vdd_val=1.8
-parameters in0=0 in1=0 in2=0 in3=0
-parameters itail=100u rout=10k
-parameters w_exp=2u l_exp=0.18u
+parameters vdd_val=1.8 in0=0 in1=0 in2=0 in3=0 itail=100u rout=10k w_exp=2u l_exp=0.18u
 
 include "/CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/gpdk.scs" section=NN
 

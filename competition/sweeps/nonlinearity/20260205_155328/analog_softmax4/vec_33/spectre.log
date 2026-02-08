@@ -1,0 +1,174 @@
+
+Spectre (R) Circuit Simulator
+Version 23.1.0.802.isr17 64bit -- 10 Apr 2025
+Copyright (C) 1989-2025 Cadence Design Systems, Inc. All rights reserved worldwide. Cadence and Spectre are registered trademarks of Cadence Design Systems, Inc. All others are the property of their respective holders.
+
+Includes RSA BSAFE(R) Cryptographic or Security Protocol Software from RSA Security, Inc.
+
+User: v71349   Host: vcl-vm0-159   HostID: 10AC9F79   PID: 2847418
+Memory  available: 13.0745 GB  physical: 16.2294 GB
+Linux   : Rocky Linux release 8.10 (Green Obsidian)
+CPU Type: Intel(R) Xeon(R) Gold 6248R CPU @ 3.00GHz
+All processors running at 2993.0 MHz
+        Socket: Processors
+        0:       0
+        2:       1
+        4:       2
+        6:       3
+        
+System load averages (1min, 5min, 15min) : 15.0 %, 19.8 %, 17.0 %
+This is a virtual machine
+
+
+Simulating `softmax4_analog_gpdk180.scs' on vcl-vm0-159 at 3:58:02 PM, Thur Feb 5, 2026 (process id: 2847418).
+Current working directory: /home/v71349/analog-gradients/competition/sweeps/nonlinearity/20260205_155328/analog_softmax4/vec_33
+Command line:
+    /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/bin/spectre  \
+        -64 softmax4_analog_gpdk180.scs -raw  \
+        softmax4_analog_gpdk180.raw +log spectre.log
+
+Licensing Information:
+[15:58:02.502697] Configured Lic search path (22.01-s002): 6055@licaccess.cmc.ca
+
+Licensing Information:
+[15:58:03.059513] Periodic Lic check successful
+
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libinfineon_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libphilips_I_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libphilips_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libsparam_sh.so ...
+Loading /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/cmi/lib/64bit/5.0/libstmodels_sh.so ...
+Reading file:  /home/v71349/analog-gradients/competition/sweeps/nonlinearity/20260205_155328/analog_softmax4/vec_33/softmax4_analog_gpdk180.scs
+Reading file:  /CMC/tools/cadence/SPECTRE23.10.802_lnx86/tools.lnx86/spectre/etc/configs/spectre.cfg
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/gpdk.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/mos25gen.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/nmos1.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/pmos1.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/resistor.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/capacitor.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/diode.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/bipolar.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/rfmos.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/xjvar_nf36.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/xjvar_w40.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/snacapacitor.scs
+Reading file:  /CMC/kits/cadence/GPDK180/gpdk180_v3.3/models/spectre/cmodel.scs
+Time for NDB Parsing: CPU = 76.82 ms, elapsed = 526.571 ms.
+Time accumulated: CPU = 148.334 ms, elapsed = 526.573 ms.
+Peak resident memory used = 176 Mbytes.
+
+Time for Elaboration: CPU = 16.066 ms, elapsed = 16.1719 ms.
+Time accumulated: CPU = 164.474 ms, elapsed = 542.818 ms.
+Peak resident memory used = 185 Mbytes.
+
+
+Time for EDB Visiting: CPU = 554 us, elapsed = 555.038 us.
+Time accumulated: CPU = 165.111 ms, elapsed = 543.455 ms.
+Peak resident memory used = 185 Mbytes.
+
+
+Netlist title:
+        // softmax4_analog_gpdk180.scs - GPDK180-compatible analog softmax (current-mode)
+
+
+Global user options:
+
+Scoped user options:
+
+Circuit inventory:
+              nodes 10
+            bsim3v3 4     
+          capacitor 4     
+            isource 1     
+           resistor 4     
+            vsource 5     
+
+Analysis and control statement inventory:
+               tran 1     
+
+Output statements:
+             .probe 0     
+           .measure 0     
+               save 1     
+
+Time for parsing: CPU = 1.674 ms, elapsed = 7.62486 ms.
+Time accumulated: CPU = 166.839 ms, elapsed = 551.133 ms.
+Peak resident memory used = 189 Mbytes.
+
+~~~~~~~~~~~~~~~~~~~~~~
+Pre-Simulation Summary
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+
+*****************************************************
+Transient Analysis `tran_test': time = (0 s -> 50 ns)
+*****************************************************
+Convergence achieved in 8 iterations.
+DC simulation time: CPU = 385 us, elapsed = 390.053 us.
+
+Opening the PSFXL file softmax4_analog_gpdk180.raw/tran_test.tran.tran ...
+Important parameter values:
+    start = 0 s
+    outputstart = 0 s
+    stop = 50 ns
+    step = 50 ps
+    maxstep = 1 ns
+    ic = all
+    useprevic = no
+    skipdc = no
+    reltol = 1e-03
+    abstol(V) = 1 uV
+    abstol(I) = 1 pA
+    temp = 27 C
+    tnom = 27 C
+    tempeffects = all
+    errpreset = moderate
+    method = traponly
+    lteratio = 3.5
+    relref = sigglobal
+    cmin = 0 F
+    gmin = 1 pS
+
+
+Output and IC/nodeset summary:
+                 save   1       (current)
+                 save   10      (voltage)
+
+......9......8......7......6......5......4......3......2......1......0
+Number of accepted tran steps =             54
+
+Maximum value achieved for any signal of each quantity: 
+V: V(vdd) = 1.8 V
+I: I(V_VDD:p) = 100 uA
+If your circuit contains signals of the same quantity that are vastly different in size (such as high voltage circuitry combined with low voltage control circuitry), you should consider specifying global option `bin_relref=yes'.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Post-Transient Simulation Summary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   -   To further speed up simulation, consider
+          add ++aps on command line
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+During simulation, the CPU load for active processors is :
+         0 (1.9 %)       3 (18.9 %)     
+        Total: 20.8%
+Initial condition solution time: CPU = 412 us, elapsed = 419.14 us.
+Intrinsic tran analysis time:    CPU = 3.049 ms, elapsed = 10.2081 ms.
+Total time required for tran analysis `tran_test': CPU = 4.488 ms, elapsed = 11.6549 ms, util. = 38.5%.
+Time accumulated: CPU = 177.909 ms, elapsed = 571.561 ms.
+Peak resident memory used = 192 Mbytes.
+
+Licensing Information:
+Lic Summary:
+[15:58:03.156832] Cdslmd servers:6055@licaccess.cmc.ca
+[15:58:03.156848] Feature usage summary:
+[15:58:03.156849] Virtuoso_Multi_mode_Simulation
+
+
+Aggregate audit (3:58:03 PM, Thur Feb 5, 2026):
+Time used: CPU = 179 ms, elapsed = 575 ms, util. = 31.2%.
+Time spent in licensing: elapsed = 326 ms, percentage of total = 56.7%.
+Peak memory used = 195 Mbytes.
+Simulation started at: 3:58:02 PM, Thur Feb 5, 2026, ended at: 3:58:03 PM, Thur Feb 5, 2026, with elapsed time (wall clock): 575 ms.
+spectre completes with 0 errors, 0 warnings, and 1 notice.

@@ -27,8 +27,35 @@ def parse_kv_list(raw: str) -> Dict[str, float]:
         if "=" not in tok:
             raise SystemExit(f"Invalid extra param '{tok}', expected key=value.")
         k, v = tok.split("=", 1)
-        out[k.strip()] = float(v.strip())
+        out[k.strip()] = parse_value(v.strip())
     return out
+
+
+def parse_value(raw: str) -> float:
+    try:
+        return float(raw)
+    except ValueError:
+        pass
+    m = re.match(r"^([+-]?\d*\.?\d+(?:[eE][+-]?\d+)?)([a-zA-Z]+)$", raw)
+    if not m:
+        raise SystemExit(f"Invalid numeric value '{raw}'")
+    base = float(m.group(1))
+    suffix = m.group(2)
+    if suffix.lower() == "meg" or suffix == "M":
+        return base * 1e6
+    scale = {
+        "f": 1e-15,
+        "p": 1e-12,
+        "n": 1e-9,
+        "u": 1e-6,
+        "m": 1e-3,
+        "k": 1e3,
+        "g": 1e9,
+        "t": 1e12,
+    }.get(suffix.lower())
+    if scale is None:
+        raise SystemExit(f"Unknown suffix '{suffix}' in '{raw}'")
+    return base * scale
 
 
 def update_param_line(param_line: str, key: str, value: str) -> str:
@@ -225,6 +252,7 @@ def main() -> None:
     parser.add_argument("--latency-hold-ns", type=float, default=0.0)
     parser.add_argument("--latency-max-ns", type=float, default=None)
     parser.add_argument("--model-class", choices=["toy", "pdk"], default="toy")
+    parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
 
     if shutil.which("spectre") is None or shutil.which("ocean") is None:
@@ -248,7 +276,7 @@ def main() -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
 
     netlist_text = args.netlist.read_text(encoding="utf-8")
-    m = re.search(r"^parameters\\s+.+$", netlist_text, flags=re.MULTILINE)
+    m = re.search(r"^parameters\s+.+$", netlist_text, flags=re.MULTILINE)
     if not m:
         raise SystemExit("Netlist missing parameters line.")
 
@@ -300,46 +328,56 @@ def main() -> None:
         metrics_path = vec_dir / "metrics.txt"
         ocn_path = vec_dir / "extract_metrics.ocn"
 
-        rc = run_cmd(
-            ["spectre", netlist_path.name, "-raw", raw_dir.name, "+log", spectre_log.name],
-            cwd=vec_dir,
-            stdout=spectre_stdout,
-        )
-        status = "PASS"
-        if rc != 0:
-            status = "SPECTRE_FAIL"
-        elif "completes with 0 errors" not in spectre_log.read_text(encoding="utf-8", errors="ignore"):
-            status = "SPECTRE_LOG_FAIL"
-
         target_vals = None
         if target_cols:
             target_vals = [float(vec[c]) for c in target_cols]
-        ocn_text = build_metrics_ocn(
-            raw_dir=raw_dir,
-            out_file=metrics_path,
-            output_nodes=output_nodes,
-            target_vals=target_vals,
-            tstop_ns=args.tstop_ns,
-            t_eval_ns=args.eval_time_ns,
-            t_start_ns=args.tstart_ns,
-            energy_dt_ps=args.energy_dt_ps,
-            vdd_node=args.vdd_node,
-            vdd_source=args.vdd_source,
-            output_scale=args.output_scale,
-            output_offset=args.output_offset,
-            output_invert=args.output_invert,
-            latency_tol=args.latency_tol,
-            latency_hold_ns=args.latency_hold_ns,
-        )
-        write_text(ocn_path, ocn_text)
 
-        if status == "PASS":
-            rc_ocean = run_cmd(["bash", "-lc", f"ocean -nograph < '{ocn_path.name}'"], cwd=vec_dir, stdout=ocean_log)
+        metrics: Dict[str, str] = {}
+        status = "PASS"
+
+        if args.resume and metrics_path.exists():
             metrics = parse_metrics(metrics_path)
-            if rc_ocean != 0 or metrics.get("status") != "OK":
+            if metrics.get("status") != "OK":
                 status = "OCEAN_FAIL"
         else:
-            metrics = {}
+            rc = run_cmd(
+                ["spectre", netlist_path.name, "-raw", raw_dir.name, "+log", spectre_log.name],
+                cwd=vec_dir,
+                stdout=spectre_stdout,
+            )
+            if rc != 0:
+                status = "SPECTRE_FAIL"
+            elif "completes with 0 errors" not in spectre_log.read_text(encoding="utf-8", errors="ignore"):
+                status = "SPECTRE_LOG_FAIL"
+
+            ocn_text = build_metrics_ocn(
+                raw_dir=raw_dir,
+                out_file=metrics_path,
+                output_nodes=output_nodes,
+                target_vals=target_vals,
+                tstop_ns=args.tstop_ns,
+                t_eval_ns=args.eval_time_ns,
+                t_start_ns=args.tstart_ns,
+                energy_dt_ps=args.energy_dt_ps,
+                vdd_node=args.vdd_node,
+                vdd_source=args.vdd_source,
+                output_scale=args.output_scale,
+                output_offset=args.output_offset,
+                output_invert=args.output_invert,
+                latency_tol=args.latency_tol,
+                latency_hold_ns=args.latency_hold_ns,
+            )
+            write_text(ocn_path, ocn_text)
+
+            if status == "PASS":
+                rc_ocean = run_cmd(
+                    ["bash", "-lc", f"ocean -nograph < '{ocn_path.name}'"],
+                    cwd=vec_dir,
+                    stdout=ocean_log,
+                )
+                metrics = parse_metrics(metrics_path)
+                if rc_ocean != 0 or metrics.get("status") != "OK":
+                    status = "OCEAN_FAIL"
 
         outputs: List[float] = []
         for i in range(len(output_nodes)):
