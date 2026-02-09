@@ -1,0 +1,29 @@
+Evaluating file mim.scm
+---> (sde:clear)
+()
+---> (sde:set-process-up-direction +y)
+#f
+---> (sdegeo:create-rectangle (position 0 0 0) (position 0.1 0.01 0) HfO2 R.Oxide)
+#[body 9 1]
+---> (sdegeo:define-contact-set top 4 (color:rgb 1 0 0) ##)
+()
+---> (sdegeo:set-current-contact-set top)
+""
+---> (sdegeo:set-contact (find-edge-id (position 0.05 0 0)) top)
+#t
+---> (sdegeo:define-contact-set bottom 4 (color:rgb 0 0 1) ##)
+()
+---> (sdegeo:set-current-contact-set bottom)
+"top"
+---> (sdegeo:set-contact (find-edge-id (position 0.05 0.01 0)) bottom)
+#t
+---> (sde:build-mesh snmesh  memdev)
+#t
+---> #[end-of-file]
+"************************************************************************"
+"Sentaurus Structure Editor "
+"Start Time:    Mon Feb  9 08:42:44 2026"
+"End   Time:    Mon Feb  9 08:42:44 2026"
+"Total Execution Time (sec):    0"
+"Total System calls Time (sec): 0"
+"************************************************************************"

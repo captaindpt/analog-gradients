@@ -1,0 +1,105 @@
+* MIM Memristor — SDevice Physics Deck (Phase 2: Trap-Assisted Tunneling)
+* Adds traps to oxide for nonlinear conduction.
+* Substitute: 1.5, 1e19, 1.0
+
+File {
+  Grid    = "memdev_msh.tdr"
+  Plot    = "memdev"
+  Current = "memdev"
+  Output  = "memdev"
+}
+
+Electrode {
+  { Name="top"    Voltage=0.0 }
+  { Name="bottom" Voltage=0.0 }
+}
+
+Physics {
+  DefaultParametersFromFile
+  Fermi
+  Mobility( DopingDep HighFieldSaturation Enormal )
+  Recombination( SRH )
+  EffectiveIntrinsicDensity( OldSlotboom )
+  eBarrierTunneling "NLM_TOP"
+  hBarrierTunneling "NLM_TOP"
+  eBarrierTunneling "NLM_BOT"
+  hBarrierTunneling "NLM_BOT"
+}
+
+Physics(Region="R.Oxide") {
+  Traps(
+    (Acceptor Level fromCondBand
+     EnergyMid=1.0
+     Conc=1e19
+     eXsection=1e-15 hXsection=1e-15
+     eBarrierTunneling(NonLocal= "NLM_TOP" NonLocal= "NLM_BOT")
+     hBarrierTunneling(NonLocal= "NLM_TOP" NonLocal= "NLM_BOT"))
+  )
+}
+
+Plot {
+  eDensity hDensity eCurrent hCurrent
+  ElectricField Potential SpaceCharge
+  eBarrierTunneling hBarrierTunneling
+  NonLocal
+  eTrappedCharge hTrappedCharge
+  TotalCurrent
+}
+
+Math {
+  NonLocal "NLM_TOP" (
+    Electrode = "top"
+    Length = 2e-6
+    Digits = 4
+    EnergyResolution = 1e-4
+  )
+  NonLocal "NLM_BOT" (
+    Electrode = "bottom"
+    Length = 2e-6
+    Digits = 4
+    EnergyResolution = 1e-4
+  )
+  Extrapolate
+  RelErrControl
+  Notdamped=50
+  Iterations=30
+  Method=Blocked
+  SubMethod=ParDiSo
+}
+
+Solve {
+  * Initial equilibrium
+  Coupled(Iterations=100){ Poisson }
+  Coupled(Iterations=100){ Poisson Electron Hole }
+
+  * Bipolar DC sweep: 0 -> +Vmax -> -Vmax -> 0
+  Quasistationary(
+    InitialStep=0.01
+    Increment=1.5
+    MinStep=1e-6
+    MaxStep=0.05
+    Goal{ Name="top" Voltage=1.5 }
+  ) {
+    Coupled { Poisson Electron Hole }
+  }
+
+  Quasistationary(
+    InitialStep=0.01
+    Increment=1.5
+    MinStep=1e-6
+    MaxStep=0.05
+    Goal{ Name="top" Voltage=-1.5 }
+  ) {
+    Coupled { Poisson Electron Hole }
+  }
+
+  Quasistationary(
+    InitialStep=0.01
+    Increment=1.5
+    MinStep=1e-6
+    MaxStep=0.05
+    Goal{ Name="top" Voltage=0.0 }
+  ) {
+    Coupled { Poisson Electron Hole }
+  }
+}

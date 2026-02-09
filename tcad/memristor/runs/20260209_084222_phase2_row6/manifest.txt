@@ -1,0 +1,17 @@
+run_id=20260209_084222
+sweep_row=6
+phase=2
+oxide_material=HfO2
+oxide_thickness_nm=10
+trap_density_cm3=1e18
+trap_energy_ev_below_cb=2.5
+vacancy_conc_cm3=NA
+vacancy_mobility_cm2vs=NA
+sweep_type=dc_bipolar
+sweep_vmax_v=1.5
+sweep_cycles=1
+outcome=FAIL:convergence
+wall_time_s=3
+notes=low trap density midgap
+has_iv_data=no
+has_metrics=no

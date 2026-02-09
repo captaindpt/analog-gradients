@@ -1,0 +1,10 @@
+sweep_row,run_id,run_dir,phase,oxide_material,oxide_thickness_nm,trap_density_cm3,trap_energy_ev_below_cb,vacancy_conc_cm3,vacancy_mobility_cm2vs,sweep_type,sweep_vmax_v,sweep_cycles,outcome,wall_time_s,has_iv_data,current_abs_max_a,energy_total_j,hysteresis_area_av,set_threshold_v,reset_threshold_v,samples,notes
+6,20260209_084222,tcad/memristor/runs/20260209_084222_phase2_row6,2,HfO2,10,1e18,2.5,NA,NA,dc_bipolar,1.5,1,FAIL:convergence,3,no,,,,,,,low trap density midgap
+7,20260209_084225,tcad/memristor/runs/20260209_084225_phase2_row7,2,HfO2,10,1e19,2.5,NA,NA,dc_bipolar,1.5,1,FAIL:convergence,3,no,,,,,,,med trap density midgap
+8,20260209_084228,tcad/memristor/runs/20260209_084228_phase2_row8,2,HfO2,10,1e20,2.5,NA,NA,dc_bipolar,1.5,1,FAIL:convergence,3,no,,,,,,,high trap density midgap
+9,20260209_084231,tcad/memristor/runs/20260209_084231_phase2_row9,2,HfO2,10,1e18,0.5,NA,NA,dc_bipolar,1.5,1,FAIL:convergence,3,no,,,,,,,low trap density shallow
+10,20260209_084234,tcad/memristor/runs/20260209_084234_phase2_row10,2,HfO2,10,1e19,0.5,NA,NA,dc_bipolar,1.5,1,FAIL:convergence,3,no,,,,,,,med trap density shallow
+11,20260209_084237,tcad/memristor/runs/20260209_084237_phase2_row11,2,HfO2,10,1e20,0.5,NA,NA,dc_bipolar,1.5,1,FAIL:convergence,3,no,,,,,,,high trap density shallow
+12,20260209_084240,tcad/memristor/runs/20260209_084240_phase2_row12,2,HfO2,10,1e18,1.0,NA,NA,dc_bipolar,1.5,1,FAIL:convergence,3,no,,,,,,,low trap density deep
+13,20260209_084243,tcad/memristor/runs/20260209_084243_phase2_row13,2,HfO2,10,1e19,1.0,NA,NA,dc_bipolar,1.5,1,FAIL:convergence,3,no,,,,,,,med trap density deep
+14,20260209_084246,tcad/memristor/runs/20260209_084246_phase2_row14,2,HfO2,10,1e20,1.0,NA,NA,dc_bipolar,1.5,1,FAIL:convergence,3,no,,,,,,,high trap density deep

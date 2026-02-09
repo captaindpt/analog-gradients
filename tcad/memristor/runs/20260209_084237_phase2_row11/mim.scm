@@ -1,0 +1,34 @@
+; MIM (Metal/Oxide/Metal) Memristor Structure — SDE Geometry Deck
+; Template: substitute 0.01 before running
+;
+; Structure (2D cross-section, y is vertical):
+;   Top electrode (metal contact) at y=0
+;   Oxide layer: y=0 to y=0.01
+;   Bottom electrode (metal contact) at y=0.01
+;
+; Device width (x): 0.1 um (100nm typical crossbar width)
+
+(sde:clear)
+(sde:set-process-up-direction "+y")
+
+; --- Geometry ---
+; Oxide region: width=0.1um, height=0.01 um
+(sdegeo:create-rectangle
+  (position 0 0 0)
+  (position 0.1 0.01 0)
+  "HfO2"
+  "R.Oxide")
+
+; --- Contacts ---
+; Top electrode (top edge, y=0)
+(sdegeo:define-contact-set "top" 4 (color:rgb 1 0 0) "##")
+(sdegeo:set-current-contact-set "top")
+(sdegeo:set-contact (find-edge-id (position 0.05 0 0)) "top")
+
+; Bottom electrode (bottom edge, y=0.01)
+(sdegeo:define-contact-set "bottom" 4 (color:rgb 0 0 1) "##")
+(sdegeo:set-current-contact-set "bottom")
+(sdegeo:set-contact (find-edge-id (position 0.05 0.01 0)) "bottom")
+
+; --- Mesh ---
+(sde:build-mesh "snmesh" "" "memdev")
