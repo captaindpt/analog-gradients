@@ -1,0 +1,42 @@
+; 3D MIM ReRAM geometry for KMC simulation
+; Parameter: %%OXIDE_THICKNESS_UM%%
+
+(sde:clear)
+(sde:set-process-up-direction "+x")
+
+(define oxide_t %%OXIDE_THICKNESS_UM%%)
+(define metal_t 0.005)
+(define ly 0.02)
+(define lz 0.02)
+
+(define x0 (- metal_t))
+(define x1 0.0)
+(define x2 oxide_t)
+(define x3 (+ oxide_t metal_t))
+
+; TiN (bottom) / HfO2 (oxide) / TiN (top)
+(sdegeo:create-cuboid (position x0 0 0) (position x1 ly lz) "TiN"  "R.Bottom")
+(sdegeo:create-cuboid (position x1 0 0) (position x2 ly lz) "HfO2" "R.Oxide")
+(sdegeo:create-cuboid (position x2 0 0) (position x3 ly lz) "TiN"  "R.Top")
+
+; Contacts on bottom and top outer faces
+(sdegeo:set-contact (list (car (find-face-id (position x0 (/ ly 2.0) (/ lz 2.0))))) "bottom")
+(sdegeo:set-contact (list (car (find-face-id (position x3 (/ ly 2.0) (/ lz 2.0))))) "top")
+
+; Global mesh
+(sdedr:define-refinement-size "global" 0.002 0.002 0.002 0.001 0.001 0.001)
+(sdedr:define-refinement-placement "global_tin"  "global" (list "material" "TiN"))
+(sdedr:define-refinement-placement "global_hfo2" "global" (list "material" "HfO2"))
+
+; Finer mesh in oxide
+(sdedr:define-refinement-size "oxide" 0.0005 0.0005 0.0005 0.00025 0.00025 0.00025)
+(sdedr:define-refinement-placement "oxide_place" "oxide" (list "material" "HfO2"))
+
+(sdesnmesh:delaunizer
+  "maxPoints" 1000000
+  "maxConnectivity" 120
+  "delaunayTolerance" 0.
+  "minDihedralAngleAllowed" 1
+)
+
+(sde:build-mesh "memdev")

@@ -1,0 +1,47 @@
+Material = "TiN" {
+   Bandgap {
+      WorkFunction = 4.4
+      FermiEnergy  = 6.0
+   }
+   FilamentParameter {
+      SigmaDef1 = 1e4
+      Sigma = 1e4
+      KappaDef1 = 0.2
+      Kappa = 0.2
+   }
+}
+
+Material = "HfO2" {
+   FilamentParameter {
+      SigmaDef1 = 0.01
+      Sigma = 1e-11
+      KappaDef1 = 0.1
+      Kappa = 0.1
+      ParticlesPerVolume2 = 1.5e22
+      FilamentsPerVolume1 = 1.5e22
+   }
+   KMC_MIM_Transport {
+      metun     = 0.2
+      medos     = 0.2
+      mcb       = 1.16
+      mvb       = 2.5
+      HuangRhys = 17.0
+      PhononEnergy = 0.070
+      OpticalPermittivity = 5.6
+      PhononFrequency = 1e13
+      tau0 = 1e-10
+      nu_max = 1e14
+      EA = 3.00
+      p0 = 5.2
+   }
+   Epsilon {
+      epsilon = 21.0
+   }
+   Bandgap {
+      Chi0  = 2.4
+      Eg0   = 5.8
+      alpha = 0.0
+      beta  = 0.0
+      Tpar  = 0.0
+   }
+}

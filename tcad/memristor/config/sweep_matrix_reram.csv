@@ -1,0 +1,20 @@
+row,phase,sweep_group,oxide_thickness_nm,gen_freq,gen_ea,gen_dipole,recomb_freq,recomb_ea,diff_ea,fil_growth_ea,fil_recess_ea,sweep_vmax_v,compliance_a,set_time_s,reset_time_s,notes
+1,B,baseline,5,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,baseline defaults
+2,C,gen_ea,5,1e8,0.6,2e-7,1e9,0.3,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,lower generation activation
+3,C,gen_ea,5,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,baseline generation activation
+4,C,gen_ea,5,1e8,1.0,2e-7,1e9,0.3,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,higher generation activation
+5,C,diff_ea,5,1e8,0.8,2e-7,1e9,0.3,0.3,0.4,0.5,3.0,1e-8,0.015,0.03,lower vacancy diffusion activation
+6,C,diff_ea,5,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,baseline vacancy diffusion activation
+7,C,diff_ea,5,1e8,0.8,2e-7,1e9,0.3,0.5,0.4,0.5,3.0,1e-8,0.015,0.03,higher vacancy diffusion activation
+8,C,fil_growth_ea,5,1e8,0.8,2e-7,1e9,0.3,0.4,0.3,0.5,3.0,1e-8,0.015,0.03,lower filament growth activation
+9,C,fil_growth_ea,5,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,baseline filament growth activation
+10,C,fil_growth_ea,5,1e8,0.8,2e-7,1e9,0.3,0.4,0.5,0.5,3.0,1e-8,0.015,0.03,higher filament growth activation
+11,C,fil_recess_ea,5,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,0.4,3.0,1e-8,0.015,0.03,lower filament recession activation
+12,C,fil_recess_ea,5,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,baseline filament recession activation
+13,C,fil_recess_ea,5,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,0.6,3.0,1e-8,0.015,0.03,higher filament recession activation
+14,C,oxide_thickness,3,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,thinner oxide
+15,C,oxide_thickness,5,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,baseline oxide
+16,C,oxide_thickness,8,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,thicker oxide
+17,C,sweep_vmax,5,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,0.5,2.0,1e-8,0.015,0.03,lower voltage sweep
+18,C,sweep_vmax,5,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,baseline voltage sweep
+19,C,sweep_vmax,5,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,0.5,4.0,1e-8,0.015,0.03,higher voltage sweep

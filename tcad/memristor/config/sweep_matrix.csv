@@ -1,0 +1,39 @@
+row,phase,oxide_material,oxide_thickness_nm,trap_density_cm3,trap_energy_ev_below_cb,vacancy_conc_cm3,vacancy_mobility_cm2vs,sweep_type,sweep_vmax_v,sweep_cycles,notes
+1,1,HfO2,5,NA,NA,NA,NA,dc_unipolar,1.0,1,thin oxide baseline
+2,1,HfO2,10,NA,NA,NA,NA,dc_unipolar,1.0,1,medium oxide baseline
+3,1,HfO2,20,NA,NA,NA,NA,dc_unipolar,1.0,1,thick oxide baseline
+4,1,HfO2,10,NA,NA,NA,NA,dc_unipolar,2.0,1,medium oxide higher bias
+5,1,HfO2,5,NA,NA,NA,NA,dc_unipolar,2.0,1,thin oxide higher bias
+6,2,HfO2,BEST_P1,1e18,2.5,NA,NA,dc_bipolar,1.5,1,low trap density midgap
+7,2,HfO2,BEST_P1,1e19,2.5,NA,NA,dc_bipolar,1.5,1,med trap density midgap
+8,2,HfO2,BEST_P1,1e20,2.5,NA,NA,dc_bipolar,1.5,1,high trap density midgap
+9,2,HfO2,BEST_P1,1e18,0.5,NA,NA,dc_bipolar,1.5,1,low trap density shallow
+10,2,HfO2,BEST_P1,1e19,0.5,NA,NA,dc_bipolar,1.5,1,med trap density shallow
+11,2,HfO2,BEST_P1,1e20,0.5,NA,NA,dc_bipolar,1.5,1,high trap density shallow
+12,2,HfO2,BEST_P1,1e18,1.0,NA,NA,dc_bipolar,1.5,1,low trap density deep
+13,2,HfO2,BEST_P1,1e19,1.0,NA,NA,dc_bipolar,1.5,1,med trap density deep
+14,2,HfO2,BEST_P1,1e20,1.0,NA,NA,dc_bipolar,1.5,1,high trap density deep
+15,3,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,1e19,1e-14,dc_bipolar,1.5,3,low vacancy low mobility
+16,3,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,1e20,1e-14,dc_bipolar,1.5,3,med vacancy low mobility
+17,3,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,1e21,1e-14,dc_bipolar,1.5,3,high vacancy low mobility
+18,3,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,1e19,1e-12,dc_bipolar,1.5,3,low vacancy med mobility
+19,3,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,1e20,1e-12,dc_bipolar,1.5,3,med vacancy med mobility
+20,3,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,1e21,1e-12,dc_bipolar,1.5,3,high vacancy med mobility
+21,3,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,1e19,1e-10,dc_bipolar,1.5,3,low vacancy high mobility
+22,3,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,1e20,1e-10,dc_bipolar,1.5,3,med vacancy high mobility
+23,3,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,1e21,1e-10,dc_bipolar,1.5,3,high vacancy high mobility
+24,4,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,BEST_P3_VAC,BEST_P3_MOB,dc_bipolar,1.0,3,low voltage sweep rate study
+25,4,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,BEST_P3_VAC,BEST_P3_MOB,dc_bipolar,1.5,3,medium voltage sweep rate study
+26,4,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,BEST_P3_VAC,BEST_P3_MOB,dc_bipolar,2.0,3,high voltage sweep rate study
+27,4,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,BEST_P3_VAC,BEST_P3_MOB,dc_bipolar,1.5,5,repeatability check 5 cycles
+28,4,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,REFINE_VAC_LO,BEST_P3_MOB,dc_bipolar,1.5,3,vacancy refinement low
+29,4,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,REFINE_VAC_HI,BEST_P3_MOB,dc_bipolar,1.5,3,vacancy refinement high
+30,4,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,BEST_P3_VAC,REFINE_MOB_LO,dc_bipolar,1.5,3,mobility refinement low
+31,4,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,BEST_P3_VAC,REFINE_MOB_HI,dc_bipolar,1.5,3,mobility refinement high
+32,5,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,BEST_P4_VAC,BEST_P4_MOB,pulse_set,1.0,1,SET pulse 1V 10ns
+33,5,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,BEST_P4_VAC,BEST_P4_MOB,pulse_set,1.5,1,SET pulse 1.5V 10ns
+34,5,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,BEST_P4_VAC,BEST_P4_MOB,pulse_set,2.0,1,SET pulse 2V 10ns
+35,5,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,BEST_P4_VAC,BEST_P4_MOB,pulse_reset,-1.0,1,RESET pulse -1V 10ns
+36,5,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,BEST_P4_VAC,BEST_P4_MOB,pulse_reset,-1.5,1,RESET pulse -1.5V 10ns
+37,5,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,BEST_P4_VAC,BEST_P4_MOB,pulse_reset,-2.0,1,RESET pulse -2V 10ns
+38,5,HfO2,BEST_P1,BEST_P2_TRAP,BEST_P2_ENERGY,BEST_P4_VAC,BEST_P4_MOB,pulse_set_read_reset_read,1.5,1,full set-read-reset-read cycle

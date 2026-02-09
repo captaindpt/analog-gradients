@@ -163,3 +163,30 @@ Pivoted from planning docs to systematic TCAD physics exploration.
 - Phase 2 outputs were overwritten with rerun data:
   - `tcad/memristor/runs/phase2_results.csv`
   - `tcad/memristor/runs/phase2_summary.md`
+
+## Latest Progress (2026-02-09, Session 6, KMC Pivot)
+
+- Pivoted TCAD method from drift-diffusion tunneling deck to Sentaurus KMC ReRAM:
+  - new 3D geometry template: `tcad/memristor/templates/mim_sde_3d.scm.tmpl`
+  - new KMC SDevice template: `tcad/memristor/templates/mim_sdevice_reram.cmd.tmpl`
+  - new KMC material parameter file: `tcad/memristor/templates/reram.par`
+  - harness updated to KMC sweep matrix + SET/RESET extraction:
+    `scripts/run_memristor_tcad_sweep.sh`
+- Executed 15-run capped session (rows 1-15 of
+  `tcad/memristor/config/sweep_matrix_reram.csv`):
+  - run dirs: `tcad/memristor/runs/20260209_104232_reram_baseline/` through
+    `tcad/memristor/runs/20260209_113745_reram_row15_oxide_thickness/`
+  - outcomes: 15/15 `CONVERGED`
+  - extracted SET/RESET CSV: 15/15
+  - nonzero current: 15/15 (`~3e-15 A` to `~5e-15 A`)
+  - switching proxy ratio (`set/reset abs max`) > 2x: 0/15
+- Published KMC aggregate artifacts:
+  - `tcad/memristor/runs/reram_results.csv`
+  - `tcad/memristor/runs/reram_summary.md`
+- Notable observation:
+  - only row 2 (`gen_ea=0.6`) showed non-zero KMC event counters in sampled
+    log summaries, but still no macro-level SET/RESET separation.
+- Session cap reached (15 runs), so remaining planned Phase C points are
+  deferred:
+  - row 16 (`oxide_thickness_nm=8`)
+  - rows 17-19 (`sweep_vmax_v = 2.0, 3.0, 4.0`)

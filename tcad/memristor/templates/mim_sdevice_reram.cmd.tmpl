@@ -1,0 +1,120 @@
+* KMC ReRAM MIM deck (3D)
+* Placeholders:
+* %%OXIDE_THICKNESS_UM%% %%GEN_FREQ%% %%GEN_EA%% %%GEN_DIPOLE%%
+* %%RECOMB_FREQ%% %%RECOMB_EA%% %%DIFF_EA%% %%FIL_GROWTH_EA%%
+* %%FIL_RECESS_EA%% %%COMPLIANCE%% %%SET_TIME%% %%RESET_TIME%% %%SWEEP_VMAX%%
+
+File {
+   Grid    = "memdev_msh.tdr"
+   Plot    = "memdev"
+   Current = "memdev"
+   Output  = "memdev"
+   Param   = "reram.par"
+}
+
+Plot {
+   VertexIndex
+   ReRAMParticle
+   ReRAMPotential
+   ReRAMTemperature
+   ReRAMField
+   ReRAMCurrent
+}
+
+Electrode {
+   {name="top"    voltage=0.0 Material="TiN"}
+   {name="bottom" voltage=0.0 Material="TiN"}
+}
+
+Thermode {
+   {name="top"    temperature=298}
+   {name="bottom" temperature=298}
+}
+
+Physics {
+   Temperature=298
+   Traps(( KmcReram ))
+   KMCDefects(
+      ConductanceEquation
+      HeatEquation
+      Particle1(Name="Oxygen")
+      Particle2(Name="Vacancy")
+      Filament1(Name="ImmobileVacancy")
+   )
+}
+
+Physics (Material = "HfO2") {
+   KMCDefects(
+      FrenkelPair1(Particle1(Region="Oxide") Particle2(Region="Oxide") SameSite)
+      Generation(FrenkelPair1(Frequency=%%GEN_FREQ%% Ea=%%GEN_EA%% Dipole=%%GEN_DIPOLE%%))
+      Recombination(FrenkelPair1(Frequency=%%RECOMB_FREQ%% Ea=%%RECOMB_EA%% Dipole=0e-7))
+      Diffusion(Particle1(Frequency=1e10 Ea=0.4 Dipole=-2e-7))
+      Diffusion(Particle2(Frequency=1e10 Ea=%%DIFF_EA%% Dipole=2e-7))
+      FilamentGrowth(Filament1(Frequency=1e9 Ea=%%FIL_GROWTH_EA%% Dipole=2e-7 Particle2))
+      FilamentRecession(Filament1(Frequency=1e9 Ea=%%FIL_RECESS_EA%% Dipole=2e-7 Particle2))
+   )
+}
+
+Physics (Electrode = "top") {
+   KMCDefects(
+      FilamentSeeds(Filament1)
+   )
+}
+
+Physics (Electrode = "bottom") {
+   KMCDefects(
+      FilamentSeeds(Filament1)
+   )
+}
+
+Math {
+   Extrapolate
+   NumberOfThreads=1
+   Iterations=200
+   Transient=BE
+   KMC (
+      CurrentCompliance (
+         Contact = "top" maxval = %%COMPLIANCE%%
+      )
+      MinLocation = (0.00, 0.00, 0.00)
+      MaxLocation = (%%OXIDE_THICKNESS_UM%%, 0.02, 0.02)
+      CellLength = 0.0005
+      UseKMCTimeStep
+      MaxTrapNumberChange = 1
+      MaxTrapNumber = 1000
+      TargetParticle(Filament1)
+   )
+}
+
+Solve {
+   Coupled (iterations=100) {Poisson Contact}
+
+   * SET: ramp to +V
+   NewCurrentFile="SET"
+   Transient (
+      InitialTime=0 FinalTime=%%SET_TIME%% Increment=1.2
+      InitialStep=0.001 MaxStep=1e30
+      Goal{Name="top" Voltage=%%SWEEP_VMAX%%}
+   ) {
+      Coupled { Poisson Contact }
+      Plot(FilePrefix="set" Time=(range=(1e-10 %%SET_TIME%%)) NoOverwrite)
+   }
+
+   * Hold at peak for stabilization
+   NewCurrentFile="tmp"
+   Quasistationary (
+      InitialStep=0.01 MinStep=1e-3 MaxStep=0.5
+      Goal {Name="top" Voltage=%%SWEEP_VMAX%%}
+   ) { Coupled {Poisson Contact} }
+
+   * RESET: ramp to -V
+   NewCurrentFile="RESET"
+   Transient (
+      InitialTime=0 FinalTime=%%RESET_TIME%% Increment=1.2
+      InitialStep=0.001 MaxStep=1e30
+      Goal{Name="top" Voltage=-%%SWEEP_VMAX%%}
+   ) {
+      Coupled { Poisson Contact }
+      Plot(FilePrefix="reset" Time=(range=(1e-7 %%RESET_TIME%%)) NoOverwrite)
+   }
+}

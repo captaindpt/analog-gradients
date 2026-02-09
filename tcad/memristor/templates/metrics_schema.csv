@@ -1,0 +1,7 @@
+metric,value,units,notes
+set_threshold,NA,V,Estimated from positive branch dI/dV peak
+reset_threshold,NA,V,Estimated from negative branch dI/dV peak
+hysteresis_area,NA,A*V,Closed-loop integral of I dV
+energy_total,NA,J,Integral of V*I over full trace
+resistance_read_min,NA,ohm,Minimum inferred resistance near read voltage
+resistance_read_max,NA,ohm,Maximum inferred resistance near read voltage

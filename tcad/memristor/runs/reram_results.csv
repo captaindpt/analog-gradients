@@ -1,0 +1,16 @@
+sweep_row,run_id,run_dir,phase,sweep_group,outcome,oxide_thickness_nm,gen_ea,diff_ea,fil_growth_ea,fil_recess_ea,sweep_vmax_v,compliance_a,set_time_s,reset_time_s,has_set_csv,has_reset_csv,set_current_abs_max_a,reset_current_abs_max_a,current_ratio_set_over_reset,kmc_generation_count_max,kmc_vacancy_diffusion_count_max,notes
+1,20260209_104232,20260209_104232_reram_baseline,B,baseline,CONVERGED,5,0.8,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,yes,yes,2.97501e-15,2.97501e-15,1.0,0,0,baseline defaults
+2,20260209_104748,20260209_104748_reram_row2_gen_ea,C,gen_ea,CONVERGED,5,0.6,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,yes,yes,2.97501e-15,2.97501e-15,1.0,5,537,lower generation activation
+3,20260209_105142,20260209_105142_reram_row3_gen_ea,C,gen_ea,CONVERGED,5,0.8,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,yes,yes,2.97501e-15,2.97501e-15,1.0,0,0,baseline generation activation
+4,20260209_105535,20260209_105535_reram_row4_gen_ea,C,gen_ea,CONVERGED,5,1.0,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,yes,yes,2.97501e-15,2.97501e-15,1.0,0,0,higher generation activation
+5,20260209_105935,20260209_105935_reram_row5_diff_ea,C,diff_ea,CONVERGED,5,0.8,0.3,0.4,0.5,3.0,1e-8,0.015,0.03,yes,yes,2.97501e-15,2.97501e-15,1.0,0,0,lower vacancy diffusion activation
+6,20260209_110338,20260209_110338_reram_row6_diff_ea,C,diff_ea,CONVERGED,5,0.8,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,yes,yes,2.97501e-15,2.97501e-15,1.0,0,0,baseline vacancy diffusion activation
+7,20260209_110734,20260209_110734_reram_row7_diff_ea,C,diff_ea,CONVERGED,5,0.8,0.5,0.4,0.5,3.0,1e-8,0.015,0.03,yes,yes,2.97501e-15,2.97501e-15,1.0,0,0,higher vacancy diffusion activation
+8,20260209_111124,20260209_111124_reram_row8_fil_growth_ea,C,fil_growth_ea,CONVERGED,5,0.8,0.4,0.3,0.5,3.0,1e-8,0.015,0.03,yes,yes,2.97501e-15,2.97501e-15,1.0,0,0,lower filament growth activation
+9,20260209_111519,20260209_111519_reram_row9_fil_growth_ea,C,fil_growth_ea,CONVERGED,5,0.8,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,yes,yes,2.97501e-15,2.97501e-15,1.0,0,0,baseline filament growth activation
+10,20260209_111918,20260209_111918_reram_row10_fil_growth_ea,C,fil_growth_ea,CONVERGED,5,0.8,0.4,0.5,0.5,3.0,1e-8,0.015,0.03,yes,yes,2.97501e-15,2.97501e-15,1.0,0,0,higher filament growth activation
+11,20260209_112310,20260209_112310_reram_row11_fil_recess_ea,C,fil_recess_ea,CONVERGED,5,0.8,0.4,0.4,0.4,3.0,1e-8,0.015,0.03,yes,yes,2.97501e-15,2.97501e-15,1.0,0,0,lower filament recession activation
+12,20260209_112707,20260209_112707_reram_row12_fil_recess_ea,C,fil_recess_ea,CONVERGED,5,0.8,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,yes,yes,2.97501e-15,2.97501e-15,1.0,0,0,baseline filament recession activation
+13,20260209_113100,20260209_113100_reram_row13_fil_recess_ea,C,fil_recess_ea,CONVERGED,5,0.8,0.4,0.4,0.6,3.0,1e-8,0.015,0.03,yes,yes,2.97501e-15,2.97501e-15,1.0,0,0,higher filament recession activation
+14,20260209_113457,20260209_113457_reram_row14_oxide_thickness,C,oxide_thickness,CONVERGED,3,0.8,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,yes,yes,4.95835e-15,4.95835e-15,1.0,0,0,thinner oxide
+15,20260209_113745,20260209_113745_reram_row15_oxide_thickness,C,oxide_thickness,CONVERGED,5,0.8,0.4,0.4,0.5,3.0,1e-8,0.015,0.03,yes,yes,2.97501e-15,2.97501e-15,1.0,0,0,baseline oxide
