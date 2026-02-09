@@ -1,24 +1,31 @@
-# Phase 2 Summary (Rows 6-14)
+# Phase 2 Summary (Rows 6-14, Second Attempt)
 
-Phase 2 executed rows 6-14 in strict order using `scripts/run_memristor_tcad_sweep.sh` with `BEST_P1=10` (from Phase 1 baseline). All nine runs produced complete manifests and logs under `tcad/memristor/runs/20260209_084222_phase2_row6` through `tcad/memristor/runs/20260209_084246_phase2_row14`, but all exited before waveform generation (`has_iv_data=no`). The common SDevice termination message across sampled runs is `TrapVolume must be positive for each trap for which the barrier tunneling model is turned on !`, so no valid I-V traces were produced for nonlinearity evaluation.
+Phase 2 was re-run for rows 6-14 in strict order using `BEST_P1=10` with the corrected `TrapVolume` template. New run artifacts are stored at `tcad/memristor/runs/20260209_085016_phase2_row6` through `tcad/memristor/runs/20260209_085040_phase2_row14`.
 
-## Phase 2 Gate Result
+## What happened
 
-- Required: at least 3/9 runs with nonlinear I-V.
-- Observed: 0/9 runs with usable I-V (all `FAIL:convergence` in manifests).
+- Outcomes: 9/9 runs ended as `FAIL:convergence`.
+- IV extraction: 0/9 (`has_iv_data=no` in all manifests).
+- Convergence status: no run reached `Good Bye`; all exited during early solve startup.
+- Common SDevice error in all sampled rerun logs:
+  - `Error: No valid electron BarrierTunneling mass has been specified for region 'R.Oxide'. !`
+
+## Phase 2 Gate (Second Attempt)
+
+- Required: at least 3/9 runs show nonlinear I-V.
+- Observed: 0/9 runs produced any I-V data.
 - Gate status: **FAIL (hard stop)**.
+
+Per the second-attempt rule, this is treated as a real Phase 2 stop condition and work does not proceed to Phases 3-5 in this session.
 
 ## Carry-Forward Substitutions
 
 - `BEST_P1 = 10`
-- `BEST_P2_TRAP = NA` (not selected; no valid nonlinear run)
-- `BEST_P2_ENERGY = NA` (not selected; no valid nonlinear run)
+- `BEST_P2_TRAP = NA` (no nonlinear I-V run available)
+- `BEST_P2_ENERGY = NA` (no nonlinear I-V run available)
 
-Per runbook hard-stop rules, execution does not proceed to Phase 3 in this session.
+## Requested log interpretation
 
-## Syntax Follow-Up Applied
-
-- Added `TrapVolume=1e-21` to trap entries in:
-  - `tcad/memristor/templates/mim_sdevice_phase2.cmd.tmpl`
-  - `tcad/memristor/templates/mim_sdevice_phase3.cmd.tmpl`
-- This addresses the explicit SDevice runtime requirement reported in Phase 2 logs.
+- Did it converge? **No** (0/9 converged).
+- Is current still zero? **Not measurable from this rerun**, because no valid IV files were produced.
+- What does the I-V look like? **No I-V curve generated** in this rerun due to solver termination before waveform output.

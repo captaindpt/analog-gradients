@@ -1,0 +1,161 @@
+
+                          Sentaurus Structure Editor 
+
+                  Version X-2025.09 for linux64 - Aug 15, 2025
+          Changelist number: 10041611, Compile host: sce-tcad-5137-001
+
+                    Copyright (c) 1994 - 2025 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+
+Running on: vcl-vm0-159
+Hardware type: x86_64
+OS name: Linux
+OS release: 4.18.0-553.27.1.el8_10.x86_64
+OS version: #1 SMP Wed Nov 6 14:29:02 UTC 2024
+Process ID: 4167
+
+Evaluating file mim.scm
+
+---> (sde:clear)
+
+---> (sde:set-process-up-direction +y)
+
+Warning: The allowed string input is either +z or -x.
+---> (sdegeo:create-rectangle (position 0 0 0) (position 0.1 0.01 0) HfO2 R.Oxide)
+
+---> (sdegeo:define-contact-set top 4 (color:rgb 1 0 0) ##)
+
+---> (sdegeo:set-current-contact-set top)
+
+---> (sdegeo:set-contact (find-edge-id (position 0.05 0 0)) top)
+
+(sdegeo:set-contact (list (car (find-edge-id (position 0.05 0 0)))) "top")
+
+---> (sdegeo:define-contact-set bottom 4 (color:rgb 0 0 1) ##)
+
+---> (sdegeo:set-current-contact-set bottom)
+
+---> (sdegeo:set-contact (find-edge-id (position 0.05 0.01 0)) bottom)
+
+(sdegeo:set-contact (list (car (find-edge-id (position 0.05 0.01 0)))) "bottom")
+
+---> (sde:build-mesh snmesh  memdev)
+
+
+                                Sentaurus Mesh 
+
+                  Version X-2025.09 for linux64 - Aug 15, 2025
+          Changelist number: 10041611, Compile host: sce-tcad-5137-001
+
+                    Copyright (c) 2005 - 2025 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+
+Running on: vcl-vm0-159
+Hardware type: x86_64
+OS name: Linux
+OS release: 4.18.0-553.27.1.el8_10.x86_64
+OS version: #1 SMP Wed Nov 6 14:29:02 UTC 2024
+Process ID: 4206
+
+Flags used:
+
+Using total concentrations for net doping
+** Generating 2d grid **
+
+Creating binary tree...done.
+Imprinting binary tree on the boundary...done.
+Optimizing boundary nodes...done.
+
+Number of vertices after binary tree generation : 
+  4 (tree) + 4 (boundary)
+
+
+=================================  brep2d quality  =====================================
+minAngle: 90  [near (-0 -0)] at region=R.Oxide
+nVerts = 4  nTris = 4  nRegs = 3
+bmin: -0 -0
+bmax: 0.1 0.01
+min area: 0.01  max area: 0.1  min edge length : 0.01
+total area  : 0.22 interface area: 0
+total volume: 0.001
+Conformal? true
+Are all boundaries on bbox? true
+==================================================================================
+** Delaunizing the mesh **
+
+Creating delaunizer input...done.
+Solving edges...done 
+Optimizing elements...done. (8 vertices)
+Fixing diagonals...done.
+
+The final mesh has: 
+       4 points.
+       2 elements.
+       3 regions.
+Max. connectivity = 2 located at (-0;-0)
+
+
+==============================  tri-grid quality  ================================
+    0  10  20  30  40  50  60  70  80  90 100 110 120 130 140 150 160 170 180
+ %       33                          33  33                                
+---------------------------------------------------------------------------------
+minAngle: 5.71059  maxAngle: 90
+nVerts = 4  nTris = 2  nMats = 1
+max connectivity (tris per node): 2 [near (-0 -0)]
+bmin: -0 -0
+bmax: 0.1 0.01
+min edgeLength: 0.01  [near (-0 0.005)]
+min volume: 0.0005  max volume: 0.0005  Total volume: 0.001
+bbox  volume: 0.001
+Are all boundaries on bbox? true
+=================================================================================
+
+Smallest region: R.Oxide  Total volume: 0.001
+Interpolating data...done.
+
+===============================  Timer Report===================================
+              Total Mesh Generation Time:   0.00209s       100%
+                       Rate of #Vertices:  1.91e+03
+                          Rate of #Edges:  1.91e+03
+                          Rate of #Faces:       957
+                       Rate of #Elements:         0
+
+                            Time Covered:         0s         0%
+
+
+"Meshing successful"
+---> #[end-of-file]
+
+"************************************************************************"
+"Sentaurus Structure Editor "
+"Start Time:    Mon Feb  9 08:50:16 2026"
+"End   Time:    Mon Feb  9 08:50:17 2026"
+"Total Execution Time (sec):    1"
+"Total System calls Time (sec): 0"
+"************************************************************************"

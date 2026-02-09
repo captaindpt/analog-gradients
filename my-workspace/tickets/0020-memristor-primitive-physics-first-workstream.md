@@ -136,3 +136,30 @@ Pivoted from planning docs to systematic TCAD physics exploration.
   - `tcad/memristor/runs/phase2_results.csv`
   - `tcad/memristor/runs/phase2_summary.md`
   - carry-forward values: `BEST_P2_TRAP=NA`, `BEST_P2_ENERGY=NA`
+
+## Latest Progress (2026-02-09, Session 5)
+
+- Re-ran Phase 2 rows 6-14 as a second attempt with corrected trap template:
+  - command pattern: `BEST_P1=10 scripts/run_memristor_tcad_sweep.sh <row>`
+  - rows executed in order: 6, 7, 8, 9, 10, 11, 12, 13, 14
+- New rerun artifact directories:
+  - `tcad/memristor/runs/20260209_085016_phase2_row6/`
+  - `tcad/memristor/runs/20260209_085019_phase2_row7/`
+  - `tcad/memristor/runs/20260209_085022_phase2_row8/`
+  - `tcad/memristor/runs/20260209_085025_phase2_row9/`
+  - `tcad/memristor/runs/20260209_085028_phase2_row10/`
+  - `tcad/memristor/runs/20260209_085031_phase2_row11/`
+  - `tcad/memristor/runs/20260209_085034_phase2_row12/`
+  - `tcad/memristor/runs/20260209_085037_phase2_row13/`
+  - `tcad/memristor/runs/20260209_085040_phase2_row14/`
+- Rerun result:
+  - 9/9 `FAIL:convergence`
+  - 0/9 with extracted IV data
+  - common SDevice error: `No valid electron BarrierTunneling mass has been specified for region 'R.Oxide'`
+- Phase 2 stop gate on second attempt:
+  - required: >=3/9 nonlinear IV
+  - observed: 0/9 nonlinear IV (no IV output)
+  - status: hard stop; no Phase 3 execution in this session
+- Phase 2 outputs were overwritten with rerun data:
+  - `tcad/memristor/runs/phase2_results.csv`
+  - `tcad/memristor/runs/phase2_summary.md`
