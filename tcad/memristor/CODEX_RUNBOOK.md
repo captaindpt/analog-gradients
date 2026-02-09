@@ -56,6 +56,7 @@ File: `tcad/memristor/config/sweep_matrix_reram.csv`
 
 - Row 1: Phase B baseline
 - Rows 2-19: Phase C one-variable-at-a-time sensitivity
+- Rows 20-26: Phase D corrective pre-seeded vacancy sweep
 
 Key variables:
 - `gen_ea`
@@ -64,6 +65,7 @@ Key variables:
 - `fil_recess_ea`
 - `oxide_thickness_nm`
 - `sweep_vmax_v`
+- `initial_vac_conc`
 
 ## Run Artifact Contract
 
@@ -90,6 +92,7 @@ Required keys in `manifest.txt`:
 - `diff_ea`
 - `fil_growth_ea`
 - `fil_recess_ea`
+- `initial_vac_conc`
 - `sweep_vmax_v`
 - `compliance_a`
 - `set_time_s`

@@ -63,3 +63,37 @@ Session cap reached (15 runs). Remaining planned points were not executed in thi
 - Row 16 (`oxide_thickness_nm=8`)
 - Rows 17-19 (`sweep_vmax_v` sweep: 2V, 3V, 4V)
 
+## Phase D Corrective Run (Rows 20-26)
+
+Scope: pre-seeded vacancy corrective sweep requested after diagnosing event starvation in pristine HfO2.
+
+Template/harness changes applied before these runs:
+- Added `Particle2(Conc=%%INITIAL_VAC_CONC%%)` to `tcad/memristor/templates/mim_sdevice_reram.cmd.tmpl`
+- Added `initial_vac_conc` column to `tcad/memristor/config/sweep_matrix_reram.csv`
+- Updated `scripts/run_memristor_tcad_sweep.sh` to parse/substitute/record `initial_vac_conc`
+
+Run outcomes for rows 20-26:
+- Converged: 6/7
+- Failed: 1/7 (row 24, terminated during extreme KMC runtime; recorded as `FAIL:convergence`)
+
+Key quantitative observations:
+- KMC generation increased dramatically with pre-seeding + aggressive kinetics:
+  - row 21: generation max `11854`, vacancy diffusion max `200678`
+  - row 23: generation max `965488`, vacancy diffusion max `1275661`
+  - row 25: generation max `3219786`, vacancy diffusion max `4264385`
+  - row 26: generation max `1930997`, vacancy diffusion max `2559497`
+- Despite large vacancy populations, filament growth remained zero in all rows:
+  - `ImmobileVacancy Growth count max = 0` for rows 20-26
+- Extracted SET current remained leakage-scale:
+  - `set_current_abs_max_a` ranged from `1.19e-15 A` to `2.97501e-15 A`
+- SET/RESET separation was not observed:
+  - `current_ratio_set_over_reset = 1.0` for all converged Phase D rows
+
+Requested success criteria check (rows 20-26):
+- `KMC generation count > 50`: met in 6/7 rows
+- `Filament growth count > 0`: not met (0/7)
+- `SET current > 1e-10 A`: not met (0/7)
+- `SET/RESET current ratio > 2x`: not met (0/7)
+
+Breakthrough status:
+- No filament-formation breakthrough in this sweep.

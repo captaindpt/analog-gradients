@@ -45,6 +45,7 @@ Physics {
 
 Physics (Material = "HfO2") {
    KMCDefects(
+      Particle2(Conc=%%INITIAL_VAC_CONC%%)
       FrenkelPair1(Particle1(Region="Oxide") Particle2(Region="Oxide") SameSite)
       Generation(FrenkelPair1(Frequency=%%GEN_FREQ%% Ea=%%GEN_EA%% Dipole=%%GEN_DIPOLE%%))
       Recombination(FrenkelPair1(Frequency=%%RECOMB_FREQ%% Ea=%%RECOMB_EA%% Dipole=0e-7))

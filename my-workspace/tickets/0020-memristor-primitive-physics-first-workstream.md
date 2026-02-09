@@ -190,3 +190,34 @@ Pivoted from planning docs to systematic TCAD physics exploration.
   deferred:
   - row 16 (`oxide_thickness_nm=8`)
   - rows 17-19 (`sweep_vmax_v = 2.0, 3.0, 4.0`)
+
+## Latest Progress (2026-02-09, Session 7, KMC Corrective Phase D)
+
+- Applied corrective KMC changes for vacancy pre-seeding and aggressive
+  generation:
+  - `tcad/memristor/templates/mim_sdevice_reram.cmd.tmpl` now supports
+    `Particle2(Conc=%%INITIAL_VAC_CONC%%)`
+  - `scripts/run_memristor_tcad_sweep.sh` now parses/substitutes/persists
+    `initial_vac_conc`
+  - `tcad/memristor/config/sweep_matrix_reram.csv` extended to include rows
+    20-26 with pre-seeded Phase D points
+- Executed rows 20-26 in order:
+  - `tcad/memristor/runs/20260209_141652_reram_row20_preseeded_baseline/`
+  - `tcad/memristor/runs/20260209_142104_reram_row21_preseeded_low_ea/`
+  - `tcad/memristor/runs/20260209_142505_reram_row22_preseeded_high_freq/`
+  - `tcad/memristor/runs/20260209_142901_reram_row23_preseeded_aggressive/`
+  - `tcad/memristor/runs/20260209_143359_reram_row24_preseeded_very_aggressive/`
+  - `tcad/memristor/runs/20260209_145041_reram_row25_preseeded_4V/`
+  - `tcad/memristor/runs/20260209_145818_reram_row26_preseeded_thin/`
+- Outcomes:
+  - 6/7 `CONVERGED`
+  - row 24 recorded `FAIL:convergence` after forced termination due extreme
+    runtime outlier under very-aggressive settings
+- Corrective criteria status:
+  - `KMC generation count > 50`: met in 6/7 rows
+  - `Filament growth count > 0`: 0/7 (no breakthrough)
+  - `SET current > 1e-10 A`: 0/7 (still leakage-scale, `~1e-15` to `~3e-15 A`)
+  - `SET/RESET current ratio > 2x`: 0/7 (`ratio=1.0` on converged rows)
+- Published aggregated results (Phase D appended, not discarded prior rows):
+  - `tcad/memristor/runs/reram_results.csv`
+  - `tcad/memristor/runs/reram_summary.md`
