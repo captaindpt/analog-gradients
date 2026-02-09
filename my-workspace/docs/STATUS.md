@@ -1,6 +1,6 @@
 # GPU Building Blocks - Status
 
-**Last Updated:** 2026-02-05
+**Last Updated:** 2026-02-09
 
 ## Build Hierarchy
 
@@ -20,6 +20,7 @@ context in `competition/competition-plan.md`).
 
 Build path from verified digital GPU stack to a neuromorphic analog core:
 
+- Memristor paper library + Markdown manifest ✅
 - Analog primitive bring-up: `synapse`, `lif_neuron` ✅ PASS
 - Neuron composition and spike behavior verification: `neuron_tile` ✅ PASS
 - Small neuromorphic tile integration: `neuro_tile4` ✅ PASS
