@@ -36,10 +36,10 @@ if [[ -z "$ROW_LINE" ]]; then
 fi
 
 IFS=',' read -r _row PHASE SWEEP_GROUP OXIDE_T_NM GEN_FREQ GEN_EA GEN_DIPOLE \
-  RECOMB_FREQ RECOMB_EA DIFF_EA FIL_GROWTH_EA FIL_RECESS_EA SWEEP_VMAX \
-  COMPLIANCE SET_TIME RESET_TIME INITIAL_VAC_CONC NOTES <<< "$ROW_LINE"
+  RECOMB_FREQ RECOMB_EA DIFF_EA FIL_GROWTH_EA FIL_GROWTH_FREQ FIL_RECESS_EA SWEEP_VMAX \
+  COMPLIANCE SET_TIME RESET_TIME INITIAL_VAC_CONC INITIAL_FIL_CONC NOTES <<< "$ROW_LINE"
 
-for v in PHASE SWEEP_GROUP OXIDE_T_NM GEN_FREQ GEN_EA GEN_DIPOLE RECOMB_FREQ RECOMB_EA DIFF_EA FIL_GROWTH_EA FIL_RECESS_EA SWEEP_VMAX COMPLIANCE SET_TIME RESET_TIME INITIAL_VAC_CONC; do
+for v in PHASE SWEEP_GROUP OXIDE_T_NM GEN_FREQ GEN_EA GEN_DIPOLE RECOMB_FREQ RECOMB_EA DIFF_EA FIL_GROWTH_EA FIL_GROWTH_FREQ FIL_RECESS_EA SWEEP_VMAX COMPLIANCE SET_TIME RESET_TIME INITIAL_VAC_CONC INITIAL_FIL_CONC; do
   if [[ -z "${!v}" ]]; then
     echo "ERROR: missing value for $v on row $ROW_NUM" >&2
     exit 1
@@ -72,8 +72,10 @@ echo "  oxide_nm:     $OXIDE_T_NM"
 echo "  gen_ea:       $GEN_EA"
 echo "  diff_ea:      $DIFF_EA"
 echo "  fil_grow_ea:  $FIL_GROWTH_EA"
+echo "  fil_grow_f:   $FIL_GROWTH_FREQ"
 echo "  fil_rec_ea:   $FIL_RECESS_EA"
 echo "  init_vac:     $INITIAL_VAC_CONC"
+echo "  init_fil:     $INITIAL_FIL_CONC"
 echo "  vmax:         $SWEEP_VMAX"
 echo "  compliance:   $COMPLIANCE"
 
@@ -88,8 +90,10 @@ sed -e "s/%%OXIDE_THICKNESS_UM%%/${OXIDE_T_UM}/g" \
     -e "s/%%RECOMB_EA%%/${RECOMB_EA}/g" \
     -e "s/%%DIFF_EA%%/${DIFF_EA}/g" \
     -e "s/%%FIL_GROWTH_EA%%/${FIL_GROWTH_EA}/g" \
+    -e "s/%%FIL_GROWTH_FREQ%%/${FIL_GROWTH_FREQ}/g" \
     -e "s/%%FIL_RECESS_EA%%/${FIL_RECESS_EA}/g" \
     -e "s/%%INITIAL_VAC_CONC%%/${INITIAL_VAC_CONC}/g" \
+    -e "s/%%INITIAL_FIL_CONC%%/${INITIAL_FIL_CONC}/g" \
     -e "s/%%COMPLIANCE%%/${COMPLIANCE}/g" \
     -e "s/%%SET_TIME%%/${SET_TIME}/g" \
     -e "s/%%RESET_TIME%%/${RESET_TIME}/g" \
@@ -210,8 +214,10 @@ recomb_freq=$RECOMB_FREQ
 recomb_ea=$RECOMB_EA
 diff_ea=$DIFF_EA
 fil_growth_ea=$FIL_GROWTH_EA
+fil_growth_freq=$FIL_GROWTH_FREQ
 fil_recess_ea=$FIL_RECESS_EA
 initial_vac_conc=$INITIAL_VAC_CONC
+initial_fil_conc=$INITIAL_FIL_CONC
 sweep_vmax_v=$SWEEP_VMAX
 compliance_a=$COMPLIANCE
 set_time_s=$SET_TIME

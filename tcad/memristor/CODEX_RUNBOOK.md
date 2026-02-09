@@ -62,10 +62,12 @@ Key variables:
 - `gen_ea`
 - `diff_ea`
 - `fil_growth_ea`
+- `fil_growth_freq`
 - `fil_recess_ea`
 - `oxide_thickness_nm`
 - `sweep_vmax_v`
 - `initial_vac_conc`
+- `initial_fil_conc`
 
 ## Run Artifact Contract
 
@@ -91,8 +93,10 @@ Required keys in `manifest.txt`:
 - `gen_ea`
 - `diff_ea`
 - `fil_growth_ea`
+- `fil_growth_freq`
 - `fil_recess_ea`
 - `initial_vac_conc`
+- `initial_fil_conc`
 - `sweep_vmax_v`
 - `compliance_a`
 - `set_time_s`

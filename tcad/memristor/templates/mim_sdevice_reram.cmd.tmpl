@@ -1,8 +1,9 @@
 * KMC ReRAM MIM deck (3D)
 * Placeholders:
 * %%OXIDE_THICKNESS_UM%% %%GEN_FREQ%% %%GEN_EA%% %%GEN_DIPOLE%%
-* %%RECOMB_FREQ%% %%RECOMB_EA%% %%DIFF_EA%% %%FIL_GROWTH_EA%%
-* %%FIL_RECESS_EA%% %%COMPLIANCE%% %%SET_TIME%% %%RESET_TIME%% %%SWEEP_VMAX%%
+* %%RECOMB_FREQ%% %%RECOMB_EA%% %%DIFF_EA%% %%FIL_GROWTH_EA%% %%FIL_GROWTH_FREQ%%
+* %%FIL_RECESS_EA%% %%INITIAL_VAC_CONC%% %%INITIAL_FIL_CONC%%
+* %%COMPLIANCE%% %%SET_TIME%% %%RESET_TIME%% %%SWEEP_VMAX%%
 
 File {
    Grid    = "memdev_msh.tdr"
@@ -45,13 +46,14 @@ Physics {
 
 Physics (Material = "HfO2") {
    KMCDefects(
+      Filament1(Conc=%%INITIAL_FIL_CONC%%)
       Particle2(Conc=%%INITIAL_VAC_CONC%%)
       FrenkelPair1(Particle1(Region="Oxide") Particle2(Region="Oxide") SameSite)
       Generation(FrenkelPair1(Frequency=%%GEN_FREQ%% Ea=%%GEN_EA%% Dipole=%%GEN_DIPOLE%%))
       Recombination(FrenkelPair1(Frequency=%%RECOMB_FREQ%% Ea=%%RECOMB_EA%% Dipole=0e-7))
       Diffusion(Particle1(Frequency=1e10 Ea=0.4 Dipole=-2e-7))
       Diffusion(Particle2(Frequency=1e10 Ea=%%DIFF_EA%% Dipole=2e-7))
-      FilamentGrowth(Filament1(Frequency=1e9 Ea=%%FIL_GROWTH_EA%% Dipole=2e-7 Particle2))
+      FilamentGrowth(Filament1(Frequency=%%FIL_GROWTH_FREQ%% Ea=%%FIL_GROWTH_EA%% Dipole=2e-7 Particle2))
       FilamentRecession(Filament1(Frequency=1e9 Ea=%%FIL_RECESS_EA%% Dipole=2e-7 Particle2))
    )
 }

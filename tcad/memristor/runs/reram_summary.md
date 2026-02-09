@@ -97,3 +97,33 @@ Requested success criteria check (rows 20-26):
 
 Breakthrough status:
 - No filament-formation breakthrough in this sweep.
+
+## Phase E Corrective Run (Filament Nuclei + Growth-Rate Boost)
+
+Scope: apply filament pre-seeding and higher growth kinetics; stop immediately on first non-zero filament growth.
+
+Changes applied:
+- Added `Filament1(Conc=%%INITIAL_FIL_CONC%%)` in the HfO2 `KMCDefects` block.
+- Added `%%FIL_GROWTH_FREQ%%` placeholder for `FilamentGrowth(Frequency=...)`.
+- Updated sweep schema and harness to support `initial_fil_conc` and `fil_growth_freq`.
+
+Execution outcome:
+- Row executed: `27` (`fil_seed_baseline`)
+- Stop condition triggered: yes (`ImmobileVacancy Growth count > 0`)
+- Rows `28-33`: intentionally not run after breakthrough, per stop rule.
+
+Breakthrough evidence (row 27):
+- Run directory: `tcad/memristor/runs/20260209_163928_reram_row27_fil_seed_baseline/`
+- `ImmobileVacancy Growth count` became non-zero and climbed during transient:
+  - sampled maxima reached `91`
+- `Number of ImmobileVacancy` in KMC particle summaries increased (seeded filament particles present and extending).
+
+Row 27 key metrics:
+- Outcome: `FAIL:convergence` (run was terminated after breakthrough to honor immediate-stop policy)
+- KMC generation max: `881745`
+- KMC vacancy diffusion max: `1162105`
+- Extracted SET/RESET current files: unavailable (`NA`) due early termination.
+
+Interpretation:
+- This session achieved the requested first filament-growth proof.
+- The growth bottleneck (no Filament1 nucleation) is resolved by pre-seeding filament nuclei.

@@ -221,3 +221,26 @@ Pivoted from planning docs to systematic TCAD physics exploration.
 - Published aggregated results (Phase D appended, not discarded prior rows):
   - `tcad/memristor/runs/reram_results.csv`
   - `tcad/memristor/runs/reram_summary.md`
+
+## Latest Progress (2026-02-09, Session 8, KMC Corrective Phase E)
+
+- Implemented corrective nucleation updates:
+  - added filament pre-seed placeholder to KMC template:
+    `Filament1(Conc=%%INITIAL_FIL_CONC%%)`
+  - made filament growth frequency sweepable:
+    `%%FIL_GROWTH_FREQ%%`
+  - expanded sweep schema + harness for new columns:
+    `initial_fil_conc`, `fil_growth_freq`
+- Added Phase E rows 27-33 in
+  `tcad/memristor/config/sweep_matrix_reram.csv`.
+- Executed row 27 first (`fil_seed_baseline`) and monitored
+  `ImmobileVacancy Growth count` live per stop rule.
+- **Breakthrough achieved on row 27**:
+  - `ImmobileVacancy Growth count` became non-zero and reached 91
+  - this is the first observed filament growth event in the workstream
+- Stopped immediately after breakthrough (rows 28-33 intentionally deferred).
+- Row 27 run directory:
+  - `tcad/memristor/runs/20260209_163928_reram_row27_fil_seed_baseline/`
+- Published updates:
+  - `tcad/memristor/runs/reram_results.csv` (row 27 appended)
+  - `tcad/memristor/runs/reram_summary.md` (Phase E section)
