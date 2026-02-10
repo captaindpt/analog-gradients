@@ -1,6 +1,7 @@
 * KMC ReRAM MIM deck (3D)
 * Placeholders:
 * %%OXIDE_THICKNESS_UM%% %%GEN_FREQ%% %%GEN_EA%% %%GEN_DIPOLE%%
+* %%LATERAL_Y_UM%% %%LATERAL_Z_UM%% %%MAX_TRAP_NUMBER%%
 * %%RECOMB_FREQ%% %%RECOMB_EA%% %%DIFF_EA%% %%FIL_GROWTH_EA%% %%FIL_GROWTH_FREQ%%
 * %%FIL_RECESS_EA%% %%INITIAL_VAC_CONC%% %%INITIAL_FIL_CONC%%
 * %%COMPLIANCE%% %%SET_TIME%% %%RESET_TIME%% %%SWEEP_VMAX%%
@@ -80,11 +81,11 @@ Math {
          Contact = "top" maxval = %%COMPLIANCE%%
       )
       MinLocation = (0.00, 0.00, 0.00)
-      MaxLocation = (%%OXIDE_THICKNESS_UM%%, 0.02, 0.02)
+      MaxLocation = (%%OXIDE_THICKNESS_UM%%, %%LATERAL_Y_UM%%, %%LATERAL_Z_UM%%)
       CellLength = 0.0005
       UseKMCTimeStep
       MaxTrapNumberChange = 1
-      MaxTrapNumber = 1000
+      MaxTrapNumber = %%MAX_TRAP_NUMBER%%
       TargetParticle(Filament1)
    )
 }
@@ -100,7 +101,8 @@ Solve {
       Goal{Name="top" Voltage=%%SWEEP_VMAX%%}
    ) {
       Coupled { Poisson Contact }
-      Plot(FilePrefix="set" Time=(range=(1e-10 %%SET_TIME%%)) NoOverwrite)
+      * Disabled transient TDR snapshots by default to prevent inode/disk blowup.
+      * Use PLT current files (SET/RESET) for sweep metrics.
    }
 
    * Hold at peak for stabilization
@@ -118,6 +120,6 @@ Solve {
       Goal{Name="top" Voltage=-%%SWEEP_VMAX%%}
    ) {
       Coupled { Poisson Contact }
-      Plot(FilePrefix="reset" Time=(range=(1e-7 %%RESET_TIME%%)) NoOverwrite)
+      * Disabled transient TDR snapshots by default to prevent inode/disk blowup.
    }
 }

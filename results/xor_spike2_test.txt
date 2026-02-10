@@ -1,6 +1,6 @@
 === XOR Spike2 Verification ===
 2-input spike-domain XOR compute demo
-Date: Feb  3 15:32:57 2026
+Date: Feb  8 21:15:03 2026
 
 Waveform Analysis:
 ==================

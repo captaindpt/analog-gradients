@@ -48,7 +48,16 @@ The harness will:
 2. Materialize concrete SDE/SDevice decks in a timestamped run directory.
 3. Run `sde` then `sdevice`.
 4. Extract SET/RESET I-V to CSV when available.
-5. Emit `manifest.txt` with parameters and metrics.
+5. Delete transient per-step snapshot files by default (`set_*_des.tdr`,
+   `reset_*_des.tdr`, `set_*_circuit_des.sav`, `reset_*_circuit_des.sav`)
+   to prevent disk/inode exhaustion.
+6. Emit `manifest.txt` with parameters and metrics.
+
+To keep transient snapshots for a targeted debug run only:
+
+```bash
+MEMRISTOR_KEEP_TRANSIENT_SNAPSHOTS=1 scripts/run_memristor_tcad_sweep.sh <row_number>
+```
 
 ## Sweep Plan
 
@@ -81,6 +90,8 @@ Every run directory under `tcad/memristor/runs/<timestamp>_reram_*` must contain
 - `memdev_msh.tdr`
 - `memdev_des.plt` and/or current files (`SET*.plt`, `RESET*.plt`) when converged
 - `set_current.csv` and `reset_current.csv` when extraction succeeds
+- transient per-step `set_*/reset_*` TDR/SAV files are optional and normally
+  removed by the harness
 
 ## Manifest Fields
 
@@ -108,6 +119,7 @@ Required keys in `manifest.txt`:
 - `set_current_abs_max_a`
 - `reset_current_abs_max_a`
 - `current_ratio_set_over_reset`
+- `keep_transient_snapshots`
 
 ## Phase Gates
 

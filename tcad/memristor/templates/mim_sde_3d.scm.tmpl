@@ -1,13 +1,15 @@
 ; 3D MIM ReRAM geometry for KMC simulation
 ; Parameter: %%OXIDE_THICKNESS_UM%%
+; Parameter: %%LATERAL_Y_UM%%
+; Parameter: %%LATERAL_Z_UM%%
 
 (sde:clear)
 (sde:set-process-up-direction "+x")
 
 (define oxide_t %%OXIDE_THICKNESS_UM%%)
 (define metal_t 0.005)
-(define ly 0.02)
-(define lz 0.02)
+(define ly %%LATERAL_Y_UM%%)
+(define lz %%LATERAL_Z_UM%%)
 
 (define x0 (- metal_t))
 (define x1 0.0)
@@ -24,7 +26,9 @@
 (sdegeo:set-contact (list (car (find-face-id (position x3 (/ ly 2.0) (/ lz 2.0))))) "top")
 
 ; Global mesh
-(sdedr:define-refinement-size "global" 0.002 0.002 0.002 0.001 0.001 0.001)
+(if (< (min ly lz) 0.01)
+  (sdedr:define-refinement-size "global" 0.001 0.001 0.001 0.0005 0.0005 0.0005)
+  (sdedr:define-refinement-size "global" 0.002 0.002 0.002 0.001 0.001 0.001))
 (sdedr:define-refinement-placement "global_tin"  "global" (list "material" "TiN"))
 (sdedr:define-refinement-placement "global_hfo2" "global" (list "material" "HfO2"))
 

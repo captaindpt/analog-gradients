@@ -1,0 +1,55 @@
+// memristor_vteam.scs - Compact VTEAM-like memristor primitive smoke deck
+// Run: spectre netlists/memristor_vteam.scs -raw memristor_vteam.raw
+
+simulator lang=spectre
+
+parameters ron=5k roff=80k xinit=0.25
+
+// A compact, bounded state model inspired by VTEAM behavior.
+subckt memristor_vteam (p n)
+    parameters ron=5k roff=80k xinit=0.25 von=0.9 voff=0.9 \
+        kon=2e7 koff=2e7 alpha_on=1.2 alpha_off=1.2 p_on=1.0 p_off=1.0 \
+        rclamp=10
+
+    // State variable x in [0,1] encoded as node voltage.
+    C_X (x 0) capacitor c=1 ic=xinit
+    R_XLEAK (x 0) resistor r=1e12
+
+    // Drive x dynamics above positive/negative thresholds.
+    B_DYN (x 0) bsource i=\
+      -((v(p,n) > von ? kon*pow(v(p,n)-von,alpha_on)*pow(1-max(min(v(x),1),0),p_on) : 0) \
+      + (v(p,n) < -voff ? -koff*pow((-v(p,n))-voff,alpha_off)*pow(max(min(v(x),1),0),p_off) : 0))
+
+    // Soft clamp for numerical safety.
+    B_CLAMP (x 0) bsource i=\
+        (v(x) > 1 ? (v(x)-1)/rclamp : 0) \
+      + (v(x) < 0 ? (v(x)-0)/rclamp : 0)
+
+    // Two-terminal conduction.
+    B_MEM (p n) bsource i=v(p,n)/(ron*max(min(v(x),1),0)+roff*(1-max(min(v(x),1),0)))
+ends memristor_vteam
+
+// Read-set-read-reset-read profile:
+// read1 -> set pulse -> read2 -> reset pulse -> read3
+V_DRV (vin 0) vsource type=pwl wave=[ \
+    0      0 \
+    5n     0.2 \
+    10n    0.2 \
+    15n    0 \
+    20n    1.4 \
+    40n    1.4 \
+    45n    0 \
+    50n    0.2 \
+    55n    0.2 \
+    60n    0 \
+    70n   -1.4 \
+    90n   -1.4 \
+    95n    0 \
+    100n   0.2 \
+    105n   0.2 \
+    120n   0 ]
+
+XMEM (vin 0) memristor_vteam ron=ron roff=roff xinit=xinit
+
+tran_test tran stop=120n maxstep=100p
+save vin XMEM.x

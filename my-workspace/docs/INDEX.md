@@ -60,6 +60,9 @@ Use this exact order for agent bootstrap. Other docs should mirror this list.
 
 - Reference docs index: `my-workspace/docs/reference/README.md`
 - Cadence setup/troubleshooting notes: `my-workspace/docs/reference/Cadence/`
+- Memristor paper stock: `my-workspace/docs/reference/MEMRISTOR_PAPER_STOCK.md`
+- Memristor primitive master notes/spec (single source):
+  `my-workspace/docs/reference/MEMRISTOR_PRIMITIVE_SPEC.md`
 
 ## Execution Records
 

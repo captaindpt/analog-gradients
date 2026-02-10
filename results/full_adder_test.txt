@@ -1,5 +1,5 @@
 === FULL ADDER Verification ===
-Date: Feb  3 15:31:08 2026
+Date: Feb  8 21:13:09 2026
 
 A=0, B=0, CIN=0 SUM=0.000 [PASS]
 A=0, B=0, CIN=0 COUT=0.000 [PASS]

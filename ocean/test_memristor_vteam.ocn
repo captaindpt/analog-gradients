@@ -1,0 +1,104 @@
+; test_memristor_vteam.ocn - Verify compact VTEAM-like memristor behavior
+
+out = outfile("results/memristor_vteam_test.txt" "w")
+fprintf(out "=== Memristor VTEAM Verification ===\n")
+fprintf(out "Compact memristor primitive read-set-read-reset-read test\n")
+fprintf(out "Date: %s\n\n" getCurrentTime())
+
+simulator('spectre)
+openResults("results/memristor_vteam/memristor_vteam.raw")
+selectResult("tran_test-tran")
+
+vdrv = v("vin")
+xstate = v("XMEM.x")
+
+if(vdrv && xstate then
+    pass = t
+
+    fprintf(out "Waveform Samples:\n")
+    fprintf(out "=================\n")
+
+    t_read1 = 8n
+    t_read2 = 52n
+    t_read3 = 102n
+    ron = 5e3
+    roff = 80e3
+
+    x_r1 = value(xstate t_read1)
+    x_r2 = value(xstate t_read2)
+    x_r3 = value(xstate t_read3)
+    v_r1 = value(vdrv t_read1)
+    v_r2 = value(vdrv t_read2)
+    v_r3 = value(vdrv t_read3)
+
+    fprintf(out "  x @read1 (8ns):   %.4f\n" x_r1)
+    fprintf(out "  x @read2 (52ns):  %.4f\n" x_r2)
+    fprintf(out "  x @read3 (102ns): %.4f\n" x_r3)
+    fprintf(out "  V @read1: %.3f V\n" v_r1)
+    fprintf(out "  V @read2: %.3f V\n" v_r2)
+    fprintf(out "  V @read3: %.3f V\n" v_r3)
+
+    if(abs(v_r1-0.2) > 0.03 || abs(v_r2-0.2) > 0.03 || abs(v_r3-0.2) > 0.03 then
+        fprintf(out "FAIL: read windows are not at expected 0.2V bias\n")
+        pass = nil
+    else
+        r_r1 = ron*x_r1 + roff*(1-x_r1)
+        r_r2 = ron*x_r2 + roff*(1-x_r2)
+        r_r3 = ron*x_r3 + roff*(1-x_r3)
+
+        fprintf(out "  Rest(read1): %.2f ohm\n" r_r1)
+        fprintf(out "  Rest(read2): %.2f ohm\n" r_r2)
+        fprintf(out "  Rest(read3): %.2f ohm\n\n" r_r3)
+
+        ; Positive pulse should drive x up and reduce resistance.
+        if(x_r2 > x_r1 + 0.05 then
+            fprintf(out "OK: state increases after SET pulse\n")
+        else
+            fprintf(out "FAIL: state does not increase enough after SET pulse\n")
+            pass = nil
+        )
+
+        if(r_r2 < 0.85 * r_r1 then
+            fprintf(out "OK: resistance decreases after SET pulse\n")
+        else
+            fprintf(out "FAIL: resistance does not decrease after SET pulse\n")
+            pass = nil
+        )
+
+        ; Negative pulse should drive x down and increase resistance.
+        if(x_r3 < x_r2 - 0.05 then
+            fprintf(out "OK: state decreases after RESET pulse\n")
+        else
+            fprintf(out "FAIL: state does not decrease enough after RESET pulse\n")
+            pass = nil
+        )
+
+        if(r_r3 > 1.08 * r_r2 then
+            fprintf(out "OK: resistance increases after RESET pulse\n")
+        else
+            fprintf(out "FAIL: resistance does not increase after RESET pulse\n")
+            pass = nil
+        )
+
+        ; State should stay bounded for physical meaning.
+        if(x_r1 >= -0.02 && x_r1 <= 1.02 && x_r2 >= -0.02 && x_r2 <= 1.02 && x_r3 >= -0.02 && x_r3 <= 1.02 then
+            fprintf(out "OK: state remains within bounded range\n")
+        else
+            fprintf(out "FAIL: state left expected bounded range\n")
+            pass = nil
+        )
+    )
+
+    fprintf(out "\n")
+    if(pass then
+        fprintf(out "=== PASS: Memristor exhibits set/reset stateful behavior ===\n")
+    else
+        fprintf(out "=== FAIL: Memristor verification failed ===\n")
+    )
+else
+    fprintf(out "ERROR: Could not read waveform data\n")
+    foreach(o outputs() fprintf(out "  %s\n" o))
+)
+
+close(out)
+exit()

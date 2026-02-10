@@ -1,6 +1,6 @@
 === Binary 2x2 Matmul (Digital Baseline) Verification ===
 Binary-only proof: AND partial products + XOR/AND two-term adder
-Date: Feb  4 14:00:45 2026
+Date: Feb  8 21:15:28 2026
 
 Stimulus matrix (fixed proof point):
   A = [[1 0] [1 1]]

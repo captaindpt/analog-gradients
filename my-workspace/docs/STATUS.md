@@ -21,6 +21,22 @@ context in `competition/competition-plan.md`).
 Build path from verified digital GPU stack to a neuromorphic analog core:
 
 - Memristor paper library + Markdown manifest ✅
+- **Physical memristor TCAD exploration (ticket 0020)** 🔄
+  - **Approach**: Systematic Sentaurus TCAD sweep through 5 phases (MIM baseline
+    -> traps -> defect drift -> hysteresis tuning -> pulse characterization)
+  - Codex runbook: `tcad/memristor/CODEX_RUNBOOK.md`
+  - Sweep matrix (38 planned runs): `tcad/memristor/config/sweep_matrix.csv`
+  - Run harness: `scripts/run_memristor_tcad_sweep.sh`
+  - Sentaurus setup: `scripts/setup_sentaurus.sh`
+  - PLT extractor: `scripts/extract_plt_to_csv.py`
+  - Phase 1 example run (10nm HfO2 MIM, DC 0-1V):
+    `tcad/memristor/runs/example_phase1_mim_10nm/` — CONVERGED, zero current
+    (expected: no conduction mechanism in Phase 1)
+  - Known issue: `BarrierTunneling` keyword rejected by SDevice vX-2025.09.
+    Correct tunneling syntax must be resolved before Phase 2 sweep.
+  - Anchor paper: Strukov 2008
+  - Spec: `my-workspace/docs/reference/MEMRISTOR_PRIMITIVE_SPEC.md`
+  - Paper stock: `my-workspace/docs/reference/MEMRISTOR_PAPER_STOCK.md`
 - Analog primitive bring-up: `synapse`, `lif_neuron` ✅ PASS
 - Neuron composition and spike behavior verification: `neuron_tile` ✅ PASS
 - Small neuromorphic tile integration: `neuro_tile4` ✅ PASS

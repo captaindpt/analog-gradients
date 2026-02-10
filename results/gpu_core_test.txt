@@ -1,5 +1,5 @@
 === GPU CORE Verification ===
-Date: Feb  3 15:31:51 2026
+Date: Feb  8 21:13:51 2026
 
 Waveform checks:
 ================

@@ -1,6 +1,6 @@
 === Binary 4x4 Matmul (Neuro Path) Verification ===
 Transistor checkpoint: coincidence products + membrane accumulation
-Date: Feb  4 14:04:15 2026
+Date: Feb  8 21:15:19 2026
 
 Stimulus matrices:
   A = [[1 0 1 1] [0 1 1 0] [1 1 0 1] [1 0 0 1]]

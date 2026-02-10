@@ -22,6 +22,13 @@ This folder contains supporting reference notes.
 - `NONLINEARITY_COMPARISON_PLAN.md`: analog vs digital nonlinearity benchmark
   protocol (softmax/exp/sum/div).
 
+## Memristor Track References
+
+- `MEMRISTOR_PAPER_STOCK.md`: durable index of local memristor papers under
+  `papers/`, grouped by theory/physics/modeling/training relevance.
+- `MEMRISTOR_PRIMITIVE_SPEC.md`: master notes/spec for the memristor primitive
+  workstream (equations, acceptance criteria, phase gates, execution sequence).
+
 ## Manufacturing-Readiness Goals
 
 Reference goals for "manufacturable pre-silicon package ready":

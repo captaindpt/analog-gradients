@@ -1,11 +1,11 @@
 HEADER
 "PSFversion" "1.00"
 "Log Generator" "drlLog rev. 1.0"
-"Log Time Stamp" "Tue Feb  3 15:30:15 2026"
+"Log Time Stamp" "Sun Feb  8 21:12:16 2026"
 "psfversion" "1.4.0"
 "simulator" "spectre"
 "version" "23.1.0.802.isr17"
-"date" "3:30:15 PM, Tue Feb 3, 2026"
+"date" "9:12:16 PM, Sun Feb 8, 2026"
 "design" "// and2.scs - 2-input CMOS AND Gate"
 "signalNameType" "spectre"
 "simMode" "Spectre"

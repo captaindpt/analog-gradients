@@ -1,22 +1,22 @@
 === Neuro Tile4 Coupled Verification ===
 4-neuron feed-forward coupled tile
-Date: Feb  3 20:52:18 2026
+Date: Feb  8 21:14:39 2026
 
 Waveform Analysis:
 ==================
 
 Sampling step for spike detection: 0.100 ns
 
-Membrane maxima (V): 0.635, 0.971, 1.184, 0.756
+Membrane maxima (V): 0.642, 0.993, 1.216, 0.756
 
 OK: all membranes show integration activity
 
 Spike pulse counts:
   spike0=15 spike1=15 spike2=15 spike3=15
-Spike maxima (V): 1.060, 1.257, 0.893, 1.798
+Spike maxima (V): 1.052, 1.263, 0.850, 1.798
 OK: source channel spike0 active
 OK: downstream channels spike (propagation observed)
-First spike times (ns): 9.388, 11.896, 12.985, 13.640
+First spike times (ns): 9.676, 12.257, 13.215, 13.727
 OK: feed-forward ordering preserved
 
 === PASS: Neuro Tile4 coupled propagation verified ===

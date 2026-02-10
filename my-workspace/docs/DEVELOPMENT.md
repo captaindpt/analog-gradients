@@ -86,6 +86,21 @@ Current analysis commands:
 
 Reference thesis: `competition/founder-thesis.md`
 
+## Memristor Primitive Workflow (Physics-First)
+
+Goal: establish a physics-grounded memristor primitive, then integrate a compact
+model into Spectre/OCEAN verification.
+
+Current bootstrap commands:
+- `sed -n '1,220p' papers/manifest.md`
+- `scripts/init_memristor_phase_a.sh`
+- `./build.sh memristor_vteam`
+- `python3 scripts/analyze_memristor_waveform.py --help`
+
+Primary references:
+- `my-workspace/docs/reference/MEMRISTOR_PAPER_STOCK.md`
+- `my-workspace/docs/reference/MEMRISTOR_PRIMITIVE_SPEC.md` (master notes/spec)
+
 ## Nonlinearity Benchmark Workflow (Analog vs Digital)
 
 Goal: compare analog vs digital softmax using matched inputs with energy,

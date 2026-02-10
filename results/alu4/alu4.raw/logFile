@@ -1,11 +1,11 @@
 HEADER
 "PSFversion" "1.00"
 "Log Generator" "drlLog rev. 1.0"
-"Log Time Stamp" "Tue Feb  3 15:31:20 2026"
+"Log Time Stamp" "Sun Feb  8 21:13:20 2026"
 "psfversion" "1.4.0"
 "simulator" "spectre"
 "version" "23.1.0.802.isr17"
-"date" "3:31:20 PM, Tue Feb 3, 2026"
+"date" "9:13:20 PM, Sun Feb 8, 2026"
 "design" "// alu4.scs - 4-bit ALU (ripple carry)"
 "signalNameType" "spectre"
 "simMode" "Spectre"

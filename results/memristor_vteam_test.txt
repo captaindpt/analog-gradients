@@ -1,0 +1,23 @@
+=== Memristor VTEAM Verification ===
+Compact memristor primitive read-set-read-reset-read test
+Date: Feb  8 21:14:15 2026
+
+Waveform Samples:
+=================
+  x @read1 (8ns):   0.2500
+  x @read2 (52ns):  0.3787
+  x @read3 (102ns): 0.3115
+  V @read1: 0.200 V
+  V @read2: 0.200 V
+  V @read3: 0.200 V
+  Rest(read1): 61250.00 ohm
+  Rest(read2): 51598.05 ohm
+  Rest(read3): 56637.12 ohm
+
+OK: state increases after SET pulse
+OK: resistance decreases after SET pulse
+OK: state decreases after RESET pulse
+OK: resistance increases after RESET pulse
+OK: state remains within bounded range
+
+=== PASS: Memristor exhibits set/reset stateful behavior ===

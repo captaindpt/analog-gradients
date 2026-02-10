@@ -8,6 +8,7 @@ set -euo pipefail
 #
 # Optional env:
 #   MEMRISTOR_SWEEP_CSV=tcad/memristor/config/sweep_matrix_reram.csv
+#   MEMRISTOR_KEEP_TRANSIENT_SNAPSHOTS=1  # keep set_/reset_ per-step TDR/SAV files
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 TCAD_ROOT="$REPO_DIR/tcad/memristor"
@@ -16,6 +17,7 @@ SWEEP_CSV="${MEMRISTOR_SWEEP_CSV:-$TCAD_ROOT/config/sweep_matrix_reram.csv}"
 
 ROW_NUM="${1:?Usage: $0 <sweep_row_number>}"
 TIMESTAMP="$(date +%Y%m%d_%H%M%S)"
+KEEP_TRANSIENT_SNAPSHOTS="${MEMRISTOR_KEEP_TRANSIENT_SNAPSHOTS:-0}"
 
 if ! command -v sde >/dev/null 2>&1; then
   echo "ERROR: sde not found. Run: source scripts/setup_sentaurus.sh" >&2
@@ -35,11 +37,11 @@ if [[ -z "$ROW_LINE" ]]; then
   exit 1
 fi
 
-IFS=',' read -r _row PHASE SWEEP_GROUP OXIDE_T_NM GEN_FREQ GEN_EA GEN_DIPOLE \
+IFS=',' read -r _row PHASE SWEEP_GROUP OXIDE_T_NM LATERAL_NM GEN_FREQ GEN_EA GEN_DIPOLE \
   RECOMB_FREQ RECOMB_EA DIFF_EA FIL_GROWTH_EA FIL_GROWTH_FREQ FIL_RECESS_EA SWEEP_VMAX \
-  COMPLIANCE SET_TIME RESET_TIME INITIAL_VAC_CONC INITIAL_FIL_CONC NOTES <<< "$ROW_LINE"
+  COMPLIANCE SET_TIME RESET_TIME INITIAL_VAC_CONC INITIAL_FIL_CONC MAX_TRAP_NUMBER NOTES <<< "$ROW_LINE"
 
-for v in PHASE SWEEP_GROUP OXIDE_T_NM GEN_FREQ GEN_EA GEN_DIPOLE RECOMB_FREQ RECOMB_EA DIFF_EA FIL_GROWTH_EA FIL_GROWTH_FREQ FIL_RECESS_EA SWEEP_VMAX COMPLIANCE SET_TIME RESET_TIME INITIAL_VAC_CONC INITIAL_FIL_CONC; do
+for v in PHASE SWEEP_GROUP OXIDE_T_NM LATERAL_NM GEN_FREQ GEN_EA GEN_DIPOLE RECOMB_FREQ RECOMB_EA DIFF_EA FIL_GROWTH_EA FIL_GROWTH_FREQ FIL_RECESS_EA SWEEP_VMAX COMPLIANCE SET_TIME RESET_TIME INITIAL_VAC_CONC INITIAL_FIL_CONC MAX_TRAP_NUMBER; do
   if [[ -z "${!v}" ]]; then
     echo "ERROR: missing value for $v on row $ROW_NUM" >&2
     exit 1
@@ -52,6 +54,15 @@ print(float(sys.argv[1]) / 1000.0)
 PY
 ); then
   echo "ERROR: invalid oxide_thickness_nm '$OXIDE_T_NM' on row $ROW_NUM" >&2
+  exit 1
+fi
+
+if ! LATERAL_UM=$(python3 - "$LATERAL_NM" <<'PY'
+import sys
+print(float(sys.argv[1]) / 1000.0)
+PY
+); then
+  echo "ERROR: invalid lateral_nm '$LATERAL_NM' on row $ROW_NUM" >&2
   exit 1
 fi
 
@@ -69,6 +80,7 @@ echo "=== KMC ReRAM Run: row $ROW_NUM ==="
 echo "  phase:        $PHASE"
 echo "  sweep_group:  $SWEEP_GROUP"
 echo "  oxide_nm:     $OXIDE_T_NM"
+echo "  lateral_nm:   $LATERAL_NM"
 echo "  gen_ea:       $GEN_EA"
 echo "  diff_ea:      $DIFF_EA"
 echo "  fil_grow_ea:  $FIL_GROWTH_EA"
@@ -76,13 +88,19 @@ echo "  fil_grow_f:   $FIL_GROWTH_FREQ"
 echo "  fil_rec_ea:   $FIL_RECESS_EA"
 echo "  init_vac:     $INITIAL_VAC_CONC"
 echo "  init_fil:     $INITIAL_FIL_CONC"
+echo "  max_traps:    $MAX_TRAP_NUMBER"
 echo "  vmax:         $SWEEP_VMAX"
 echo "  compliance:   $COMPLIANCE"
 
 sed -e "s/%%OXIDE_THICKNESS_UM%%/${OXIDE_T_UM}/g" \
+    -e "s/%%LATERAL_Y_UM%%/${LATERAL_UM}/g" \
+    -e "s/%%LATERAL_Z_UM%%/${LATERAL_UM}/g" \
   "$TEMPLATES/mim_sde_3d.scm.tmpl" > "$RUN_DIR/mim.scm"
 
 sed -e "s/%%OXIDE_THICKNESS_UM%%/${OXIDE_T_UM}/g" \
+    -e "s/%%LATERAL_Y_UM%%/${LATERAL_UM}/g" \
+    -e "s/%%LATERAL_Z_UM%%/${LATERAL_UM}/g" \
+    -e "s/%%MAX_TRAP_NUMBER%%/${MAX_TRAP_NUMBER}/g" \
     -e "s/%%GEN_FREQ%%/${GEN_FREQ}/g" \
     -e "s/%%GEN_EA%%/${GEN_EA}/g" \
     -e "s/%%GEN_DIPOLE%%/${GEN_DIPOLE}/g" \
@@ -132,6 +150,15 @@ if [[ "$OUTCOME" == "CONVERGED" ]]; then
 fi
 
 popd > /dev/null
+
+# By default, delete transient per-step snapshots. They can create thousands
+# of files and quickly exhaust disk/inodes in long KMC runs.
+if [[ "$KEEP_TRANSIENT_SNAPSHOTS" != "1" ]]; then
+  find "$RUN_DIR" -maxdepth 1 -type f \
+    \( -name 'set_*_des.tdr' -o -name 'reset_*_des.tdr' -o \
+       -name 'set_*_circuit_des.sav' -o -name 'reset_*_circuit_des.sav' \) \
+    -delete
+fi
 
 SET_CURRENT_ABS_MAX_A="NA"
 RESET_CURRENT_ABS_MAX_A="NA"
@@ -207,6 +234,8 @@ phase=$PHASE
 sweep_group=$SWEEP_GROUP
 oxide_thickness_nm=$OXIDE_T_NM
 oxide_thickness_um=$OXIDE_T_UM
+lateral_nm=$LATERAL_NM
+lateral_um=$LATERAL_UM
 gen_freq=$GEN_FREQ
 gen_ea=$GEN_EA
 gen_dipole=$GEN_DIPOLE
@@ -218,6 +247,7 @@ fil_growth_freq=$FIL_GROWTH_FREQ
 fil_recess_ea=$FIL_RECESS_EA
 initial_vac_conc=$INITIAL_VAC_CONC
 initial_fil_conc=$INITIAL_FIL_CONC
+max_trap_number=$MAX_TRAP_NUMBER
 sweep_vmax_v=$SWEEP_VMAX
 compliance_a=$COMPLIANCE
 set_time_s=$SET_TIME
@@ -229,6 +259,7 @@ has_reset_csv=$HAS_RESET_CSV
 set_current_abs_max_a=$SET_CURRENT_ABS_MAX_A
 reset_current_abs_max_a=$RESET_CURRENT_ABS_MAX_A
 current_ratio_set_over_reset=$CURRENT_RATIO_SET_OVER_RESET
+keep_transient_snapshots=$KEEP_TRANSIENT_SNAPSHOTS
 notes=$NOTES
 EOF_MANIFEST
 

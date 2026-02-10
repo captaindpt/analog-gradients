@@ -1,6 +1,6 @@
 === Binary 2x2 Matmul (Neuro Path) Verification ===
 Binary-only proof: product via coincidence, sum via integration
-Date: Feb  4 14:00:53 2026
+Date: Feb  8 21:15:11 2026
 
 Stimulus matrix (fixed proof point):
   A = [[1 0] [1 1]]

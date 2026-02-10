@@ -21,6 +21,7 @@ results/**/*.raw/
 results/**/psf/
 results/**/spectre.log
 results/**/ocean.log
+results/**/*.ahdlSimDB/
 results/**/logFile
 results/**/*.tran
 results/**/*.psfxl
@@ -38,3 +39,6 @@ implementation/fullflow_demo/work/dc/work/
 implementation/fullflow_demo/work/dc/out/*.ddc
 implementation/fullflow_demo/work/dc/out/*.sdc
 implementation/fullflow_demo/work/dc/reports/*.rpt
+
+# Memristor phase-A generated run artifacts
+tcad/memristor/runs/
