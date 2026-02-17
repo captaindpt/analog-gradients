@@ -1,0 +1,4 @@
+row,phase,sweep_group,oxide_thickness_nm,lateral_nm,gen_freq,gen_ea,gen_dipole,recomb_freq,recomb_ea,diff_ea,fil_growth_ea,fil_growth_freq,fil_recess_ea,sweep_vmax_v,compliance_a,set_time_s,reset_time_s,initial_vac_conc,initial_fil_conc,max_trap_number,notes
+901,Z,blitz_sanity_3nm,3,3,1e12,0.2,4e-7,1e9,0.1,0.2,0.1,1e12,0.8,4.0,1e-2,0.01,0.01,1e22,1e22,20000,small domain high seeds high growth sanity check
+902,Z,blitz_dense_3nm,3,3,1e12,0.2,4e-7,1e9,0.1,0.2,0.1,1e12,0.8,4.0,1e-2,0.01,0.01,1e22,3e22,20000,denser filament seeds for percolation forcing
+903,Z,blitz_ultra_small_2nm,3,2,1e12,0.2,4e-7,1e9,0.1,0.2,0.1,1e12,0.8,4.0,1e-2,0.005,0.005,1e22,3e22,20000,ultra small lateral box to force bridging quickly

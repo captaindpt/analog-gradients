@@ -25,7 +25,7 @@ Build path from verified digital GPU stack to a neuromorphic analog core:
   - **Approach**: Systematic Sentaurus TCAD sweep through 5 phases (MIM baseline
     -> traps -> defect drift -> hysteresis tuning -> pulse characterization)
   - Codex runbook: `tcad/memristor/CODEX_RUNBOOK.md`
-  - Sweep matrix (38 planned runs): `tcad/memristor/config/sweep_matrix.csv`
+  - Sweep matrix (38 planned runs): `tcad/memristor/config/sweep_matrix_reram.csv`
   - Run harness: `scripts/run_memristor_tcad_sweep.sh`
   - Sentaurus setup: `scripts/setup_sentaurus.sh`
   - PLT extractor: `scripts/extract_plt_to_csv.py`
