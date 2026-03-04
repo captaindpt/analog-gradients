@@ -54,15 +54,22 @@ def extract_iv(names: List[str], rows: List[List[float]],
 
     # Find voltage column: "<electrode> OuterVoltage"
     v_name = f"{electrode} OuterVoltage"
-    i_name = f"{electrode} TotalCurrent"
+    i_name_reram = f"{electrode} ReRAMTotalCurrent"
+    i_name_total = f"{electrode} TotalCurrent"
 
     v_idx = None
     i_idx = None
     for idx, name in enumerate(names):
         if name == v_name:
             v_idx = idx
-        if name == i_name:
+        if name == i_name_reram:
             i_idx = idx
+    # Backward-compatible fallback for non-KMC/non-ReRAM PLT files.
+    if i_idx is None:
+        for idx, name in enumerate(names):
+            if name == i_name_total:
+                i_idx = idx
+                break
 
     if v_idx is None:
         avail = [n for n in names if "Voltage" in n or "Current" in n]

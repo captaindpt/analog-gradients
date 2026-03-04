@@ -1,9 +1,9 @@
 * KMC ReRAM MIM deck (3D)
 * Placeholders:
-* %%OXIDE_THICKNESS_UM%% %%GEN_FREQ%% %%GEN_EA%% %%GEN_DIPOLE%%
+* %%OXIDE_THICKNESS_UM%% %%KMC_MAX_X%% %%GEN_FREQ%% %%GEN_EA%% %%GEN_DIPOLE%%
 * %%LATERAL_Y_UM%% %%LATERAL_Z_UM%% %%MAX_TRAP_NUMBER%%
 * %%RECOMB_FREQ%% %%RECOMB_EA%% %%DIFF_EA%% %%FIL_GROWTH_EA%% %%FIL_GROWTH_FREQ%%
-* %%FIL_RECESS_EA%% %%INITIAL_VAC_CONC%% %%INITIAL_FIL_CONC%%
+* %%FIL_RECESS_EA%% %%FIL_RECESS_FREQ%% %%INITIAL_VAC_CONC%% %%INITIAL_FIL_CONC%%
 * %%COMPLIANCE%% %%SET_TIME%% %%RESET_TIME%% %%SWEEP_VMAX%%
 
 File {
@@ -55,7 +55,7 @@ Physics (Material = "HfO2") {
       Diffusion(Particle1(Frequency=1e10 Ea=0.4 Dipole=-2e-7))
       Diffusion(Particle2(Frequency=1e10 Ea=%%DIFF_EA%% Dipole=2e-7))
       FilamentGrowth(Filament1(Frequency=%%FIL_GROWTH_FREQ%% Ea=%%FIL_GROWTH_EA%% Dipole=2e-7 Particle2))
-      FilamentRecession(Filament1(Frequency=1e9 Ea=%%FIL_RECESS_EA%% Dipole=2e-7 Particle2))
+      FilamentRecession(Filament1(Frequency=%%FIL_RECESS_FREQ%% Ea=%%FIL_RECESS_EA%% Dipole=2e-7 Particle2))
    )
 }
 
@@ -73,15 +73,17 @@ Physics (Electrode = "bottom") {
 
 Math {
    Extrapolate
+   Digits=5
+   NotDamped=50
    NumberOfThreads=1
-   Iterations=200
+   Iterations=500
    Transient=BE
    KMC (
       CurrentCompliance (
          Contact = "top" maxval = %%COMPLIANCE%%
       )
-      MinLocation = (0.00, 0.00, 0.00)
-      MaxLocation = (%%OXIDE_THICKNESS_UM%%, %%LATERAL_Y_UM%%, %%LATERAL_Z_UM%%)
+      MinLocation = (-0.005, 0.00, 0.00)
+      MaxLocation = (%%KMC_MAX_X%%, %%LATERAL_Y_UM%%, %%LATERAL_Z_UM%%)
       CellLength = 0.0005
       UseKMCTimeStep
       MaxTrapNumberChange = 1
@@ -96,8 +98,8 @@ Solve {
    * SET: ramp to +V
    NewCurrentFile="SET"
    Transient (
-      InitialTime=0 FinalTime=%%SET_TIME%% Increment=1.2
-      InitialStep=0.001 MaxStep=1e30
+      InitialTime=0 FinalTime=%%SET_TIME%% Increment=1.05
+      InitialStep=1e-6 MaxStep=1e30
       Goal{Name="top" Voltage=%%SWEEP_VMAX%%}
    ) {
       Coupled { Poisson Contact }
@@ -115,8 +117,8 @@ Solve {
    * RESET: ramp to -V
    NewCurrentFile="RESET"
    Transient (
-      InitialTime=0 FinalTime=%%RESET_TIME%% Increment=1.2
-      InitialStep=0.001 MaxStep=1e30
+      InitialTime=0 FinalTime=%%RESET_TIME%% Increment=1.05
+      InitialStep=1e-6 MaxStep=1e30
       Goal{Name="top" Voltage=-%%SWEEP_VMAX%%}
    ) {
       Coupled { Poisson Contact }

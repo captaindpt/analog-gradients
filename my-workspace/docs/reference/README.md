@@ -10,6 +10,21 @@ This folder contains supporting reference notes.
   2. `my-workspace/docs/DEVELOPMENT.md`
   3. `my-workspace/docs/STATUS.md`
 
+## Pause Handoff (2026-03-04)
+
+- Temporary sunset checkpoint log:
+  `my-workspace/logs/2026-03-04-project-pause-handoff.md`
+- Live project status:
+  `my-workspace/docs/STATUS.md`
+- Memristor master spec and restart sequence:
+  `my-workspace/docs/reference/MEMRISTOR_PRIMITIVE_SPEC.md`
+- Current memristor sweep matrix source:
+  `tcad/memristor/config/sweep_matrix_reram.csv`
+  (`64` planned rows as of 2026-03-04)
+- Current recorded sweep outcomes:
+  `tcad/memristor/runs/reram_results.csv`
+  (rows `1..27` recorded as of 2026-03-04)
+
 ## Cadence Subfolder
 
 - `Cadence/SETUP_GUIDE.md`: environment setup background.
@@ -27,7 +42,8 @@ This folder contains supporting reference notes.
 - `MEMRISTOR_PAPER_STOCK.md`: durable index of local memristor papers under
   `papers/`, grouped by theory/physics/modeling/training relevance.
 - `MEMRISTOR_PRIMITIVE_SPEC.md`: master notes/spec for the memristor primitive
-  workstream (equations, acceptance criteria, phase gates, execution sequence).
+  workstream (equations, acceptance criteria, phase gates, execution sequence,
+  and pause-restart handoff).
 
 ## Manufacturing-Readiness Goals
 

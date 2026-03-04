@@ -1,0 +1,25 @@
+// memristor_vteam_sweep.scs - Sinusoidal sweep for I-V hysteresis plot
+simulator lang=spectre
+
+parameters ron=5k roff=80k xinit=0.25
+
+subckt memristor_vteam (p n)
+    parameters ron=5k roff=80k xinit=0.25 von=0.9 voff=0.9 \
+        kon=2e7 koff=2e7 alpha_on=1.2 alpha_off=1.2 p_on=1.0 p_off=1.0 \
+        rclamp=10
+    C_X (x 0) capacitor c=1 ic=xinit
+    R_XLEAK (x 0) resistor r=1e12
+    B_DYN (x 0) bsource i=\
+      -((v(p,n) > von ? kon*pow(v(p,n)-von,alpha_on)*pow(1-max(min(v(x),1),0),p_on) : 0) \
+      + (v(p,n) < -voff ? -koff*pow((-v(p,n))-voff,alpha_off)*pow(max(min(v(x),1),0),p_off) : 0))
+    B_CLAMP (x 0) bsource i=\
+        (v(x) > 1 ? (v(x)-1)/rclamp : 0) \
+      + (v(x) < 0 ? (v(x)-0)/rclamp : 0)
+    B_MEM (p n) bsource i=v(p,n)/(ron*max(min(v(x),1),0)+roff*(1-max(min(v(x),1),0)))
+ends memristor_vteam
+
+V_DRV (vin 0) vsource type=sine ampl=1.5 freq=5M
+XMEM (vin 0) memristor_vteam ron=ron roff=roff xinit=xinit
+
+hyst_tran tran stop=800n maxstep=50p
+save vin XMEM.x

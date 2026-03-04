@@ -1,41 +1,65 @@
-row,phase,sweep_group,oxide_thickness_nm,lateral_nm,gen_freq,gen_ea,gen_dipole,recomb_freq,recomb_ea,diff_ea,fil_growth_ea,fil_growth_freq,fil_recess_ea,sweep_vmax_v,compliance_a,set_time_s,reset_time_s,initial_vac_conc,initial_fil_conc,max_trap_number,notes
-1,B,baseline,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-8,0.015,0.03,0,0,1000,baseline defaults
-2,C,gen_ea,5,20,1e8,0.6,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-8,0.015,0.03,0,0,1000,lower generation activation
-3,C,gen_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-8,0.015,0.03,0,0,1000,baseline generation activation
-4,C,gen_ea,5,20,1e8,1.0,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-8,0.015,0.03,0,0,1000,higher generation activation
-5,C,diff_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.3,0.4,1e9,0.5,3.0,1e-8,0.015,0.03,0,0,1000,lower vacancy diffusion activation
-6,C,diff_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-8,0.015,0.03,0,0,1000,baseline vacancy diffusion activation
-7,C,diff_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.5,0.4,1e9,0.5,3.0,1e-8,0.015,0.03,0,0,1000,higher vacancy diffusion activation
-8,C,fil_growth_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.3,1e9,0.5,3.0,1e-8,0.015,0.03,0,0,1000,lower filament growth activation
-9,C,fil_growth_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-8,0.015,0.03,0,0,1000,baseline filament growth activation
-10,C,fil_growth_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.5,1e9,0.5,3.0,1e-8,0.015,0.03,0,0,1000,higher filament growth activation
-11,C,fil_recess_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.4,3.0,1e-8,0.015,0.03,0,0,1000,lower filament recession activation
-12,C,fil_recess_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-8,0.015,0.03,0,0,1000,baseline filament recession activation
-13,C,fil_recess_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.6,3.0,1e-8,0.015,0.03,0,0,1000,higher filament recession activation
-14,C,oxide_thickness,3,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-8,0.015,0.03,0,0,1000,thinner oxide
-15,C,oxide_thickness,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-8,0.015,0.03,0,0,1000,baseline oxide
-16,C,oxide_thickness,8,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-8,0.015,0.03,0,0,1000,thicker oxide
-17,C,sweep_vmax,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,2.0,1e-8,0.015,0.03,0,0,1000,lower voltage sweep
-18,C,sweep_vmax,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-8,0.015,0.03,0,0,1000,baseline voltage sweep
-19,C,sweep_vmax,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,4.0,1e-8,0.015,0.03,0,0,1000,higher voltage sweep
-20,D,preseeded_baseline,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-8,0.015,0.03,1e19,0,1000,pre-seeded vacancies baseline
-21,D,preseeded_low_ea,5,20,1e8,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-8,0.015,0.03,1e19,0,1000,pre-seeded plus low gen_ea
-22,D,preseeded_high_freq,5,20,1e10,0.6,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-8,0.015,0.03,1e19,0,1000,pre-seeded plus high gen_freq
-23,D,preseeded_aggressive,5,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e9,0.5,3.0,1e-8,0.015,0.03,1e20,0,1000,aggressive high freq low ea high vac
-24,D,preseeded_very_aggressive,5,20,1e12,0.3,4e-7,1e9,0.3,0.3,0.3,1e9,0.5,3.0,1e-6,0.1,0.2,1e20,0,1000,very aggressive longer time higher compliance
-25,D,preseeded_4V,5,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e9,0.5,4.0,1e-6,0.05,0.1,1e20,0,1000,higher voltage
-26,D,preseeded_thin,3,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e9,0.5,3.0,1e-6,0.05,0.1,1e20,0,1000,thin oxide plus aggressive
-27,E,fil_seed_baseline,5,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-6,0.05,0.1,1e20,1e18,1000,filament seeds plus vacancy preload
-28,E,fil_seed_more,5,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-6,0.05,0.1,1e20,1e19,1000,more filament seeds
-29,E,fil_seed_dense,5,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-6,0.05,0.1,1e20,5e19,1000,dense filament seeds
-30,E,fil_growth_low_ea,5,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.2,1e9,0.5,3.0,1e-6,0.05,0.1,1e20,1e19,1000,lower filament growth ea
-31,E,fil_growth_high_freq,5,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e11,0.5,3.0,1e-6,0.05,0.1,1e20,1e19,1000,higher filament growth freq
-32,E,combined_aggressive,3,20,1e10,0.4,4e-7,1e9,0.3,0.3,0.2,1e9,0.6,4.0,1e-6,0.1,0.2,1e20,5e19,1000,3nm plus aggressive everything
-33,E,combined_moderate,5,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e9,0.5,3.0,1e-6,0.05,0.1,1e20,1e19,1000,moderate combined
-34,F,narrow_baseline,5,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-3,0.1,0.2,1e22,1e21,5000,5nm lateral about125 filament particles in 1000 cells
-35,F,narrow_dense,5,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-3,0.1,0.2,1e22,3e21,5000,denser filament about375 particles in 1000 cells
-36,F,narrow_thin,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-3,0.1,0.2,1e22,1e21,5000,3nm oxide about75 particles in 600 cells
-37,F,narrow_thin_dense,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-3,0.1,0.2,1e22,3e21,5000,3nm dense about225 particles in 600 cells
-38,F,narrow_aggressive,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.2,1e11,0.5,4.0,1e-3,0.2,0.4,1e22,3e21,5000,aggressive growth kinetics plus 4V
-39,F,narrow_4V,5,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e10,0.5,4.0,1e-3,0.1,0.2,1e22,1e21,5000,higher voltage plus faster growth
-40,F,narrow_long,5,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,3.0,1e-3,0.5,1.0,1e22,1e21,5000,longer time to allow bridging
+row,phase,sweep_group,oxide_thickness_nm,lateral_nm,gen_freq,gen_ea,gen_dipole,recomb_freq,recomb_ea,diff_ea,fil_growth_ea,fil_growth_freq,fil_recess_ea,fil_recess_freq,sweep_vmax_v,compliance_a,set_time_s,reset_time_s,initial_vac_conc,initial_fil_conc,max_trap_number,notes
+1,B,baseline,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,0,0,1000,baseline defaults
+2,C,gen_ea,5,20,1e8,0.6,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,0,0,1000,lower generation activation
+3,C,gen_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,0,0,1000,baseline generation activation
+4,C,gen_ea,5,20,1e8,1.0,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,0,0,1000,higher generation activation
+5,C,diff_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.3,0.4,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,0,0,1000,lower vacancy diffusion activation
+6,C,diff_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,0,0,1000,baseline vacancy diffusion activation
+7,C,diff_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.5,0.4,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,0,0,1000,higher vacancy diffusion activation
+8,C,fil_growth_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.3,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,0,0,1000,lower filament growth activation
+9,C,fil_growth_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,0,0,1000,baseline filament growth activation
+10,C,fil_growth_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.5,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,0,0,1000,higher filament growth activation
+11,C,fil_recess_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.4,1e9,3.0,1e-8,0.015,0.03,0,0,1000,lower filament recession activation
+12,C,fil_recess_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,0,0,1000,baseline filament recession activation
+13,C,fil_recess_ea,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.6,1e9,3.0,1e-8,0.015,0.03,0,0,1000,higher filament recession activation
+14,C,oxide_thickness,3,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,0,0,1000,thinner oxide
+15,C,oxide_thickness,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,0,0,1000,baseline oxide
+16,C,oxide_thickness,8,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,0,0,1000,thicker oxide
+17,C,sweep_vmax,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,2.0,1e-8,0.015,0.03,0,0,1000,lower voltage sweep
+18,C,sweep_vmax,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,0,0,1000,baseline voltage sweep
+19,C,sweep_vmax,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,4.0,1e-8,0.015,0.03,0,0,1000,higher voltage sweep
+20,D,preseeded_baseline,5,20,1e8,0.8,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,1e19,0,1000,pre-seeded vacancies baseline
+21,D,preseeded_low_ea,5,20,1e8,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,1e19,0,1000,pre-seeded plus low gen_ea
+22,D,preseeded_high_freq,5,20,1e10,0.6,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,1e19,0,1000,pre-seeded plus high gen_freq
+23,D,preseeded_aggressive,5,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e9,0.5,1e9,3.0,1e-8,0.015,0.03,1e20,0,1000,aggressive high freq low ea high vac
+24,D,preseeded_very_aggressive,5,20,1e12,0.3,4e-7,1e9,0.3,0.3,0.3,1e9,0.5,1e9,3.0,1e-6,0.1,0.2,1e20,0,1000,very aggressive longer time higher compliance
+25,D,preseeded_4V,5,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e9,0.5,1e9,4.0,1e-6,0.05,0.1,1e20,0,1000,higher voltage
+26,D,preseeded_thin,3,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e9,0.5,1e9,3.0,1e-6,0.05,0.1,1e20,0,1000,thin oxide plus aggressive
+27,E,fil_seed_baseline,5,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-6,0.05,0.1,1e20,1e18,1000,filament seeds plus vacancy preload
+28,E,fil_seed_more,5,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-6,0.05,0.1,1e20,1e19,1000,more filament seeds
+29,E,fil_seed_dense,5,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-6,0.05,0.1,1e20,5e19,1000,dense filament seeds
+30,E,fil_growth_low_ea,5,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.2,1e9,0.5,1e9,3.0,1e-6,0.05,0.1,1e20,1e19,1000,lower filament growth ea
+31,E,fil_growth_high_freq,5,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e11,0.5,1e9,3.0,1e-6,0.05,0.1,1e20,1e19,1000,higher filament growth freq
+32,E,combined_aggressive,3,20,1e10,0.4,4e-7,1e9,0.3,0.3,0.2,1e9,0.6,1e9,4.0,1e-6,0.1,0.2,1e20,5e19,1000,3nm plus aggressive everything
+33,E,combined_moderate,5,20,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e9,0.5,1e9,3.0,1e-6,0.05,0.1,1e20,1e19,1000,moderate combined
+34,F,narrow_baseline,5,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-3,0.1,0.2,1e22,1e21,5000,5nm lateral about125 filament particles in 1000 cells
+35,F,narrow_dense,5,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-3,0.1,0.2,1e22,3e21,5000,denser filament about375 particles in 1000 cells
+36,F,narrow_thin,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-3,0.1,0.2,1e22,1e21,5000,3nm oxide about75 particles in 600 cells
+37,F,narrow_thin_dense,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-3,0.1,0.2,1e22,3e21,5000,3nm dense about225 particles in 600 cells
+38,F,narrow_aggressive,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.2,1e11,0.5,1e9,4.0,1e-3,0.2,0.4,1e22,3e21,5000,aggressive growth kinetics plus 4V
+39,F,narrow_4V,5,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e10,0.5,1e9,4.0,1e-3,0.1,0.2,1e22,1e21,5000,higher voltage plus faster growth
+40,F,narrow_long,5,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-3,0.5,1.0,1e22,1e21,5000,longer time to allow bridging
+41,G,force_bridge,3,10,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-4,0.1,0.2,0,8e21,5000,diagnostic near-full prefill to force conductive bridge
+42,G,dense_prefill,3,10,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-4,5e-5,1e-4,0,5e21,2000,dense initial filament state for natural bridge (fallback max_trap=2000 minimal pulse)
+43,G,growth_bridge,3,10,1e10,0.4,2e-7,1e9,0.3,0.4,0.15,1e9,0.5,1e9,3.0,1e-4,5e-5,1e-4,0,1e21,2000,kinetic bridge via lower filament growth activation (fallback max_trap=2000 minimal pulse)
+44,G,ultra_thin,2,10,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.5,1e9,3.0,1e-4,5e-5,1e-4,0,1e21,2000,ultra-thin oxide to minimize gap for bridging (fallback max_trap=2000 minimal pulse)
+45,H,H_dense_easy_recess,3,10,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.2,1e11,3.0,1e-3,0.1,0.5,5e20,5e21,5000,pre-bridged easy recession
+46,H,H_moderate_recess,3,10,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e10,0.3,1e10,3.0,1e-3,0.2,0.5,1e21,3e21,5000,moderate fill and recession
+47,H,H_clean_start,3,10,1e10,0.4,2e-7,1e9,0.3,0.4,0.2,1e10,0.3,1e10,3.0,1e-4,0.5,1.0,0,0,5000,clean start natural formation
+48,H,H_narrow_recess,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e10,0.2,1e11,3.0,1e-3,0.2,0.5,1e21,3e21,5000,narrow geometry easy rupture
+49,H,H_fast_switch_narrow,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e10,0.15,1e12,3.0,1e-3,0.01,0.05,1e21,3e21,2000,fast scout narrow high recession
+50,H,H_fast_switch_dense,3,10,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.15,1e12,3.0,1e-3,0.01,0.05,5e20,5e21,2000,fast scout dense high recession
+51,H,H_gradual_switch,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.15,1e11,0.2,1e11,2.5,5e-4,0.02,0.05,5e20,5e20,2000,gradual formation and rupture scout
+52,H,H_gradual_switch_highv,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.15,1e11,0.2,1e11,3.0,5e-4,0.02,0.05,1e21,1e21,2000,gradual formation with higher drive
+53,H,H_recession_blast,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.05,1e13,3.0,1e-3,5e-4,0.002,5e20,5e21,2000,aggressive fast rupture scout
+54,H,H_recession_blast_short,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.05,1e13,3.0,1e-3,3e-5,1e-4,5e20,5e21,1000,aggressive short-window completion scout
+55,H,H_dense_easy_recess_short,3,10,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.2,1e11,3.0,1e-3,0.005,0.02,5e20,5e21,2000,row45 kinetics with shortened windows for convergence
+56,H,H_dense_easy_recess_micro,3,10,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.2,1e11,3.0,1e-3,1e-4,5e-4,5e20,5e21,1000,row45 kinetics micro-window completion
+57,H,H_low_trap_switch,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e10,0.2,1e11,3.0,1e-3,1e-4,2e-4,5e20,1e21,100,low trap-count switching scout
+58,H,H_low_trap_switch_short,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e10,0.2,1e11,3.0,1e-3,5e-6,1e-5,5e20,1e21,100,short-window completion for low-trap switching
+59,H,H_low_trap_switch_completion,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e10,0.2,1e11,3.0,1e-3,1e-8,2e-8,5e20,1e21,100,completion-targeted micro window
+60,H,H_low_trap_switch_ultra,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e10,0.2,1e11,3.0,1e-3,1e-6,2e-6,5e20,1e21,10,ultra-low-trap convergence probe
+61,H,H_low_trap_switch_nanoscale,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e10,0.2,1e11,3.0,1e-3,2.5e-9,5e-9,5e20,1e21,10,nanoscale window aligned to observed switching jump
+62,H,H_dense_easy_recess_completion,3,10,1e10,0.4,2e-7,1e9,0.3,0.4,0.4,1e9,0.2,1e11,3.0,1e-3,0.001,0.002,5e20,5e21,1000,row45-equivalent short completion probe
+63,H,H_low_trap_switch_picosecond,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.3,1e10,0.2,1e11,3.0,1e-3,5e-10,1e-9,5e20,1e21,100,picosecond-window completion tuned from row59 stall point
+64,H,H_prefilled_reset_rupture,3,5,1e10,0.4,2e-7,1e9,0.3,0.4,0.6,1e8,0.05,1e13,3.0,1e-3,5e-10,1e-9,5e20,5e21,200,prefilled filament with aggressive reset rupture for set-over-reset ratio

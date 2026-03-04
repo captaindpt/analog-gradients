@@ -1,6 +1,6 @@
 # GPU Building Blocks - Status
 
-**Last Updated:** 2026-02-09
+**Last Updated:** 2026-03-04
 
 ## Build Hierarchy
 
@@ -16,27 +16,41 @@ Level 0: System              ✅ COMPLETE
 Strategic direction reference: `my-workspace/docs/vision.md` (competition
 context in `competition/competition-plan.md`).
 
+## Pause Snapshot (2026-03-04)
+
+- Project is intentionally paused for a short-term sunset period.
+- Pause handoff log: `my-workspace/logs/2026-03-04-project-pause-handoff.md`
+- Primary restart target remains ticket `0020` (memristor physical primitive).
+
 ## Current Development Focus
 
 Build path from verified digital GPU stack to a neuromorphic analog core:
 
 - Memristor paper library + Markdown manifest ✅
 - **Physical memristor TCAD exploration (ticket 0020)** 🔄
-  - **Approach**: Systematic Sentaurus TCAD sweep through 5 phases (MIM baseline
-    -> traps -> defect drift -> hysteresis tuning -> pulse characterization)
+  - **Approach**: Systematic Sentaurus TCAD sweep across phases B/C/D/E/F/G/Z
+    (baseline -> trap kinetics -> preseed -> filament seed/growth -> narrow
+    geometry -> bridge forcing -> pulse tuning)
   - Codex runbook: `tcad/memristor/CODEX_RUNBOOK.md`
-  - Sweep matrix (38 planned runs): `tcad/memristor/config/sweep_matrix_reram.csv`
+  - Sweep matrix (64 planned runs): `tcad/memristor/config/sweep_matrix_reram.csv`
+  - Current run ledger: `tcad/memristor/runs/reram_results.csv`
+    - Coverage checkpoint: rows `1..27` recorded (`25 CONVERGED`, `2 FAIL:convergence`)
+    - Latest completed rows: 16-19 rerun on `2026-02-17`
   - Run harness: `scripts/run_memristor_tcad_sweep.sh`
+  - Batch helpers: `scripts/run_phase_f_scout_34_40.sh`, `scripts/run_reram_blitz.sh`
   - Sentaurus setup: `scripts/setup_sentaurus.sh`
   - PLT extractor: `scripts/extract_plt_to_csv.py`
+  - IV plotting helper: `scripts/plot_switching_iv.py`
   - Phase 1 example run (10nm HfO2 MIM, DC 0-1V):
     `tcad/memristor/runs/example_phase1_mim_10nm/` — CONVERGED, zero current
     (expected: no conduction mechanism in Phase 1)
   - Known issue: `BarrierTunneling` keyword rejected by SDevice vX-2025.09.
-    Correct tunneling syntax must be resolved before Phase 2 sweep.
+    Direct tunneling syntax still needs vendor-confirmed correction before
+    physically credible switching-current claims.
   - Anchor paper: Strukov 2008
   - Spec: `my-workspace/docs/reference/MEMRISTOR_PRIMITIVE_SPEC.md`
   - Paper stock: `my-workspace/docs/reference/MEMRISTOR_PAPER_STOCK.md`
+  - Pause handoff: `my-workspace/logs/2026-03-04-project-pause-handoff.md`
 - Analog primitive bring-up: `synapse`, `lif_neuron` ✅ PASS
 - Neuron composition and spike behavior verification: `neuron_tile` ✅ PASS
 - Small neuromorphic tile integration: `neuro_tile4` ✅ PASS

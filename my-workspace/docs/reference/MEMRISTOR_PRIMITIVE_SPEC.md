@@ -1,11 +1,31 @@
 # Memristor Primitive Master Notes and Spec (Physics-First)
 
-Date: 2026-02-09
-Status: Planning baseline, execution scaffold active
+Date: 2026-03-04
+Status: Active TCAD exploration checkpointed; project temporarily paused
 Track: new physical primitive first, compact model second, CMOS fallback third
 
 This is the single master notes file for the memristor primitive workstream.
 All planning, equations, acceptance criteria, and phase gates should stay here.
+
+## 0) Execution Checkpoint (2026-03-04)
+
+Current reality at pause time:
+
+1. Sweep matrix expanded to `64` planned rows:
+   `tcad/memristor/config/sweep_matrix_reram.csv`
+2. Recorded outcomes exist for rows `1..27`:
+   `tcad/memristor/runs/reram_results.csv`
+   - `25` runs marked `CONVERGED`
+   - `2` runs marked `FAIL:convergence`
+3. Run harness hardening is active:
+   - log throttling and capping in `scripts/run_memristor_tcad_sweep.sh`
+   - optional timeout controls via `MEMRISTOR_SDEVICE_TIMEOUT_S`
+   - row batch helpers:
+     `scripts/run_phase_f_scout_34_40.sh`, `scripts/run_reram_blitz.sh`
+4. Compact-model checkpoint is still valid:
+   `results/memristor_vteam_test.txt` PASS artifact is present.
+5. Physical-switching claim remains gated:
+   direct tunneling syntax and calibration are still unresolved.
 
 ## 1) Mission and Minimum Success
 
@@ -319,6 +339,11 @@ Current helper scripts:
 
 1. `scripts/init_memristor_phase_a.sh`
 2. `scripts/analyze_memristor_waveform.py`
+3. `scripts/run_memristor_tcad_sweep.sh`
+4. `scripts/run_phase_f_scout_34_40.sh`
+5. `scripts/run_reram_blitz.sh`
+6. `scripts/extract_plt_to_csv.py`
+7. `scripts/plot_switching_iv.py`
 
 ## 12) Claims Policy and Scientific Hygiene
 
@@ -372,10 +397,18 @@ Gate A5: workstream integration complete
 1. `build.sh` target stable.
 2. Docs/ticket/status all updated.
 
-## 15) Immediate Execution Sequence (Next Work Session)
+## 15) Immediate Execution Sequence (Pause-Restart)
 
-1. Promote the `/tmp` Sentaurus smoke chain into repo under `tcad/memristor/`.
-2. Add script `scripts/run_memristor_phase_a_sentaurus.sh` with run manifest.
-3. Add CSV extraction bridge from `.plt`/`.tdr` to analysis script input.
-4. Run first phase-A sweep and publish baseline summary in `competition/` or
-   `my-workspace/logs/` with explicit caveats.
+1. Read handoff log:
+   `my-workspace/logs/2026-03-04-project-pause-handoff.md`.
+2. Re-source environments:
+   `source setup_cadence.sh` and `source scripts/setup_sentaurus.sh`.
+3. Re-validate compact baseline:
+   `./build.sh memristor_vteam`.
+4. Resume TCAD rows with explicit batch selection:
+   `scripts/run_phase_f_scout_34_40.sh` or
+   `MEMRISTOR_BLITZ_ROWS="..." scripts/run_reram_blitz.sh`.
+5. Append run outcomes and update docs after each batch:
+   - `tcad/memristor/runs/reram_results.csv`
+   - `my-workspace/docs/STATUS.md`
+   - `my-workspace/logs/YYYY-MM-DD-*.md`

@@ -1,0 +1,55 @@
+; extract_memristor_plots.ocn - Extract memristor waveforms to CSV
+
+simulator('spectre)
+
+; --- Sinusoidal sweep: extract V and I for hysteresis ---
+openResults("results/memristor_vteam_sweep/memristor_vteam_sweep.raw")
+selectResult("hyst_tran-tran")
+
+vdrv = v("vin")
+xstate = v("XMEM.x")
+
+; Current = V/R where R = ron*x + roff*(1-x)
+; We reconstruct from saved signals.
+ron_val = 5e3
+roff_val = 80e3
+
+csv = outfile("results/memristor_vteam_sweep/hyst_iv.csv" "w")
+fprintf(csv "time_s,voltage_v,state_x,current_a\n")
+dt = 100e-12
+tcur = 0
+while(tcur <= 800e-9
+    vv = value(vdrv tcur)
+    xx = value(xstate tcur)
+    xx_clamp = max(min(xx 1.0) 0.0)
+    rr = ron_val * xx_clamp + roff_val * (1.0 - xx_clamp)
+    ii = vv / rr
+    fprintf(csv "%L,%L,%L,%L\n" tcur vv xx_clamp ii)
+    tcur = tcur + dt
+)
+close(csv)
+
+; --- PWL test: extract V, x, and I for state evolution ---
+openResults("results/memristor_vteam/memristor_vteam.raw")
+selectResult("tran_test-tran")
+
+vdrv2 = v("vin")
+xstate2 = v("XMEM.x")
+
+csv2 = outfile("results/memristor_vteam/pwl_traces.csv" "w")
+fprintf(csv2 "time_s,voltage_v,state_x,current_a,resistance_ohm\n")
+dt2 = 100e-12
+tcur2 = 0
+while(tcur2 <= 120e-9
+    vv2 = value(vdrv2 tcur2)
+    xx2 = value(xstate2 tcur2)
+    xx2c = max(min(xx2 1.0) 0.0)
+    rr2 = ron_val * xx2c + roff_val * (1.0 - xx2c)
+    ii2 = vv2 / rr2
+    fprintf(csv2 "%L,%L,%L,%L,%L\n" tcur2 vv2 xx2c ii2 rr2)
+    tcur2 = tcur2 + dt2
+)
+close(csv2)
+
+printf("Extraction complete.\n")
+exit()

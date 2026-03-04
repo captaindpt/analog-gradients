@@ -13,8 +13,8 @@ Material = "TiN" {
 
 Material = "HfO2" {
    FilamentParameter {
-      SigmaDef1 = 0.01
-      Sigma = 1e-11
+      SigmaDef1 = 1.0
+      Sigma = 1e-6
       KappaDef1 = 0.1
       Kappa = 0.1
       ParticlesPerVolume2 = 1.5e22

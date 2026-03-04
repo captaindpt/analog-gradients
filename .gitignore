@@ -17,6 +17,7 @@ inverter.raw/
 spectre_probe_*.log
 
 # Cadence generated artifacts (keep *_test.txt reports)
+*.ahdlSimDB/
 results/**/*.raw/
 results/**/psf/
 results/**/spectre.log
@@ -42,3 +43,5 @@ implementation/fullflow_demo/work/dc/reports/*.rpt
 
 # Memristor phase-A generated run artifacts
 tcad/memristor/runs/
+tcad/memristor/results/
+results/memristor_linkedin_figure.png

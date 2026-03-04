@@ -18,6 +18,63 @@ SWEEP_CSV="${MEMRISTOR_SWEEP_CSV:-$TCAD_ROOT/config/sweep_matrix_reram.csv}"
 ROW_NUM="${1:?Usage: $0 <sweep_row_number>}"
 TIMESTAMP="$(date +%Y%m%d_%H%M%S)"
 KEEP_TRANSIENT_SNAPSHOTS="${MEMRISTOR_KEEP_TRANSIENT_SNAPSHOTS:-0}"
+SDEVICE_LOG_MODE="${MEMRISTOR_SDEVICE_LOG_MODE:-compact}"
+SDEVICE_TIMEOUT_S="${MEMRISTOR_SDEVICE_TIMEOUT_S:-0}"
+SDEVICE_THROTTLE_SPAM="${MEMRISTOR_SDEVICE_THROTTLE_SPAM:-1}"
+SDEVICE_SPAM_SAMPLE_LINES="${MEMRISTOR_SDEVICE_SPAM_SAMPLE_LINES:-20}"
+SDEVICE_SPAM_PROGRESS_INTERVAL="${MEMRISTOR_SDEVICE_SPAM_PROGRESS_INTERVAL:-10000}"
+SDEVICE_LOG_MAX_MB="${MEMRISTOR_SDEVICE_LOG_MAX_MB:-512}"
+SDEVICE_LOG_HEAD_LINES="${MEMRISTOR_SDEVICE_LOG_HEAD_LINES:-2000}"
+SDEVICE_LOG_TAIL_LINES="${MEMRISTOR_SDEVICE_LOG_TAIL_LINES:-2000}"
+
+sanitize_uint() {
+  local value="$1"
+  local fallback="$2"
+  if [[ "$value" =~ ^[0-9]+$ ]]; then
+    echo "$value"
+  else
+    echo "$fallback"
+  fi
+}
+
+cap_log_file() {
+  local file="$1"
+  local max_mb="$2"
+  local head_lines="$3"
+  local tail_lines="$4"
+  local size_bytes max_bytes tmp
+
+  [[ -f "$file" ]] || return 0
+  if [[ "$max_mb" -le 0 ]]; then
+    return 0
+  fi
+
+  size_bytes=$(wc -c < "$file" 2>/dev/null || echo 0)
+  max_bytes=$((max_mb * 1024 * 1024))
+  if (( size_bytes <= max_bytes )); then
+    return 0
+  fi
+
+  tmp="${file}.tmp.$$"
+  {
+    echo "[log-cap] original_size_bytes=$size_bytes cap_mb=$max_mb"
+    echo "[log-cap] preserved_head_lines=$head_lines preserved_tail_lines=$tail_lines"
+    echo "[log-cap] ---- BEGIN HEAD ----"
+    sed -n "1,${head_lines}p" "$file"
+    echo "[log-cap] ---- TRUNCATED ----"
+    tail -n "$tail_lines" "$file"
+    echo "[log-cap] ---- END TAIL ----"
+  } > "$tmp"
+  mv "$tmp" "$file"
+}
+
+SDEVICE_TIMEOUT_S="$(sanitize_uint "$SDEVICE_TIMEOUT_S" 0)"
+SDEVICE_THROTTLE_SPAM="$(sanitize_uint "$SDEVICE_THROTTLE_SPAM" 1)"
+SDEVICE_SPAM_SAMPLE_LINES="$(sanitize_uint "$SDEVICE_SPAM_SAMPLE_LINES" 20)"
+SDEVICE_SPAM_PROGRESS_INTERVAL="$(sanitize_uint "$SDEVICE_SPAM_PROGRESS_INTERVAL" 10000)"
+SDEVICE_LOG_MAX_MB="$(sanitize_uint "$SDEVICE_LOG_MAX_MB" 512)"
+SDEVICE_LOG_HEAD_LINES="$(sanitize_uint "$SDEVICE_LOG_HEAD_LINES" 2000)"
+SDEVICE_LOG_TAIL_LINES="$(sanitize_uint "$SDEVICE_LOG_TAIL_LINES" 2000)"
 
 if ! command -v sde >/dev/null 2>&1; then
   echo "ERROR: sde not found. Run: source scripts/setup_sentaurus.sh" >&2
@@ -38,10 +95,10 @@ if [[ -z "$ROW_LINE" ]]; then
 fi
 
 IFS=',' read -r _row PHASE SWEEP_GROUP OXIDE_T_NM LATERAL_NM GEN_FREQ GEN_EA GEN_DIPOLE \
-  RECOMB_FREQ RECOMB_EA DIFF_EA FIL_GROWTH_EA FIL_GROWTH_FREQ FIL_RECESS_EA SWEEP_VMAX \
+  RECOMB_FREQ RECOMB_EA DIFF_EA FIL_GROWTH_EA FIL_GROWTH_FREQ FIL_RECESS_EA FIL_RECESS_FREQ SWEEP_VMAX \
   COMPLIANCE SET_TIME RESET_TIME INITIAL_VAC_CONC INITIAL_FIL_CONC MAX_TRAP_NUMBER NOTES <<< "$ROW_LINE"
 
-for v in PHASE SWEEP_GROUP OXIDE_T_NM LATERAL_NM GEN_FREQ GEN_EA GEN_DIPOLE RECOMB_FREQ RECOMB_EA DIFF_EA FIL_GROWTH_EA FIL_GROWTH_FREQ FIL_RECESS_EA SWEEP_VMAX COMPLIANCE SET_TIME RESET_TIME INITIAL_VAC_CONC INITIAL_FIL_CONC MAX_TRAP_NUMBER; do
+for v in PHASE SWEEP_GROUP OXIDE_T_NM LATERAL_NM GEN_FREQ GEN_EA GEN_DIPOLE RECOMB_FREQ RECOMB_EA DIFF_EA FIL_GROWTH_EA FIL_GROWTH_FREQ FIL_RECESS_EA FIL_RECESS_FREQ SWEEP_VMAX COMPLIANCE SET_TIME RESET_TIME INITIAL_VAC_CONC INITIAL_FIL_CONC MAX_TRAP_NUMBER; do
   if [[ -z "${!v}" ]]; then
     echo "ERROR: missing value for $v on row $ROW_NUM" >&2
     exit 1
@@ -54,6 +111,15 @@ print(float(sys.argv[1]) / 1000.0)
 PY
 ); then
   echo "ERROR: invalid oxide_thickness_nm '$OXIDE_T_NM' on row $ROW_NUM" >&2
+  exit 1
+fi
+
+if ! KMC_MAX_X=$(python3 - "$OXIDE_T_UM" <<'PY'
+import sys
+print(float(sys.argv[1]) + 0.005)
+PY
+); then
+  echo "ERROR: failed to compute KMC_MAX_X from oxide_thickness_um '$OXIDE_T_UM' on row $ROW_NUM" >&2
   exit 1
 fi
 
@@ -86,6 +152,7 @@ echo "  diff_ea:      $DIFF_EA"
 echo "  fil_grow_ea:  $FIL_GROWTH_EA"
 echo "  fil_grow_f:   $FIL_GROWTH_FREQ"
 echo "  fil_rec_ea:   $FIL_RECESS_EA"
+echo "  fil_rec_f:    $FIL_RECESS_FREQ"
 echo "  init_vac:     $INITIAL_VAC_CONC"
 echo "  init_fil:     $INITIAL_FIL_CONC"
 echo "  max_traps:    $MAX_TRAP_NUMBER"
@@ -98,6 +165,7 @@ sed -e "s/%%OXIDE_THICKNESS_UM%%/${OXIDE_T_UM}/g" \
   "$TEMPLATES/mim_sde_3d.scm.tmpl" > "$RUN_DIR/mim.scm"
 
 sed -e "s/%%OXIDE_THICKNESS_UM%%/${OXIDE_T_UM}/g" \
+    -e "s/%%KMC_MAX_X%%/${KMC_MAX_X}/g" \
     -e "s/%%LATERAL_Y_UM%%/${LATERAL_UM}/g" \
     -e "s/%%LATERAL_Z_UM%%/${LATERAL_UM}/g" \
     -e "s/%%MAX_TRAP_NUMBER%%/${MAX_TRAP_NUMBER}/g" \
@@ -110,6 +178,7 @@ sed -e "s/%%OXIDE_THICKNESS_UM%%/${OXIDE_T_UM}/g" \
     -e "s/%%FIL_GROWTH_EA%%/${FIL_GROWTH_EA}/g" \
     -e "s/%%FIL_GROWTH_FREQ%%/${FIL_GROWTH_FREQ}/g" \
     -e "s/%%FIL_RECESS_EA%%/${FIL_RECESS_EA}/g" \
+    -e "s/%%FIL_RECESS_FREQ%%/${FIL_RECESS_FREQ}/g" \
     -e "s/%%INITIAL_VAC_CONC%%/${INITIAL_VAC_CONC}/g" \
     -e "s/%%INITIAL_FIL_CONC%%/${INITIAL_FIL_CONC}/g" \
     -e "s/%%COMPLIANCE%%/${COMPLIANCE}/g" \
@@ -134,22 +203,175 @@ fi
 
 if [[ "$OUTCOME" == "CONVERGED" ]]; then
   echo "--- Running SDevice ---"
-  if ! sdevice mim_device.cmd > sdevice_stdout.log 2>&1; then
-    if grep -q "Errors in parsing command file" sdevice_stdout.log 2>/dev/null; then
-      OUTCOME="FAIL:syntax"
+  SDEVICE_RC=0
+  if [[ "$SDEVICE_LOG_MODE" == "full" ]]; then
+    if [[ "$SDEVICE_THROTTLE_SPAM" == "1" ]]; then
+      if [[ "$SDEVICE_TIMEOUT_S" -gt 0 ]]; then
+        set +e
+        timeout --signal=TERM --kill-after=60 "${SDEVICE_TIMEOUT_S}s" \
+          sdevice mim_device.cmd 2>&1 | awk \
+          -v sample_lines="$SDEVICE_SPAM_SAMPLE_LINES" \
+          -v progress_interval="$SDEVICE_SPAM_PROGRESS_INTERVAL" '
+            BEGIN { spam=0; shown=0; }
+            /location is already occupied\. Discarded\./ {
+              spam++;
+              if (shown < sample_lines) {
+                print;
+                shown++;
+                next;
+              }
+              if (progress_interval > 0 && (spam % progress_interval) == 0) {
+                printf("[log-throttle] suppressed %d repeated location-is-occupied lines so far\n", spam - shown);
+              }
+              next;
+            }
+            { print; }
+            END {
+              if (spam > shown) {
+                printf("[log-throttle] total_suppressed_repeated_lines=%d shown=%d\n", spam - shown, shown);
+              }
+            }
+          ' > sdevice_stdout.log
+        SDEVICE_RC=$?
+        set -e
+      else
+        set +e
+        sdevice mim_device.cmd 2>&1 | awk \
+          -v sample_lines="$SDEVICE_SPAM_SAMPLE_LINES" \
+          -v progress_interval="$SDEVICE_SPAM_PROGRESS_INTERVAL" '
+            BEGIN { spam=0; shown=0; }
+            /location is already occupied\. Discarded\./ {
+              spam++;
+              if (shown < sample_lines) {
+                print;
+                shown++;
+                next;
+              }
+              if (progress_interval > 0 && (spam % progress_interval) == 0) {
+                printf("[log-throttle] suppressed %d repeated location-is-occupied lines so far\n", spam - shown);
+              }
+              next;
+            }
+            { print; }
+            END {
+              if (spam > shown) {
+                printf("[log-throttle] total_suppressed_repeated_lines=%d shown=%d\n", spam - shown, shown);
+              }
+            }
+          ' > sdevice_stdout.log
+        SDEVICE_RC=$?
+        set -e
+      fi
     else
-      OUTCOME="FAIL:convergence"
+      if [[ "$SDEVICE_TIMEOUT_S" -gt 0 ]]; then
+        set +e
+        timeout --signal=TERM --kill-after=60 "${SDEVICE_TIMEOUT_S}s" \
+          sdevice mim_device.cmd > sdevice_stdout.log 2>&1
+        SDEVICE_RC=$?
+        set -e
+      else
+        set +e
+        sdevice mim_device.cmd > sdevice_stdout.log 2>&1
+        SDEVICE_RC=$?
+        set -e
+      fi
     fi
-  elif ! grep -q "Good Bye" sdevice_stdout.log 2>/dev/null; then
-    if grep -q "Errors in parsing command file" sdevice_stdout.log 2>/dev/null; then
-      OUTCOME="FAIL:syntax"
+    if [[ "$SDEVICE_RC" -ne 0 ]]; then
+      if [[ "$SDEVICE_RC" -eq 124 || "$SDEVICE_RC" -eq 137 ]]; then
+        OUTCOME="FAIL:timeout"
+      elif grep -q "Errors in parsing command file" sdevice_stdout.log 2>/dev/null; then
+        OUTCOME="FAIL:syntax"
+      else
+        OUTCOME="FAIL:convergence"
+      fi
+    elif ! grep -q "Good Bye" sdevice_stdout.log 2>/dev/null; then
+      if grep -q "Errors in parsing command file" sdevice_stdout.log 2>/dev/null; then
+        OUTCOME="FAIL:syntax"
+      else
+        OUTCOME="FAIL:convergence"
+      fi
+    fi
+  else
+    set +e
+    if [[ "$SDEVICE_TIMEOUT_S" -gt 0 ]]; then
+      timeout --signal=TERM --kill-after=60 "${SDEVICE_TIMEOUT_S}s" \
+        sdevice mim_device.cmd 2>&1 | awk '
+      NR <= 200 { print; next }
+      /Errors in parsing command file/ { print; next }
+      /Curve trace finished/ { print; next }
+      /Good Bye/ { print; next }
+      /total conductance/ { print; next }
+      /KMC Events Summary/ { print; next }
+      /FrenkelPair1 Bulk Generation count/ { print; next }
+      /FrenkelPair1 Bulk Recombination count/ { print; next }
+      /Oxygen diffusion count/ { print; next }
+      /Vacancy diffusion count/ { print; next }
+      /ImmobileVacancy Growth count/ { print; next }
+      /ImmobileVacancy Recession count/ { print; next }
+      /KMC Particles Summary/ { print; next }
+      /Number of Oxygen/ { print; next }
+      /Number of Vacancy/ { print; next }
+      /Number of ImmobileVacancy/ { print; next }
+      /contact        voltage/ { print; next }
+      /^ top/ { print; next }
+      /^ bottom/ { print; next }
+      /Computing BE-step from/ { print; next }
+      /ERROR/ { print; next }
+      /Error/ { print; next }
+    ' > sdevice_stdout.log
     else
-      OUTCOME="FAIL:convergence"
+      sdevice mim_device.cmd 2>&1 | awk '
+      NR <= 200 { print; next }
+      /Errors in parsing command file/ { print; next }
+      /Curve trace finished/ { print; next }
+      /Good Bye/ { print; next }
+      /total conductance/ { print; next }
+      /KMC Events Summary/ { print; next }
+      /FrenkelPair1 Bulk Generation count/ { print; next }
+      /FrenkelPair1 Bulk Recombination count/ { print; next }
+      /Oxygen diffusion count/ { print; next }
+      /Vacancy diffusion count/ { print; next }
+      /ImmobileVacancy Growth count/ { print; next }
+      /ImmobileVacancy Recession count/ { print; next }
+      /KMC Particles Summary/ { print; next }
+      /Number of Oxygen/ { print; next }
+      /Number of Vacancy/ { print; next }
+      /Number of ImmobileVacancy/ { print; next }
+      /contact        voltage/ { print; next }
+      /^ top/ { print; next }
+      /^ bottom/ { print; next }
+      /Computing BE-step from/ { print; next }
+      /ERROR/ { print; next }
+      /Error/ { print; next }
+    ' > sdevice_stdout.log
+    fi
+    SDEVICE_RC=$?
+    set -e
+    if [[ "$SDEVICE_RC" -ne 0 ]]; then
+      if [[ "$SDEVICE_RC" -eq 124 || "$SDEVICE_RC" -eq 137 ]]; then
+        OUTCOME="FAIL:timeout"
+      elif grep -q "Errors in parsing command file" sdevice_stdout.log 2>/dev/null; then
+        OUTCOME="FAIL:syntax"
+      else
+        OUTCOME="FAIL:convergence"
+      fi
+    elif ! grep -q "Good Bye" sdevice_stdout.log 2>/dev/null; then
+      if grep -q "Errors in parsing command file" sdevice_stdout.log 2>/dev/null; then
+        OUTCOME="FAIL:syntax"
+      else
+        OUTCOME="FAIL:convergence"
+      fi
     fi
   fi
 fi
 
 popd > /dev/null
+
+# Apply a final safety cap to avoid runaway logs filling the filesystem.
+cap_log_file "$RUN_DIR/sdevice_stdout.log" \
+  "$SDEVICE_LOG_MAX_MB" \
+  "$SDEVICE_LOG_HEAD_LINES" \
+  "$SDEVICE_LOG_TAIL_LINES"
 
 # By default, delete transient per-step snapshots. They can create thousands
 # of files and quickly exhaust disk/inodes in long KMC runs.
@@ -245,6 +467,7 @@ diff_ea=$DIFF_EA
 fil_growth_ea=$FIL_GROWTH_EA
 fil_growth_freq=$FIL_GROWTH_FREQ
 fil_recess_ea=$FIL_RECESS_EA
+fil_recess_freq=$FIL_RECESS_FREQ
 initial_vac_conc=$INITIAL_VAC_CONC
 initial_fil_conc=$INITIAL_FIL_CONC
 max_trap_number=$MAX_TRAP_NUMBER
@@ -260,6 +483,8 @@ set_current_abs_max_a=$SET_CURRENT_ABS_MAX_A
 reset_current_abs_max_a=$RESET_CURRENT_ABS_MAX_A
 current_ratio_set_over_reset=$CURRENT_RATIO_SET_OVER_RESET
 keep_transient_snapshots=$KEEP_TRANSIENT_SNAPSHOTS
+sdevice_log_mode=$SDEVICE_LOG_MODE
+sdevice_timeout_s=$SDEVICE_TIMEOUT_S
 notes=$NOTES
 EOF_MANIFEST
 
